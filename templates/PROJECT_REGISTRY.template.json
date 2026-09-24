@@ -1,0 +1,15 @@
+{
+  "_schema_version": "1.0",
+  "_description": "Registro determinístico de workspaces para o Antigravity Control Plane",
+  "exemplo-projeto": {
+    "canonical_name": "Exemplo Projeto",
+    "aliases": [
+      "exemplo-projeto",
+      "exemplo"
+    ],
+    "repo": "seu-usuario-github/exemplo-projeto",
+    "workspace": "/caminho/para/seu/workspace",
+    "write_allowed": true,
+    "project_id": "00000000-0000-0000-0000-000000000000"
+  }
+}
