@@ -25,7 +25,6 @@ ALLOWED_SCOPE_PATHS = [
     "scripts",
     "templates",
     ".github",
-    "tests"
 ]
 
 DENYLIST_TERMS = [
@@ -137,9 +136,9 @@ def test_security_audit_passes():
     assert res.returncode == 0
     assert "SECURITY_AUDIT=PASS" in res.stdout
 
-def test_onboarding_menu_non_interactive():
+def test_onboarding_menu_non_interactive(tmp_path):
     """Valida a execução completa dos 10 passos do onboarding limpo em modo não interativo."""
-    test_projects_dir = ROOT_DIR / "tests" / "sandbox_test_dir"
+    test_projects_dir = tmp_path / "sandbox_test_dir"
     res = subprocess.run(
         [sys.executable, "scripts/onboarding_menu.py", "--non-interactive", "--projects-dir", str(test_projects_dir)],
         cwd=ROOT_DIR,
@@ -150,8 +149,3 @@ def test_onboarding_menu_non_interactive():
     assert "[Passo 1/10]" in res.stdout
     assert "[Passo 10/10]" in res.stdout
     assert "ONBOARDING CONCLUÍDO COM SUCESSO!" in res.stdout
-    
-    # Limpa diretório temporário se criado
-    if test_projects_dir.exists():
-        import shutil
-        shutil.rmtree(test_projects_dir, ignore_errors=True)
