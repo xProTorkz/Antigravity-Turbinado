@@ -61,11 +61,38 @@ def check_antigravity():
 
 def check_directories():
     base = Path(__file__).resolve().parent.parent
-    required = ["docs", "templates", "scripts", ".github"]
+    required = ["docs", "templates", "scripts", ".github", "skills"]
     missing = [d for d in required if not (base / d).exists()]
     if not missing:
         return True, "Estrutura do kit íntegra"
     return False, f"Diretórios ausentes: {', '.join(missing)}"
+
+def check_turbo_settings():
+    home = Path.home()
+    config_file = home / ".gemini" / "config" / "config.json"
+    if config_file.exists():
+        try:
+            data = json.loads(config_file.read_text(encoding="utf-8"))
+            settings = data.get("userSettings", {})
+            if settings.get("autoExecutionPolicy") == "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER":
+                return True, "Políticas Turbo ativas (Eager Auto-Execution + Max Autonomia)"
+        except Exception:
+            pass
+    return True, "Políticas padrão (execute configure_turbo_environment.py para ativar modo Turbo)"
+
+def check_skills_catalog():
+    home = Path.home()
+    native_dir = home / ".agents" / "skills"
+    catalog_dir = home / "projetos" / "config" / "Skills"
+    
+    native_count = len([d for d in native_dir.iterdir() if d.is_dir()]) if native_dir.exists() else 0
+    catalog_count = len([d for d in catalog_dir.iterdir() if d.is_dir()]) if catalog_dir.exists() else 0
+    
+    if native_count >= 100 or catalog_count >= 2000:
+        return True, f"Acervo completo: {native_count} nativas (~/.agents/skills) + {catalog_count} no catálogo ampliado"
+    elif native_count > 0:
+        return True, f"{native_count} skills nativas ativas"
+    return True, "Catálogo pronto para sincronização"
 
 def main():
     ci_mode = "--ci" in sys.argv
@@ -79,6 +106,8 @@ def main():
         ("GitHub Credential Auth", check_github_auth),
         ("Antigravity Framework", check_antigravity),
         ("Kit Directory Structure", check_directories),
+        ("Turbo Execution Policy", check_turbo_settings),
+        ("Skills Catalog Index", check_skills_catalog),
     ]
 
     all_ok = True

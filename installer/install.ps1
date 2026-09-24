@@ -79,31 +79,38 @@ if (-not $pythonCmd) {
 }
 Write-Host "✅ Python detectado: $(python --version)" -ForegroundColor Green
 
-# ETAPA 3: Diretórios de Projeto
-Write-Host "`n[ETAPA 3/6] Configurando Diretório de Projetos..." -ForegroundColor Yellow
-$projectsDir = Join-Path $env:USERPROFILE "projetos"
-if (-not (Test-Path $projectsDir)) {
-    New-Item -ItemType Directory -Path $projectsDir -Force | Out-Null
+# ETAPA 3: Instalação e Indexação das Skills e Configurações Turbo
+Write-Host "`n[ETAPA 3/5] Configurando Ambiente Turbo, Skills e Permissões..." -ForegroundColor Yellow
+$TurboScript = Join-Path $ScriptDir "scripts\configure_turbo_environment.py"
+if (Test-Path $TurboScript) {
+    python $TurboScript
+} else {
+    $TempTurboDir = Join-Path $env:TEMP "antigravity_turbo"
+    New-Item -ItemType Directory -Path $TempTurboDir -Force | Out-Null
+    $TempTurboScript = Join-Path $TempTurboDir "configure_turbo_environment.py"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/xProTorkz/Antigravity-Turbinado/main/scripts/configure_turbo_environment.py" -OutFile $TempTurboScript -UseBasicParsing -ErrorAction SilentlyContinue
+    if (Test-Path $TempTurboScript) {
+        python $TempTurboScript
+        Remove-Item -Recurse -Force $TempTurboDir -ErrorAction SilentlyContinue
+    }
 }
-Write-Host "✅ Diretório base configurado em $projectsDir" -ForegroundColor Green
 
-# ETAPA 4: Configuração de Skills (2.488+ Skills)
-Write-Host "`n[ETAPA 4/6] Configurando Catálogo de 2.488+ Skills Especializadas..." -ForegroundColor Yellow
-$skillsTarget = Join-Path $projectsDir "config\Skills"
-if (-not (Test-Path $skillsTarget)) {
-    New-Item -ItemType Directory -Path $skillsTarget -Force | Out-Null
-}
-Write-Host "✅ Catálogo completo de skills pronto e indexado dinamicamente!" -ForegroundColor Green
-
-# ETAPA 5: Permissões de Workspace
-Write-Host "`n[ETAPA 5/6] Aplicando Política Otimizada de Permissões..." -ForegroundColor Yellow
-Write-Host "• Dentro da pasta do projeto: Sempre permitir e proceder com as implementações" -ForegroundColor Green
+# ETAPA 4: Permissões de Workspace e Autonomia
+Write-Host "`n[ETAPA 4/5] Aplicando Política Otimizada de Permissões..." -ForegroundColor Yellow
+Write-Host "• Antigravity configurado em modo: EAGER (Auto-execução contínua de comandos)" -ForegroundColor Green
+Write-Host "• Dentro da pasta do projeto: Sempre permitir alterações no workspace" -ForegroundColor Green
 Write-Host "• Fora da pasta do projeto: Perguntar sempre / Request Review obrigatório" -ForegroundColor Yellow
 
-# ETAPA 6: Doctor
-Write-Host "`n[ETAPA 6/6] Executando Doctor de Validação..." -ForegroundColor Yellow
+# ETAPA 5: Doctor de Integridade
+Write-Host "`n[ETAPA 5/5] Executando Doctor de Validação do Ambiente..." -ForegroundColor Yellow
 python (Join-Path $ScriptDir "scripts\doctor.py")
 
 Write-Host "`n============================================================" -ForegroundColor Cyan
 Write-Host "🎉 ANTIGRAVITY TURBINADO INSTALADO COM SUCESSO!" -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Cyan
+Write-Host "Sua máquina agora está 100% calibrada e pronta para receber tarefas autônomas."
+Write-Host "`n📌 COMO COMEÇAR SEU PRIMEIRO PROJETO:" -ForegroundColor Yellow
+Write-Host "1. Abra o ChatGPT e configure as Instruções Personalizadas com o template do kit."
+Write-Host "2. Peça sua tarefa em português no ChatGPT: ele criará a Issue no GitHub com a skill ideal."
+Write-Host "3. Abra o repositório no Google Antigravity e veja o agente programar e testar sozinho!"
+Write-Host "`n💬 Para suporte técnico exclusivo: @xprotorkzdev no Telegram.`n" -ForegroundColor Cyan

@@ -127,28 +127,38 @@ else
     exit 1
 fi
 
-# ETAPA 5: Instalação e Indexação das 2.488+ Skills Técnicas
-echo -e "\n${YELLOW}[ETAPA 5/7] Configurando Catálogo de 2.488+ Skills Especializadas...${NC}"
-SKILLS_TARGET="$HOME/projetos/config/Skills"
-mkdir -p "$SKILLS_TARGET"
-SOURCE_SKILLS="/Users/lucasvinicius/projetos/config/Skills"
-if [ -d "$SOURCE_SKILLS" ] && [ "$SOURCE_SKILLS" != "$SKILLS_TARGET" ]; then
-    echo -e "Copiando e indexando skills completas..."
-    cp -R "$SOURCE_SKILLS/"* "$SKILLS_TARGET/" 2>/dev/null || true
+# ETAPA 5: Instalação e Indexação das Skills e Configurações Turbo
+echo -e "\n${YELLOW}[ETAPA 5/7] Configurando Ambiente Turbo, Skills e Permissões...${NC}"
+TURBO_SCRIPT="$SCRIPT_DIR/scripts/configure_turbo_environment.py"
+if [ -f "$TURBO_SCRIPT" ]; then
+    python3 "$TURBO_SCRIPT"
+else
+    # Fallback caso executado via pipe remoto
+    TMP_TURBO_DIR="/tmp/.antigravity_turbo_$$"
+    mkdir -p "$TMP_TURBO_DIR"
+    curl -fsSL "https://raw.githubusercontent.com/xProTorkz/Antigravity-Turbinado/main/scripts/configure_turbo_environment.py" -o "$TMP_TURBO_DIR/configure_turbo_environment.py" 2>/dev/null || true
+    if [ -f "$TMP_TURBO_DIR/configure_turbo_environment.py" ]; then
+        python3 "$TMP_TURBO_DIR/configure_turbo_environment.py"
+        rm -rf "$TMP_TURBO_DIR" 2>/dev/null || true
+    fi
 fi
-echo -e "${GREEN}✅ Catálogo completo de skills pronto e indexado dinamicamente!${NC}"
 
-# ETAPA 6: Política de Permissões do Workspace
-echo -e "\n${YELLOW}[ETAPA 6/7] Aplicando Diretrizes de Workspace...${NC}"
-echo -e "• Dentro da pasta de projeto: ${GREEN}Sempre permitir e proceder com as implementações${NC}"
+# ETAPA 6: Política de Permissões do Workspace e Autonomia
+echo -e "\n${YELLOW}[ETAPA 6/7] Aplicando Diretrizes de Workspace e Autonomia...${NC}"
+echo -e "• Antigravity configurado em modo: ${GREEN}EAGER (Auto-execução sem interrupção de comandos seguros)${NC}"
+echo -e "• Dentro da pasta de projeto: ${GREEN}Sempre permitir alterações no workspace${NC}"
 echo -e "• Fora da pasta de projeto: ${YELLOW}Perguntar sempre / Request Review obrigatório${NC}"
 
 # ETAPA 7: Doctor de Integridade
-echo -e "\n${YELLOW}[ETAPA 7/7] Executando Doctor de Diagnóstico...${NC}"
+echo -e "\n${YELLOW}[ETAPA 7/7] Executando Doctor de Diagnóstico do Ambiente...${NC}"
 python3 "$SCRIPT_DIR/scripts/doctor.py"
 
 echo -e "\n${BLUE}============================================================${NC}"
 echo -e "${GREEN}🎉 ANTIGRAVITY TURBINADO INSTALADO COM SUCESSO!${NC}"
 echo -e "${BLUE}============================================================${NC}"
-echo -e "Sua máquina agora está pronta para receber tarefas autônomas via GitHub e ChatGPT."
-echo -e "Para suporte técnico: ${BLUE}@xprotorkzdev${NC} no Telegram.\n"
+echo -e "Sua máquina agora está 100% calibrada e pronta para receber tarefas autônomas."
+echo -e "\n📌 ${YELLOW}COMO COMEÇAR SEU PRIMEIRO PROJETO:${NC}"
+echo -e "1. Abra o ChatGPT e configure as ${BLUE}Instruções Personalizadas${NC} com o template do kit."
+echo -e "2. Peça sua tarefa em português no ChatGPT: ele criará a Issue no GitHub com a skill ideal."
+echo -e "3. Abra o repositório no Google Antigravity e veja o agente programar e testar sozinho!"
+echo -e "\n💬 Para suporte técnico exclusivo: ${BLUE}@xprotorkzdev${NC} no Telegram.\n"

@@ -1,0 +1,83 @@
+name: "Antigravity — Tarefa de Projeto"
+description: "Crie uma tarefa executável com Packet v5 e Skill técnica obrigatória para o Antigravity"
+title: "[TASK] "
+labels: ["ag:queued", "execution:auto"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Linha de Produção Autônoma
+        **Planejar (ChatGPT) → Registrar (GitHub) → Blindar (Sentinela) → Executar (Antigravity)**
+        
+        Toda tarefa enviada para execução deve conter uma `@skill` técnica especializada do catálogo oficial.
+
+  - type: input
+    id: target_project
+    attributes:
+      label: Projeto Alvo
+      description: Identificador ou nome do projeto/workspace local.
+      placeholder: "Ex.: meu-projeto"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridade de Execução
+      options:
+        - "P0 (Crítico / Bloqueante)"
+        - "P1 (Alta Prioridade / Feature Principal)"
+        - "P2 (Média Prioridade / Melhoria)"
+        - "P3 (Baixa Prioridade / Dívida Técnica)"
+    validations:
+      required: true
+
+  - type: input
+    id: execution_skill
+    attributes:
+      label: Skill Técnica Obrigatória de Execução
+      description: "Informe a skill com @ (Ex.: @testes-validacao, @pesquisa-projeto, @seguranca-infra, @fastapi, @postgresql). O Skill Router seleciona automaticamente."
+      placeholder: "@pesquisa-projeto"
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo Único
+      description: O que precisa ser implementado ou corrigido de maneira objetiva.
+      placeholder: "Implementar autenticação JWT com refresh token e testes automatizados..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: allowed_scope
+    attributes:
+      label: Escopo Permitido (Scope Lock)
+      description: Diretórios e arquivos autorizados para alteração. Qualquer alteração fora deste escopo será bloqueada.
+      placeholder: "src/\ntests/\nrequirements.txt"
+    validations:
+      required: true
+
+  - type: textarea
+    id: do_not_touch
+    attributes:
+      label: Fora de Escopo / Restrições
+      description: O que o executor NÃO deve alterar (ex.: não mexer no banco de produção, não refatorar arquivos externos).
+      placeholder: "Não alterar infraestrutura, não remover rotas existentes."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: acceptance_criteria
+    attributes:
+      label: Critérios de Aceite
+      options:
+        - label: "Implementação concluída e funcional"
+          required: true
+        - label: "Testes automatizados passando (Test Before / Test After)"
+          required: true
+        - label: "Zero arquivos modificados fora de allowed_scope"
+          required: true
+        - label: "Zero segredos ou tokens gravados no código"
+          required: true
