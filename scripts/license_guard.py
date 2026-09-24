@@ -3,7 +3,7 @@
 License Guard & Hardware Fingerprint Lock — Antigravity Turbinado
 ================================================================
 Garante a proteção contra pirataria e compartilhamento não autorizado:
-- Vincula cada licença ao Telegram User ID do comprador.
+- Vincula cada licença ao identificador do comprador.
 - Trava no primeiro uso no HWID (Hardware UUID) e IP da máquina do cliente.
 - Impede a execução da instalação em máquinas não autorizadas.
 """
@@ -19,7 +19,8 @@ import urllib.request
 from pathlib import Path
 from datetime import datetime
 
-SECRET_SALT = b"AntigravityTurbinado_HWID_Security_2026_xProTorkz"
+SALT_ENV = os.environ.get("ANTIGRAVITY_LICENSE_SALT")
+SECRET_SALT = SALT_ENV.encode() if SALT_ENV else b"AntigravityTurbinado_HWID_Security_2026_Canonical"
 
 def get_machine_hwid() -> str:
     """Obtém o identificador único e imutável de hardware da máquina atual."""
@@ -86,16 +87,17 @@ def get_client_public_ip() -> str:
             pass
     return "127.0.0.1"
 
-def generate_license_key(telegram_user_id: int, plan_id: str = "core") -> str:
+def generate_license_key(user_id: int, plan_id: str = "core") -> str:
     """Gera chave de licença determinística e criptograficamente assinada."""
     plan_code = "PRO" if "pro" in plan_id.lower() else "CORE"
-    data = f"{telegram_user_id}:{plan_code}".encode()
+    data = f"{user_id}:{plan_code}".encode()
     signature = hmac.new(SECRET_SALT, data, hashlib.sha256).hexdigest()[:12].upper()
-    return f"TURBO-{plan_code}-{telegram_user_id}-{signature}"
+    return f"TURBO-{plan_code}-{user_id}-{signature}"
 
 def verify_license_signature(license_key: str):
     """Verifica criptograficamente se a chave possui assinatura autêntica da nossa chave privada."""
     parts = license_key.strip().split("-")
+
     if len(parts) == 4 and parts[0] == "TURBO":
         plan_code = parts[1].upper()
         try:
@@ -120,10 +122,12 @@ def verify_license_signature(license_key: str):
     return False, 0, ""
 
 def get_license_db_path() -> Path:
-    # Procura banco de dados no Sharkbot ou na pasta local
-    sharkbot_db = Path("/Users/lucasvinicius/projetos/Sharkbot/data/antigravity_turbinado_licenses.db")
-    if sharkbot_db.parent.exists():
-        return sharkbot_db
+    """Retorna o caminho seguro do banco de dados local ou customizado via ambiente."""
+    env_db = os.environ.get("ANTIGRAVITY_LICENSE_DB")
+    if env_db:
+        db_path = Path(env_db)
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+        return db_path
     local_db = Path.home() / ".gemini" / "antigravity" / "licenses.db"
     local_db.parent.mkdir(parents=True, exist_ok=True)
     return local_db
@@ -171,7 +175,7 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
         return {
             "ok": False,
             "error": "INVALID_LICENSE_SIGNATURE",
-            "message": "FALHA CRÍTICA: Assinatura de licença inválida ou falsificada. Adquira sua licença oficial no Telegram: @xprotorkzbot"
+            "message": "FALHA CRÍTICA: Assinatura de licença inválida ou falsificada. Adquira sua licença oficial em <support-url>"
         }
 
     # 2. Verificação no Banco de Dados de Licenças
@@ -220,7 +224,7 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
         return {
             "ok": False,
             "error": "HWID_MISMATCH",
-            "message": f"VIOLAÇÃO DE COMPARTILHAMENTO: Esta licença do Telegram ID {user_id} já está vinculada a outro computador (HWID {bound_hwid[:8]}...). Não é permitido compartilhar seu link de instalação."
+            "message": f"VIOLAÇÃO DE COMPARTILHAMENTO: Esta licença do ID {user_id} já está vinculada a outro computador (HWID {bound_hwid[:8]}...). Não é permitido compartilhar sua licença de uso."
         }
     finally:
         conn.close()
@@ -230,7 +234,7 @@ def main():
     parser = argparse.ArgumentParser(description="License Guard & Hardware Lock")
     parser.add_argument("--hwid", action="store_true", help="Exibe o HWID desta máquina")
     parser.add_argument("--ip", action="store_true", help="Exibe o IP público detectado")
-    parser.add_argument("--generate", type=int, help="Gera chave para Telegram User ID")
+    parser.add_argument("--generate", type=int, help="Gera chave para User ID")
     parser.add_argument("--verify", type=str, help="Verifica e vincula uma chave de licença")
     parser.add_argument("--plan", type=str, default="core", help="Plano (core ou combo_pro)")
     args = parser.parse_args()

@@ -47,4 +47,4 @@ Execute o comando nativo:
 python3 scripts/doctor.py --verbose
 ```
 
-Copie o relatório gerado (que não conterá nenhum segredo ou token) e envie para o nosso canal de suporte no Telegram: [@xprotorkzdev](https://t.me/xprotorkzdev).
+Copie o relatório gerado (que não conterá nenhum segredo ou token) e encaminhe para o canal oficial de suporte: `<support-url>`.

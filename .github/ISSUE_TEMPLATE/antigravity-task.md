@@ -10,8 +10,8 @@ assignees: []
 agent_task:
   version: 5
   task_id: task-001
-  target_project: ai-orchestration-kit
-  target_repo: xProTorkz/ai-orchestration-kit
+  target_project: <project-name>
+  target_repo: <github-user>/<github-repo>
   priority: P1
   type: feature
   execution: auto

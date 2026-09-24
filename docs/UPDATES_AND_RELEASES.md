@@ -16,7 +16,7 @@ O **Antigravity Turbinado** adota um ciclo de desenvolvimento estável, previsí
 ## 2. ATUALIZAÇÕES AUDITÁVEIS & CHECKSUMS
 
 Toda release gerada pelo time oficial acompanha:
-1. **Tag Git Assinada:** Versionada no GitHub em `xProTorkz/ai-orchestration-kit`.
+1. **Tag Git Assinada:** Versionada no GitHub em `<github-user>/<github-repo>`.
 2. **Arquivo de Checksums (SHA256):** Garante que nenhum byte foi adulterado em trânsito.
 3. **Changelog Detalhado:** Rastreabilidade completa de todas as alterações introduzidas.
 

@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         ## Linha de Produção Autônoma
-        **Planejar (ChatGPT) → Registrar (GitHub) → Blindar (Sentinela) → Executar (Antigravity)**
+        **Planejar (ChatGPT) → Registrar (GitHub) → Executar (Antigravity)**
         
         Toda tarefa enviada para execução deve conter uma `@skill` técnica especializada do catálogo oficial.
 

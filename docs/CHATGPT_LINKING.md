@@ -58,5 +58,5 @@ agent_task:
 1. Você solicita uma feature ou correção no ChatGPT.
 2. O ChatGPT planeja e produz a Issue formatada com o Execution Packet.
 3. A Issue é criada no GitHub (manualmente ou via conector oficial GitHub do ChatGPT).
-4. O Antigravity detecta a tarefa na fila, valida o escopo via Sentinela e executa autonomamente no workspace do seu computador.
+4. O Antigravity recebe a tarefa, valida os limites do escopo (allowed_scope) e executa autonomamente no workspace do seu computador.
 5. O Antigravity roda testes (Test Before / Test After), faz o commit com recibo e fecha a Issue com estado `DONE`.

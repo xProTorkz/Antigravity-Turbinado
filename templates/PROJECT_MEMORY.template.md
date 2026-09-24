@@ -4,7 +4,7 @@
 - Arquitetura base: Definida conforme stack principal do projeto.
 - Fonte de Verdade: GitHub Issues e PRs.
 - Executor: Google Antigravity em modo autônomo no workspace.
-- Governança: Sentinela Guardião v2.0 com Scope Lock permanente.
+- Governança: Delimitação estrita de escopo (Scope Lock) e testes automatizados no workspace.
 
 ## 2. INVARIANTES ARQUITETURAIS
 - Não misturar regras de outros projetos.

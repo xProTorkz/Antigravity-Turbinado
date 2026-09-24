@@ -43,13 +43,19 @@ def configure_antigravity_settings(custom_home: Path = None) -> bool:
     config_file.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     return True
 
-def install_skills(base_kit_dir: Path, custom_home: Path = None) -> dict:
+def install_skills(base_kit_dir: Path, custom_home: Path = None, custom_projects_dir: Path = None) -> dict:
     """Instala as 100 skills nativas e descompacta as 2.492 skills do catálogo."""
     home = custom_home or Path.home()
     agents_skills_dir = home / ".agents" / "skills"
     agents_skills_dir.mkdir(parents=True, exist_ok=True)
 
-    projects_dir = home / "projetos"
+    env_proj = os.environ.get("ANTIGRAVITY_PROJECTS_DIR")
+    if custom_projects_dir:
+        projects_dir = custom_projects_dir
+    elif env_proj:
+        projects_dir = Path(env_proj)
+    else:
+        projects_dir = home / "projects" if (home / "projects").exists() else home / "projetos"
     projects_dir.mkdir(parents=True, exist_ok=True)
     catalog_skills_dir = projects_dir / "config" / "Skills"
     catalog_skills_dir.mkdir(parents=True, exist_ok=True)
@@ -59,8 +65,9 @@ def install_skills(base_kit_dir: Path, custom_home: Path = None) -> dict:
     # 1. Instalar as 100 skills nativas em ~/.agents/skills/
     src_native = base_kit_dir / "skills" / "native"
     if not src_native.exists():
-        # Fallback local se estiver executando no próprio repositório original
-        src_native = Path.home() / ".agents" / "skills"
+        env_native = os.environ.get("ANTIGRAVITY_NATIVE_SKILLS_DIR")
+        if env_native:
+            src_native = Path(env_native)
 
     if src_native.exists():
         for skill_dir in src_native.iterdir():
@@ -72,11 +79,15 @@ def install_skills(base_kit_dir: Path, custom_home: Path = None) -> dict:
 
     # 2. Descompactar o catálogo de 2.492 skills em ~/projetos/config/Skills/
     tar_path = base_kit_dir / "skills" / "catalog.tar.gz"
+    if not tar_path.exists():
+        env_tar = os.environ.get("ANTIGRAVITY_CATALOG_TAR")
+        if env_tar:
+            tar_path = Path(env_tar)
+
     if tar_path.exists():
         with tarfile.open(tar_path, "r:gz") as tar:
             # Extrai apenas as pastas de skills para catalog_skills_dir
             for member in tar.getmembers():
-                # se tiver prefixo Skills/, remove o prefixo
                 rel_path = member.name
                 if rel_path.startswith("Skills/"):
                     rel_path = rel_path[len("Skills/"):]
@@ -92,15 +103,6 @@ def install_skills(base_kit_dir: Path, custom_home: Path = None) -> dict:
                     target_item.parent.mkdir(parents=True, exist_ok=True)
                     with tar.extractfile(member) as source_f, open(target_item, "wb") as dest_f:
                         shutil.copyfileobj(source_f, dest_f)
-    else:
-        # Fallback para pasta local se disponível
-        source_catalog = Path.home() / "projetos" / "config" / "Skills"
-        if source_catalog.exists() and source_catalog != catalog_skills_dir:
-            for item in source_catalog.iterdir():
-                if item.is_dir():
-                    dest = catalog_skills_dir / item.name
-                    if not dest.exists():
-                        shutil.copytree(item, dest, dirs_exist_ok=True)
 
     # Conta total real de skills instaladas no catálogo
     if catalog_skills_dir.exists():

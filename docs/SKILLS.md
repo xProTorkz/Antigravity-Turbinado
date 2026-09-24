@@ -10,9 +10,8 @@ O ecossistema é estruturado em três níveis complementares:
 
 | Nível | Localização | Quantidade | Propósito |
 |---|---|---|---|
-| **Skills Canônicas de Governança** | `~/.gemini/config/skills/` | ~38 | Regras fundamentais de integridade (`guardiao-sentinela`, `pesquisa-projeto`, `testes-validacao`, `git-governanca`, `seguranca-infra`). |
 | **Skills Nativas Essenciais** | `~/.agents/skills/` | 100 | Habilidades técnicas completas e auto-contidas prontas para uso imediato em desenvolvimento web, mobile, backend, APIs e dados. |
-| **Catálogo Extendido de Referência** | Índice dinâmico | 2.488+ | Acervo de especialidades em infraestrutura, inteligência artificial, linguagens específicas e bancos de dados, consultadas sob demanda. |
+| **Catálogo Extendido de Referência** | `projects/config/Skills` | 2.492 | Acervo de especialidades em infraestrutura, inteligência artificial, linguagens específicas e bancos de dados, consultadas sob demanda. |
 
 ---
 

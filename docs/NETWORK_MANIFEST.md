@@ -13,7 +13,6 @@ Este documento declara todos os hosts, protocolos e portas de rede que o **Antig
 | `127.0.0.1` (localhost) | HTTP (8765) | Comunicação interna local entre o Control Plane e o Antigravity (loopback estrito). | **SIM** |
 | `raw.githubusercontent.com` | HTTPS (443) | Download de scripts oficiais de release e instalador assinado. | **SIM** |
 | `generativelanguage.googleapis.com` | HTTPS (443) | Chamadas à API oficial do Google Gemini (somente quando invocado pelo Antigravity). | **SIM** |
-| `api.telegram.org` | HTTPS (443) | Comunicação segura com o bot [@xprotorkzdev](https://t.me/xprotorkzdev) para onboarding e suporte. | Opcional |
 
 ---
 
