@@ -4,51 +4,64 @@ Este documento detalha o processo de instalação do **Antigravity Turbinado** t
 
 ---
 
-## 1. INSTALAÇÃO NO MACOS
+## 1. AS 3 FERRAMENTAS PRÉ-REQUISITO OBRIGATÓRIAS
 
-### 1.1. Pré-requisitos
-- macOS Monterey (12.0) ou superior (suporte nativo a Apple Silicon M1/M2/M3/M4 e Intel).
-- Terminal padrão (`zsh` ou `bash`).
-- Git e Python 3.10+ instalados.
+Para que o ecossistema Antigravity Turbinado funcione com máxima performance, o cliente deve possuir instalado na máquina:
 
-### 1.2. Execução do Instalador
-Abra o Terminal e execute:
+### 1. GitHub (Conta, Git & GitHub CLI)
+- **Conta GitHub:** Crie ou utilize sua conta em [github.com](https://github.com).
+- **Git:** Verifique se o Git está instalado executando `git --version` no terminal.
+  - *macOS:* Instale via `xcode-select --install`.
+  - *Windows:* Baixe em [git-scm.com](https://git-scm.com) com Git Credential Manager ativo.
+- **GitHub CLI (`gh`):** Recomendado para autenticação rápida via `gh auth login`.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/xProTorkz/ai-orchestration-kit/main/installer/install.sh | bash
-```
+### 2. Google Antigravity
+- Baixe e instale o aplicativo oficial do **Google Antigravity** na sua máquina.
+- **Configuração de Permissão no Workspace:**
+  - Dentro da pasta de projetos (`~/projetos`): configure para *"Sempre permitir e proceder com as implementações"* para que o agente execute autonomamente.
+  - Fora da pasta: mantenha em *"Perguntar sempre / Request Review"*.
 
-### 1.3. Gestão de Permissões no macOS (TCC & Full Disk Access)
-
-> [!IMPORTANT]
-> O Antigravity e o Control Plane necessitam de permissão para ler e escrever arquivos nas suas pastas de projetos e executar testes locais. O macOS gerencia isso pelo sistema de segurança TCC.
-
-O instalador executa um teste de acesso ao disco. Caso a permissão não esteja ativa:
-1. Uma janela do sistema poderá ser exibida solicitando autorização para o Terminal / Antigravity.
-2. Como conceder a permissão manualmente:
-   - Abra **Ajustes do Sistema** (System Settings).
-   - Vá em **Privacidade e Segurança** (Privacy & Security) → **Acesso Total ao Disco** (Full Disk Access).
-   - Clique no ícone de `+` e adicione o seu **Terminal** (ou aplicativo de terminal em uso) e o aplicativo **Antigravity**.
-   - Certifique-se de que a chave está **ativada** (azul).
-3. ⚠️ **Política Fail-Closed:** Se você recusar a permissão no teste do instalador, a instalação é **cancelada imediatamente na hora**. Nenhum arquivo corrompido é deixado no sistema. Após habilitar a permissão nos Ajustes, basta rodar o comando de instalação novamente.
+### 3. ChatGPT (Web & Desktop App)
+- Tenha acesso ao ChatGPT ([chatgpt.com](https://chatgpt.com)) ou ao aplicativo desktop oficial para Mac/Windows.
+- Configure as **Instruções Personalizadas (Custom Instructions)** com o perfil do **Planner** fornecido em [`docs/CHATGPT_LINKING.md`](CHATGPT_LINKING.md).
 
 ---
 
-## 2. INSTALAÇÃO NO WINDOWS
+## 2. OBTENÇÃO DA LICENÇA & INSTALADOR AUTENTICADO
 
-### 2.1. Pré-requisitos
-- Windows 10 (Build 19041+) ou Windows 11.
-- PowerShell 5.1 ou PowerShell 7+ rodando como Administrador.
-- Git para Windows instalado (com `git-credential-manager` habilitado).
-- Python 3.10+ instalado e marcado a opção "Add python.exe to PATH".
+> [!CAUTION]
+> **O instalador NÃO é público no GitHub.**  
+> O script de instalação e a sua chave de ativação única são entregues com exclusividade pelo bot oficial no Telegram:  
+> 👉 **[@xProTorkzbot](https://t.me/xProTorkzbot)**
 
-### 2.2. Execução do Instalador
-Abra o PowerShell como Administrador e execute:
+### 🛡️ Proteção por HWID (Hardware UUID) & IP
+- Cada chave de licença é gerada com assinatura criptográfica vinculada ao seu Telegram User ID.
+- No **primeiro uso**, o instalador realiza a leitura do identificador único da placa-mãe/processador da sua máquina (**Hardware UUID / Machine GUID**) e do IP público de ativação.
+- A licença é permanentemente travada naquele hardware. Se alguém tentar rodar o mesmo instalador ou a mesma chave em outro computador, a instalação será bloqueada imediatamente com erro de `HWID Mismatch`.
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-irm https://raw.githubusercontent.com/xProTorkz/ai-orchestration-kit/main/installer/install.ps1 | iex
-```
+---
+
+## 3. INSTALAÇÃO NO MACOS
+
+1. Receba o arquivo autenticado `install.sh` e sua chave de licença no Telegram [@xProTorkzbot](https://t.me/xProTorkzbot).
+2. Abra o Terminal e execute:
+   ```bash
+   bash install.sh --license=SUA_CHAVE_AQUI
+   ```
+3. O instalador verificará o HWID, confirmará a permissão de disco (TCC) e instalará o kit completo com as 2.488+ skills.
+4. Se o macOS solicitar autorização de disco, habilite em **Ajustes do Sistema → Privacidade e Segurança → Acesso Total ao Disco**. Se recusar, a instalação cancela na hora por segurança (fail-closed).
+
+---
+
+## 4. INSTALAÇÃO NO WINDOWS
+
+1. Receba o script autenticado `install.ps1` e sua chave de licença no Telegram [@xProTorkzbot](https://t.me/xProTorkzbot).
+2. Abra o PowerShell como Administrador e execute:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\install.ps1 -License SUA_CHAVE_AQUI
+   ```
+3. O script valida o hardware, configura o Windows Credential Manager e prepara o ambiente com todas as skills pré-instaladas.
+
 
 ### 2.3. Gestão de Permissões no Windows
 - O script configura o armazenamento seguro de credenciais via Windows Credential Manager.

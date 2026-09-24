@@ -117,32 +117,29 @@ O instalador foi projetado para exigir o **mínimo de Human Gates possível**, c
 
 ---
 
-### Instalação no macOS
+### 📦 Como Obter o Instalador Oficial
 
-Execute o script de instalação oficial:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/xProTorkz/ai-orchestration-kit/main/installer/install.sh | bash
-```
-
-#### 🛡️ Guia de Permissões no macOS (TCC & Acesso a Disco):
-Para que o Antigravity e o Control Plane funcionem com velocidade máxima e sem travas:
-1. O instalador verificará o acesso à pasta de projetos e ao disco.
-2. Caso o terminal solicite permissão, acesse:
-   **Ajustes do Sistema → Privacidade e Segurança → Acesso Total ao Disco** (ou Arquivos e Pastas) e habilite o seu Terminal / Antigravity.
-3. ⚠️ **Atenção:** Se as permissões obrigatórias não forem concedidas, o instalador **cancela imediatamente** por segurança (Fail-Closed). Basta autorizar nos Ajustes e reiniciar a instalação.
+> [!IMPORTANT]
+> **Acesso Exclusivo & Protegido por Licença:**  
+> Por motivos de segurança contra pirataria e controle de versão, o instalador e o link de download **não são públicos**. O instalador autenticado e a sua chave exclusiva de ativação (vinculada ao seu Hardware UUID / HWID) são entregues **diretamente pelo bot oficial no Telegram [@xProTorkzbot](https://t.me/xProTorkzbot)** após a confirmação do plano.
 
 ---
 
-### Instalação no Windows
+### 🧰 As 3 Ferramentas Obrigatórias Antes da Instalação
 
-Abra o PowerShell como Administrador e execute:
+Antes de rodar o instalador recebido no Telegram, certifique-se de que as 3 ferramentas base estão prontas na sua máquina:
 
-```powershell
-irm https://raw.githubusercontent.com/xProTorkz/ai-orchestration-kit/main/installer/install.ps1 | iex
-```
+1. **GitHub (Conta & Git CLI):**
+   - Tenha uma conta ativa em [github.com](https://github.com).
+   - Tenha o Git instalado (`git --version` no terminal).
+   - Recomendado: GitHub CLI oficial instalado (`gh auth login`).
+2. **Google Antigravity:**
+   - Tenha o Google Antigravity instalado no seu computador.
+   - Configure a permissão de workspace para *"Sempre permitir e proceder com as implementações"* na pasta de projetos.
+3. **ChatGPT (Web ou Desktop App):**
+   - Conta no [chatgpt.com](https://chatgpt.com) ou aplicativo oficial para Mac/Windows.
+   - Aplique o perfil comportamental do **Planner** disponibilizado na documentação para que ele orquestre as tarefas diretamente no GitHub.
 
-O script configura as políticas de execução locais, valida o Git Credential Manager e prepara o ambiente Python com isolamento completo.
 
 ---
 

@@ -11,7 +11,7 @@ Soluções rápidas e diagnósticos para os cenários operacionais mais comuns.
 - **Solução:**
   1. Abra **Ajustes do Sistema → Privacidade e Segurança → Acesso Total ao Disco**.
   2. Adicione e habilite o seu aplicativo de **Terminal** e o **Antigravity**.
-  3. Execute novamente o comando de instalação: `curl -fsSL ... | bash`.
+  3. Execute novamente o comando de instalação com sua chave: `bash install.sh --license=SUA_CHAVE`.
 
 ---
 
