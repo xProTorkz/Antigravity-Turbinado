@@ -88,9 +88,36 @@ def get_client_public_ip() -> str:
 
 def generate_license_key(telegram_user_id: int, plan_id: str = "core") -> str:
     """Gera chave de licença determinística e criptograficamente assinada."""
-    data = f"{telegram_user_id}:{plan_id}:{datetime.now().strftime('%Y%m%d')}".encode()
+    plan_code = "PRO" if "pro" in plan_id.lower() else "CORE"
+    data = f"{telegram_user_id}:{plan_code}".encode()
     signature = hmac.new(SECRET_SALT, data, hashlib.sha256).hexdigest()[:12].upper()
-    return f"TURBO-{telegram_user_id}-{signature}"
+    return f"TURBO-{plan_code}-{telegram_user_id}-{signature}"
+
+def verify_license_signature(license_key: str):
+    """Verifica criptograficamente se a chave possui assinatura autêntica da nossa chave privada."""
+    parts = license_key.strip().split("-")
+    if len(parts) == 4 and parts[0] == "TURBO":
+        plan_code = parts[1].upper()
+        try:
+            user_id = int(parts[2])
+        except ValueError:
+            return False, 0, ""
+        expected_sig = hmac.new(SECRET_SALT, f"{user_id}:{plan_code}".encode(), hashlib.sha256).hexdigest()[:12].upper()
+        if hmac.compare_digest(parts[3].upper(), expected_sig):
+            plan_id = "combo_pro" if plan_code == "PRO" else "core"
+            return True, user_id, plan_id
+    elif len(parts) == 3 and parts[0] == "TURBO":
+        # Formato de compatibilidade TURBO-<user_id>-<sig>
+        try:
+            user_id = int(parts[1])
+        except ValueError:
+            return False, 0, ""
+        for p in ["core", "combo_pro"]:
+            for d_str in ["", f":{datetime.now().strftime('%Y%m%d')}", f":{datetime.now().strftime('%Y%m%d%H%M')}"]:
+                expected_sig = hmac.new(SECRET_SALT, f"{user_id}:{p}{d_str}".encode(), hashlib.sha256).hexdigest()[:12].upper()
+                if hmac.compare_digest(parts[2].upper(), expected_sig):
+                    return True, user_id, p
+    return False, 0, ""
 
 def get_license_db_path() -> Path:
     # Procura banco de dados no Sharkbot ou na pasta local
@@ -138,6 +165,16 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
     Verifica a validade da licença e realiza o binding no HWID do cliente.
     Regra: 1 licença = 1 máquina física exclusiva.
     """
+    # 1. Validação Criptográfica Estrita da Assinatura (Fail-Closed)
+    is_valid, user_id, plan_id = verify_license_signature(license_key)
+    if not is_valid:
+        return {
+            "ok": False,
+            "error": "INVALID_LICENSE_SIGNATURE",
+            "message": "FALHA CRÍTICA: Assinatura de licença inválida ou falsificada. Adquira sua licença oficial no Telegram: @xprotorkzbot"
+        }
+
+    # 2. Verificação no Banco de Dados de Licenças
     db_path = get_license_db_path()
     init_db(db_path)
     conn = sqlite3.connect(str(db_path))
@@ -145,33 +182,16 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
     
     try:
         row = cur.execute("SELECT user_id, plan_id, hwid, ip, status FROM licenses WHERE license_key=?", (license_key,)).fetchone()
-        
-        # Se a licença não existir no banco (ex: cliente offline com chave autêntica de teste)
-        if not row:
-            # Validação criptográfica do formato da chave
-            parts = license_key.split("-")
-            if len(parts) == 3 and parts[0] == "TURBO":
-                # Licença gerada válida
-                pass
-            else:
-                return {
-                    "ok": False,
-                    "error": "LICENSE_NOT_FOUND",
-                    "message": "Chave de licença inválida. Adquira no Telegram oficial: @xprotorkzbot"
-                }
-
-        user_id = row[0] if row else 0
-        plan_id = row[1] if row else "core"
         bound_hwid = row[2] if row else None
         status = row[4] if row else "pending"
 
-        # Caso 1: Primeiro uso (Binding do HWID e IP)
+        # Caso 1: Primeiro uso (Binding permanente do HWID e IP)
         if not bound_hwid or status == "pending":
+            now_iso = datetime.now().isoformat()
             cur.execute("""
-                UPDATE licenses 
-                SET hwid=?, ip=?, status='active', activated_at=?
-                WHERE license_key=?
-            """, (current_hwid, current_ip, datetime.now().isoformat(), license_key))
+                INSERT OR REPLACE INTO licenses (license_key, user_id, plan_id, hwid, ip, status, created_at, activated_at)
+                VALUES (?, ?, ?, ?, ?, 'active', coalesce((SELECT created_at FROM licenses WHERE license_key=?), ?), ?)
+            """, (license_key, user_id, plan_id, current_hwid, current_ip, license_key, now_iso, now_iso))
             conn.commit()
             return {
                 "ok": True,
@@ -180,12 +200,11 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
                 "user_id": user_id,
                 "hwid": current_hwid,
                 "ip": current_ip,
-                "message": "Licença vinculada com sucesso a esta máquina!"
+                "message": "Licença personalizada vinculada com sucesso a esta máquina física!"
             }
 
         # Caso 2: Máquina já autorizada (HWID idêntico)
         if bound_hwid == current_hwid:
-            # Atualiza último IP
             cur.execute("UPDATE licenses SET ip=? WHERE license_key=?", (current_ip, license_key))
             conn.commit()
             return {
@@ -194,14 +213,14 @@ def verify_and_bind_license(license_key: str, current_hwid: str, current_ip: str
                 "plan_id": plan_id,
                 "user_id": user_id,
                 "hwid": current_hwid,
-                "message": "Acesso verificado e autorizado."
+                "message": "Acesso verificado e autorizado nesta máquina."
             }
 
         # Caso 3: HWID diferente -> TENTATIVA DE COMPARTILHAMENTO / PIRATARIA
         return {
             "ok": False,
             "error": "HWID_MISMATCH",
-            "message": f"VIOLAÇÃO DE COMPARTILHAMENTO: Esta licença já está vinculada a outro computador (HWID {bound_hwid[:8]}...). Não é permitido compartilhar seu link de instalação."
+            "message": f"VIOLAÇÃO DE COMPARTILHAMENTO: Esta licença do Telegram ID {user_id} já está vinculada a outro computador (HWID {bound_hwid[:8]}...). Não é permitido compartilhar seu link de instalação."
         }
     finally:
         conn.close()

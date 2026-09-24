@@ -29,29 +29,60 @@ done
 # ETAPA 1: Autenticação de Licença e HWID Lock
 echo -e "\n${YELLOW}[ETAPA 1/7] Verificando Licença e Vinculação de Hardware (HWID)...${NC}"
 if [ -z "$LICENSE_KEY" ]; then
-    echo -e "Para prosseguir, insira a chave de licença que você recebeu no Telegram (@xprotorkzbot):"
-    read -p "🔑 Chave de Licença: " LICENSE_KEY
+    echo -e "${YELLOW}============================================================${NC}"
+    echo -e "Para prosseguir, insira o Link ou Chave de Licença Personalizada"
+    echo -e "recebida exclusivamente pelo bot oficial no Telegram (${BLUE}@xprotorkzbot${NC}):"
+    echo -e "${YELLOW}============================================================${NC}"
+    read -p "🔑 Link ou Chave de Ativação: " LICENSE_INPUT
+    if echo "$LICENSE_INPUT" | grep -q 'TURBO-'; then
+        LICENSE_KEY=$(echo "$LICENSE_INPUT" | grep -o 'TURBO-[A-Za-z0-9_-]*' | head -n1)
+    else
+        LICENSE_KEY="$LICENSE_INPUT"
+    fi
 fi
 
 if [ -z "$LICENSE_KEY" ]; then
-    echo -e "${RED}❌ ERRO: Chave de licença obrigatória. Adquira no Telegram: @xprotorkzbot${NC}"
+    echo -e "\n${RED}============================================================${NC}"
+    echo -e "${RED}❌ INSTALAÇÃO BLOQUEADA: LINK/LICENÇA PERSONALIZADA OBRIGATÓRIA${NC}"
+    echo -e "${RED}============================================================${NC}"
+    echo -e "Você baixou este repositório do GitHub, mas a instalação é restrita"
+    echo -e "e só pode ser concluída com o Link/Chave Personalizada do Telegram."
+    echo -e "\n👉 Adquira seu acesso oficial: ${BLUE}https://t.me/xprotorkzbot${NC}\n"
     exit 1
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-if [ -f "$SCRIPT_DIR/scripts/license_guard.py" ]; then
-    VERIFY_RES=$(python3 "$SCRIPT_DIR/scripts/license_guard.py" --verify="$LICENSE_KEY" 2>&1 || true)
-    if echo "$VERIFY_RES" | grep -q '"ok": false'; then
-        echo -e "\n${RED}============================================================${NC}"
-        echo -e "${RED}❌ FALHA DE ATIVAÇÃO: LICENÇA INVÁLIDA OU COMPARTILHADA${NC}"
-        echo -e "${RED}============================================================${NC}"
-        echo -e "$VERIFY_RES"
-        echo -e "\n${YELLOW}Esta licença só pode ser executada na máquina cadastrada no primeiro uso.${NC}"
-        echo -e "Dúvidas ou reset de máquina: fale com @xprotorkzdev no Telegram.\n"
-        exit 1
-    fi
-    echo -e "${GREEN}✅ Licença autenticada com sucesso e vinculada a este hardware!${NC}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/.." 2>/dev/null && pwd || echo "")"
+GUARD_SCRIPT="$SCRIPT_DIR/scripts/license_guard.py"
+
+# Se executado diretamente via curl | bash, baixa o módulo de verificação temporariamente
+if [ ! -f "$GUARD_SCRIPT" ]; then
+    TMP_GUARD_DIR="/tmp/.antigravity_guard_$$"
+    mkdir -p "$TMP_GUARD_DIR"
+    GUARD_SCRIPT="$TMP_GUARD_DIR/license_guard.py"
+    curl -fsSL "https://raw.githubusercontent.com/xProTorkz/Antigravity-Turbinado/main/scripts/license_guard.py" -o "$GUARD_SCRIPT" 2>/dev/null || true
 fi
+
+if [ ! -f "$GUARD_SCRIPT" ]; then
+    echo -e "${RED}❌ ERRO DE INTEGRIDADE: Falha ao carregar o módulo de proteção de licença.${NC}"
+    echo -e "Verifique sua conexão com a internet e tente novamente."
+    exit 1
+fi
+
+VERIFY_RES=$(python3 "$GUARD_SCRIPT" --verify="$LICENSE_KEY" 2>&1)
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ] || echo "$VERIFY_RES" | grep -q '"ok": false'; then
+    echo -e "\n${RED}============================================================${NC}"
+    echo -e "${RED}❌ ACESSO NEGADO: LICENÇA INVÁLIDA OU COMPARTILHADA${NC}"
+    echo -e "${RED}============================================================${NC}"
+    echo -e "$VERIFY_RES"
+    echo -e "\n${YELLOW}Esta licença só pode ser executada na máquina física cadastrada no primeiro uso (HWID lock).${NC}"
+    echo -e "Compartilhamento não autorizado é bloqueado. Dúvidas: ${BLUE}@xprotorkzdev${NC} no Telegram.\n"
+    [ -n "$TMP_GUARD_DIR" ] && rm -rf "$TMP_GUARD_DIR" 2>/dev/null || true
+    exit 1
+fi
+echo -e "${GREEN}✅ Licença personalizada autenticada com sucesso e vinculada a este hardware!${NC}"
+[ -n "$TMP_GUARD_DIR" ] && rm -rf "$TMP_GUARD_DIR" 2>/dev/null || true
 
 # ETAPA 2: Verificação do Sistema Operacional
 echo -e "\n${YELLOW}[ETAPA 2/7] Verificando Sistema Operacional...${NC}"

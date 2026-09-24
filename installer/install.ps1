@@ -15,29 +15,53 @@ Write-Host "============================================================" -Foreg
 Write-Host "`n[ETAPA 1/6] Verificando Licença e Vinculação de Hardware (HWID)..." -ForegroundColor Yellow
 
 if (-not $License) {
-    $License = Read-Host "🔑 Digite a Chave de Licença recebida no Telegram (@xprotorkzbot)"
+    Write-Host "============================================================" -ForegroundColor Yellow
+    Write-Host "Para prosseguir, insira o Link ou Chave de Licença Personalizada"
+    Write-Host "recebida exclusivamente pelo bot oficial no Telegram (@xprotorkzbot):"
+    Write-Host "============================================================" -ForegroundColor Yellow
+    $LicenseInput = Read-Host "🔑 Link ou Chave de Ativação"
+    if ($LicenseInput -match 'TURBO-[A-Za-z0-9_-]+') {
+        $License = $Matches[0]
+    } else {
+        $License = $LicenseInput
+    }
 }
 
 if (-not $License) {
-    Write-Host "❌ ERRO: Licença obrigatória. Adquira no Telegram: @xprotorkzbot" -ForegroundColor Red
+    Write-Host "`n============================================================" -ForegroundColor Red
+    Write-Host "❌ INSTALAÇÃO BLOQUEADA: LINK/LICENÇA PERSONALIZADA OBRIGATÓRIA" -ForegroundColor Red
+    Write-Host "============================================================" -ForegroundColor Red
+    Write-Host "Você baixou este repositório do GitHub, mas a instalação é restrita"
+    Write-Host "e só pode ser concluída com o Link/Chave Personalizada do Telegram."
+    Write-Host "`n👉 Adquira seu acesso oficial: https://t.me/xprotorkzbot`n" -ForegroundColor Cyan
     exit 1
 }
 
 $ScriptDir = Split-Path -Parent $PSScriptRoot
 $LicenseGuard = Join-Path $ScriptDir "scripts\license_guard.py"
 
-if (Test-Path $LicenseGuard) {
-    $VerifyOutput = python $LicenseGuard --verify $License 2>&1
-    if ($VerifyOutput -match '"ok": false') {
-        Write-Host "`n============================================================" -ForegroundColor Red
-        Write-Host "❌ FALHA DE ATIVAÇÃO: LICENÇA INVÁLIDA OU COMPARTILHADA" -ForegroundColor Red
-        Write-Host "============================================================" -ForegroundColor Red
-        Write-Host $VerifyOutput
-        Write-Host "`nEsta licença está bloqueada por HWID mismatch para evitar pirataria." -ForegroundColor Yellow
-        exit 1
-    }
-    Write-Host "✅ Licença autenticada com sucesso e vinculada a este hardware!" -ForegroundColor Green
+if (-not (Test-Path $LicenseGuard)) {
+    $TempDir = Join-Path $env:TEMP "antigravity_guard"
+    New-Item -ItemType Directory -Path $TempDir -Force | Out-Null
+    $LicenseGuard = Join-Path $TempDir "license_guard.py"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/xProTorkz/Antigravity-Turbinado/main/scripts/license_guard.py" -OutFile $LicenseGuard -UseBasicParsing -ErrorAction SilentlyContinue
 }
+
+if (-not (Test-Path $LicenseGuard)) {
+    Write-Host "❌ ERRO DE INTEGRIDADE: Falha ao carregar scripts\license_guard.py." -ForegroundColor Red
+    exit 1
+}
+
+$VerifyOutput = python $LicenseGuard --verify $License 2>&1
+if ($LASTEXITCODE -ne 0 -or $VerifyOutput -match '"ok": false') {
+    Write-Host "`n============================================================" -ForegroundColor Red
+    Write-Host "❌ ACESSO NEGADO: LICENÇA INVÁLIDA OU COMPARTILHADA" -ForegroundColor Red
+    Write-Host "============================================================" -ForegroundColor Red
+    Write-Host $VerifyOutput
+    Write-Host "`nEsta licença é única e vinculada ao HWID/IP do comprador. Proibido compartilhar." -ForegroundColor Yellow
+    exit 1
+}
+Write-Host "✅ Licença personalizada autenticada com sucesso e vinculada a este hardware!" -ForegroundColor Green
 
 # ETAPA 2: Pré-requisitos
 Write-Host "`n[ETAPA 2/6] Verificando Dependências..." -ForegroundColor Yellow
