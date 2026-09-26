@@ -6,6 +6,7 @@ Verifica pré-requisitos, permissões, conectividade e componentes ativos.
 
 import sys
 import os
+import json
 import subprocess
 import shutil
 from pathlib import Path

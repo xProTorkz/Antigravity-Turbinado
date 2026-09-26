@@ -245,3 +245,23 @@ Para manter o produto vendável, seguro e com governança limpa, sem expor o ven
 * **Integridade das Políticas:** Nenhuma política em produção foi alterada nesta tarefa (`AUDIT-ONLY`).
 * **Segurança:** Zero segredos encontrados, zero bypass de segurança.
 * **Estado Canônico:** `VALIDADO` / `AUDIT_COMPLETED`.
+
+---
+
+## 10. ADENDO DE EXECUÇÃO: RECONCILIAÇÃO ESTRUTURAL APLICADA (OPÇÃO B)
+
+Em 26/09/2026, a remediação arquitetural recomendada na **Opção B** foi formalmente implementada em toda a estrutura do repositório:
+
+1. **Correção do Doctor (`scripts/doctor.py`):**
+   - Corrigido o `import json` ausente no cabeçalho do script. O teste de integridade agora detecta e valida com sucesso as políticas ativas:
+     `[✅ PASS] Turbo Execution Policy: Políticas Turbo ativas (Eager Auto-Execution + Max Autonomia)`.
+2. **Reconciliação dos Instaladores (`install.sh` e `install.ps1`):**
+   - Removida a mensagem desatualizada e contraditória *"Fora da pasta do projeto: Perguntar sempre / Request Review obrigatório"*.
+   - Atualizado para declarar com transparência e precisão:
+     *"Fora da pasta de projeto: Autonomia no escopo do usuário (home/tmp) com blindagem do SO (SIP/TCC no macOS; UAC/ACLs no Windows)"*.
+3. **Reconciliação da Governança e Manifestos (`WORKSPACE_GOVERNANCE.md`, `PERMISSION_MANIFEST.md`, `README.md`):**
+   - Regra 3 de Governança atualizada para descrever o Modo Turbo ativo no nível de usuário com fail-closed apenas para alterações fora do `allowed_scope` do projeto e bloqueio de sistema operacional.
+   - Adicionada formalmente a *Permissão 6 (Políticas de Autonomia Turbo)* ao Manifesto de Permissões.
+   - Atualizada a seção de permissões no `README.md` para refletir a realidade operacional.
+4. **Validação Automatizada:**
+   - O teste automatizado `tests/test_permission_matrix.py::test_g_permission_alignment_reconciled` valida e garante que a taxa de divergência documental/código é exatamente **0% (Zero Contradições)**.

@@ -188,28 +188,36 @@ def test_f_antigravity_config_settings():
         assert user_settings.get("nonWorkspaceFileAccessPolicy") == "AGENT_SETTING_POLICY_ALLOW"
 
 # ---------------------------------------------------------------------------
-# Test G: Contradiction Check (Code vs Documentation)
+# Test G: Permission Alignment Verification (Code & Documentation In Sync)
 # ---------------------------------------------------------------------------
-def test_g_contradiction_detection():
-    """Formally detect and document the contradiction between AGENT_SETTING_POLICY_ALLOW and docs."""
+def test_g_permission_alignment_reconciled():
+    """Verify that AGENT_SETTING_POLICY_ALLOW and documentation are 100% reconciled without contradictions."""
     config_script = ROOT_DIR / "scripts" / "configure_turbo_environment.py"
     config_text = config_script.read_text(encoding="utf-8")
     
     install_sh = ROOT_DIR / "installer" / "install.sh"
     install_sh_text = install_sh.read_text(encoding="utf-8")
+
+    install_ps1 = ROOT_DIR / "installer" / "install.ps1"
+    install_ps1_text = install_ps1.read_text(encoding="utf-8")
     
     workspace_gov = ROOT_DIR / "docs" / "WORKSPACE_GOVERNANCE.md"
     gov_text = workspace_gov.read_text(encoding="utf-8")
 
-    # The code sets: nonWorkspaceFileAccessPolicy = "AGENT_SETTING_POLICY_ALLOW"
-    code_allows_non_workspace = 'user_settings["nonWorkspaceFileAccessPolicy"] = "AGENT_SETTING_POLICY_ALLOW"' in config_text
-    
-    # The documentation & installer claim: Outside workspace = Ask always / Request Review
-    doc_claims_review = (
-        "Fora da pasta de projeto: Perguntar sempre / Request Review obrigatório" in install_sh_text or
-        "bloqueada com solicitação explícita de revisão humana" in gov_text
-    )
+    readme = ROOT_DIR / "README.md"
+    readme_text = readme.read_text(encoding="utf-8")
 
-    # Both conditions are true simultaneously, proving the documented contradiction
-    assert code_allows_non_workspace is True
-    assert doc_claims_review is True
+    # 1. Code sets Turbo policies:
+    assert 'user_settings["nonWorkspaceFileAccessPolicy"] = "AGENT_SETTING_POLICY_ALLOW"' in config_text
+    assert 'user_settings["autoExecutionPolicy"] = "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER"' in config_text
+
+    # 2. Outdated contradictory text is completely eradicated:
+    assert "Fora da pasta de projeto: Perguntar sempre / Request Review obrigatório" not in install_sh_text
+    assert "Fora da pasta do projeto: Perguntar sempre / Request Review obrigatório" not in install_ps1_text
+    assert "bloqueada com solicitação explícita de revisão humana" not in gov_text
+
+    # 3. Aligned Turbo messaging is present:
+    assert "Autonomia no escopo do usuário" in install_sh_text
+    assert "Autonomia no escopo do usuário" in install_ps1_text
+    assert "Autonomia Turbo" in gov_text
+    assert "Autonomia estendida no escopo do usuário" in readme_text

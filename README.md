@@ -80,9 +80,10 @@ O produto é distribuído e suportado através do nosso canal oficial de atendim
 
 ### 3. Antigravity = Único Executor Local Autorizado
 - O Google Antigravity executa os passos com foco cirúrgico no workspace do projeto.
-- **Configuração de Permissões Otimizada:**
-  - **Dentro da pasta do projeto (`Workspace Policy`):** Modo autônomo com política de *Sempre permitir e proceder* com ferramentas seguras e implementações, eliminando interrupções redundantes.
-  - **Fora da pasta do projeto (`Outside Workspace Policy`):** Política estrita de *Request Review / Confirmar sempre*, bloqueando mutações acidentais no sistema operacional.
+- **Configuração de Permissões Turbo & Blindagem do SO:**
+  - **Dentro da pasta do projeto:** Autonomia máxima Turbo com execução contínua de comandos, ferramentas e testes sem travamentos (`CASCADE_COMMANDS_AUTO_EXECUTION_EAGER`).
+  - **Fora da pasta do projeto (Espaço do Usuário):** Autonomia estendida no escopo do usuário (`AGENT_SETTING_POLICY_ALLOW` para `$HOME` e `/tmp`), viabilizando leitura de dependências globais e caches sem paradas redundantes no IDE.
+  - **Recursos do Sistema & Hardware:** Blindados nativamente pelo sistema operacional (macOS SIP/TCC para Câmera/Microfone/Tela; Windows UAC/ACLs para System32/HKLM).
 - **Auditoria de Escopo & Zero Segredos:** Commits são cancelados imediatamente caso arquivos fora de `allowed_scope` ou padrões de chaves/tokens sensíveis sejam detectados.
 
 ---

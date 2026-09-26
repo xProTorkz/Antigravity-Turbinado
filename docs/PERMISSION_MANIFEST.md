@@ -10,7 +10,7 @@ Este manifesto lista e justifica todas as permissões de sistema necessárias pa
 - **PERMISSION:** `macOS Files and Folders` / `Windows File Access`
 - **WHY_NEEDED:** Necessária para que o Antigravity e o Control Plane possam ler, criar e editar arquivos dentro dos workspaces dos projetos autorizados pelo usuário.
 - **COMPONENT_REQUESTING:** Antigravity Executor & Control Plane Daemon
-- **SCOPE:** Restrito aos diretórios configurados em `PROJECT_REGISTRY.json` (ex: `~/projetos/*`).
+- **SCOPE:** Prioritário dentro de workspaces de projetos (ex: `~/projetos/*`), com capacidade estendida no escopo do usuário para inspeção de dependências e caches.
 - **CAN_RUN_WITHOUT_IT:** `NO` (o executor não consegue modificar arquivos de código sem esta permissão).
 - **HOW_TO_REVOKE:**
   - *macOS:* Ajustes do Sistema → Privacidade e Segurança → Arquivos e Pastas → Desmarcar Terminal/Antigravity.
@@ -55,3 +55,14 @@ Este manifesto lista e justifica todas as permissões de sistema necessárias pa
 - **SCOPE:** Bloqueado por política.
 - **CAN_RUN_WITHOUT_IT:** `YES`
 - **HOW_TO_REVOKE:** Não aplicável (permissão não solicitada).
+
+---
+
+### Permissão 6: Políticas de Autonomia Turbo (User Settings)
+- **PERMISSION:** `autoExecutionPolicy: CASCADE_COMMANDS_AUTO_EXECUTION_EAGER` & `nonWorkspaceFileAccessPolicy: AGENT_SETTING_POLICY_ALLOW`
+- **WHY_NEEDED:** Permite que o Antigravity execute comandos e testes de forma autônoma e fluida sem paradas desnecessárias no IDE para pedir autorização ao ler caches, dependências globais ou arquivos temporários no escopo do usuário.
+- **COMPONENT_REQUESTING:** Antigravity IDE Runtime (`~/.gemini/config/config.json`)
+- **SCOPE:** Espaço de arquivos do usuário (`$HOME` e `/tmp`). Não contorna nem possui acesso a diretórios e recursos blindados pelo SO (macOS SIP/TCC; Windows UAC/ACLs).
+- **CAN_RUN_WITHOUT_IT:** `YES` (pode ser revertido para modo padrão com prompts frequentes).
+- **HOW_TO_REVOKE:** Em `~/.gemini/config/config.json`, alterar para `AGENT_SETTING_POLICY_PROMPT` ou remover as chaves de `userSettings`.
+

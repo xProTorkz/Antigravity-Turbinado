@@ -117,11 +117,12 @@ if [ -f "$TURBO_SCRIPT" ]; then
     python3 "$TURBO_SCRIPT"
 fi
 
-# ETAPA 6: Política de Permissões do Workspace e Autonomia
-echo -e "\n${YELLOW}[ETAPA 6/7] Aplicando Diretrizes de Workspace e Autonomia...${NC}"
-echo -e "• Antigravity configurado em modo: ${GREEN}EAGER (Auto-execução de comandos seguros no workspace)${NC}"
-echo -e "• Dentro da pasta de projeto: ${GREEN}Sempre permitir alterações no workspace${NC}"
-echo -e "• Fora da pasta de projeto: ${YELLOW}Perguntar sempre / Request Review obrigatório${NC}"
+# ETAPA 6: Política de Permissões do Workspace e Autonomia Turbo
+echo -e "\n${YELLOW}[ETAPA 6/7] Aplicando Diretrizes de Autonomia Turbo & Blindagem do SO...${NC}"
+echo -e "• Antigravity configurado em modo: ${GREEN}EAGER (Auto-execução fluida de comandos sem travamentos)${NC}"
+echo -e "• Dentro da pasta de projeto: ${GREEN}Autonomia total para criar, editar e testar no workspace${NC}"
+echo -e "• Fora da pasta de projeto: ${GREEN}Autonomia no escopo do usuário (home/tmp) com blindagem do SO (SIP/TCC)${NC}"
+echo -e "• Recursos de Sistema e Hardware: ${BLUE}Protegidos pelo macOS (SIP, Câmera, Microfone, Tela)${NC}"
 
 # ETAPA 7: Doctor de Integridade
 echo -e "\n${YELLOW}[ETAPA 7/7] Executando Doctor de Diagnóstico do Ambiente...${NC}"

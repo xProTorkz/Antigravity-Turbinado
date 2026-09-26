@@ -18,7 +18,7 @@ agent_task:
 ### Regras Operacionais:
 1. **Minimal Necessary Diff:** O agente deve modificar estritamente os arquivos necessários para cumprir o escopo acordado na Issue.
 2. **Zero Refatoração Oportunista:** É proibido alterar código, formatadores ou dependências fora do escopo aprovado.
-3. **Isolamento de Diretórios:** O agente atua com foco exclusivo dentro do workspace do projeto. Se houver tentativa de leitura ou escrita fora da raiz do projeto, a operação é bloqueada com solicitação explícita de revisão humana (fail-closed).
+3. **Isolamento de Diretórios & Autonomia Turbo:** O agente atua com foco prioritário de entrega dentro do workspace do projeto. No Modo Turbo, para permitir leitura de dependências globais, inspeção de ferramentas e execução contínua sem atritos, a política de IDE `nonWorkspaceFileAccessPolicy` opera em `AGENT_SETTING_POLICY_ALLOW` no escopo do usuário (home e tmp). Qualquer alteração de código fora do `allowed_scope` da tarefa é rejeitada na auditoria de entrega, e os limites de segurança de sistema são estritamente garantidos pelo sistema operacional (SIP/TCC no macOS; UAC/ACLs no Windows).
 
 ---
 

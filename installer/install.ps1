@@ -57,11 +57,12 @@ if (Test-Path $TurboScript) {
     python $TurboScript
 }
 
-# ETAPA 4: Permissões de Workspace e Autonomia
-Write-Host "`n[ETAPA 4/5] Aplicando Política Otimizada de Permissões..." -ForegroundColor Yellow
-Write-Host "• Antigravity configurado em modo: EAGER (Auto-execução de comandos no workspace)" -ForegroundColor Green
-Write-Host "• Dentro da pasta do projeto: Sempre permitir alterações no workspace" -ForegroundColor Green
-Write-Host "• Fora da pasta do projeto: Perguntar sempre / Request Review obrigatório" -ForegroundColor Yellow
+# ETAPA 4: Permissões de Workspace e Autonomia Turbo
+Write-Host "`n[ETAPA 4/5] Aplicando Diretrizes de Autonomia Turbo & Blindagem do SO..." -ForegroundColor Yellow
+Write-Host "• Antigravity configurado em modo: EAGER (Auto-execução fluida de comandos sem travamentos)" -ForegroundColor Green
+Write-Host "• Dentro da pasta do projeto: Autonomia total para criar, editar e testar no workspace" -ForegroundColor Green
+Write-Host "• Fora da pasta do projeto: Autonomia no escopo do usuário (home/temp) com blindagem do SO (UAC/ACLs)" -ForegroundColor Green
+Write-Host "• Recursos de Sistema e Hardware: Protegidos nativamente pelo Windows (UAC, System32, HKLM)" -ForegroundColor Cyan
 
 # ETAPA 5: Doctor de Integridade
 Write-Host "`n[ETAPA 5/5] Executando Doctor de Validação do Ambiente..." -ForegroundColor Yellow
