@@ -67,4 +67,4 @@ Para ativar, refinar ou expandir qualquer ponto deste fluxo sem corromper o hist
 5. SCHEMA CANÔNICO DE VALIDAÇÃO JSON (CONTRATO DE CARGA)
 ================================================================================
 O payload de dados deve obrigatoriamente validar contra o schema canônico definido em:
-`./system_core_architecture_schema.template.json`
+`./system_core_architecture_schema.json`

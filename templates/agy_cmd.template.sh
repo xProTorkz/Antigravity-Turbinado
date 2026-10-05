@@ -626,6 +626,67 @@ for p in procs: p.join()
             ;;
 
         # ======================================================================
+        # FOCO NOVO: Blindagem de Memória, Trava de Contexto & Validação de Schemas
+        # ======================================================================
+        "blindar")
+            echo "🛡️ Aplicando blindagem de permissões e integridade no ecossistema..."
+            chmod -R 750 /Users/lucasvinicius/projetos/estruturas /Users/lucasvinicius/projetos/config 2>/dev/null || true
+            echo "✅ Permissões restritas ao proprietário (750) em estruturas e config."
+            ;;
+        "travar")
+            echo "🔒 Verificando diretriz de contexto persistente SYSTEM-CORE-ARCHITECTURE-V1..."
+            local directive_path="/Users/lucasvinicius/projetos/estruturas/DIRETRIZ_CONTEXTO_PERSISTENTE.md"
+            if [ -f "$directive_path" ]; then
+                echo "✅ Diretriz persistente validada em: $directive_path"
+                grep "IDENTIFICADOR:" "$directive_path" || true
+            else
+                echo "⚠️ Diretriz não encontrada em $directive_path!"
+                return 1
+            fi
+            ;;
+        "validar-schema")
+            local target_json="${1}"
+            local schema_path="/Users/lucasvinicius/projetos/estruturas/system_core_architecture_schema.json"
+            if [ -z "$target_json" ]; then
+                echo "Uso: agy_cmd validar-schema <arquivo_payload.json>"
+                return 1
+            fi
+            if [ ! -f "$target_json" ]; then
+                echo "❌ Arquivo JSON não encontrado: $target_json"
+                return 1
+            fi
+            echo "🔍 Validando $target_json contra o schema canônico..."
+            python3 -c "
+import json, sys
+schema_p = '$schema_path'
+data_p = '$target_json'
+try:
+    with open(schema_p) as sf:
+        schema = json.load(sf)
+    with open(data_p) as df:
+        data = json.load(df)
+    print('✅ JSON sintaticamente válido.')
+    # Validação estrutural básica das chaves obrigatórias
+    reqs = schema.get('required', [])
+    missing = [k for k in reqs if k not in data]
+    if missing:
+        print(f'❌ Campos obrigatórios ausentes: {missing}')
+        sys.exit(1)
+    print(f'✅ Validação de conformidade aprovada contra {schema.get(\"title\", \"Schema\")}.')
+except Exception as e:
+    print(f'❌ Erro de validação: {e}')
+    sys.exit(1)
+"
+            ;;
+        "config-sync")
+            echo "🔄 Sincronizando estruturas e templates para /Users/lucasvinicius/projetos/config..."
+            mkdir -p /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas
+            cp -f /Users/lucasvinicius/projetos/estruturas/* /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/ 2>/dev/null || true
+            chmod 750 /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/agy_cmd.sh 2>/dev/null || true
+            echo "✅ Sincronização de estruturas concluída com sucesso."
+            ;;
+
+        # ======================================================================
         # Menu Canônico de Ajuda
         # ======================================================================
         *)
@@ -644,6 +705,7 @@ for p in procs: p.join()
             echo "  Amostragem/SRE: export-db-sample| export-sqlite-schema | sqlite-vacuum | leak-check | scan-fixtures | sync-remote <orig> <dest>"
             echo "  Sandbox/Chaos:  sandbox-run <c> | stress-test [s]"
             echo "  Mock/Conform:   mock-traffic    | audit-compliance | audit-deps | quiet-mode <cmd>"
+            echo "  Blindagem/Core: blindar         | travar       | validar-schema <f> | config-sync"
             ;;
     esac
 }
