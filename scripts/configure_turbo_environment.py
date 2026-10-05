@@ -120,6 +120,27 @@ def install_skills(base_kit_dir: Path, custom_home: Path = None, custom_projects
 
     return stats
 
+def install_automation_dictionary(base_kit_dir: Path, custom_projects_dir: Path = None) -> bool:
+    """Provisiona o Dicionário Canônico de Automação na pasta estruturas do cliente."""
+    home = Path.home()
+    env_proj = os.environ.get("ANTIGRAVITY_PROJECTS_DIR")
+    if custom_projects_dir:
+        projects_dir = custom_projects_dir
+    elif env_proj:
+        projects_dir = Path(env_proj)
+    else:
+        projects_dir = home / "projects" if (home / "projects").exists() else home / "projetos"
+
+    estruturas_dir = projects_dir / "estruturas"
+    estruturas_dir.mkdir(parents=True, exist_ok=True)
+    target_dict = estruturas_dir / "dicionario_automacao_core.md"
+
+    template_dict = base_kit_dir / "templates" / "dicionario_automacao_core.template.md"
+    if template_dict.exists() and not target_dict.exists():
+        shutil.copy2(template_dict, target_dict)
+        return True
+    return False
+
 def main():
     kit_dir = Path(__file__).resolve().parent.parent
     print("=" * 65)
@@ -136,6 +157,10 @@ def main():
     stats = install_skills(kit_dir)
     print(f"   [OK] Skills Nativas em ~/.agents/skills/: {stats['native']}")
     print(f"   [OK] Catálogo Ampliado em ~/projetos/config/Skills: {stats['catalog']}")
+
+    print("\n3. Provisionando Dicionário Canônico de Automação & Aliases...")
+    install_automation_dictionary(kit_dir)
+    print("   [OK] Dicionário Canônico em ~/projetos/estruturas/dicionario_automacao_core.md")
 
     print("\n" + "=" * 65)
     print("✅ AMBIENTE 100% CALIBRADO E PRONTO PARA O USO DO AGENTE!")

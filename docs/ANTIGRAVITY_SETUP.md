@@ -59,3 +59,15 @@ O instalador do Antigravity Turbinado adiciona automaticamente ao diretório de 
 - Cada projeto cadastrado no `PROJECT_REGISTRY.json` possui uma sessão persistente associada.
 - Isso preserva o contexto operacional, histórico recente de commits e baseline sem poluir o contexto com tarefas de outros projetos.
 - O Antigravity mantém isolamento completo de cache e dependências entre projetos diferentes.
+
+---
+
+## 4. DICIONÁRIO CANÔNICO DE AUTOMAÇÃO & GATILHOS DE ALTA POTÊNCIA
+
+O Antigravity Turbinado inclui o Dicionário Canônico de Automação (`estruturas/dicionario_automacao_core.md`), permitindo acionar tarefas administrativas complexas por frases curtas e `//comandos` padronizados sob a taxonomia de **Engenharia de Sistemas, SRE e DevOps**:
+- **Processos & CPU:** `//foco-ativo`, `//kill-zombies`, `//realtime-cpu`
+- **I/O & Buffers:** `//purgar-buffers`, `//clean-scratch`, `//rotacionar-logs`
+- **Git & Resiliência:** `//sync-base`, `//snapshot-force`, `//reset-clean`
+- **Telemetria:** `//telemetria-full`, `//portas-ativas`, `//varrer-grandes`
+- **Background:** `//exec-raw`, `//run-daemon`, `//silence-logs`
+- **Conformidade:** `//audit-perms`, `//harden-workspace`, `//audit-logins`
