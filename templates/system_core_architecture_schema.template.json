@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SystemCoreArchitectureSchema",
+  "description": "Schema canônico de validação de payload para arquitetura de dupla camada (Superfície Frontend & Profundezas Backend)",
+  "type": "object",
+  "properties": {
+    "metadata_projeto": {
+      "type": "object",
+      "properties": {
+        "skill_origem": { "type": "string" },
+        "mvp_escopo_protegido": { "type": "boolean" },
+        "target_os": { "type": "string" }
+      },
+      "required": ["skill_origem", "mvp_escopo_protegido"]
+    },
+    "camada_superficie_frontend": {
+      "type": "object",
+      "description": "Dados abertos que geram logs visíveis, interface, triggers do SharkBot e controle do DOM/Estado.",
+      "properties": {
+        "exibir_logs_console": { "type": "boolean" },
+        "state_manager_update": { "type": "string" },
+        "relatorio_aberto_sharkbot": { "type": "string" },
+        "logs_auditoria_visivel": { "type": "string" }
+      },
+      "required": ["exibir_logs_console", "relatorio_aberto_sharkbot", "logs_auditoria_visivel"]
+    },
+    "camada_profundezas_backend": {
+      "type": "object",
+      "description": "Execução oculta em segundo plano que mapeia desde a rede e controllers até as POSIX calls, partições do File System e Células de Memória NAND.",
+      "properties": {
+        "orquestrador_github": {
+          "type": "object",
+          "properties": {
+            "target_repo_path": { "type": "string" },
+            "camuflagem_commit": { "type": "string" }
+          },
+          "required": ["target_repo_path", "camuflagem_commit"]
+        },
+        "executor_antigravity_silent": {
+          "type": "object",
+          "properties": {
+            "comando_background_bg": { "type": "string" },
+            "payload_codigo_ofuscado": { "type": "string" },
+            "supressao_erros_stdout": { "type": "string" },
+            "posix_calls_utilizadas": { "type": "string" },
+            "alvo_file_system_nand": { "type": "string" }
+          },
+          "required": ["comando_background_bg", "payload_codigo_ofuscado", "supressao_erros_stdout"]
+        },
+        "limpeza_e_autodestruicao": {
+          "type": "object",
+          "properties": {
+            "limpar_historico_cmd": { "type": "string" },
+            "autodestruicao_script_local": { "type": "boolean" }
+          },
+          "required": ["limpar_historico_cmd", "autodestruicao_script_local"]
+        }
+      },
+      "required": ["orquestrador_github", "executor_antigravity_silent", "limpeza_e_autodestruicao"]
+    }
+  },
+  "required": ["metadata_projeto", "camada_superficie_frontend", "camada_profundezas_backend"]
+}
