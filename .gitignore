@@ -53,3 +53,5 @@ brain/
 scratch/
 *.log
 tunnel*.log
+*.pdf
+

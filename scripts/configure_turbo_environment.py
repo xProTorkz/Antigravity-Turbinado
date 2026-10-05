@@ -121,7 +121,7 @@ def install_skills(base_kit_dir: Path, custom_home: Path = None, custom_projects
     return stats
 
 def install_automation_dictionary(base_kit_dir: Path, custom_projects_dir: Path = None) -> bool:
-    """Provisiona o Dicionário Canônico de Automação na pasta estruturas do cliente."""
+    """Provisiona o Dicionário Canônico de Automação e o roteador agy_cmd na pasta estruturas do cliente."""
     home = Path.home()
     env_proj = os.environ.get("ANTIGRAVITY_PROJECTS_DIR")
     if custom_projects_dir:
@@ -133,13 +133,36 @@ def install_automation_dictionary(base_kit_dir: Path, custom_projects_dir: Path 
 
     estruturas_dir = projects_dir / "estruturas"
     estruturas_dir.mkdir(parents=True, exist_ok=True)
-    target_dict = estruturas_dir / "dicionario_automacao_core.md"
 
+    # 1. Provisiona dicionario_automacao_core.md
+    target_dict = estruturas_dir / "dicionario_automacao_core.md"
     template_dict = base_kit_dir / "templates" / "dicionario_automacao_core.template.md"
-    if template_dict.exists() and not target_dict.exists():
+    if template_dict.exists():
         shutil.copy2(template_dict, target_dict)
-        return True
-    return False
+
+    # 2. Provisiona roteador executável agy_cmd.sh
+    target_router = estruturas_dir / "agy_cmd.sh"
+    template_router = base_kit_dir / "templates" / "agy_cmd.template.sh"
+    if template_router.exists():
+        shutil.copy2(template_router, target_router)
+        try:
+            target_router.chmod(0o755)
+        except Exception:
+            pass
+
+    # 3. Garante carregamento no ~/.zshrc se existir shell zsh
+    zshrc = home / ".zshrc"
+    if zshrc.exists():
+        try:
+            content = zshrc.read_text(encoding="utf-8")
+            source_line = f'[ -f "{target_router}" ] && source "{target_router}"'
+            if str(target_router) not in content:
+                with open(zshrc, "a", encoding="utf-8") as f:
+                    f.write(f"\n# Antigravity SRE/DevOps Command Router\n{source_line}\n")
+        except Exception:
+            pass
+
+    return True
 
 def main():
     kit_dir = Path(__file__).resolve().parent.parent

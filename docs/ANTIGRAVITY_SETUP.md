@@ -62,12 +62,15 @@ O instalador do Antigravity Turbinado adiciona automaticamente ao diretório de 
 
 ---
 
-## 4. DICIONÁRIO CANÔNICO DE AUTOMAÇÃO & GATILHOS DE ALTA POTÊNCIA
+## 4. DICIONÁRIO CANÔNICO DE AUTOMAÇÃO & GATILHOS DE ALTA POTÊNCIA (v3.2)
 
-O Antigravity Turbinado inclui o Dicionário Canônico de Automação (`estruturas/dicionario_automacao_core.md`), permitindo acionar tarefas administrativas complexas por frases curtas e `//comandos` padronizados sob a taxonomia de **Engenharia de Sistemas, SRE e DevOps**:
-- **Processos & CPU:** `//foco-ativo`, `//kill-zombies`, `//realtime-cpu`
-- **I/O & Buffers:** `//purgar-buffers`, `//clean-scratch`, `//rotacionar-logs`
-- **Git & Resiliência:** `//sync-base`, `//snapshot-force`, `//reset-clean`
-- **Telemetria:** `//telemetria-full`, `//portas-ativas`, `//varrer-grandes`
-- **Background:** `//exec-raw`, `//run-daemon`, `//silence-logs`
-- **Conformidade:** `//audit-perms`, `//harden-workspace`, `//audit-logins`
+O Antigravity Turbinado inclui o Dicionário Canônico de Automação (`estruturas/dicionario_automacao_core.md`) e o roteador executável `agy_cmd.sh`, permitindo acionar tarefas administrativas complexas por frases curtas e `//comandos` padronizados sob a taxonomia de **Engenharia de Sistemas, SRE e DevOps**:
+- **Processos & CPU:** `//foco-ativo`, `//kill-zombies`, `//realtime-cpu`, `//kill-port`, `//watchdog-cpu`
+- **I/O & Buffers:** `//purgar-buffers`, `//clean-scratch`, `//deep-clean`, `//rotacionar-logs`
+- **Git & Resiliência:** `//quick-push`, `//snapshot-force`, `//reset-clean`, `//sync-upstream`, `//bypass-hooks`
+- **Redes & Sockets:** `//portas-ativas`, `//check-endpoint`, `//check-net`, `//cert-check`
+- **Telemetria:** `//telemetria-full`, `//check-health`, `//disk-usage`, `//varrer-grandes`
+- **Background & Silêncio:** `//exec-raw`, `//run-daemon`, `//run-idle`, `//quiet-mode`
+- **Segurança & Permissões:** `//audit-perms`, `//blindar` (`//harden-workspace`), `//audit-secrets`
+- **Amostragem & DR:** `//export-db-sample`, `//backup-quick`, `//leak-check`, `//sync-remote`
+- **Sandbox & Chaos:** `//sandbox-run`, `//stress-test`, `//mock-traffic`, `//audit-compliance`
