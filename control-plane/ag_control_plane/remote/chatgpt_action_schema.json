@@ -1,0 +1,370 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Jarvis Control Plane — API de Integração ChatGPT",
+    "version": "2.0.0",
+    "description": "API do Control Plane local de Sr. Lucas com certificado SSL HTTPS válido em dadosbacbo.com.br. Permite ao ChatGPT consultar o estado dos projetos, verificar a fila de execução, despachar tarefas para o Antigravity e controlar o orb de voz."
+  },
+  "servers": [
+    {
+      "url": "https://dadosbacbo.com.br/jarvis",
+      "description": "VPS Nginx Proxy HTTPS (dadosbacbo.com.br) → Mac Localhost"
+    },
+    {
+      "url": "http://localhost:8765",
+      "description": "Bridge local direto (na mesma máquina)"
+    }
+  ],
+  "paths": {
+    "/api/status": {
+      "get": {
+        "operationId": "getStatus",
+        "summary": "Estado do Orb e áudio",
+        "description": "Retorna o estado atual do Orb (IDLE/ACTIVE), estado de mute do áudio, hostname e pendências de sinal.",
+        "responses": {
+          "200": {
+            "description": "Estado atual",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string"},
+                    "orb": {"type": "object"},
+                    "audio": {"type": "object"},
+                    "hostname": {"type": "string"},
+                    "pending_signal": {"type": "object"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/status": {
+      "get": {
+        "operationId": "getControlPlaneStatus",
+        "summary": "Estado completo do Control Plane",
+        "description": "Retorna status dos daemons (dispatcher, remote_gateway, local_llm), contagem de projetos, projeto ativo e hostname.",
+        "responses": {
+          "200": {
+            "description": "Estado do Control Plane",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "enum": ["ONLINE", "DEGRADED", "OFFLINE"]},
+                    "kill_switch_active": {"type": "boolean"},
+                    "daemons": {"type": "object"},
+                    "projects_count": {"type": "integer"},
+                    "active_project": {"type": "string"},
+                    "hostname": {"type": "string"},
+                    "executor": {"type": "string"},
+                    "router_authority": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/queue": {
+      "get": {
+        "operationId": "getQueue",
+        "summary": "Fila de execução ativa",
+        "description": "Retorna as tarefas em execução ativa (leases), com projeto, número da Issue e timestamps.",
+        "responses": {
+          "200": {
+            "description": "Estado da fila",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string"},
+                    "active_leases_count": {"type": "integer"},
+                    "active_leases": {"type": "array", "items": {"type": "object"}}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/active_project": {
+      "get": {
+        "operationId": "getActiveProject",
+        "summary": "Projeto ativo no momento",
+        "description": "Retorna o projeto atualmente em foco no Control Plane.",
+        "responses": {
+          "200": {
+            "description": "Projeto ativo",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/health": {
+      "get": {
+        "operationId": "getRuntimeHealth",
+        "summary": "Saúde do runtime",
+        "description": "Verifica a saúde do runtime do Control Plane.",
+        "responses": {
+          "200": {
+            "description": "Health check",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/project/{slug}": {
+      "get": {
+        "operationId": "getProjectState",
+        "summary": "Estado completo de um projeto",
+        "description": "Retorna o estado atual de um projeto específico pelo seu slug (ex: antigravity-control-plane, derivbot, sharkbot, api-catalogador).",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"},
+            "description": "Slug do projeto (ex: antigravity-control-plane)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estado do projeto",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/project/{slug}/git": {
+      "get": {
+        "operationId": "getProjectGitStatus",
+        "summary": "Status Git de um projeto",
+        "description": "Retorna branch, HEAD, arquivos modificados e status do repositório Git do projeto.",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status Git",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/project/{slug}/actions": {
+      "get": {
+        "operationId": "getRecentActions",
+        "summary": "Ações recentes de um projeto",
+        "description": "Retorna as ações recentes executadas no projeto.",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"}
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {"type": "integer", "default": 10}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ações recentes",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/context/project/{slug}/diff": {
+      "get": {
+        "operationId": "getProjectDiff",
+        "summary": "Diff recente de um projeto",
+        "description": "Retorna um resumo das mudanças recentes no código do projeto.",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {"type": "string"}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resumo do diff",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/activate": {
+      "post": {
+        "operationId": "activateOrb",
+        "summary": "Ativar o Orb (iniciar sessão Antigravity)",
+        "description": "Envia sinal de ativação para o Orb iniciar uma sessão de voz/execução no Antigravity.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": {"type": "string", "description": "ID do dispositivo que está ativando"},
+                  "token": {"type": "string", "description": "Token de autenticação"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Orb ativado",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/command": {
+      "post": {
+        "operationId": "sendVoiceCommand",
+        "summary": "Enviar comando de texto para o Antigravity",
+        "description": "Envia um comando de texto para ser processado pelo Antigravity no Mac.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["text"],
+                "properties": {
+                  "text": {"type": "string", "description": "Comando a ser executado pelo Antigravity"},
+                  "device_id": {"type": "string"},
+                  "project": {"type": "string", "description": "Projeto alvo (opcional)"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comando enviado",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/mute": {
+      "post": {
+        "operationId": "muteAudio",
+        "summary": "Silenciar áudio do Orb",
+        "description": "Silencia o áudio de resposta do Orb.",
+        "responses": {
+          "200": {
+            "description": "Áudio silenciado",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/unmute": {
+      "post": {
+        "operationId": "unmuteAudio",
+        "summary": "Reativar áudio do Orb",
+        "description": "Reativa o áudio de resposta do Orb.",
+        "responses": {
+          "200": {
+            "description": "Áudio reativado",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stop": {
+      "post": {
+        "operationId": "stopOrb",
+        "summary": "Parar o Orb",
+        "description": "Envia sinal de parada para o Orb.",
+        "responses": {
+          "200": {
+            "description": "Orb parado",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "healthCheck",
+        "summary": "Health check simples",
+        "description": "Verifica se o servidor está online.",
+        "responses": {
+          "200": {
+            "description": "Servidor online",
+            "content": {
+              "application/json": {
+                "schema": {"type": "object"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

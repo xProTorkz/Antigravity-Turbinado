@@ -90,18 +90,20 @@ O produto é distribuído e suportado através do nosso canal oficial de atendim
 
 ## 📂 Arquitetura Modular Unificada
 
-O ecossistema está consolidado em 4 módulos canônicos, estruturados e testados:
+O ecossistema está consolidado em 5 módulos canônicos, estruturados e testados:
 
 ```text
 ANTIGRAVITY TURBINADO/
-├── 1-governanca-e-regras/    # Regras inegociáveis: menor diff, test before/after, Guardião de Integridade
-├── 2-prompts-chatgpt/        # Prompts Mestres: ChatGPT Brain Orchestrator, Cloud-First e Capabilities
-├── 3-instalacao-skills/      # Instalador de skills e catálogo das 100 essenciais + acervo de 2.450+
+├── 1-governanca-e-regras/    # Regras inegociáveis: menor diff, test before/after, Sentinela Guardião
+├── 2-prompts-chatgpt/        # Prompts Mestres: ChatGPT Brain Orchestrator, Cloud-First e Planejador Soberano
+├── 3-instalacao-skills/      # Instalador de skills e catálogo das 100 essenciais + acervo de 2.492 skills
 ├── 4-automacao-e-shell/       # Motor Semântico v5.2, agy_cmd.sh, dicionário canônico e suíte de 52 testes
+├── control-plane/            # Motor do Control Plane: dispatcher, scheduler, task parser e daemon
 ├── apresentacao/             # Materiais executivos de apresentação (HTML, PDF, Markdown)
 ├── install.sh                # Instalador mestre automatizado em 1 comando (macOS / Linux)
 └── installer/                # Instaladores dedicados (macOS / Windows PowerShell)
 ```
+
 
 ---
 
