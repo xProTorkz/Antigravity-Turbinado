@@ -94,8 +94,8 @@ O ecossistema está consolidado em 4 módulos canônicos, estruturados e testado
 
 ```text
 ANTIGRAVITY TURBINADO/
-├── 1-governanca-e-regras/    # Regras inegociáveis: menor diff, test before/after, Sentinela Guardião
-├── 2-prompts-chatgpt/        # Prompts Mestres: Chatgpt Sentinela Orchestrator, Cloud-First e Capabilities
+├── 1-governanca-e-regras/    # Regras inegociáveis: menor diff, test before/after, Guardião de Integridade
+├── 2-prompts-chatgpt/        # Prompts Mestres: ChatGPT Brain Orchestrator, Cloud-First e Capabilities
 ├── 3-instalacao-skills/      # Instalador de skills e catálogo das 100 essenciais + acervo de 2.450+
 ├── 4-automacao-e-shell/       # Motor Semântico v5.2, agy_cmd.sh, dicionário canônico e suíte de 52 testes
 ├── apresentacao/             # Materiais executivos de apresentação (HTML, PDF, Markdown)
