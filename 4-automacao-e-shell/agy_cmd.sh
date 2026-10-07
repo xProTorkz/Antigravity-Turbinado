@@ -253,7 +253,7 @@ agy_cmd() {
             ;;
         "atualizar-sentinela")
             echo "🔄 Disparando atualizador canônico do Sentinela & Dicionário..."
-            local script_path="/Users/lucasvinicius/projetos/ANTIGRAVITY TURBINADO/scripts/atualizar_sentinela.sh"
+            local script_path="/Users/lucasvinicius/projetos/ANTIGRAVITY TURBINADO/4-automacao-e-shell/atualizar_sentinela.sh"
             if [ -f "$script_path" ]; then
                 bash "$script_path"
             else

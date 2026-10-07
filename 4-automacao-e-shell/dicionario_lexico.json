@@ -296,7 +296,7 @@
       ],
       "diretiva": "atualizar_sentinela",
       "execucao_material": true,
-      "comando": "bash /Users/lucasvinicius/projetos/ANTIGRAVITY\\ TURBINADO/scripts/atualizar_sentinela.sh"
+      "comando": "bash /Users/lucasvinicius/projetos/ANTIGRAVITY\\ TURBINADO/4-automacao-e-shell/atualizar_sentinela.sh"
     },
     "gatilhos_auditoria_com_depuracao_dom": {
       "termos": [
