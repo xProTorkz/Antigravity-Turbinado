@@ -36,7 +36,7 @@ mkdir -p "$SKILLS_DIR/menu-comandos-rapidos"
 mkdir -p "$SKILLS_DIR/sentinela"
 
 # 3. Sincronizar o Dicionário Léxico (~/.gemini/config/dicionario_lexico.json)
-echo -e "\n${BLUE}📚 2. Sincronizando Dicionário Léxico Canônico v3.8...${NC}"
+echo -e "\n${BLUE}📚 2. Sincronizando Dicionário Léxico Canônico...${NC}"
 if [ -f "$REPO_DIR/4-automacao-e-shell/dicionario_lexico.json" ]; then
     cp -f "$REPO_DIR/4-automacao-e-shell/dicionario_lexico.json" "$CONFIG_DIR/dicionario_lexico.json"
     echo -e "  ✅ Dicionário atualizado em: ${BOLD}$CONFIG_DIR/dicionario_lexico.json${NC}"
@@ -52,14 +52,19 @@ if [ -f "$REPO_DIR/1-governanca-e-regras/GUARDIAO_DE_PROJETOS_SENTINELA.md" ]; t
     cp -f "$REPO_DIR/1-governanca-e-regras/GUARDIAO_DE_PROJETOS_SENTINELA.md" "$SKILLS_DIR/guardiao-sentinela/SKILL.md"
     echo -e "  ✅ Skill @sentinela e @guardiao-sentinela sincronizadas."
 fi
+if [ -f "$REPO_DIR/skills/native/menu-comandos-rapidos/SKILL.md" ]; then
+    cp -f "$REPO_DIR/skills/native/menu-comandos-rapidos/SKILL.md" "$SKILLS_DIR/menu-comandos-rapidos/SKILL.md"
+    echo -e "  ✅ Skill @menu-comandos-rapidos sincronizada."
+fi
 
 # 5. Validação da versão instalada
 if command -v python3 >/dev/null 2>&1 && [ -f "$CONFIG_DIR/dicionario_lexico.json" ]; then
-    VERSION=$(python3 -c "import json; print(json.load(open('$CONFIG_DIR/dicionario_lexico.json')).get('versao', 'Desconhecida'))" 2>/dev/null || echo "3.8")
+    VERSION=$(python3 -c "import json; print(json.load(open('$CONFIG_DIR/dicionario_lexico.json')).get('versao', 'Desconhecida'))" 2>/dev/null || echo "3.9")
     echo -e "\n${BOLD}${GREEN}✨ Sentinela e Dicionário atualizados com sucesso para a versão v${VERSION}!${NC}"
     echo -e "🎯 Recursos Ativos:"
     echo -e "  • Espelhamento estático recursivo via wget com destino em /projetos/<PASTA>"
-    echo -e "  • Inicialização automática de servidor HTTP local e abertura no navegador"
+    echo -e "  • Suíte DevTools de Inspeção Irrestrita de Interface & Depuração DOM (Menu 10)"
+    echo -e "  • Desmascaramento de senhas, remoção de travas CSS/blur, overlays e extração de cache"
     echo -e "  • Gatilho rápido de atualização: 'baixa a nova atualizacao sentinela'"
 fi
 
