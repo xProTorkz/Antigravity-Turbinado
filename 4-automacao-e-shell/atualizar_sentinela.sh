@@ -38,11 +38,11 @@ mkdir -p "$SKILLS_DIR/sentinela"
 # 3. Sincronizar o Dicionário Léxico (~/.gemini/config/dicionario_lexico.json)
 echo -e "\n${BLUE}📚 2. Sincronizando Dicionário Léxico Canônico...${NC}"
 if [ -f "$REPO_DIR/4-automacao-e-shell/dicionario_lexico.json" ]; then
-    cp -f "$REPO_DIR/4-automacao-e-shell/dicionario_lexico.json" "$CONFIG_DIR/dicionario_lexico.json"
-    echo -e "  ✅ Dicionário atualizado em: ${BOLD}$CONFIG_DIR/dicionario_lexico.json${NC}"
+    ln -sf "$REPO_DIR/4-automacao-e-shell/dicionario_lexico.json" "$CONFIG_DIR/dicionario_lexico.json"
+    echo -e "  ✅ Dicionário unificado (symlink) em: ${BOLD}$CONFIG_DIR/dicionario_lexico.json${NC}"
 elif [ -f "$REPO_DIR/templates/dicionario_lexico.template.json" ]; then
-    cp -f "$REPO_DIR/templates/dicionario_lexico.template.json" "$CONFIG_DIR/dicionario_lexico.json"
-    echo -e "  ✅ Dicionário copiado do template em: ${BOLD}$CONFIG_DIR/dicionario_lexico.json${NC}"
+    ln -sf "$REPO_DIR/templates/dicionario_lexico.template.json" "$CONFIG_DIR/dicionario_lexico.json"
+    echo -e "  ✅ Dicionário vinculado do template (symlink) em: ${BOLD}$CONFIG_DIR/dicionario_lexico.json${NC}"
 fi
 
 # 4. Sincronizar Skills do Sentinela & Contrato Mestre
