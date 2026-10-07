@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
 # Roteador Canônico de Automação Antigravity (SRE / DevOps Dictionary v3.2)
-# Local: /Users/lucasvinicius/projetos/estruturas/agy_cmd.sh
+# Local: $HOME/projetos/estruturas/agy_cmd.sh
 # Escopo: macOS / Unix - Automação Determinística, Resiliência e SRE
 # ==============================================================================
 
@@ -73,7 +73,7 @@ agy_cmd() {
         # ======================================================================
         "purgar-buffers"|"zerar-logs")
             echo "📄 Truncando arquivos de log para 0 bytes sem romper descritores..."
-            find /Users/lucasvinicius/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null
+            find $HOME/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null
             echo "✅ Todos os arquivos .log truncados com sucesso."
             ;;
         "deep-clean")
@@ -84,7 +84,7 @@ agy_cmd() {
             ;;
         "clean-scratch")
             echo "🗑️ Esvaziando diretórios scratch da IDE e temporários do SO..."
-            rm -rf /Users/lucasvinicius/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null || true
+            rm -rf $HOME/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null || true
             echo "✅ Diretórios de rascunho limpos."
             ;;
         "clean-pycache")
@@ -106,7 +106,7 @@ agy_cmd() {
             ;;
         "rotacionar-logs")
             echo "🗜️ Compactando em gzip arquivos de log superiores a 50MB..."
-            find /Users/lucasvinicius/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null
+            find $HOME/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null
             echo "✅ Rotação de logs concluída."
             ;;
         "empty-trash")
@@ -273,7 +273,7 @@ agy_cmd() {
             ;;
         "varrer-grandes")
             echo "🔍 Mapeando arquivos maiores que 50MB no diretório de projetos..."
-            find /Users/lucasvinicius/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null | awk '{print $5, $9}'
+            find $HOME/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null | awk '{print $5, $9}'
             ;;
         "sys-load")
             echo "⏱️ Tempo de atividade e carga média do sistema:"
@@ -310,11 +310,11 @@ agy_cmd() {
         # ======================================================================
         "audit-perms")
             echo "🔒 Verificando arquivos com permissões abertas indevidas (world-writable):"
-            find /Users/lucasvinicius/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null | head -n 20 || echo "✅ Nenhuma inconsistência encontrada."
+            find $HOME/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null | head -n 20 || echo "✅ Nenhuma inconsistência encontrada."
             ;;
         "harden-workspace"|"blindar"|"blindar-workspace")
             echo "🛡️ Blindando permissões de workspace para acesso restrito (750)..."
-            chmod -R 750 /Users/lucasvinicius/projetos 2>/dev/null || true
+            chmod -R 750 $HOME/projetos 2>/dev/null || true
             echo "✅ Permissões aplicadas aos projetos."
             ;;
         "audit-logins")
@@ -532,7 +532,7 @@ agy_cmd() {
             fi
             ;;
         "sanitize-logs")
-            local log_path="${1:-/Users/lucasvinicius/projetos}"
+            local log_path="${1:-$HOME/projetos}"
             echo "🔒 Higienizando e mascarando segredos em arquivos .log em $log_path..."
             find -L "$log_path" -maxdepth 4 -name "*.log" -exec sed -E -i '' -e 's/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/[REDACTED_CPF]/g' -e 's/Bearer [a-zA-Z0-9_\-\.]{15,}/[REDACTED_TOKEN]/g' -e 's/(password|senha)=[^& ]+/\1=[REDACTED]/g' {} + 2>/dev/null || true
             echo "✅ Logs higienizados com sucesso."
@@ -630,12 +630,12 @@ for p in procs: p.join()
         # ======================================================================
         "blindar")
             echo "🛡️ Aplicando blindagem de permissões e integridade no ecossistema..."
-            chmod -R 750 /Users/lucasvinicius/projetos/estruturas /Users/lucasvinicius/projetos/config 2>/dev/null || true
+            chmod -R 750 $HOME/projetos/estruturas $HOME/projetos/config 2>/dev/null || true
             echo "✅ Permissões restritas ao proprietário (750) em estruturas e config."
             ;;
         "travar")
             echo "🔒 Verificando diretriz de contexto persistente SYSTEM-CORE-ARCHITECTURE-V1..."
-            local directive_path="/Users/lucasvinicius/projetos/estruturas/DIRETRIZ_CONTEXTO_PERSISTENTE.md"
+            local directive_path="$HOME/projetos/estruturas/DIRETRIZ_CONTEXTO_PERSISTENTE.md"
             if [ -f "$directive_path" ]; then
                 echo "✅ Diretriz persistente validada em: $directive_path"
                 grep "IDENTIFICADOR:" "$directive_path" || true
@@ -646,7 +646,7 @@ for p in procs: p.join()
             ;;
         "validar-schema")
             local target_json="${1}"
-            local schema_path="/Users/lucasvinicius/projetos/estruturas/system_core_architecture_schema.json"
+            local schema_path="$HOME/projetos/estruturas/system_core_architecture_schema.json"
             if [ -z "$target_json" ]; then
                 echo "Uso: agy_cmd validar-schema <arquivo_payload.json>"
                 return 1
@@ -679,10 +679,10 @@ except Exception as e:
 "
             ;;
         "config-sync")
-            echo "🔄 Sincronizando estruturas e templates para /Users/lucasvinicius/projetos/config..."
-            mkdir -p /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas
-            cp -f /Users/lucasvinicius/projetos/estruturas/* /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/ 2>/dev/null || true
-            chmod 750 /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/agy_cmd.sh 2>/dev/null || true
+            echo "🔄 Sincronizando estruturas e templates para $HOME/projetos/config..."
+            mkdir -p $HOME/projetos/config/4-Automacao-e-Estruturas
+            cp -f $HOME/projetos/estruturas/* $HOME/projetos/config/4-Automacao-e-Estruturas/ 2>/dev/null || true
+            chmod 750 $HOME/projetos/config/4-Automacao-e-Estruturas/agy_cmd.sh 2>/dev/null || true
             echo "✅ Sincronização de estruturas concluída com sucesso."
             ;;
 

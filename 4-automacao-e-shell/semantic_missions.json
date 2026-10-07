@@ -1,0 +1,2118 @@
+{
+  "schema_version": 1,
+  "version": "1.0",
+  "updated_at": "2026-10-06T11:38:35.633460+00:00",
+  "missions": {
+    "AUDIT.HARD": {
+      "mission_id": "AUDIT.HARD",
+      "aliases": [
+        "audite",
+        "auditoria",
+        "faça uma auditoria",
+        "faz auditoria",
+        "faz uma auditoria geral",
+        "audita isso",
+        "audita tudo",
+        "raio-x",
+        "faz um raio-x",
+        "puxa a ficha",
+        "confere tudo",
+        "verifica tudo",
+        "auditoria total",
+        "aduitoria total",
+        "varredura completa"
+      ],
+      "canonical_meaning": "Avaliar profundamente o estado atual do alvo autorizado.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "MUTATION_ALLOWED=false",
+      "referenced_intents": [
+        "audit.project.hard",
+        "audit-git-integrity",
+        "audit-deps",
+        "scan-attack-surface",
+        "audit-env-drift",
+        "audit-git-history-pii",
+        "audit.database.hard"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "IDENTIFY",
+          "surface": "AGY_BACKGROUND",
+          "action": "identify_target"
+        },
+        {
+          "phase": 2,
+          "name": "RECON",
+          "surface": "AGY_BACKGROUND",
+          "action": "recon.project.hard"
+        },
+        {
+          "phase": 3,
+          "name": "ARCHITECTURE",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_topology"
+        },
+        {
+          "phase": 4,
+          "name": "GIT",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit-git-integrity"
+        },
+        {
+          "phase": 5,
+          "name": "DEPENDENCIES",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit-deps"
+        },
+        {
+          "phase": 6,
+          "name": "RUNTIME",
+          "surface": "AGY_BACKGROUND",
+          "action": "check_runtimes"
+        },
+        {
+          "phase": 7,
+          "name": "NETWORK",
+          "surface": "AGY_BACKGROUND",
+          "action": "scan-attack-surface"
+        },
+        {
+          "phase": 8,
+          "name": "DATABASE",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit.database.hard"
+        },
+        {
+          "phase": 9,
+          "name": "CONFIGURATION",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit-env-drift"
+        },
+        {
+          "phase": 10,
+          "name": "SECURITY",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit-git-history-pii"
+        },
+        {
+          "phase": 11,
+          "name": "OBSERVABILITY",
+          "surface": "AGY_BACKGROUND",
+          "action": "tail -n 30 *.log"
+        },
+        {
+          "phase": 12,
+          "name": "CORRELATE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "correlate_findings"
+        },
+        {
+          "phase": 13,
+          "name": "REPORT",
+          "surface": "AGY_BACKGROUND",
+          "action": "generate_audit_report"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "GIT",
+          "DEPENDENCIES",
+          "RUNTIME",
+          "CONFIGURATION"
+        ],
+        [
+          "NETWORK",
+          "DATABASE",
+          "SECURITY",
+          "OBSERVABILITY"
+        ]
+      ],
+      "dependencies": {
+        "RECON": [
+          "IDENTIFY"
+        ],
+        "ARCHITECTURE": [
+          "RECON"
+        ],
+        "CORRELATE": [
+          "GIT",
+          "DEPENDENCIES",
+          "RUNTIME",
+          "NETWORK",
+          "DATABASE",
+          "CONFIGURATION",
+          "SECURITY",
+          "OBSERVABILITY"
+        ],
+        "REPORT": [
+          "CORRELATE"
+        ]
+      },
+      "completion_conditions": [
+        "ALL_DIAGNOSTICS_COMPLETED",
+        "ZERO_MUTATION",
+        "EVIDENCE_GATHERED"
+      ],
+      "fallback_policy": "ISOLATE_FAILED_COMPONENT_AND_CONTINUE",
+      "risk_policy": "READ_ONLY_FIRST",
+      "canonical_intents": [
+        "audit.project.hard",
+        "audit-git-integrity",
+        "audit-deps",
+        "audit-all"
+      ]
+    },
+    "VISIT.GENERAL": {
+      "mission_id": "VISIT.GENERAL",
+      "aliases": [
+        "dá uma olhada geral",
+        "dá uma passada",
+        "entra lá e olha tudo",
+        "faz uma visita",
+        "faça uma visita",
+        "passa lá",
+        "vamos dar uma olhada",
+        "vamos fazer uma visita",
+        "vamos ver como está",
+        "vamos visitar",
+        "visita técnica"
+      ],
+      "canonical_meaning": "Entrar no contexto autorizado e construir uma visão completa sem modificar nada inicialmente.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "READ_ONLY_FIRST=true",
+      "referenced_intents": [
+        "recon.project.hard",
+        "map.project.general",
+        "audit.project.hard"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "IDENTIFY_TARGET",
+          "surface": "AGY_BACKGROUND",
+          "action": "identify_context"
+        },
+        {
+          "phase": 2,
+          "name": "VERIFY_CONTEXT",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_active_workspace"
+        },
+        {
+          "phase": 3,
+          "name": "CONNECT_IF_REQUIRED",
+          "surface": "AGY_BACKGROUND",
+          "action": "validate_connectivity"
+        },
+        {
+          "phase": 4,
+          "name": "RECON",
+          "surface": "AGY_BACKGROUND",
+          "action": "recon.project.hard"
+        },
+        {
+          "phase": 5,
+          "name": "MAP",
+          "surface": "AGY_BACKGROUND",
+          "action": "map.project.general"
+        },
+        {
+          "phase": 6,
+          "name": "AUDIT",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit.project.hard"
+        },
+        {
+          "phase": 7,
+          "name": "FINDINGS",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "synthesize_findings"
+        },
+        {
+          "phase": 8,
+          "name": "VISIT_REPORT",
+          "surface": "AGY_BACKGROUND",
+          "action": "render_visit_summary"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "RECON",
+          "MAP"
+        ]
+      ],
+      "dependencies": {
+        "VERIFY_CONTEXT": [
+          "IDENTIFY_TARGET"
+        ],
+        "CONNECT_IF_REQUIRED": [
+          "VERIFY_CONTEXT"
+        ],
+        "RECON": [
+          "CONNECT_IF_REQUIRED"
+        ],
+        "MAP": [
+          "RECON"
+        ],
+        "AUDIT": [
+          "MAP"
+        ],
+        "FINDINGS": [
+          "AUDIT"
+        ],
+        "VISIT_REPORT": [
+          "FINDINGS"
+        ]
+      },
+      "completion_conditions": [
+        "CONTEXT_VERIFIED",
+        "INVENTORY_BUILT",
+        "MAP_GENERATED",
+        "READ_ONLY_MAINTAINED"
+      ],
+      "fallback_policy": "ABORT_ON_UNVERIFIED_CONTEXT",
+      "risk_policy": "READ_ONLY_FIRST",
+      "canonical_intents": [
+        "recon.project.hard",
+        "audit.project.hard",
+        "map.project.general"
+      ]
+    },
+    "REPORT.GENERAL": {
+      "mission_id": "REPORT.GENERAL",
+      "aliases": [
+        "faz relatório",
+        "fecha um relatório",
+        "gera um relatório",
+        "me dá o diagnóstico",
+        "me dá o panorama",
+        "me dá um relatório",
+        "me manda relatório",
+        "me manda um relatório",
+        "me mande um relatório",
+        "me mostra o resultado",
+        "me mostre a diferença",
+        "me passa o relatório",
+        "relatório",
+        "resume o que encontrou"
+      ],
+      "canonical_meaning": "Recuperar evidências do contexto atual e gerar panorama estruturado.",
+      "scope_resolution": "CONTEXTUAL",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "READ_ONLY=true",
+      "referenced_intents": [
+        "audit.project.hard"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "COLLECT_EVIDENCE",
+          "surface": "AGY_BACKGROUND",
+          "action": "gather_recent_telemetry"
+        },
+        {
+          "phase": 2,
+          "name": "NORMALIZE",
+          "surface": "AGY_BACKGROUND",
+          "action": "normalize_logs_and_metrics"
+        },
+        {
+          "phase": 3,
+          "name": "CLASSIFY",
+          "surface": "AGY_BACKGROUND",
+          "action": "classify_findings_severity"
+        },
+        {
+          "phase": 4,
+          "name": "PRIORITIZE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "prioritize_actionable_items"
+        },
+        {
+          "phase": 5,
+          "name": "CORRELATE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "correlate_root_causes"
+        },
+        {
+          "phase": 6,
+          "name": "REPORT",
+          "surface": "AGY_BACKGROUND",
+          "action": "emit_executive_report"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "NORMALIZE": [
+          "COLLECT_EVIDENCE"
+        ],
+        "CLASSIFY": [
+          "NORMALIZE"
+        ],
+        "PRIORITIZE": [
+          "CLASSIFY"
+        ],
+        "CORRELATE": [
+          "PRIORITIZE"
+        ],
+        "REPORT": [
+          "CORRELATE"
+        ]
+      },
+      "completion_conditions": [
+        "EVIDENCE_CORRELATED",
+        "EXECUTIVE_SUMMARY_READY"
+      ],
+      "fallback_policy": "EMIT_PARTIAL_REPORT_WITH_WARNING",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "report.problems",
+        "audit.project.hard"
+      ]
+    },
+    "FIND.SMART": {
+      "mission_id": "FIND.SMART",
+      "aliases": [
+        "acha",
+        "acha o erro",
+        "acha pra mim",
+        "ache",
+        "busca tudo relacionado",
+        "descubra",
+        "encontre",
+        "encontre de onde vem essa função",
+        "encontre esse arquivo",
+        "encontre o erro",
+        "encontre o problema",
+        "encontre qualquer problema",
+        "encontre tudo relacionado",
+        "localiza",
+        "procura",
+        "procura direito",
+        "vê onde está",
+        "vê quem está"
+      ],
+      "canonical_meaning": "Localizar e correlacionar recursos, causas-raiz, arquivos ou problemas no contexto autorizado.",
+      "scope_resolution": "CONTEXTUAL",
+      "default_depth": "DEEP",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "READ_ONLY=true",
+      "referenced_intents": [
+        "cloc-code"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "SEARCH",
+          "surface": "AGY_BACKGROUND",
+          "action": "grep_or_find_resources"
+        },
+        {
+          "phase": 2,
+          "name": "CORRELATE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "correlate_symbol_references"
+        },
+        {
+          "phase": 3,
+          "name": "RANK",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "rank_candidates_by_confidence"
+        },
+        {
+          "phase": 4,
+          "name": "VERIFY",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_target_existence"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "CORRELATE": [
+          "SEARCH"
+        ],
+        "RANK": [
+          "CORRELATE"
+        ],
+        "VERIFY": [
+          "RANK"
+        ]
+      },
+      "completion_conditions": [
+        "CANDIDATES_FOUND",
+        "RANKED_CONFIDENCE_MEASURED"
+      ],
+      "fallback_policy": "WIDEN_SEARCH_PATTERN",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "report.problems",
+        "git-reflog-search",
+        "git-pickaxe"
+      ]
+    },
+    "EXECUTION.DISCREET": {
+      "mission_id": "EXECUTION.DISCREET",
+      "aliases": [
+        "modo oculto",
+        "modo silencioso",
+        "sem aparecer",
+        "faz escondido",
+        "roda por trás",
+        "faz em segundo plano",
+        "não mexe na minha tela",
+        "não mexe na tela",
+        "não abre nada",
+        "não muda de janela",
+        "deixa rodando por trás",
+        "em background"
+      ],
+      "canonical_meaning": "Execução em segundo plano (BACKGROUND EXECUTION) com interface não-intrusiva e auditoria ativa.",
+      "scope_resolution": "GLOBAL",
+      "default_depth": "NORMAL",
+      "default_profile": "FAST",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "PRESERVE_LOGS_AND_AUDIT",
+      "referenced_intents": [
+        "execution.discreet.background"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "ENFORCE_BACKGROUND",
+          "surface": "AGY_BACKGROUND",
+          "action": "set_background_flags"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {},
+      "completion_conditions": [
+        "DISCREET_FLAGS_APPLIED"
+      ],
+      "fallback_policy": "FAIL_CLOSED_IF_VISUAL_FORCED",
+      "risk_policy": "AUDIT_LOGGING_REQUIRED",
+      "canonical_intents": [
+        "execution.discreet.background",
+        "quiet-mode"
+      ]
+    },
+    "EXECUTION.ADVANCED": {
+      "mission_id": "EXECUTION.ADVANCED",
+      "aliases": [
+        "modo avançado",
+        "ativa avançado",
+        "modo hard",
+        "vai no avançado",
+        "potência máxima",
+        "modo turbo",
+        "modo completo",
+        "usa tudo que tiver",
+        "vai fundo",
+        "va mais a fundo",
+        "vá mais a fundo",
+        "vai mais a fundo",
+        "mais a fundo",
+        "mais alem",
+        "mais além",
+        "vá mais além",
+        "vai mais além"
+      ],
+      "canonical_meaning": "Elevar capacidade de planejamento, paralelismo e profundidade investigativa mantendo governança Sentinela.",
+      "scope_resolution": "GLOBAL",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "ANTIGRAVITY_VISUAL",
+      "mutation_policy": "GOVERNANCE_ACTIVE",
+      "referenced_intents": [
+        "mode-advanced"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "ENABLE_ADVANCED_CAPABILITIES",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "set_deep_execution_flags"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {},
+      "completion_conditions": [
+        "ADVANCED_FLAGS_ACTIVE",
+        "GOVERNANCE_PRESERVED"
+      ],
+      "fallback_policy": "FALLBACK_TO_STANDARD",
+      "risk_policy": "HUMAN_GATES_PRESERVED",
+      "canonical_intents": [
+        "mode-advanced"
+      ]
+    },
+    "CONNECT.SMART": {
+      "mission_id": "CONNECT.SMART",
+      "aliases": [
+        "se conecte",
+        "conecta",
+        "conecte",
+        "entra lá",
+        "abre conexão",
+        "faz conexão",
+        "estabelece conexão",
+        "liga com",
+        "vincula",
+        "acessa",
+        "entra no serviço"
+      ],
+      "canonical_meaning": "Resolver e estabelecer canal de comunicação com o alvo contextual autorizado.",
+      "scope_resolution": "CONTEXTUAL",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "IDEMPOTENT_AUTH",
+      "referenced_intents": [
+        "unlock-port"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "IDENTIFY_TARGET",
+          "surface": "AGY_BACKGROUND",
+          "action": "resolve_connection_endpoint"
+        },
+        {
+          "phase": 2,
+          "name": "CHECK_EXISTING_CONNECTION",
+          "surface": "AGY_BACKGROUND",
+          "action": "check_active_socket_or_tunnel"
+        },
+        {
+          "phase": 3,
+          "name": "CHECK_EXISTING_SESSION",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_session_token"
+        },
+        {
+          "phase": 4,
+          "name": "VALIDATE_AUTH",
+          "surface": "AGY_BACKGROUND",
+          "action": "validate_credential_presence"
+        },
+        {
+          "phase": 5,
+          "name": "CONNECT_IF_NEEDED",
+          "surface": "AGY_BACKGROUND",
+          "action": "establish_secure_channel"
+        },
+        {
+          "phase": 6,
+          "name": "HEALTH_CHECK",
+          "surface": "AGY_BACKGROUND",
+          "action": "ping_or_handshake"
+        },
+        {
+          "phase": 7,
+          "name": "READY",
+          "surface": "AGY_BACKGROUND",
+          "action": "confirm_connected_state"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "CHECK_EXISTING_CONNECTION": [
+          "IDENTIFY_TARGET"
+        ],
+        "CHECK_EXISTING_SESSION": [
+          "CHECK_EXISTING_CONNECTION"
+        ],
+        "VALIDATE_AUTH": [
+          "CHECK_EXISTING_SESSION"
+        ],
+        "CONNECT_IF_NEEDED": [
+          "VALIDATE_AUTH"
+        ],
+        "HEALTH_CHECK": [
+          "CONNECT_IF_NEEDED"
+        ],
+        "READY": [
+          "HEALTH_CHECK"
+        ]
+      },
+      "completion_conditions": [
+        "CHANNEL_OPEN",
+        "HEALTHY_HANDSHAKE"
+      ],
+      "fallback_policy": "FAIL_CLOSED_NO_CREDENTIAL_GUESSING",
+      "risk_policy": "ZERO_CREDENTIAL_LEAK",
+      "canonical_intents": [
+        "conectar",
+        "check-endpoint",
+        "check-net"
+      ]
+    },
+    "ACTIVATE.SMART": {
+      "mission_id": "ACTIVATE.SMART",
+      "aliases": [
+        "ative",
+        "ativa",
+        "liga",
+        "inicia",
+        "sobe",
+        "coloca pra rodar",
+        "bota pra funcionar",
+        "deixa ativo",
+        "habilita"
+      ],
+      "canonical_meaning": "Colocar componente ou serviço em estado ativo e operacional com validação de saúde.",
+      "scope_resolution": "CONTEXTUAL",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "IDEMPOTENT_NOOP_IF_ACTIVE",
+      "referenced_intents": [
+        "unlock-dev-ports"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "RESOLVE_OBJECT",
+          "surface": "AGY_BACKGROUND",
+          "action": "identify_service_name"
+        },
+        {
+          "phase": 2,
+          "name": "CHECK_STATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_is_already_running"
+        },
+        {
+          "phase": 3,
+          "name": "PREFLIGHT",
+          "surface": "AGY_BACKGROUND",
+          "action": "check_port_and_lock_freedom"
+        },
+        {
+          "phase": 4,
+          "name": "ACTIVATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "start_service_command"
+        },
+        {
+          "phase": 5,
+          "name": "HEALTH_CHECK",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_listening_port"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "CHECK_STATE": [
+          "RESOLVE_OBJECT"
+        ],
+        "PREFLIGHT": [
+          "CHECK_STATE"
+        ],
+        "ACTIVATE": [
+          "PREFLIGHT"
+        ],
+        "HEALTH_CHECK": [
+          "ACTIVATE"
+        ]
+      },
+      "completion_conditions": [
+        "SERVICE_LISTENING",
+        "HEALTHCHECK_200_OR_PID_ACTIVE"
+      ],
+      "fallback_policy": "REVERT_LAUNCH_ON_HEALTHCHECK_FAIL",
+      "risk_policy": "CONFIRM_REQUIRED",
+      "canonical_intents": [
+        "conectar",
+        "check-endpoint"
+      ]
+    },
+    "ORGANIZE.SYSTEM": {
+      "mission_id": "ORGANIZE.SYSTEM",
+      "aliases": [
+        "organiza tudo",
+        "organiza isso",
+        "arruma tudo",
+        "coloca em ordem",
+        "organiza a casa",
+        "deixa organizado",
+        "estrutura isso",
+        "ajeita isso"
+      ],
+      "canonical_meaning": "Diagnosticar e estruturar componentes, dependências e artefatos de forma segura e incremental.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "STANDARD",
+      "default_surface": "ANTIGRAVITY_VISUAL",
+      "mutation_policy": "CONFIRM_REQUIRED",
+      "referenced_intents": [
+        "deep-clean"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "RECON",
+          "surface": "AGY_BACKGROUND",
+          "action": "recon.project.hard"
+        },
+        {
+          "phase": 2,
+          "name": "CLASSIFY",
+          "surface": "AGY_BACKGROUND",
+          "action": "classify_file_types_and_artifacts"
+        },
+        {
+          "phase": 3,
+          "name": "DUPLICATE_DETECTION",
+          "surface": "AGY_BACKGROUND",
+          "action": "identify_redundant_files"
+        },
+        {
+          "phase": 4,
+          "name": "DEPENDENCY_MAP",
+          "surface": "AGY_BACKGROUND",
+          "action": "map.project.general"
+        },
+        {
+          "phase": 5,
+          "name": "PLAN",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "propose_organization_plan"
+        },
+        {
+          "phase": 6,
+          "name": "SAFE_REORGANIZATION",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "apply_safe_structure_changes"
+        },
+        {
+          "phase": 7,
+          "name": "VALIDATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "test-project"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "CLASSIFY",
+          "DUPLICATE_DETECTION"
+        ]
+      ],
+      "dependencies": {
+        "CLASSIFY": [
+          "RECON"
+        ],
+        "DUPLICATE_DETECTION": [
+          "RECON"
+        ],
+        "DEPENDENCY_MAP": [
+          "CLASSIFY"
+        ],
+        "PLAN": [
+          "DEPENDENCY_MAP"
+        ],
+        "SAFE_REORGANIZATION": [
+          "PLAN"
+        ],
+        "VALIDATE": [
+          "SAFE_REORGANIZATION"
+        ]
+      },
+      "completion_conditions": [
+        "PLAN_APPROVED",
+        "NO_BROKEN_IMPORTS",
+        "TESTS_PASSING"
+      ],
+      "fallback_policy": "GIT_RESTORE_ON_VALIDATION_ERROR",
+      "risk_policy": "CONFIRM_REQUIRED",
+      "canonical_intents": [
+        "deep-clean",
+        "clean-pycache",
+        "clean-modules",
+        "git-gc-aggressive"
+      ]
+    },
+    "MAKE_IT_WORK": {
+      "mission_id": "MAKE_IT_WORK",
+      "aliases": [
+        "faça funcionar",
+        "faz funcionar",
+        "coloca pra funcionar",
+        "resolve isso",
+        "faz isso rodar",
+        "deixa operacional",
+        "faz voltar",
+        "conserta isso"
+      ],
+      "canonical_meaning": "Investigar falha desconhecida, isolar causa-raiz e aplicar correção mínima com testes.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "SENTINELA_GATE",
+      "referenced_intents": [
+        "repair-project",
+        "test-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "REPRODUCE",
+          "surface": "AGY_BACKGROUND",
+          "action": "trigger_failure_test"
+        },
+        {
+          "phase": 2,
+          "name": "RECON",
+          "surface": "AGY_BACKGROUND",
+          "action": "recon.project.hard"
+        },
+        {
+          "phase": 3,
+          "name": "DIAGNOSE",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_stacktraces_and_logs"
+        },
+        {
+          "phase": 4,
+          "name": "ROOT_CAUSE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "isolate_faulty_component"
+        },
+        {
+          "phase": 5,
+          "name": "PLAN_FIX",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "plan_minimal_diff"
+        },
+        {
+          "phase": 6,
+          "name": "REPAIR",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "apply_code_repair"
+        },
+        {
+          "phase": 7,
+          "name": "FOCUSED_TEST",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_reproducing_test"
+        },
+        {
+          "phase": 8,
+          "name": "REGRESSION",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_full_test_suite"
+        },
+        {
+          "phase": 9,
+          "name": "VALIDATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "confirm_operational_health"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "RECON": [
+          "REPRODUCE"
+        ],
+        "DIAGNOSE": [
+          "RECON"
+        ],
+        "ROOT_CAUSE": [
+          "DIAGNOSE"
+        ],
+        "PLAN_FIX": [
+          "ROOT_CAUSE"
+        ],
+        "REPAIR": [
+          "PLAN_FIX"
+        ],
+        "FOCUSED_TEST": [
+          "REPAIR"
+        ],
+        "REGRESSION": [
+          "FOCUSED_TEST"
+        ],
+        "VALIDATE": [
+          "REGRESSION"
+        ]
+      },
+      "completion_conditions": [
+        "FAILURE_REPRODUCED",
+        "ROOT_CAUSE_FIXED",
+        "TESTS_PASS_100"
+      ],
+      "fallback_policy": "ROLLBACK_DIFF_IF_TESTS_FAIL",
+      "risk_policy": "SENTINELA_GATE",
+      "canonical_intents": [
+        "repair-project",
+        "test-project",
+        "unlock-git"
+      ]
+    },
+    "RECON.HARD": {
+      "mission_id": "RECON.HARD",
+      "aliases": [
+        "descobre o que tem",
+        "faz levantamento",
+        "faz reconhecimento",
+        "faz um recon",
+        "faz um reconhecimento",
+        "inventaria",
+        "levanta o ambiente",
+        "recon",
+        "reconhece",
+        "reconhecimento",
+        "reconheça"
+      ],
+      "canonical_meaning": "Descobrir exaustivamente todos os componentes, serviços e runtimes existentes.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "READ_ONLY=true",
+      "referenced_intents": [
+        "recon.project.hard"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "IDENTITY",
+          "surface": "AGY_BACKGROUND",
+          "action": "identify_project_meta"
+        },
+        {
+          "phase": 2,
+          "name": "SERVICES_AND_RUNTIMES",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_runtime_matrix"
+        },
+        {
+          "phase": 3,
+          "name": "DEPENDENCIES_AND_DATABASES",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_deps_and_dbs"
+        },
+        {
+          "phase": 4,
+          "name": "TECHNICAL_INVENTORY",
+          "surface": "AGY_BACKGROUND",
+          "action": "compile_inventory_json"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "SERVICES_AND_RUNTIMES",
+          "DEPENDENCIES_AND_DATABASES"
+        ]
+      ],
+      "dependencies": {
+        "SERVICES_AND_RUNTIMES": [
+          "IDENTITY"
+        ],
+        "DEPENDENCIES_AND_DATABASES": [
+          "IDENTITY"
+        ],
+        "TECHNICAL_INVENTORY": [
+          "SERVICES_AND_RUNTIMES",
+          "DEPENDENCIES_AND_DATABASES"
+        ]
+      },
+      "completion_conditions": [
+        "INVENTORY_JSON_EMITTED",
+        "READ_ONLY_CONFIRMED"
+      ],
+      "fallback_policy": "FALLBACK_TO_BASIC_LS",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "recon.project.hard",
+        "recon.host.hard",
+        "recon.network.hard"
+      ]
+    },
+    "MAP.GENERAL": {
+      "mission_id": "MAP.GENERAL",
+      "aliases": [
+        "mapeie",
+        "mapeia",
+        "faz um mapa",
+        "mapeamento geral",
+        "mostra como conecta",
+        "desenha isso",
+        "me dá a topologia",
+        "mostra a arquitetura",
+        "mapeie tudo"
+      ],
+      "canonical_meaning": "Descobrir relações e dependências topológicas entre componentes.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "STANDARD",
+      "default_surface": "HYBRID",
+      "mutation_policy": "READ_ONLY=true",
+      "referenced_intents": [
+        "map.project.general"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "COMPONENT_DISCOVERY",
+          "surface": "AGY_BACKGROUND",
+          "action": "discover_topology_nodes"
+        },
+        {
+          "phase": 2,
+          "name": "RELATIONSHIP_EXTRACTION",
+          "surface": "AGY_BACKGROUND",
+          "action": "extract_call_and_data_edges"
+        },
+        {
+          "phase": 3,
+          "name": "GRAPH_CONSTRUCTION",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "build_graph_adjacency"
+        },
+        {
+          "phase": 4,
+          "name": "DEPENDENCY_GRAPH",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "emit_dependency_graph"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "RELATIONSHIP_EXTRACTION": [
+          "COMPONENT_DISCOVERY"
+        ],
+        "GRAPH_CONSTRUCTION": [
+          "RELATIONSHIP_EXTRACTION"
+        ],
+        "DEPENDENCY_GRAPH": [
+          "GRAPH_CONSTRUCTION"
+        ]
+      },
+      "completion_conditions": [
+        "GRAPH_EMITTED",
+        "ZERO_MUTATION"
+      ],
+      "fallback_policy": "EMIT_SHALLOW_HIERARCHY",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "map.project.general",
+        "map.host.general",
+        "map.network.hard"
+      ]
+    },
+    "REPAIR.SMART": {
+      "mission_id": "REPAIR.SMART",
+      "aliases": [
+        "corrija",
+        "corrige",
+        "conserta",
+        "consertar",
+        "arruma",
+        "arrumar",
+        "repara",
+        "reparar",
+        "resolve",
+        "resolver",
+        "dá um jeito"
+      ],
+      "canonical_meaning": "Corrigir defeito de forma cirúrgica precedida de diagnóstico e sucedida de testes.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "ANTIGRAVITY_VISUAL",
+      "mutation_policy": "CONFIRM_REQUIRED",
+      "referenced_intents": [
+        "repair-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "VERIFY_PROBLEM",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_failing_component"
+        },
+        {
+          "phase": 2,
+          "name": "ROOT_CAUSE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "isolate_code_defect"
+        },
+        {
+          "phase": 3,
+          "name": "IMPACT",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "assess_blast_radius"
+        },
+        {
+          "phase": 4,
+          "name": "MINIMAL_FIX",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "apply_surgical_edit"
+        },
+        {
+          "phase": 5,
+          "name": "TEST",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_regression_test"
+        },
+        {
+          "phase": 6,
+          "name": "VALIDATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_fix_integrity"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "ROOT_CAUSE": [
+          "VERIFY_PROBLEM"
+        ],
+        "IMPACT": [
+          "ROOT_CAUSE"
+        ],
+        "MINIMAL_FIX": [
+          "IMPACT"
+        ],
+        "TEST": [
+          "MINIMAL_FIX"
+        ],
+        "VALIDATE": [
+          "TEST"
+        ]
+      },
+      "completion_conditions": [
+        "MINIMAL_DIFF_APPLIED",
+        "TESTS_PASSING"
+      ],
+      "fallback_policy": "GIT_RESTORE_ON_FAILURE",
+      "risk_policy": "CONFIRM_REQUIRED",
+      "canonical_intents": [
+        "repair-project",
+        "unlock-git"
+      ]
+    },
+    "OPTIMIZE.SMART": {
+      "mission_id": "OPTIMIZE.SMART",
+      "aliases": [
+        "otimize",
+        "otimiza",
+        "deixa mais rápido",
+        "acelera",
+        "melhora performance",
+        "turbo nisso",
+        "deixa leve",
+        "reduz latência"
+      ],
+      "canonical_meaning": "Identificar gargalos e aplicar otimização comprovada por métricas comparativas.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "BENCHMARK_REQUIRED",
+      "referenced_intents": [
+        "db-optimize-full"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "BASELINE",
+          "surface": "AGY_BACKGROUND",
+          "action": "measure_initial_latency"
+        },
+        {
+          "phase": 2,
+          "name": "PROFILE",
+          "surface": "AGY_BACKGROUND",
+          "action": "profile_cpu_and_io"
+        },
+        {
+          "phase": 3,
+          "name": "BOTTLENECK",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "identify_slowest_span"
+        },
+        {
+          "phase": 4,
+          "name": "PLAN",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "design_optimization_patch"
+        },
+        {
+          "phase": 5,
+          "name": "OPTIMIZE",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "apply_tuning_changes"
+        },
+        {
+          "phase": 6,
+          "name": "BENCHMARK",
+          "surface": "AGY_BACKGROUND",
+          "action": "measure_final_latency"
+        },
+        {
+          "phase": 7,
+          "name": "COMPARE",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_improvement_percentage"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "PROFILE": [
+          "BASELINE"
+        ],
+        "BOTTLENECK": [
+          "PROFILE"
+        ],
+        "PLAN": [
+          "BOTTLENECK"
+        ],
+        "OPTIMIZE": [
+          "PLAN"
+        ],
+        "BENCHMARK": [
+          "OPTIMIZE"
+        ],
+        "COMPARE": [
+          "BENCHMARK"
+        ]
+      },
+      "completion_conditions": [
+        "BENCHMARK_PROVES_SPEEDUP",
+        "NO_FUNCTIONAL_REGRESSION"
+      ],
+      "fallback_policy": "REVERT_IF_BENCHMARK_WORSENS",
+      "risk_policy": "BENCHMARK_VERIFIED",
+      "canonical_intents": [
+        "bench-endpoint",
+        "db-optimize-full",
+        "db-vacuum",
+        "git-gc-aggressive"
+      ]
+    },
+    "VALIDATE.COMPLETE": {
+      "mission_id": "VALIDATE.COMPLETE",
+      "aliases": [
+        "confere",
+        "confere tudo",
+        "garante que funciona",
+        "testa",
+        "testa tudo",
+        "teste",
+        "valida",
+        "validacao",
+        "validação",
+        "valide",
+        "verifica se ficou certo"
+      ],
+      "canonical_meaning": "Verificar exaustivamente critérios de aceitação, testes de regressão e integridade.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "NORMAL",
+      "default_profile": "FAST",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "AUTO_ALLOWED",
+      "referenced_intents": [
+        "test-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "ACCEPTANCE_CRITERIA",
+          "surface": "AGY_BACKGROUND",
+          "action": "load_acceptance_criteria"
+        },
+        {
+          "phase": 2,
+          "name": "FOCUSED_TESTS",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_unit_tests"
+        },
+        {
+          "phase": 3,
+          "name": "INTEGRATION_TESTS",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_integration_suite"
+        },
+        {
+          "phase": 4,
+          "name": "REGRESSION",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_regression_matrix"
+        },
+        {
+          "phase": 5,
+          "name": "STATE_CHECK",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_git_and_runtime_state"
+        },
+        {
+          "phase": 6,
+          "name": "EVIDENCE",
+          "surface": "AGY_BACKGROUND",
+          "action": "record_validation_receipt"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "FOCUSED_TESTS",
+          "INTEGRATION_TESTS"
+        ]
+      ],
+      "dependencies": {
+        "FOCUSED_TESTS": [
+          "ACCEPTANCE_CRITERIA"
+        ],
+        "INTEGRATION_TESTS": [
+          "ACCEPTANCE_CRITERIA"
+        ],
+        "REGRESSION": [
+          "FOCUSED_TESTS",
+          "INTEGRATION_TESTS"
+        ],
+        "STATE_CHECK": [
+          "REGRESSION"
+        ],
+        "EVIDENCE": [
+          "STATE_CHECK"
+        ]
+      },
+      "completion_conditions": [
+        "ALL_GATES_PASS",
+        "EVIDENCE_ATTACHED"
+      ],
+      "fallback_policy": "EMIT_FAIL_REPORT",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "test-project",
+        "audit-all"
+      ]
+    },
+    "SYNC.SMART": {
+      "mission_id": "SYNC.SMART",
+      "aliases": [
+        "sincronize",
+        "sincroniza",
+        "atualiza tudo",
+        "deixa sincronizado",
+        "alinha tudo",
+        "joga pro github",
+        "sincroniza estado"
+      ],
+      "canonical_meaning": "Sincronizar estado entre workspace local, governança e remoto sem sobrescrita destrutiva.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "NON_DESTRUCTIVE_SYNC",
+      "referenced_intents": [
+        "audit-git-integrity"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "RESOLVE_TARGET",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_remote_origin"
+        },
+        {
+          "phase": 2,
+          "name": "AUDIT_DIFF",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit_git_status_and_diff"
+        },
+        {
+          "phase": 3,
+          "name": "VERIFY_SECRETS",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit-git-history-pii"
+        },
+        {
+          "phase": 4,
+          "name": "SAFE_SYNC",
+          "surface": "AGY_BACKGROUND",
+          "action": "push_or_sync_safe"
+        },
+        {
+          "phase": 5,
+          "name": "CONFIRM_REMOTE",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_remote_head"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "AUDIT_DIFF": [
+          "RESOLVE_TARGET"
+        ],
+        "VERIFY_SECRETS": [
+          "AUDIT_DIFF"
+        ],
+        "SAFE_SYNC": [
+          "VERIFY_SECRETS"
+        ],
+        "CONFIRM_REMOTE": [
+          "SAFE_SYNC"
+        ]
+      },
+      "completion_conditions": [
+        "ZERO_SECRETS_EXPOSED",
+        "REMOTE_CONFIRMED"
+      ],
+      "fallback_policy": "ABORT_ON_UNTRACKED_DIRTY_STATE",
+      "risk_policy": "ZERO_FORCE_PUSH",
+      "canonical_intents": [
+        "config-sync",
+        "audit-git-integrity"
+      ]
+    },
+    "INTEGRATE.SMART": {
+      "mission_id": "INTEGRATE.SMART",
+      "aliases": [
+        "integre",
+        "integra",
+        "conecta os dois",
+        "junta",
+        "vincula",
+        "faz conversar",
+        "liga isso com aquilo"
+      ],
+      "canonical_meaning": "Conectar dois componentes ou serviços descobrindo contratos, autenticação e fluxo bidirecional.",
+      "scope_resolution": "CONTEXTUAL",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "CONFIRM_REQUIRED",
+      "referenced_intents": [
+        "repair-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "IDENTIFY_A",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_system_a"
+        },
+        {
+          "phase": 2,
+          "name": "IDENTIFY_B",
+          "surface": "AGY_BACKGROUND",
+          "action": "inspect_system_b"
+        },
+        {
+          "phase": 3,
+          "name": "CONTRACT_DISCOVERY",
+          "surface": "AGY_BACKGROUND",
+          "action": "read_api_or_schema_contracts"
+        },
+        {
+          "phase": 4,
+          "name": "AUTH_PERMISSIONS",
+          "surface": "AGY_BACKGROUND",
+          "action": "validate_shared_credentials"
+        },
+        {
+          "phase": 5,
+          "name": "INTERFACE_SELECTION",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "design_adapter_layer"
+        },
+        {
+          "phase": 6,
+          "name": "IMPLEMENT",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "code_bridge_and_wiring"
+        },
+        {
+          "phase": 7,
+          "name": "TEST_A_TO_B",
+          "surface": "AGY_BACKGROUND",
+          "action": "test_forward_communication"
+        },
+        {
+          "phase": 8,
+          "name": "TEST_B_TO_A",
+          "surface": "AGY_BACKGROUND",
+          "action": "test_reverse_communication"
+        },
+        {
+          "phase": 9,
+          "name": "VALIDATE",
+          "surface": "AGY_BACKGROUND",
+          "action": "validate_end_to_end_flow"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "IDENTIFY_A",
+          "IDENTIFY_B"
+        ]
+      ],
+      "dependencies": {
+        "CONTRACT_DISCOVERY": [
+          "IDENTIFY_A",
+          "IDENTIFY_B"
+        ],
+        "AUTH_PERMISSIONS": [
+          "CONTRACT_DISCOVERY"
+        ],
+        "INTERFACE_SELECTION": [
+          "AUTH_PERMISSIONS"
+        ],
+        "IMPLEMENT": [
+          "INTERFACE_SELECTION"
+        ],
+        "TEST_A_TO_B": [
+          "IMPLEMENT"
+        ],
+        "TEST_B_TO_A": [
+          "TEST_A_TO_B"
+        ],
+        "VALIDATE": [
+          "TEST_B_TO_A"
+        ]
+      },
+      "completion_conditions": [
+        "BIDIRECTIONAL_TEST_PASSES",
+        "CONTRACTS_VALIDATED"
+      ],
+      "fallback_policy": "ROLLBACK_ADAPTER_ON_FAILURE",
+      "risk_policy": "CONFIRM_REQUIRED",
+      "canonical_intents": [
+        "conectar",
+        "check-endpoint",
+        "test-project"
+      ]
+    },
+    "PREPARE.SMART": {
+      "mission_id": "PREPARE.SMART",
+      "aliases": [
+        "prepare",
+        "prepara",
+        "deixa pronto",
+        "prepara pra usar",
+        "prepara pra produção",
+        "prepara pra producao",
+        "deixa no ponto"
+      ],
+      "canonical_meaning": "Configurar e disponibilizar ambiente para objetivo operacional determinado.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "READ_ONLY_FIRST=true",
+      "referenced_intents": [
+        "audit-deps",
+        "test-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "CONTEXT_INSPECTION",
+          "surface": "AGY_BACKGROUND",
+          "action": "detect_target_environment"
+        },
+        {
+          "phase": 2,
+          "name": "DEPENDENCY_CHECK",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_installed_binaries"
+        },
+        {
+          "phase": 3,
+          "name": "CONFIG_HARDENING",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit_env_files"
+        },
+        {
+          "phase": 4,
+          "name": "PREFLIGHT_VALIDATION",
+          "surface": "AGY_BACKGROUND",
+          "action": "run_smoke_tests"
+        },
+        {
+          "phase": 5,
+          "name": "READINESS_REPORT",
+          "surface": "AGY_BACKGROUND",
+          "action": "emit_ready_manifest"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "DEPENDENCY_CHECK",
+          "CONFIG_HARDENING"
+        ]
+      ],
+      "dependencies": {
+        "DEPENDENCY_CHECK": [
+          "CONTEXT_INSPECTION"
+        ],
+        "CONFIG_HARDENING": [
+          "CONTEXT_INSPECTION"
+        ],
+        "PREFLIGHT_VALIDATION": [
+          "DEPENDENCY_CHECK",
+          "CONFIG_HARDENING"
+        ],
+        "READINESS_REPORT": [
+          "PREFLIGHT_VALIDATION"
+        ]
+      },
+      "completion_conditions": [
+        "SMOKE_TESTS_PASS",
+        "READINESS_CONFIRMED"
+      ],
+      "fallback_policy": "REPORT_BLOCKING_GAPS",
+      "risk_policy": "READ_ONLY_FIRST",
+      "canonical_intents": [
+        "test-project",
+        "audit.project.hard",
+        "recon.project.hard"
+      ]
+    },
+    "REVIEW.DEEP": {
+      "mission_id": "REVIEW.DEEP",
+      "aliases": [
+        "faz um pente fino",
+        "pente fino",
+        "olha minuciosamente",
+        "revê tudo",
+        "analisa nos mínimos detalhes",
+        "procura qualquer problema"
+      ],
+      "canonical_meaning": "Auditoria minuciosa de ponta a ponta procurando edge cases, inconsistências e vulnerabilidades.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "FORENSIC",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "READ_ONLY=true",
+      "referenced_intents": [
+        "audit.project.hard"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "RECON",
+          "surface": "AGY_BACKGROUND",
+          "action": "recon.project.hard"
+        },
+        {
+          "phase": 2,
+          "name": "AUDIT_HARD",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit.project.hard"
+        },
+        {
+          "phase": 3,
+          "name": "CROSS_CHECK",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "cross_reference_configs_and_code"
+        },
+        {
+          "phase": 4,
+          "name": "EDGE_CASES",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "audit_boundary_conditions"
+        },
+        {
+          "phase": 5,
+          "name": "INCONSISTENCIES",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "find_schema_and_logic_drifts"
+        },
+        {
+          "phase": 6,
+          "name": "REPORT",
+          "surface": "AGY_BACKGROUND",
+          "action": "emit_deep_forensic_report"
+        }
+      ],
+      "parallel_groups": [
+        [
+          "EDGE_CASES",
+          "INCONSISTENCIES"
+        ]
+      ],
+      "dependencies": {
+        "AUDIT_HARD": [
+          "RECON"
+        ],
+        "CROSS_CHECK": [
+          "AUDIT_HARD"
+        ],
+        "EDGE_CASES": [
+          "CROSS_CHECK"
+        ],
+        "INCONSISTENCIES": [
+          "CROSS_CHECK"
+        ],
+        "REPORT": [
+          "EDGE_CASES",
+          "INCONSISTENCIES"
+        ]
+      },
+      "completion_conditions": [
+        "ZERO_MUTATION",
+        "FULL_GAP_MATRIX_BUILT"
+      ],
+      "fallback_policy": "CONTINUE_ON_EDGE_CASE_WARNING",
+      "risk_policy": "READ_ONLY",
+      "canonical_intents": [
+        "audit.project.hard",
+        "audit-all",
+        "audit-git-integrity"
+      ]
+    },
+    "STABILIZE.SYSTEM": {
+      "mission_id": "STABILIZE.SYSTEM",
+      "aliases": [
+        "deixa redondo",
+        "deixa estável",
+        "deixa certinho",
+        "finaliza direito",
+        "faz ficar robusto",
+        "deixa pronto"
+      ],
+      "canonical_meaning": "Alinhar saúde operacional, corrigir pendências e assegurar resiliência do sistema.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "HARD",
+      "default_profile": "DEEP",
+      "default_surface": "HYBRID",
+      "mutation_policy": "SENTINELA_GATE",
+      "referenced_intents": [
+        "repair-project",
+        "test-project"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "AUDIT",
+          "surface": "AGY_BACKGROUND",
+          "action": "audit.project.hard"
+        },
+        {
+          "phase": 2,
+          "name": "DIAGNOSE",
+          "surface": "AGY_BACKGROUND",
+          "action": "isolate_instabilities"
+        },
+        {
+          "phase": 3,
+          "name": "REPAIR",
+          "surface": "ANTIGRAVITY_VISUAL",
+          "action": "repair-project"
+        },
+        {
+          "phase": 4,
+          "name": "TEST",
+          "surface": "AGY_BACKGROUND",
+          "action": "test-project"
+        },
+        {
+          "phase": 5,
+          "name": "PERFORMANCE_CHECK",
+          "surface": "AGY_BACKGROUND",
+          "action": "benchmark_health"
+        },
+        {
+          "phase": 6,
+          "name": "REGRESSION",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_no_regressions"
+        },
+        {
+          "phase": 7,
+          "name": "FINAL_VALIDATION",
+          "surface": "AGY_BACKGROUND",
+          "action": "confirm_stability_receipt"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "DIAGNOSE": [
+          "AUDIT"
+        ],
+        "REPAIR": [
+          "DIAGNOSE"
+        ],
+        "TEST": [
+          "REPAIR"
+        ],
+        "PERFORMANCE_CHECK": [
+          "TEST"
+        ],
+        "REGRESSION": [
+          "PERFORMANCE_CHECK"
+        ],
+        "FINAL_VALIDATION": [
+          "REGRESSION"
+        ]
+      },
+      "completion_conditions": [
+        "ZERO_FAILING_TESTS",
+        "STABILITY_VERIFIED"
+      ],
+      "fallback_policy": "REVERT_INSTABILITY_FIX_IF_TESTS_FAIL",
+      "risk_policy": "SENTINELA_GATE",
+      "canonical_intents": [
+        "repair-project",
+        "test-project",
+        "clean-pycache",
+        "audit.project.hard"
+      ]
+    },
+    "COMPLETE.WORK": {
+      "mission_id": "COMPLETE.WORK",
+      "aliases": [
+        "fecha isso",
+        "finaliza",
+        "termina",
+        "conclui",
+        "pode fechar",
+        "deixa pronto e fecha"
+      ],
+      "canonical_meaning": "Encerrar formalmente o ciclo operacional com verificação de pendências, evidências e sincronização.",
+      "scope_resolution": "PROJECT",
+      "default_depth": "NORMAL",
+      "default_profile": "STANDARD",
+      "default_surface": "AGY_BACKGROUND",
+      "mutation_policy": "SENTINELA_GATE",
+      "referenced_intents": [
+        "test-project",
+        "git-governanca"
+      ],
+      "phases": [
+        {
+          "phase": 1,
+          "name": "CHECK_PENDING",
+          "surface": "AGY_BACKGROUND",
+          "action": "check_uncommitted_changes"
+        },
+        {
+          "phase": 2,
+          "name": "TEST",
+          "surface": "AGY_BACKGROUND",
+          "action": "test-project"
+        },
+        {
+          "phase": 3,
+          "name": "ACCEPTANCE",
+          "surface": "AGY_BACKGROUND",
+          "action": "verify_task_criteria"
+        },
+        {
+          "phase": 4,
+          "name": "EVIDENCE",
+          "surface": "AGY_BACKGROUND",
+          "action": "compile_completion_receipt"
+        },
+        {
+          "phase": 5,
+          "name": "SENTINELA_POST_FLIGHT",
+          "surface": "AGY_BACKGROUND",
+          "action": "sentinela_governance_close"
+        },
+        {
+          "phase": 6,
+          "name": "SYNC",
+          "surface": "AGY_BACKGROUND",
+          "action": "git_sync_if_authorized"
+        },
+        {
+          "phase": 7,
+          "name": "DONE",
+          "surface": "AGY_BACKGROUND",
+          "action": "mark_task_as_done"
+        }
+      ],
+      "parallel_groups": [],
+      "dependencies": {
+        "TEST": [
+          "CHECK_PENDING"
+        ],
+        "ACCEPTANCE": [
+          "TEST"
+        ],
+        "EVIDENCE": [
+          "ACCEPTANCE"
+        ],
+        "SENTINELA_POST_FLIGHT": [
+          "EVIDENCE"
+        ],
+        "SYNC": [
+          "SENTINELA_POST_FLIGHT"
+        ],
+        "DONE": [
+          "SYNC"
+        ]
+      },
+      "completion_conditions": [
+        "ALL_ACCEPTANCE_CRITERIA_MET",
+        "SENTINELA_RECEIPT_EMITTED"
+      ],
+      "fallback_policy": "REMAIN_IN_SYNC_PENDING_IF_SYNC_FAILS",
+      "risk_policy": "SENTINELA_GATE",
+      "canonical_intents": [
+        "test-project",
+        "config-sync",
+        "audit.project.hard"
+      ]
+    }
+  },
+  "modifiers": {
+    "EXECUTION.DISCREET": {
+      "modifier_id": "EXECUTION.DISCREET",
+      "aliases": [
+        "modo oculto",
+        "modo silencioso",
+        "sem aparecer",
+        "faz escondido",
+        "roda por trás",
+        "faz em segundo plano",
+        "não mexe na minha tela",
+        "não mexe na tela",
+        "não abre nada",
+        "não muda de janela",
+        "deixa rodando por trás",
+        "em background"
+      ],
+      "settings": {
+        "BACKGROUND": true,
+        "UI_FOCUS": false,
+        "VISIBLE_TERMINAL": false,
+        "OPEN_NEW_WINDOWS": false,
+        "OPEN_NEW_TABS": false,
+        "AUDIT_LOGGING": true,
+        "SECURITY_LOGGING": true
+      },
+      "forbidden_mappings": [
+        "DISABLE_LOGGING",
+        "DELETE_HISTORY",
+        "HIDE_FROM_SECURITY",
+        "DISGUISE_PROCESS",
+        "BYPASS_MONITORING"
+      ]
+    },
+    "EXECUTION.ADVANCED": {
+      "modifier_id": "EXECUTION.ADVANCED",
+      "aliases": [
+        "modo avançado",
+        "ativa avançado",
+        "modo hard",
+        "vai no avançado",
+        "potência máxima",
+        "modo turbo",
+        "modo completo",
+        "usa tudo que tiver",
+        "vai fundo",
+        "va mais a fundo",
+        "vá mais a fundo",
+        "vai mais a fundo",
+        "mais a fundo",
+        "mais alem",
+        "mais além",
+        "vá mais além",
+        "vai mais além"
+      ],
+      "settings": {
+        "DEPTH": "HARD",
+        "PROFILE": "DEEP",
+        "ALLOW_SUBAGENTS": true,
+        "ALLOW_PARALLEL": true,
+        "ALLOW_EXTENDED_DISCOVERY": true,
+        "ALLOW_DEEP_TESTING": true
+      },
+      "invariants": [
+        "NO_SENTINELA_BYPASS",
+        "NO_DESTRUCTIVE_AUTO_APPROVAL",
+        "PRESERVE_HUMAN_GATES"
+      ]
+    },
+    "READ_ONLY": {
+      "modifier_id": "READ_ONLY",
+      "aliases": [
+        "só leitura",
+        "so leitura",
+        "sem alterar",
+        "sem modificar"
+      ],
+      "settings": {
+        "READ_ONLY": true,
+        "MUTATION_ALLOWED": false
+      }
+    },
+    "FAST": {
+      "modifier_id": "FAST",
+      "aliases": [
+        "rápido",
+        "rapido",
+        "ligeiro",
+        "express"
+      ],
+      "settings": {
+        "DEPTH": "LIGHT",
+        "PROFILE": "FAST"
+      }
+    },
+    "DEEP": {
+      "modifier_id": "DEEP",
+      "aliases": [
+        "profundo",
+        "completo",
+        "minucioso",
+        "forense"
+      ],
+      "settings": {
+        "DEPTH": "FORENSIC",
+        "PROFILE": "DEEP"
+      }
+    },
+    "SUBAGENTS": {
+      "modifier_id": "SUBAGENTS",
+      "aliases": [
+        "use subagentes",
+        "com subagentes",
+        "paralelo",
+        "em paralelo"
+      ],
+      "settings": {
+        "ALLOW_SUBAGENTS": true,
+        "ALLOW_PARALLEL": true,
+        "PROFILE": "PARALLEL"
+      }
+    }
+  },
+  "composition_rules": {
+    "connectors": [
+      " e depois ",
+      " em seguida ",
+      " logo após ",
+      " depois ",
+      " e ",
+      ", "
+    ],
+    "order_preserved": true,
+    "surface_composition_rule": "IF_ANY_VISUAL_AND_ANY_BACKGROUND_THEN_HYBRID",
+    "discreet_override_rule": "APPLY_BACKGROUND_ACROSS_ENTIRE_PIPELINE"
+  },
+  "context_rules": {
+    "priority_order": [
+      "EXPLICIT_TARGET",
+      "CURRENT_CONVERSATION_TARGET",
+      "ACTIVE_PROJECT",
+      "ACTIVE_SESSION",
+      "NEEDS_DISAMBIGUATION"
+    ],
+    "default_target": "THIS_PROJECT"
+  }
+}

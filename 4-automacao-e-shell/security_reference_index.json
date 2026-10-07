@@ -1,0 +1,3704 @@
+{
+  "schema_version": 1,
+  "total_references": 191,
+  "generated_at": "2026-10-06T09:19:59.975850+00:00",
+  "execution_policy_global": "REFERENCE_ONLY",
+  "sources": [
+    "https://github.com/tripping-alien/HackersCheatsheet.git",
+    "https://github.com/cdac/Pentesting_cheatsheet.git",
+    "https://github.com/swisskyrepo/PayloadsAllTheThings.git"
+  ],
+  "entries": [
+    {
+      "source_id": "sec-hackerscheatsheet-04c6e90f",
+      "repository": "https://github.com/tripping-alien/HackersCheatsheet.git",
+      "commit": "019a923b7d11ff7ab9c0c1671476d48a50268f70",
+      "path": "README.md",
+      "category": "RECON",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "recon",
+        "general",
+        "metasploit"
+      ],
+      "technique": "README",
+      "description": "Referência de pentest/defesa extraída de HackersCheatsheet: README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/tripping-alien/HackersCheatsheet/blob/019a923b7d11ff7ab9c0c1671476d48a50268f70/README.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-590cf3dc",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "Payloads.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "Payloads",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: Payloads.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/Payloads.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-1e900951",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "metasploit.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "metasploit",
+        "general"
+      ],
+      "technique": "MSFConsole",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: metasploit.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/metasploit.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-04c6e90f",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "README.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "RedTeaming_CheatSheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/README.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-237379f9",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "OSINT.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "OSINT",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: OSINT.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/OSINT.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-ae8f733a",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cobalt-strike.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "Cobalt-Strike cheatsheet.",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cobalt-strike.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cobalt-strike.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-a2cf0006",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "covenant.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "covenant",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: covenant.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/covenant.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-9adab1ce",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "python_dependancies.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "general"
+      ],
+      "technique": "Best way to handle python dependancies",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: python_dependancies.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/python_dependancies.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-89d96f3e",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/recon.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "cloud",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud",
+        "cloud_security",
+        "gobuster"
+      ],
+      "technique": "Recon on the target",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/recon.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/recon.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-1442a595",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/readme.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "cloud",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud",
+        "cloud_security"
+      ],
+      "technique": "Pentesting the cloud cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-03a9569e",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/initial-access-attacks.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "cloud",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud",
+        "cloud_security"
+      ],
+      "technique": "Initial access attacks",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/initial-access-attacks.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/initial-access-attacks.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-f3443034",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Lateral-Movement.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Lateral Movement",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Lateral-Movement.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Lateral-Movement.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-492a9a6d",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Host-Persistence.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Host Persistence",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Host-Persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Host-Persistence.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-0b2b566c",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Domain-Privilege-Escalation.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Domain Privilege escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Domain-Privilege-Escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Domain-Privilege-Escalation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-ec23ba1b",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Domain-Enumeration.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "bloodhound",
+        "windows-ad"
+      ],
+      "technique": "Domain Enumeration",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Domain-Enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Domain-Enumeration.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-67b56658",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Domain-Persistence.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Domain persistence",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Domain-Persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Domain-Persistence.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-957428e6",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Initial-Access.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Initial Access attacks",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Initial-Access.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Initial-Access.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-d45875b5",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/readme.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Windows-Domain-Cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-c9020a6f",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Evasion.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Evasion",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Evasion.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Evasion.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-6177a01e",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Host-Reconnaissance.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Host Reconnaissance",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Host-Reconnaissance.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Host-Reconnaissance.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-04023b0a",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/relaying.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "hashcat",
+        "responder",
+        "windows-ad"
+      ],
+      "technique": "relaying",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/relaying.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/relaying.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-fb59c731",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/linux_ad.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "windows-ad"
+      ],
+      "technique": "Linux Active Directory",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/linux_ad.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/linux_ad.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-ca1bda69",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "windows-ad/Post-Exploitation.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "windows-ad",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "penetration_testing",
+        "mimikatz",
+        "windows-ad"
+      ],
+      "technique": "Post-Exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: windows-ad/Post-Exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/windows-ad/Post-Exploitation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-4637a9f8",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/pivoting.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing"
+      ],
+      "technique": "Post Exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/pivoting.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/pivoting.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-b5c9e0ce",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/readme.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing",
+        "metasploit"
+      ],
+      "technique": "Infrastructure cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-df9c0121",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/exploitation.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing"
+      ],
+      "technique": "Exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/exploitation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-a36bb869",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/privesc_linux.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing"
+      ],
+      "technique": "Linux Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/privesc_linux.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/privesc_linux.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-98657965",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/enumeration.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing",
+        "nmap"
+      ],
+      "technique": "Enumeration",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/enumeration.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-dc2fa242",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/privesc_windows.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing"
+      ],
+      "technique": "Windows Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/privesc_windows.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/privesc_windows.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-dada2820",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "infrastructure/bufferoverflow.md",
+      "category": "PENETRATION_TESTING",
+      "subcategory": "infrastructure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "infrastructure",
+        "penetration_testing",
+        "metasploit"
+      ],
+      "technique": "Buffer overflow",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: infrastructure/bufferoverflow.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/infrastructure/bufferoverflow.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-69d21cb5",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/General-information.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security"
+      ],
+      "technique": "General information",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/General-information.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/General-information.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-223c83ad",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/Cloud-OnPrem-lateral-movement.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security"
+      ],
+      "technique": "Lateral movement",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/Cloud-OnPrem-lateral-movement.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/Cloud-OnPrem-lateral-movement.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-7bf9833d",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/readme.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security"
+      ],
+      "technique": "Azure-cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-c174cbd2",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/persistence.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security"
+      ],
+      "technique": "Persistence",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/persistence.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-0761ad19",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/privilege-escalation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security",
+        "mimikatz"
+      ],
+      "technique": "Privilege escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/privilege-escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/privilege-escalation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-a39f5e42",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/post-exploitation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security"
+      ],
+      "technique": "Post exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/post-exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/post-exploitation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-5f51ed80",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/azure/Authenticated-enumeration.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "azure",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "azure",
+        "cloud_security",
+        "bloodhound"
+      ],
+      "technique": "Authenticated enumeration",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/azure/Authenticated-enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/azure/Authenticated-enumeration.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-d1ffd912",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/lateral-movement.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Lateral Movement",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/lateral-movement.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/lateral-movement.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-7cfe8a0a",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/readme.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Google Cloud Platform pentesting cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-70230c9f",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/persistence.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Persistence",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/persistence.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-bfb4af3b",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/privilege-escalation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/privilege-escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/privilege-escalation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-fcde231f",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/post-exploitation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "curl",
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Post exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/post-exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/post-exploitation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-13109c15",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/gcb/authenticated-enumeration.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "gcb",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "curl",
+        "cloud_security",
+        "gcb"
+      ],
+      "technique": "Authenticated enumeration",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/gcb/authenticated-enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/gcb/authenticated-enumeration.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-806fb5ed",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/lateral-movement.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "cloud_security"
+      ],
+      "technique": "Lateral movement",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/lateral-movement.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/lateral-movement.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-9e460327",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/readme.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "cloud_security"
+      ],
+      "technique": "Amazon Web Services pentesting cheatsheet",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/readme.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/readme.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-fc67d562",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/persistence.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "cloud_security"
+      ],
+      "technique": "Persistence",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/persistence.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-292e9ac7",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/privilege-escalation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "curl",
+        "cloud_security"
+      ],
+      "technique": "Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/privilege-escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/privilege-escalation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-3fdef600",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/post-exploitation.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "cloud_security"
+      ],
+      "technique": "Post exploitation",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/post-exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/post-exploitation.md"
+    },
+    {
+      "source_id": "sec-pentesting_cheatsheet-4ee37f5e",
+      "repository": "https://github.com/cdac/Pentesting_cheatsheet.git",
+      "commit": "d62a20e83935bf9798f7fa99c97f23adaa9621c3",
+      "path": "cloud/aws/authenticated-enumeration.md",
+      "category": "CLOUD_SECURITY",
+      "subcategory": "aws",
+      "platform": "cross-platform",
+      "protocol": "generic",
+      "tags": [
+        "aws",
+        "cloud_security"
+      ],
+      "technique": "Authenticated enumeration",
+      "description": "Referência de pentest/defesa extraída de Pentesting_cheatsheet: cloud/aws/authenticated-enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/cdac/Pentesting_cheatsheet/blob/d62a20e83935bf9798f7fa99c97f23adaa9621c3/cloud/aws/authenticated-enumeration.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-04c6e90f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "general"
+      ],
+      "technique": "Payloads All The Things",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-6a337145",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CONTRIBUTING.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "general"
+      ],
+      "technique": "CONTRIBUTING",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CONTRIBUTING.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CONTRIBUTING.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-48a60859",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "DISCLAIMER.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "general",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "general"
+      ],
+      "technique": "DISCLAIMER",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: DISCLAIMER.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/DISCLAIMER.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ac7cc735",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Request Forgery/SSRF-Advanced-Exploitation.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Request Forgery",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "server side request forgery",
+        "web_security",
+        "curl"
+      ],
+      "technique": "SSRF Advanced Exploitation",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Request Forgery/SSRF-Advanced-Exploitation.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Request Forgery/SSRF-Advanced-Exploitation.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-0360636a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Request Forgery/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Request Forgery",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "server side request forgery",
+        "web_security"
+      ],
+      "technique": "Server-Side Request Forgery",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Request Forgery/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Request Forgery/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-91b79bbd",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Request Forgery/SSRF-Cloud-Instances.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Request Forgery",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "server side request forgery",
+        "web_security",
+        "curl"
+      ],
+      "technique": "SSRF URL for Cloud Instances",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Request Forgery/SSRF-Cloud-Instances.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Request Forgery/SSRF-Cloud-Instances.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4a7705de",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "_LEARNING_AND_SOCIALS/TWITTER.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "_LEARNING_AND_SOCIALS",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "_learning_and_socials",
+        "mimikatz"
+      ],
+      "technique": "Twitter",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: _LEARNING_AND_SOCIALS/TWITTER.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/_LEARNING_AND_SOCIALS/TWITTER.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-409138f3",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "_LEARNING_AND_SOCIALS/YOUTUBE.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "_LEARNING_AND_SOCIALS",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "john",
+        "web_security",
+        "_learning_and_socials"
+      ],
+      "technique": "Youtube",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: _LEARNING_AND_SOCIALS/YOUTUBE.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/_LEARNING_AND_SOCIALS/YOUTUBE.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-de7632b4",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "_LEARNING_AND_SOCIALS/BOOKS.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "_LEARNING_AND_SOCIALS",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "_learning_and_socials"
+      ],
+      "technique": "Books",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: _LEARNING_AND_SOCIALS/BOOKS.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/_LEARNING_AND_SOCIALS/BOOKS.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-5c000d7a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Randomness/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Randomness",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure randomness"
+      ],
+      "technique": "Insecure Randomness",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Randomness/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Randomness/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-a3b6884c",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Account Takeover/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Account Takeover",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "account takeover"
+      ],
+      "technique": "Account Takeover",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Account Takeover/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Account Takeover/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-cbd546cc",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Account Takeover/mfa-bypass.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Account Takeover",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "account takeover"
+      ],
+      "technique": "MFA Bypasses",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Account Takeover/mfa-bypass.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Account Takeover/mfa-bypass.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ab28388b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Virtual Hosts/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Virtual Hosts",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "virtual hosts",
+        "gobuster"
+      ],
+      "technique": "Virtual Host",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Virtual Hosts/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Virtual Hosts/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-5f9d8200",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/Python.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": "Python Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/Python.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/Python.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-22c3162c",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/DotNET.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": ".NET Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/DotNET.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/DotNET.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-cf712056",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/Node.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": "Node Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/Node.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/Node.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-de5be44d",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/PHP.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": "PHP Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/PHP.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/PHP.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-30316396",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": "Insecure Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-dc31aea4",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/Java.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "insecure deserialization"
+      ],
+      "technique": "Java Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/Java.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/Java.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-19a3133a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Deserialization/Ruby.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Deserialization",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure deserialization"
+      ],
+      "technique": "Ruby Deserialization",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Deserialization/Ruby.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Deserialization/Ruby.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4e12ebca",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "DOM Clobbering/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "DOM Clobbering",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "dom clobbering",
+        "web_security"
+      ],
+      "technique": "DOM Clobbering",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: DOM Clobbering/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/DOM Clobbering/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-fddbe7e2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CVE Exploits/Log4Shell.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CVE Exploits",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "cve exploits"
+      ],
+      "technique": "CVE-2021-44228 Log4Shell",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CVE Exploits/Log4Shell.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CVE Exploits/Log4Shell.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-3ad61df9",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CVE Exploits/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CVE Exploits",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "metasploit",
+        "cve exploits"
+      ],
+      "technique": "Common Vulnerabilities and Exposures",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CVE Exploits/README.md",
+      "risk": "REFERENCE_HIGH_RISK",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CVE Exploits/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-33bcfdcc",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Tabnabbing/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Tabnabbing",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "tabnabbing"
+      ],
+      "technique": "Tabnabbing",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Tabnabbing/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Tabnabbing/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-be328720",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CSV Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CSV Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "csv injection"
+      ],
+      "technique": "CSV Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CSV Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CSV Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-49dddcc5",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Open Redirect/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Open Redirect",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "open redirect"
+      ],
+      "technique": "Open URL Redirect",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Open Redirect/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Open Redirect/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-e0fd498a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XPATH Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XPATH Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xpath injection"
+      ],
+      "technique": "XPATH Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XPATH Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XPATH Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-33da2420",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Zip Slip/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Zip Slip",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "zip slip",
+        "web_security"
+      ],
+      "technique": "Zip Slip",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Zip Slip/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Zip Slip/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-16f6929a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Google Web Toolkit/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Google Web Toolkit",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "google web toolkit",
+        "web_security"
+      ],
+      "technique": "Google Web Toolkit",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Google Web Toolkit/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Google Web Toolkit/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-8c41fc30",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "NoSQL Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "NoSQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "nosql injection"
+      ],
+      "technique": "NoSQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: NoSQL Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/NoSQL Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4468cb4b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/ASP.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - ASP.NET",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/ASP.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/ASP.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-3e8f9539",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/Python.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - Python",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/Python.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/Python.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-676c9c41",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/Elixir.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - Elixir",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/Elixir.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/Elixir.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-e31e98e9",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/PHP.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - PHP",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/PHP.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/PHP.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-abeeff6f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/JavaScript.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - JavaScript",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/JavaScript.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/JavaScript.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-fb7b0312",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "john",
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-c3d9ccf2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/Java.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - Java",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/Java.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/Java.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f9dc8557",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Template Injection/Ruby.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Template Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "server side template injection"
+      ],
+      "technique": "Server Side Template Injection - Ruby",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Template Injection/Ruby.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Template Injection/Ruby.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-7d5a7952",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Client Side Path Traversal/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Client Side Path Traversal",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "client side path traversal"
+      ],
+      "technique": "Client Side Path Traversal",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Client Side Path Traversal/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Client Side Path Traversal/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-95ebc73f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Encoding Transformations/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Encoding Transformations",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "encoding transformations"
+      ],
+      "technique": "Encoding and Transformations",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Encoding Transformations/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Encoding Transformations/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-03e502cb",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Mass Assignment/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Mass Assignment",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "mass assignment"
+      ],
+      "technique": "Mass Assignment",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Mass Assignment/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Mass Assignment/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-9d12c378",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Clickjacking/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Clickjacking",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "burp",
+        "web_security",
+        "clickjacking"
+      ],
+      "technique": "Clickjacking",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Clickjacking/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Clickjacking/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-58c61b8f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Cross-Site Request Forgery/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Cross-Site Request Forgery",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "cross-site request forgery"
+      ],
+      "technique": "Cross-Site Request Forgery",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Cross-Site Request Forgery/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Cross-Site Request Forgery/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-37c0bb7e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Direct Object References/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Direct Object References",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure direct object references"
+      ],
+      "technique": "Insecure Direct Object References",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Direct Object References/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Direct Object References/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-5a4dd55f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "ORM Leak/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "ORM Leak",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "orm leak"
+      ],
+      "technique": "ORM Leak",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: ORM Leak/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/ORM Leak/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-2c87ac92",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XXE Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XXE Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xxe injection"
+      ],
+      "technique": "XML External Entity",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XXE Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XXE Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-de5bf79b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Regular Expression/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Regular Expression",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "regular expression"
+      ],
+      "technique": "Regular Expression",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Regular Expression/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Regular Expression/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-45b60892",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Dependency Confusion/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Dependency Confusion",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "dependency confusion"
+      ],
+      "technique": "Dependency Confusion",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Dependency Confusion/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Dependency Confusion/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f914e0c6",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/2 - XSS Polyglot.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "Polyglot XSS",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/2 - XSS Polyglot.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/2 - XSS Polyglot.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-a6c07c88",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/3 - XSS Common WAF Bypass.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "Common WAF Bypass",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/3 - XSS Common WAF Bypass.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/3 - XSS Common WAF Bypass.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-9679c757",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/1 - XSS Filter Bypass.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "XSS Filter Bypass",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/1 - XSS Filter Bypass.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/1 - XSS Filter Bypass.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-905d775a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "Cross Site Scripting",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-354aabd2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/4 - CSP Bypass.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "CSP Bypass",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/4 - CSP Bypass.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/4 - CSP Bypass.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4f478a2f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSS Injection/5 - XSS in Angular.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xss injection"
+      ],
+      "technique": "XSS in Angular and AngularJS",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSS Injection/5 - XSS in Angular.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSS Injection/5 - XSS in Angular.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-82d5fc0b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Prototype Pollution/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Prototype Pollution",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "prototype pollution",
+        "web_security",
+        "burp"
+      ],
+      "technique": "Prototype Pollution",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Prototype Pollution/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Prototype Pollution/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-028c42ff",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Source Code Management/Bazaar.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Source Code Management",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "insecure source code management",
+        "web_security"
+      ],
+      "technique": "Bazaar",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Source Code Management/Bazaar.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Source Code Management/Bazaar.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-39d79248",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Source Code Management/Subversion.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Source Code Management",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "insecure source code management",
+        "web_security",
+        "curl"
+      ],
+      "technique": "Subversion",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Source Code Management/Subversion.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Source Code Management/Subversion.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4fc0114e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Source Code Management/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Source Code Management",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "insecure source code management",
+        "web_security"
+      ],
+      "technique": "Insecure Source Code Management",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Source Code Management/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Source Code Management/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-d62b16ba",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Source Code Management/Git.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Source Code Management",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "insecure source code management",
+        "web_security"
+      ],
+      "technique": "Git",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Source Code Management/Git.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Source Code Management/Git.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-341c6de7",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Source Code Management/Mercurial.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Source Code Management",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "insecure source code management",
+        "web_security"
+      ],
+      "technique": "Mercurial",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Source Code Management/Mercurial.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Source Code Management/Mercurial.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-e99b9303",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "OAuth Misconfiguration/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "OAuth Misconfiguration",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "oauth misconfiguration"
+      ],
+      "technique": "OAuth Misconfiguration",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: OAuth Misconfiguration/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/OAuth Misconfiguration/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-24f2c568",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Prompt Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Prompt Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "prompt injection",
+        "web_security"
+      ],
+      "technique": "Prompt Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Prompt Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Prompt Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-568657ac",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/Cassandra Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "Cassandra Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/Cassandra Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/Cassandra Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-55acb6ea",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/MSSQL Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "MSSQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/MSSQL Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/MSSQL Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4369ff4e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/BigQuery Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "Google BigQuery SQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/BigQuery Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/BigQuery Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-03a388be",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection",
+        "sqlmap"
+      ],
+      "technique": "SQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-65a0db1e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/MySQL Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "MySQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/MySQL Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/MySQL Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-d8bae803",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/PostgreSQL Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "PostgreSQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/PostgreSQL Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/PostgreSQL Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-220bfe13",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/DB2 Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "DB2 Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/DB2 Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/DB2 Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-2aac218c",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/SQLite Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "SQLite Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/SQLite Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/SQLite Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-076767c8",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/OracleSQL Injection.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection"
+      ],
+      "technique": "Oracle SQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/OracleSQL Injection.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/OracleSQL Injection.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-8d4af747",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SQL Injection/SQLmap.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "sql injection",
+        "sqlmap"
+      ],
+      "technique": "SQLmap",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SQL Injection/SQLmap.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SQL Injection/SQLmap.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f899d917",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Insecure Management Interface/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Insecure Management Interface",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "insecure management interface"
+      ],
+      "technique": "Insecure Management Interface",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Insecure Management Interface/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Insecure Management Interface/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-85dd6a18",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "LaTeX Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "LaTeX Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "latex injection"
+      ],
+      "technique": "LaTeX Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: LaTeX Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/LaTeX Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-bfb0d0f4",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Java RMI/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Java RMI",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "java rmi",
+        "web_security",
+        "metasploit",
+        "nmap"
+      ],
+      "technique": "Java RMI",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Java RMI/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Java RMI/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-99656e35",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Denial of Service/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Denial of Service",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "curl",
+        "web_security",
+        "denial of service"
+      ],
+      "technique": "Denial of Service",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Denial of Service/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Denial of Service/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f9bd4370",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Brute Force Rate Limit/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Brute Force Rate Limit",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "brute force rate limit",
+        "web_security",
+        "burp",
+        "ffuf",
+        "curl"
+      ],
+      "technique": "Brute Force & Rate Limit",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Brute Force Rate Limit/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Brute Force Rate Limit/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-07b7deae",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Web Cache Deception/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Web Cache Deception",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "web cache deception"
+      ],
+      "technique": "Web Cache Deception",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Web Cache Deception/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Web Cache Deception/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-91316547",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XSLT Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XSLT Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "xslt injection",
+        "web_security"
+      ],
+      "technique": "XSLT Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XSLT Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XSLT Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-de46c8e0",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Business Logic Errors/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Business Logic Errors",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "business logic errors",
+        "web_security"
+      ],
+      "technique": "Business Logic Errors",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Business Logic Errors/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Business Logic Errors/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-a06b9f2c",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "HTTP Parameter Pollution/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "HTTP Parameter Pollution",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "http parameter pollution"
+      ],
+      "technique": "HTTP Parameter Pollution",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: HTTP Parameter Pollution/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/HTTP Parameter Pollution/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-630f6059",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CRLF Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CRLF Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "crlf injection",
+        "web_security"
+      ],
+      "technique": "Carriage Return Line Feed",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CRLF Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CRLF Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-104faf16",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Command Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Command Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "command injection"
+      ],
+      "technique": "Command Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Command Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Command Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f57f94f9",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Request Smuggling/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Request Smuggling",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "request smuggling"
+      ],
+      "technique": "Request Smuggling",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Request Smuggling/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Request Smuggling/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-be163189",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CORS Misconfiguration/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CORS Misconfiguration",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "burp",
+        "web_security",
+        "cors misconfiguration"
+      ],
+      "technique": "CORS Misconfiguration",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CORS Misconfiguration/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CORS Misconfiguration/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-17ec2f95",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Type Juggling/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Type Juggling",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "type juggling",
+        "web_security"
+      ],
+      "technique": "Type Juggling",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Type Juggling/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Type Juggling/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ebfd60d7",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "_template_vuln/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "_template_vuln",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "_template_vuln"
+      ],
+      "technique": "Vulnerability Title",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: _template_vuln/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/_template_vuln/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-394806e3",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Headless Browser/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Headless Browser",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "headless browser",
+        "web_security"
+      ],
+      "technique": "Headless Browser",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Headless Browser/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Headless Browser/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-77aff9be",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Race Condition/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Race Condition",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "race condition"
+      ],
+      "technique": "Race Condition",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Race Condition/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Race Condition/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-cb14641f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Initial Access.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Initial Access",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Initial Access.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Initial Access.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-048c215b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Active Directory Attack.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Active Directory Attacks",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Active Directory Attack.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Active Directory Attack.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-32946079",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Web Attack Surface.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Subdomains Enumeration",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Web Attack Surface.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Web Attack Surface.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-51f35e4e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Escape Breakout.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Application Escape and Breakout",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Escape Breakout.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Escape Breakout.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-a9a07fc1",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Privilege Escalation.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Windows - Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Privilege Escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Privilege Escalation.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-f650013e",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Vulnerability Reports.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Vulnerability Reports",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Vulnerability Reports.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Vulnerability Reports.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-c229d4f2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Office - Attacks.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "metasploit",
+        "methodology and resources"
+      ],
+      "technique": "Office - Attacks",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Office - Attacks.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Office - Attacks.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-42026fc2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Using credentials.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources",
+        "impacket"
+      ],
+      "technique": "Windows - Using credentials",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Using credentials.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Using credentials.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-84b94b4f",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Linux - Evasion.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Linux - Evasion",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Linux - Evasion.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Linux - Evasion.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-55ad9508",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Network Pivoting Techniques.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "metasploit",
+        "methodology and resources"
+      ],
+      "technique": "Network Pivoting Techniques",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Network Pivoting Techniques.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Network Pivoting Techniques.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ca9825cc",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Reverse Shell Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Reverse Shell Cheat Sheet",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Reverse Shell Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Reverse Shell Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-6293aaaa",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Persistence.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Windows - Persistence",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Persistence.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-3daa5add",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/HTML Smuggling.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "HTML Smuggling",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/HTML Smuggling.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/HTML Smuggling.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-88af17a6",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/MSSQL Server - Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "MSSQL Server",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/MSSQL Server - Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/MSSQL Server - Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-b1097af4",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Cobalt Strike - Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "metasploit",
+        "methodology and resources"
+      ],
+      "technique": "Cobalt Strike",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Cobalt Strike - Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Cobalt Strike - Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-8bdb31d3",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Powershell - Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Powershell",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Powershell - Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Powershell - Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-314a7532",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Download and Execute.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Windows - Download and execute methods",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Download and Execute.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Download and Execute.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-acd055b5",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - DPAPI.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources",
+        "mimikatz"
+      ],
+      "technique": "Windows - DPAPI",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - DPAPI.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - DPAPI.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ba9ce08a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Bind Shell Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Bind Shell",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Bind Shell Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Bind Shell Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-399283ab",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Cloud - Azure Pentest.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Cloud - Azure",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Cloud - Azure Pentest.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Cloud - Azure Pentest.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-3b8e2833",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Hash Cracking.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "john",
+        "web_security",
+        "hashcat",
+        "methodology and resources"
+      ],
+      "technique": "Hash Cracking",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Hash Cracking.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Hash Cracking.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4a494805",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Mimikatz.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources",
+        "mimikatz"
+      ],
+      "technique": "Windows - Mimikatz",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Mimikatz.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Mimikatz.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-c70d0126",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Linux - Persistence.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Linux - Persistence",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Linux - Persistence.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Linux - Persistence.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-97ccdd5c",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Network Discovery.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "responder",
+        "methodology and resources",
+        "nmap"
+      ],
+      "technique": "Network Discovery",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Network Discovery.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Network Discovery.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-7f2b2b4a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Cloud - AWS Pentest.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Cloud - AWS",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Cloud - AWS Pentest.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Cloud - AWS Pentest.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-805f55d5",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Metasploit - Cheatsheet.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "metasploit",
+        "methodology and resources",
+        "mimikatz"
+      ],
+      "technique": "Metasploit",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Metasploit - Cheatsheet.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Metasploit - Cheatsheet.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-b44d85e7",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - AMSI Bypass.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Windows - AMSI Bypass",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - AMSI Bypass.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - AMSI Bypass.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-2e56ed5b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Methodology and enumeration.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Bug Hunting Methodology and Enumeration",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Methodology and enumeration.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Methodology and enumeration.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-c526899b",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Windows - Defenses.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Windows - Defenses",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Windows - Defenses.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Windows - Defenses.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-12389a85",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Linux - Privilege Escalation.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Linux - Privilege Escalation",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Linux - Privilege Escalation.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Linux - Privilege Escalation.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ac7704fb",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Container - Docker Pentest.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Container - Docker",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Container - Docker Pentest.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Container - Docker Pentest.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-d0476553",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Container - Kubernetes Pentest.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Container - Kubernetes",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Container - Kubernetes Pentest.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Container - Kubernetes Pentest.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-37d56b4a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Methodology and Resources/Source Code Management.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Methodology and Resources",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "methodology and resources"
+      ],
+      "technique": "Source Code Management & CI/CD Compromise",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Methodology and Resources/Source Code Management.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Methodology and Resources/Source Code Management.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-e0dfec67",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "XS-Leak/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "XS-Leak",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "xs-leak"
+      ],
+      "technique": "XS-Leak",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: XS-Leak/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/XS-Leak/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-036019ff",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Reverse Proxy Misconfigurations/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Reverse Proxy Misconfigurations",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "reverse proxy misconfigurations"
+      ],
+      "technique": "Reverse Proxy Misconfigurations",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Reverse Proxy Misconfigurations/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Reverse Proxy Misconfigurations/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-6abf2f03",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Upload Insecure Files/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Upload Insecure Files",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "burp",
+        "web_security",
+        "upload insecure files"
+      ],
+      "technique": "Upload Insecure Files",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Upload Insecure Files/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Upload Insecure Files/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ad03f8e0",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "SAML Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "SAML Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "saml injection"
+      ],
+      "technique": "SAML Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: SAML Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/SAML Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-243830e6",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "JSON Web Token/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "JSON Web Token",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "json web token"
+      ],
+      "technique": "JWT - JSON Web Token",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: JSON Web Token/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/JSON Web Token/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-0593f7bc",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "File Inclusion/Wrappers.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "File Inclusion",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "file inclusion",
+        "web_security"
+      ],
+      "technique": "Inclusion Using Wrappers",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: File Inclusion/Wrappers.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/File Inclusion/Wrappers.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-00cf1912",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "File Inclusion/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "File Inclusion",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "file inclusion",
+        "web_security"
+      ],
+      "technique": "File Inclusion",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: File Inclusion/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/File Inclusion/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-cd1dad96",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "File Inclusion/LFI-to-RCE.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "File Inclusion",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "file inclusion",
+        "web_security"
+      ],
+      "technique": "LFI to RCE",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: File Inclusion/LFI-to-RCE.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/File Inclusion/LFI-to-RCE.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-265c8e69",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "DNS Rebinding/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "DNS Rebinding",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "dns rebinding"
+      ],
+      "technique": "DNS Rebinding",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: DNS Rebinding/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/DNS Rebinding/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-1567f3ad",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "External Variable Modification/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "External Variable Modification",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "external variable modification"
+      ],
+      "technique": "External Variable Modification",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: External Variable Modification/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/External Variable Modification/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-11fd1358",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Directory Traversal/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Directory Traversal",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "directory traversal",
+        "web_security"
+      ],
+      "technique": "Directory Traversal",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Directory Traversal/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Directory Traversal/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-a411849d",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Hidden Parameters/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Hidden Parameters",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "hidden parameters",
+        "web_security",
+        "burp"
+      ],
+      "technique": "HTTP Hidden Parameters",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Hidden Parameters/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Hidden Parameters/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-6e6961d0",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "GraphQL Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "GraphQL Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "burp",
+        "web_security",
+        "graphql injection"
+      ],
+      "technique": "GraphQL Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: GraphQL Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/GraphQL Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-eec03eb6",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "API Key Leaks/IIS-Machine-Keys.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "API Key Leaks",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "api key leaks",
+        "web_security"
+      ],
+      "technique": "IIS Machine Keys",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: API Key Leaks/IIS-Machine-Keys.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/API Key Leaks/IIS-Machine-Keys.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-4879b52a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "API Key Leaks/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "API Key Leaks",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "api key leaks",
+        "web_security",
+        "burp"
+      ],
+      "technique": "API Key and Token Leaks",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: API Key Leaks/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/API Key Leaks/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-3669a6ea",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Web Sockets/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Web Sockets",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "burp",
+        "web sockets"
+      ],
+      "technique": "Web Sockets",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Web Sockets/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Web Sockets/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-6e6598a2",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "LDAP Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "LDAP Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "ldap injection",
+        "web_security"
+      ],
+      "technique": "LDAP Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: LDAP Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/LDAP Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-36f9aaf8",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Server Side Include Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Server Side Include Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "server side include injection",
+        "web_security",
+        "john"
+      ],
+      "technique": "Server Side Include Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Server Side Include Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Server Side Include Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-ae4c373a",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "CSS Injection/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "CSS Injection",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "css injection"
+      ],
+      "technique": "CSS Injection",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: CSS Injection/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/CSS Injection/README.md"
+    },
+    {
+      "source_id": "sec-payloadsallthethings-b828e771",
+      "repository": "https://github.com/swisskyrepo/PayloadsAllTheThings.git",
+      "commit": "3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a",
+      "path": "Upload Insecure Files/Configuration Apache .htaccess/README.md",
+      "category": "WEB_SECURITY",
+      "subcategory": "Configuration Apache .htaccess",
+      "platform": "cross-platform",
+      "protocol": "http",
+      "tags": [
+        "web_security",
+        "configuration apache .htaccess"
+      ],
+      "technique": ".htaccess",
+      "description": "Referência de pentest/defesa extraída de PayloadsAllTheThings: Upload Insecure Files/Configuration Apache .htaccess/README.md",
+      "risk": "REFERENCE_INFO",
+      "execution_policy": "REFERENCE_ONLY",
+      "source_url": "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/3ac27901c711bdf3f5b65a7b1d1820a1f65bd09a/Upload Insecure Files/Configuration Apache .htaccess/README.md"
+    }
+  ]
+}

@@ -1,0 +1,1742 @@
+{
+  "ACTION_SETS": {
+    "AUDIT": {
+      "verbs": [
+        "auditar",
+        "verificar",
+        "checar",
+        "inspecionar",
+        "analisar",
+        "revisar",
+        "examinar"
+      ],
+      "inflections": [
+        "audite",
+        "audita",
+        "auditar",
+        "auditando",
+        "auditoria",
+        "verifica",
+        "verificar",
+        "verificando",
+        "verifique",
+        "checa",
+        "checar",
+        "checando",
+        "cheque",
+        "inspeciona",
+        "inspecionar",
+        "inspecionando",
+        "inspecione",
+        "analisa",
+        "analisar",
+        "analisando",
+        "analise",
+        "analise tudo",
+        "revisa",
+        "revisar",
+        "revisando",
+        "revise"
+      ],
+      "phrases": [
+        "faz raio-x",
+        "faz um raio-x",
+        "raio-x",
+        "puxa a ficha",
+        "audita tudo",
+        "auditoria completa",
+        "audit completo",
+        "audit rápido",
+        "audit rapido",
+        "audit forense",
+        "verifique rapidamente",
+        "dá um raio-x"
+      ]
+    },
+    "CHECK": {
+      "verbs": [
+        "checar",
+        "testar",
+        "validar",
+        "confirmar"
+      ],
+      "inflections": [
+        "checa",
+        "checar",
+        "testa",
+        "testar",
+        "valida",
+        "validar",
+        "confirma",
+        "confirmar"
+      ],
+      "phrases": [
+        "vê se tá ok",
+        "confere aí"
+      ]
+    },
+    "STATUS": {
+      "verbs": [
+        "ver_status",
+        "consultar",
+        "acompanhar"
+      ],
+      "inflections": [
+        "status",
+        "situação",
+        "como tá",
+        "onde paramos",
+        "mostra o estado"
+      ],
+      "phrases": [
+        "como está",
+        "qual o status",
+        "qual a situação"
+      ]
+    },
+    "LIST": {
+      "verbs": [
+        "listar",
+        "exibir",
+        "mostrar",
+        "trazer"
+      ],
+      "inflections": [
+        "lista",
+        "listar",
+        "mostra",
+        "mostrar",
+        "exibe",
+        "exibir"
+      ],
+      "phrases": [
+        "quais são",
+        "mostra a lista"
+      ]
+    },
+    "SEARCH": {
+      "verbs": [
+        "procurar",
+        "buscar",
+        "localizar",
+        "encontrar"
+      ],
+      "inflections": [
+        "procura",
+        "procurar",
+        "busca",
+        "buscar",
+        "localiza",
+        "encontra"
+      ],
+      "phrases": [
+        "acha aí",
+        "onde tá"
+      ]
+    },
+    "SCAN": {
+      "verbs": [
+        "escanear",
+        "varrer",
+        "rastrear"
+      ],
+      "inflections": [
+        "escaneia",
+        "escanear",
+        "varre",
+        "varrer",
+        "rastreia"
+      ],
+      "phrases": [
+        "varredura",
+        "pente fino"
+      ]
+    },
+    "UNLOCK": {
+      "verbs": [
+        "destravar",
+        "desbloquear",
+        "liberar",
+        "soltar",
+        "desengasgar",
+        "desemperrar"
+      ],
+      "inflections": [
+        "destrava",
+        "destravar",
+        "desbloqueia",
+        "desbloquear",
+        "libera",
+        "liberar",
+        "solta",
+        "soltar",
+        "desengasga",
+        "desemperra"
+      ],
+      "phrases": [
+        "arranca o lock",
+        "tira o lock",
+        "remove a trava",
+        "solta a trava",
+        "desemperra tudo",
+        "resolve o deadlock"
+      ]
+    },
+    "REPAIR": {
+      "verbs": [
+        "corrigir",
+        "consertar",
+        "reparar",
+        "resolver",
+        "aplicar"
+      ],
+      "inflections": [
+        "corrige",
+        "corrigir",
+        "corrigindo",
+        "corrija",
+        "correção",
+        "correcao",
+        "conserta",
+        "consertar",
+        "consertando",
+        "conserte",
+        "repara",
+        "reparar",
+        "reparando",
+        "repare",
+        "reparo",
+        "resolve",
+        "resolver",
+        "resolvendo",
+        "resolva",
+        "resolução",
+        "resolucao",
+        "aplica",
+        "aplicar",
+        "aplicando",
+        "aplique"
+      ],
+      "phrases": [
+        "aplica correção",
+        "aplica correcao",
+        "aplica fix",
+        "conserta tudo",
+        "repara o problema",
+        "corrige o erro"
+      ]
+    },
+    "FIX": {
+      "verbs": [
+        "corrigir",
+        "ajustar",
+        "alinhar"
+      ],
+      "inflections": [
+        "corrige",
+        "corrigir",
+        "ajusta",
+        "ajustar",
+        "alinha"
+      ],
+      "phrases": [
+        "aplica fix",
+        "faz o ajuste"
+      ]
+    },
+    "CLEAN": {
+      "verbs": [
+        "limpar",
+        "higienizar",
+        "faxinar",
+        "apagar",
+        "remover"
+      ],
+      "inflections": [
+        "limpa",
+        "limpar",
+        "higieniza",
+        "faxina",
+        "apaga",
+        "apagar",
+        "remove"
+      ],
+      "phrases": [
+        "faz a limpa",
+        "limpa o lixo",
+        "faxina profunda",
+        "limpa temporários",
+        "tira o entulho"
+      ]
+    },
+    "PURGE": {
+      "verbs": [
+        "purgar",
+        "drenar",
+        "esvaziar",
+        "truncar"
+      ],
+      "inflections": [
+        "purga",
+        "purgar",
+        "drena",
+        "drenar",
+        "esvazia",
+        "trunca"
+      ],
+      "phrases": [
+        "purga tudo",
+        "drena a memória",
+        "trunca logs",
+        "zera os buffers"
+      ]
+    },
+    "OPTIMIZE": {
+      "verbs": [
+        "otimizar",
+        "acelerar",
+        "melhorar",
+        "compactar"
+      ],
+      "inflections": [
+        "otimiza",
+        "otimizar",
+        "acelera",
+        "melhora",
+        "compacta"
+      ],
+      "phrases": [
+        "deixa mais rápido",
+        "dá um gás",
+        "compacta a base"
+      ]
+    },
+    "BACKUP": {
+      "verbs": [
+        "salvar",
+        "fazer_backup",
+        "gerar_snapshot",
+        "espelhar"
+      ],
+      "inflections": [
+        "salva",
+        "salvar",
+        "backup",
+        "snapshot",
+        "espelha"
+      ],
+      "phrases": [
+        "salva snapshot",
+        "faz backup",
+        "garante o ponto de restauração",
+        "tira um snapshot"
+      ]
+    },
+    "RESTORE": {
+      "verbs": [
+        "restaurar",
+        "recuperar",
+        "reverter"
+      ],
+      "inflections": [
+        "restaura",
+        "restaurar",
+        "recupera",
+        "reverte"
+      ],
+      "phrases": [
+        "volta atrás",
+        "pega o backup"
+      ]
+    },
+    "START": {
+      "verbs": [
+        "iniciar",
+        "subir",
+        "ligar",
+        "startar",
+        "despachar"
+      ],
+      "inflections": [
+        "inicia",
+        "iniciar",
+        "sobe",
+        "subir",
+        "liga",
+        "starta",
+        "despacha"
+      ],
+      "phrases": [
+        "bota pra rodar",
+        "coloca no ar"
+      ]
+    },
+    "STOP": {
+      "verbs": [
+        "parar",
+        "derrubar",
+        "matar",
+        "encerrar",
+        "finalizar"
+      ],
+      "inflections": [
+        "para",
+        "parar",
+        "derruba",
+        "mata",
+        "matar",
+        "encerra",
+        "finaliza"
+      ],
+      "phrases": [
+        "mata no sigkill",
+        "derruba o processo",
+        "para tudo"
+      ]
+    },
+    "RESTART": {
+      "verbs": [
+        "reiniciar",
+        "recarregar",
+        "reciclar"
+      ],
+      "inflections": [
+        "reinicia",
+        "reiniciar",
+        "recarrega",
+        "recicla"
+      ],
+      "phrases": [
+        "dá um restart",
+        "reinicia o serviço"
+      ]
+    },
+    "RELOAD": {
+      "verbs": [
+        "recarregar",
+        "atualizar"
+      ],
+      "inflections": [
+        "recarrega",
+        "recarregar",
+        "atualiza"
+      ],
+      "phrases": [
+        "dá um reload"
+      ]
+    },
+    "SYNC": {
+      "verbs": [
+        "sincronizar",
+        "parear",
+        "alinhar"
+      ],
+      "inflections": [
+        "sincroniza",
+        "sincronizar",
+        "pareia",
+        "alinha"
+      ],
+      "phrases": [
+        "dá um push",
+        "sincroniza tudo",
+        "manda pro remoto"
+      ]
+    },
+    "BUILD": {
+      "verbs": [
+        "compilar",
+        "construir",
+        "gerar_build"
+      ],
+      "inflections": [
+        "compila",
+        "compilar",
+        "constrói",
+        "builda"
+      ],
+      "phrases": [
+        "faz o build",
+        "roda o compilador"
+      ]
+    },
+    "TEST": {
+      "verbs": [
+        "testar",
+        "validar",
+        "estressar"
+      ],
+      "inflections": [
+        "testa",
+        "testar",
+        "valida",
+        "estressa"
+      ],
+      "phrases": [
+        "roda os testes",
+        "faz teste de carga"
+      ]
+    },
+    "DEPLOY": {
+      "verbs": [
+        "implantar",
+        "publicar",
+        "deployar"
+      ],
+      "inflections": [
+        "implanta",
+        "publica",
+        "deploya"
+      ],
+      "phrases": [
+        "faz deploy",
+        "sobe pra produção"
+      ]
+    },
+    "INSTALL": {
+      "verbs": [
+        "instalar",
+        "baixar",
+        "configurar"
+      ],
+      "inflections": [
+        "instala",
+        "instalar",
+        "baixa",
+        "configura"
+      ],
+      "phrases": [
+        "bota o pacote"
+      ]
+    },
+    "REMOVE": {
+      "verbs": [
+        "remover",
+        "deletar",
+        "apagar",
+        "desinstalar"
+      ],
+      "inflections": [
+        "remove",
+        "remover",
+        "deleta",
+        "apaga",
+        "desinstala"
+      ],
+      "phrases": [
+        "arranca fora",
+        "apaga de vez"
+      ]
+    },
+    "CREATE": {
+      "verbs": [
+        "criar",
+        "gerar",
+        "adicionar"
+      ],
+      "inflections": [
+        "cria",
+        "criar",
+        "gera",
+        "adiciona"
+      ],
+      "phrases": [
+        "cria novo",
+        "faz um"
+      ]
+    },
+    "UPDATE": {
+      "verbs": [
+        "atualizar",
+        "renovar",
+        "subir_versao"
+      ],
+      "inflections": [
+        "atualiza",
+        "atualizar",
+        "renova"
+      ],
+      "phrases": [
+        "sobe versão",
+        "dá um update"
+      ]
+    },
+    "COMPARE": {
+      "verbs": [
+        "comparar",
+        "diferenciar",
+        "checar_diff"
+      ],
+      "inflections": [
+        "compara",
+        "comparar",
+        "diferencia"
+      ],
+      "phrases": [
+        "mostra a diferença",
+        "vê o que mudou"
+      ]
+    },
+    "EXPORT": {
+      "verbs": [
+        "exportar",
+        "extrair",
+        "despejar"
+      ],
+      "inflections": [
+        "exporta",
+        "exportar",
+        "extrai",
+        "despeja"
+      ],
+      "phrases": [
+        "faz dump",
+        "cospe os dados"
+      ]
+    },
+    "IMPORT": {
+      "verbs": [
+        "importar",
+        "carregar",
+        "ingerir"
+      ],
+      "inflections": [
+        "importa",
+        "importar",
+        "carrega",
+        "ingere"
+      ],
+      "phrases": [
+        "puxa pra dentro",
+        "faz carga"
+      ]
+    },
+    "MONITOR": {
+      "verbs": [
+        "monitorar",
+        "vigiar",
+        "observar",
+        "acompanhar"
+      ],
+      "inflections": [
+        "monitora",
+        "monitorar",
+        "vigia",
+        "observa"
+      ],
+      "phrases": [
+        "fica de olho",
+        "deixa o watchdog"
+      ]
+    },
+    "ISOLATE": {
+      "verbs": [
+        "isolar",
+        "sandboxing",
+        "confinar"
+      ],
+      "inflections": [
+        "isola",
+        "isolar",
+        "confina"
+      ],
+      "phrases": [
+        "roda em sandbox",
+        "isola a execução"
+      ]
+    },
+    "RECON": {
+      "verbs": [
+        "reconhecer",
+        "descobrir",
+        "levantar",
+        "inventariar",
+        "catalogar",
+        "identificar"
+      ],
+      "inflections": [
+        "reconhecimento",
+        "recon",
+        "reconheça",
+        "reconheca",
+        "reconhece",
+        "descubra",
+        "descobrir",
+        "descobrindo",
+        "levanta",
+        "levantar",
+        "levantando",
+        "inventaria",
+        "inventariar",
+        "inventariando",
+        "cataloga",
+        "catalogar",
+        "catalogando",
+        "identifica",
+        "identificar",
+        "identificando"
+      ],
+      "phrases": [
+        "faça um reconhecimento",
+        "faca um reconhecimento",
+        "faz um recon",
+        "mapear ambiente",
+        "mapeie o ambiente",
+        "levanta tudo",
+        "descubra o que tem aqui",
+        "reconheça o projeto",
+        "reconheca o projeto",
+        "faça reconhecimento"
+      ]
+    },
+    "MAP": {
+      "verbs": [
+        "mapear",
+        "desenhar",
+        "estruturar",
+        "relacionar"
+      ],
+      "inflections": [
+        "mapeia",
+        "mapear",
+        "mapeando",
+        "mapeie",
+        "mapeamento",
+        "desenha",
+        "desenhar",
+        "desenhando",
+        "desenhe"
+      ],
+      "phrases": [
+        "faça um mapeamento",
+        "faca um mapeamento",
+        "faça um mapeamento geral",
+        "faca um mapeamento geral",
+        "mapeia tudo",
+        "me dá o panorama",
+        "me da o panorama",
+        "panorama",
+        "visão geral",
+        "visao geral",
+        "levanta a arquitetura",
+        "levanta arquitetura",
+        "faça um mapa geral",
+        "mapa geral"
+      ]
+    },
+    "DIAGNOSE": {
+      "verbs": [
+        "diagnosticar",
+        "investigar",
+        "procurar",
+        "debugar"
+      ],
+      "inflections": [
+        "diagnostica",
+        "diagnosticar",
+        "diagnosticando",
+        "diagnostique",
+        "diagnóstico",
+        "diagnostico",
+        "investiga",
+        "investigar",
+        "investigando",
+        "investigue",
+        "debuga",
+        "debugar",
+        "debugando"
+      ],
+      "phrases": [
+        "acha o problema",
+        "descobre o erro",
+        "procura causa",
+        "causa raiz",
+        "encontra a falha",
+        "por que falhou"
+      ]
+    }
+  },
+  "OBJECT_SETS": {
+    "GIT": [
+      "bisect",
+      "branch",
+      "commit",
+      "git",
+      "head",
+      "index",
+      "index.lock",
+      "merge",
+      "rebase",
+      "refs",
+      "repo",
+      "repositorio",
+      "repositório",
+      "stash",
+      "vcs",
+      "worktree"
+    ],
+    "PORT": [
+      "porta",
+      "portas",
+      "port",
+      "ports",
+      "socket tcp",
+      "listen",
+      "3000",
+      "5173",
+      "8000",
+      "8080",
+      "8765"
+    ],
+    "PROCESS": [
+      "processo",
+      "processos",
+      "pid",
+      "pids",
+      "worker",
+      "workers",
+      "zumbi",
+      "zombies",
+      "orphan",
+      "deadlock"
+    ],
+    "SERVICE": [
+      "servico",
+      "serviço",
+      "servicos",
+      "serviços",
+      "daemon",
+      "launchd",
+      "agent"
+    ],
+    "SYSTEM": [
+      "ambiente",
+      "host",
+      "host local",
+      "kernel",
+      "mac",
+      "macos",
+      "maquina",
+      "máquina",
+      "os",
+      "sistema",
+      "sistema operacional",
+      "sistema todo",
+      "so"
+    ],
+    "MACOS": [
+      "macos",
+      "mac",
+      "darwin",
+      "launchd",
+      "keychain",
+      "quarantine",
+      "gatekeeper",
+      "spotlight"
+    ],
+    "NETWORK": [
+      "arp",
+      "conexao",
+      "conexão",
+      "interface",
+      "interfaces",
+      "ip",
+      "network",
+      "rede",
+      "rotas",
+      "tcp",
+      "trafego",
+      "tráfego",
+      "udp",
+      "wifi"
+    ],
+    "DNS": [
+      "dns",
+      "lookup",
+      "mdns",
+      "mdnsresponder",
+      "nameserver",
+      "resolucao",
+      "resolução"
+    ],
+    "HTTP": [
+      "api",
+      "apis",
+      "endpoint",
+      "endpoints",
+      "headers",
+      "http",
+      "https",
+      "request",
+      "rest",
+      "url",
+      "urls"
+    ],
+    "HTTPS": [
+      "https",
+      "ssl",
+      "tls",
+      "certificado",
+      "cert"
+    ],
+    "TLS": [
+      "cadeia ssl",
+      "cert",
+      "certificado",
+      "certificados",
+      "chave publica",
+      "chave pública",
+      "ssl",
+      "tls"
+    ],
+    "CERTIFICATE": [
+      "cert",
+      "certificado",
+      "certificados",
+      "certificate",
+      "chaves tls",
+      "ssl cert",
+      "validade"
+    ],
+    "PROXY": [
+      "proxy",
+      "http_proxy",
+      "https_proxy",
+      "pac"
+    ],
+    "FIREWALL": [
+      "firewall",
+      "pf",
+      "port forward"
+    ],
+    "SOCKET": [
+      "socket",
+      "unix socket",
+      "ipc",
+      "descritores",
+      "fd"
+    ],
+    "SQLITE": [
+      "banco",
+      "banco local",
+      "database",
+      "db",
+      "pragma",
+      "shm",
+      "sqlite",
+      "sqlite3",
+      "wal"
+    ],
+    "DATABASE": [
+      "banco",
+      "banco de dados",
+      "bancos",
+      "base",
+      "base de dados",
+      "dados",
+      "database",
+      "databases",
+      "db",
+      "dbs",
+      "schema",
+      "sgbd",
+      "tabela",
+      "tabelas"
+    ],
+    "CACHE": [
+      "buffers",
+      "cache",
+      "caches",
+      "ds_store",
+      "pycache",
+      "ram inativa",
+      "temporarios",
+      "temporários"
+    ],
+    "MEMORY": [
+      "buffer",
+      "buffers",
+      "heap",
+      "memoria",
+      "memória",
+      "ram",
+      "swap"
+    ],
+    "CPU": [
+      "carga",
+      "cpu",
+      "load",
+      "nucleos",
+      "núcleos",
+      "processador",
+      "termico",
+      "throttling",
+      "térmico"
+    ],
+    "DISK": [
+      "armazenamento",
+      "disco",
+      "disk",
+      "espaco",
+      "espaço",
+      "hd",
+      "smart",
+      "ssd",
+      "storage"
+    ],
+    "FILE": [
+      "arquivo",
+      "arquivos",
+      "file",
+      "files",
+      "arquivo travado"
+    ],
+    "DIRECTORY": [
+      "pasta",
+      "pastas",
+      "diretorio",
+      "diretório",
+      "folder",
+      "tree"
+    ],
+    "LOG": [
+      "log",
+      "logs",
+      "arquivo de log",
+      "tail",
+      "buffer de log"
+    ],
+    "ENV": [
+      ".env",
+      ".env.example",
+      "dotenv",
+      "drift",
+      "env",
+      "variaveis de ambiente",
+      "variavel de ambiente",
+      "variáveis de ambiente",
+      "variável de ambiente"
+    ],
+    "SECRET": [
+      "segredo",
+      "segredos",
+      "secret",
+      "secrets",
+      "chave",
+      "token",
+      "jwt",
+      "senha",
+      "password",
+      "pii"
+    ],
+    "CREDENTIAL": [
+      "credencial",
+      "credenciais",
+      "token github",
+      "aws key",
+      "api key"
+    ],
+    "PACKAGE": [
+      "pacote",
+      "pacotes",
+      "dependencias",
+      "dependências",
+      "lockfile"
+    ],
+    "NODE": [
+      "node",
+      "node.js",
+      "node_modules",
+      "nodejs",
+      "npm",
+      "npx",
+      "pnpm",
+      "v8",
+      "yarn"
+    ],
+    "PYTHON": [
+      "__pycache__",
+      "pip",
+      "py",
+      "pytest",
+      "python",
+      "python3",
+      "venv",
+      "virtualenv"
+    ],
+    "DOCKER": [
+      "compose",
+      "container",
+      "containers",
+      "docker",
+      "imagem",
+      "imagens",
+      "socket docker"
+    ],
+    "HOMEBREW": [
+      "brew",
+      "homebrew",
+      "cask"
+    ],
+    "NPM": [
+      "npm",
+      "package-lock",
+      "npm cache"
+    ],
+    "PNPM": [
+      "pnpm",
+      "pnpm-lock"
+    ],
+    "YARN": [
+      "yarn",
+      "yarn.lock"
+    ],
+    "PIP": [
+      "pip",
+      "pipx",
+      "wheels"
+    ],
+    "LAUNCHD": [
+      "daemon mac",
+      "launchagent",
+      "launchagents",
+      "launchctl",
+      "launchd",
+      "launchdaemons",
+      "plist"
+    ],
+    "BROWSER": [
+      "browser",
+      "chrome",
+      "devtools",
+      "navegador",
+      "sessao web",
+      "sessão web"
+    ],
+    "CHROME": [
+      "chrome",
+      "chromium",
+      "debug port",
+      "google chrome"
+    ],
+    "ANTIGRAVITY": [
+      "agente",
+      "agy",
+      "antigravity",
+      "control plane",
+      "executor",
+      "subagente"
+    ],
+    "SENTINELA": [
+      "auditor",
+      "governanca",
+      "governança",
+      "guardiao",
+      "guardião",
+      "sentinela",
+      "supervisor"
+    ],
+    "GITHUB": [
+      "gh",
+      "github",
+      "octocat",
+      "origin",
+      "remoto",
+      "repo remoto"
+    ],
+    "ISSUE": [
+      "issue",
+      "tarefa",
+      "task"
+    ],
+    "PR": [
+      "pr",
+      "pull request"
+    ],
+    "BRANCH": [
+      "branch",
+      "main",
+      "master",
+      "head"
+    ],
+    "COMMIT": [
+      "commit",
+      "commits",
+      "sha",
+      "historico",
+      "histórico"
+    ],
+    "PROJECT": [
+      "aplicacao",
+      "aplicação",
+      "app",
+      "project",
+      "projeto",
+      "repo local",
+      "workspace"
+    ],
+    "BACKUP": [
+      "backup",
+      "snapshot",
+      "tar.gz",
+      "ponto de restauracao",
+      "ponto de restauração"
+    ],
+    "REPOSITORY": [
+      "origem",
+      "remote",
+      "repo",
+      "repositorio",
+      "repositório",
+      "upstream"
+    ],
+    "FILES": [
+      "arquivo",
+      "arquivos",
+      "codigo",
+      "código",
+      "file",
+      "files",
+      "fonte"
+    ],
+    "DIRECTORIES": [
+      "dir",
+      "directory",
+      "diretorio",
+      "diretório",
+      "folder",
+      "pasta",
+      "pastas",
+      "árvore"
+    ],
+    "PORTS": [
+      "listen",
+      "listener",
+      "port",
+      "porta",
+      "portas",
+      "ports",
+      "socket port",
+      "tcp"
+    ],
+    "PROCESSES": [
+      "daemon",
+      "pid",
+      "pids",
+      "process",
+      "processes",
+      "processo",
+      "processos",
+      "zumbi",
+      "zumbis"
+    ],
+    "SERVICES": [
+      "daemon",
+      "job",
+      "service",
+      "services",
+      "servicos",
+      "serviço",
+      "serviços"
+    ],
+    "RUNTIME": [
+      "ambiente de execução",
+      "interpretador",
+      "runtime",
+      "runtimes",
+      "vm"
+    ],
+    "PACKAGES": [
+      "dependencia",
+      "dependência",
+      "dependências",
+      "package",
+      "packages",
+      "pacote",
+      "pacotes"
+    ],
+    "LOGS": [
+      "log",
+      "logfiles",
+      "logs",
+      "rastros",
+      "stderr",
+      "stdout",
+      "telemetria"
+    ],
+    "CONFIG": [
+      "config",
+      "configs",
+      "configuracao",
+      "configuração",
+      "preferências",
+      "settings"
+    ],
+    "SECURITY": [
+      "cve",
+      "postura",
+      "security",
+      "seguranca",
+      "segurança",
+      "vulnerabilidade"
+    ],
+    "SECRETS": [
+      "chave",
+      "chaves",
+      "key",
+      "keys",
+      "secrets",
+      "segredo",
+      "segredos",
+      "senha",
+      "token",
+      "tokens"
+    ],
+    "ISSUES": [
+      "chamado",
+      "issue",
+      "issues",
+      "tarefa",
+      "tarefas"
+    ],
+    "PULL_REQUESTS": [
+      "mr",
+      "pr",
+      "prs",
+      "pull request",
+      "pull requests"
+    ],
+    "BRANCHES": [
+      "branch",
+      "branches",
+      "feature",
+      "main",
+      "master",
+      "ramo",
+      "ramos"
+    ],
+    "COMMITS": [
+      "commit",
+      "commits",
+      "hash",
+      "revisao",
+      "revisão",
+      "sha"
+    ],
+    "AUTOMATION": [
+      "automacao",
+      "automação",
+      "pipeline",
+      "rotina",
+      "script",
+      "scripts"
+    ]
+  },
+  "QUALIFIER_SETS": {
+    "ALL": [
+      "all",
+      "completo",
+      "geral",
+      "todas",
+      "todos",
+      "total",
+      "tudo"
+    ],
+    "ONLY": [
+      "apenas",
+      "exclusivo",
+      "only",
+      "so",
+      "somente",
+      "só"
+    ],
+    "QUICK": [
+      "breve",
+      "express",
+      "leve",
+      "quick",
+      "rapida",
+      "rapido",
+      "rápida",
+      "rápido",
+      "superficial"
+    ],
+    "FULL": [
+      "completa",
+      "completo",
+      "exaustiva",
+      "exaustivo",
+      "full",
+      "inteira",
+      "inteiro"
+    ],
+    "DEEP": [
+      "deep",
+      "detalhada",
+      "detalhado",
+      "forense",
+      "fundo",
+      "minucioso",
+      "profunda",
+      "profundo"
+    ],
+    "SAFE": [
+      "safe",
+      "segura",
+      "seguro",
+      "sem quebrar",
+      "sem risco"
+    ],
+    "FORCE": [
+      "forca",
+      "força",
+      "force",
+      "na marra",
+      "compulsorio",
+      "compulsório",
+      "-f"
+    ],
+    "BACKGROUND": [
+      "background",
+      "desacoplado",
+      "em background",
+      "segundo plano",
+      "sem janela"
+    ],
+    "SILENT": [
+      "discreta",
+      "discreto",
+      "nas sombras",
+      "quiet",
+      "sem output",
+      "sem ruido",
+      "sem ruído",
+      "silenciosa",
+      "silencioso",
+      "silent"
+    ],
+    "CURRENT": [
+      "atual",
+      "corrente",
+      "current",
+      "esse",
+      "este",
+      "neste",
+      "presente"
+    ],
+    "GLOBAL": [
+      "em todos",
+      "em tudo",
+      "global",
+      "sistema todo"
+    ],
+    "LOCAL": [
+      "aqui",
+      "local",
+      "na maquina",
+      "na máquina",
+      "neste projeto",
+      "neste repo"
+    ],
+    "RECENT": [
+      "novos",
+      "recente",
+      "ultimo",
+      "último"
+    ],
+    "OLD": [
+      "antigo",
+      "antiga",
+      "velho",
+      "velha",
+      "legado"
+    ],
+    "LARGE": [
+      "grande",
+      "pesado",
+      "pesada",
+      "maior",
+      "pesados"
+    ],
+    "BROKEN": [
+      "corrompida",
+      "corrompido",
+      "danificado",
+      "presa",
+      "preso",
+      "quebrada",
+      "quebrado",
+      "travada",
+      "travado"
+    ],
+    "ORPHAN": [
+      "orfa",
+      "orfao",
+      "orfaos",
+      "perdida",
+      "perdido",
+      "sem dono",
+      "zumbi",
+      "órfã",
+      "órfão",
+      "órfãos"
+    ],
+    "BLOCKED": [
+      "bloqueada",
+      "bloqueado",
+      "em deadlock",
+      "lockada",
+      "lockado",
+      "preso",
+      "travada",
+      "travado"
+    ],
+    "ACTIVE": [
+      "ativa",
+      "ativo",
+      "ligado",
+      "ocupada",
+      "ocupado",
+      "rodando",
+      "running"
+    ],
+    "INACTIVE": [
+      "inativo",
+      "inativa",
+      "morto",
+      "morta",
+      "parado",
+      "parada"
+    ],
+    "GENERAL": [
+      "amplo",
+      "general",
+      "geral",
+      "panorama"
+    ],
+    "COMPLETE": [
+      "completa",
+      "completo",
+      "integral",
+      "tudo"
+    ],
+    "HARD": [
+      "firme",
+      "hard",
+      "intenso",
+      "pesado",
+      "rigoroso"
+    ],
+    "FORENSIC": [
+      "exaustivo",
+      "forense",
+      "forensica",
+      "pericial"
+    ]
+  },
+  "NEGATION_SETS": {
+    "triggers": [
+      "não",
+      "nao",
+      "sem",
+      "somente",
+      "só",
+      "so",
+      "apenas",
+      "exceto",
+      "menos"
+    ],
+    "exclusion_rules": [
+      {
+        "pattern": "\\b(?:sem|não|nao)\\s+(?:alterar|modificar|mexer|mudar|tocar)\\b",
+        "excluded": [
+          "REPAIR",
+          "WRITE",
+          "DELETE",
+          "MODIFY"
+        ]
+      },
+      {
+        "pattern": "\\b(?:sem|não|nao)\\s+(?:corrigir|reparar|consertar|resolver)\\b",
+        "excluded": [
+          "REPAIR",
+          "WRITE"
+        ]
+      },
+      {
+        "pattern": "\\b(?:sem|não|nao)\\s+(?:limpar|limpeza|apagar|faxinar|deletar)\\b",
+        "excluded": [
+          "CLEAN",
+          "DELETE",
+          "PURGE"
+        ]
+      },
+      {
+        "pattern": "\\b(?:sem|não|nao)\\s+(?:matar|derrubar|encerrar|finalizar)\\s*(?:processos|pids)?\\b",
+        "excluded": [
+          "KILL",
+          "STOP"
+        ]
+      },
+      {
+        "pattern": "\\b(?:só|so|apenas|somente)\\s*(?:leitura|audita|olhar|verificar)\\b",
+        "excluded": [
+          "REPAIR",
+          "WRITE",
+          "DELETE",
+          "MODIFY"
+        ]
+      },
+      {
+        "pattern": "\\b(?:sem\\s+tocar\\s+nos\\s+arquivos)\\b",
+        "excluded": [
+          "WRITE",
+          "MODIFY",
+          "DELETE"
+        ]
+      }
+    ]
+  },
+  "MODALITY_SETS": {
+    "CAN": [
+      "pode",
+      "poderia"
+    ],
+    "MUST": [
+      "deve",
+      "tem que",
+      "precisa"
+    ],
+    "PLEASE": [
+      "por favor",
+      "pfv",
+      "faz favor"
+    ]
+  },
+  "POLARITY_SETS": {
+    "POSITIVE": [
+      "sim",
+      "confirmo",
+      "prossiga",
+      "autorizo"
+    ],
+    "NEGATIVE": [
+      "nao",
+      "não",
+      "cancela",
+      "aborta"
+    ]
+  },
+  "CONTEXT_SETS": {
+    "THIS_PROJECT": [
+      "nesse projeto",
+      "neste projeto",
+      "aqui",
+      "no workspace atual"
+    ],
+    "SAME_PORT": [
+      "na mesma porta",
+      "nessa porta"
+    ],
+    "SAME_FILE": [
+      "no mesmo arquivo",
+      "nesse arquivo"
+    ],
+    "SAME_DB": [
+      "nesse banco",
+      "no mesmo banco"
+    ],
+    "REPEAT": [
+      "faz de novo",
+      "repete o ultimo",
+      "repete o último",
+      "roda outra vez"
+    ]
+  },
+  "PARAM_PATTERNS": {
+    "PORT": "\\b(?:porta\\s+)?(\\d{2,5})\\b",
+    "PORT_RANGE": "\\b(\\d{2,5})\\s*(?:ate|a|-)\\s*(\\d{2,5})\\b",
+    "URL": "https?://[^\\s'\\\"]+",
+    "IP": "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+    "FILE_PATH": "(?:/[a-zA-Z0-9_\\.\\-]+)+|\\b[a-zA-Z0-9_\\-]+\\.[a-zA-Z0-9]{2,4}\\b",
+    "NUMBER": "\\b\\d+\\b"
+  },
+  "DEPTH_SETS": {
+    "LIGHT": [
+      "rápido",
+      "rapido",
+      "rápida",
+      "rapida",
+      "breve",
+      "express",
+      "superficial"
+    ],
+    "NORMAL": [
+      "normal",
+      "padrão",
+      "padrao"
+    ],
+    "DEEP": [
+      "profundo",
+      "profunda",
+      "detalhado",
+      "detalhada",
+      "minucioso",
+      "aprofundado"
+    ],
+    "HARD": [
+      "hard",
+      "completo",
+      "completa",
+      "total",
+      "geral",
+      "tudo",
+      "audite",
+      "reconhecimento",
+      "mapeamento geral"
+    ],
+    "FORENSIC": [
+      "forense",
+      "forensica",
+      "pericial",
+      "exaustivo",
+      "microscópico",
+      "microscopico"
+    ]
+  },
+  "DISCREET_SETS": {
+    "triggers": [
+      "modo silencioso",
+      "roda sem aparecer",
+      "faz em background",
+      "não mexe na minha tela",
+      "nao mexe na minha tela",
+      "não troca minha janela",
+      "nao troca minha janela",
+      "silencioso",
+      "background",
+      "sem foco",
+      "discreto",
+      "segundo plano",
+      "opera nas sombras"
+    ],
+    "policy": {
+      "EXECUTION_VISIBILITY": "BACKGROUND",
+      "UI_FOCUS": false,
+      "OPEN_NEW_WINDOWS": false,
+      "OPEN_NEW_TABS": false,
+      "HEADLESS_BROWSER": false,
+      "VISIBLE_TERMINAL": false,
+      "AUDIT_LOGGING": true,
+      "SECURITY_LOGGING": true,
+      "RESUME_FROM_GATE": true
+    },
+    "forbidden_mappings": [
+      "DELETE_HISTORY",
+      "DISGUISE_PROCESS",
+      "DISABLE_LOGGING",
+      "HIDE_FROM_SECURITY",
+      "BYPASS_MONITORING"
+    ]
+  }
+}

@@ -1,0 +1,329 @@
+{
+  "dictionary_version": "5.1",
+  "timestamp_utc": "2026-10-06T11:21:06.800194+00:00",
+  "total_intents_audited": 214,
+  "reclassified_count": 16,
+  "policy_status": "PASS",
+  "changes": [
+    {
+      "intent_id": "bypass-hooks",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "REFERENCE_ONLY",
+      "reason": "Bypass de integridade de hooks deve ser exclusivamente referência defensiva",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "disguise-proc",
+      "old_policy": "DENIED_BY_POLICY",
+      "new_policy": "DENIED_BY_POLICY",
+      "reason": "Camuflagem de processos viola princípios de observabilidade e auditoria",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "exec-raw",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Execução arbitrária de shell exige portão humano estrito",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "stealth-exec",
+      "old_policy": "REFERENCE_ONLY",
+      "new_policy": "REFERENCE_ONLY",
+      "reason": "Evasão de logs de shell restrita a referência defensiva",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "stress-fd-exhaustion",
+      "old_policy": "REFERENCE_ONLY",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Esgotamento de FDs tem alto risco de travar o host",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "stress-ram",
+      "old_policy": "REFERENCE_ONLY",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Consumo agressivo de RAM pode invocar OOM killer destrutivo",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": false,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "wipe-session",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Encerramento em massa de sessões requer aprovação humana",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": true,
+        "reversible": false
+      },
+      "destructive": false,
+      "reversible": false,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "unlock-kill-by-name",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "CONFIRM_REQUIRED",
+      "reason": "Kill por padrão nominal exige confirmação para evitar matar processos errados",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": true,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "deep-clean",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "CONFIRM_REQUIRED",
+      "reason": "Limpeza profunda expurga caches e diretórios locais",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "reset-clean",
+      "old_policy": "HUMAN_GATE",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Reset agressivo de workspace pode causar perda de alterações locais",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": true,
+        "reversible": false
+      },
+      "destructive": true,
+      "reversible": false,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "shred-file",
+      "old_policy": "HUMAN_GATE",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Destruição definitiva e sobrescrita de arquivo é irreversível",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": true,
+        "reversible": false
+      },
+      "destructive": true,
+      "reversible": false,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "clean-history-tail",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Modificação de histórico de shell é sensível e auditável",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": true,
+        "reversible": false
+      },
+      "destructive": true,
+      "reversible": false,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "clean-history-secrets",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Sanitização de credenciais de histórico requer gate de segurança",
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": true,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": true
+    },
+    {
+      "intent_id": "daemon-kill",
+      "old_policy": "CONFIRM_REQUIRED",
+      "new_policy": "CONFIRM_REQUIRED",
+      "reason": "Matar daemons pode interromper serviços vitais",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": true,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "chaos-kill-worker",
+      "old_policy": "REFERENCE_ONLY",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Injeção de caos em workers é de alto risco operacional",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": true,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    },
+    {
+      "intent_id": "chaos-freeze-thaw",
+      "old_policy": "REFERENCE_ONLY",
+      "new_policy": "HUMAN_GATE",
+      "reason": "Congelamento de processos (SIGSTOP) tem alto risco operacional",
+      "side_effects": {
+        "filesystem_write": false,
+        "process_kill": true,
+        "network_change": false,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "destructive": true,
+      "reversible": true,
+      "privilege": false,
+      "security_sensitive": false
+    }
+  ]
+}

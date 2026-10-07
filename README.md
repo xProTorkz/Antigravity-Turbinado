@@ -88,6 +88,23 @@ O produto é distribuído e suportado através do nosso canal oficial de atendim
 
 ---
 
+## 📂 Arquitetura Modular Unificada
+
+O ecossistema está consolidado em 4 módulos canônicos, estruturados e testados:
+
+```text
+ANTIGRAVITY TURBINADO/
+├── 1-governanca-e-regras/    # Regras inegociáveis: menor diff, test before/after, Sentinela Guardião
+├── 2-prompts-chatgpt/        # Prompts Mestres: Chatgpt Sentinela Orchestrator, Cloud-First e Capabilities
+├── 3-instalacao-skills/      # Instalador de skills e catálogo das 100 essenciais + acervo de 2.450+
+├── 4-automacao-e-shell/       # Motor Semântico v5.2, agy_cmd.sh, dicionário canônico e suíte de 52 testes
+├── apresentacao/             # Materiais executivos de apresentação (HTML, PDF, Markdown)
+├── install.sh                # Instalador mestre automatizado em 1 comando (macOS / Linux)
+└── installer/                # Instaladores dedicados (macOS / Windows PowerShell)
+```
+
+---
+
 ## 🛠️ Instalação Rápida & Onboarding Limpo
 
 O instalador foi projetado para configurar exclusivamente os dados fornecidos pelo próprio cliente em ambiente neutro:
@@ -102,9 +119,10 @@ O instalador foi projetado para configurar exclusivamente os dados fornecidos pe
 
 ### Execução da Instalação
 
-#### No macOS:
+#### No macOS / Linux (Instalador Mestre Unificado):
 ```bash
-bash installer/install.sh
+chmod +x install.sh
+./install.sh
 ```
 
 #### No Windows:

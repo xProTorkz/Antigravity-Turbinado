@@ -1,6 +1,6 @@
 # 🗺️ Dicionário Canônico de Automação, Gatilhos Ambíguos & Comandos de Alta Potência
 
-**Localização:** `/Users/lucasvinicius/projetos/estruturas/dicionario_automacao_core.md`  
+**Localização:** `$HOME/projetos/estruturas/dicionario_automacao_core.md`  
 **Escopo:** Ecossistema Antigravity, CLI `agy`, IDE, Agentes e Terminal do Desenvolvedor (macOS / Unix)  
 **Versão:** 3.2 (Catálogo Unificado SRE & DevOps: Amostragem Sanitizada, Sandbox, Mocking, Resiliência e Roteador Shell Ativo)
 
@@ -46,13 +46,13 @@
 | Gatilhos Naturais / Gírias Comuns | `//comando` | Ação Operacional Real | Comando Shell / Ação no macOS |
 | :--- | :--- | :--- | :--- |
 | `"faxina geral"`, `"limpa a casa"`, `"remove o lixo"` | `//deep-clean` | Remove caches de build, logs truncados e arquivos temporários | `find . -type d \( -name ".turbo" -o -name ".next" -o -name "dist" -o -name "__pycache__" \) -prune -exec rm -rf {} + 2>/dev/null` |
-| `"purgar buffers"`, `"zerar logs"`, `"limpa os logs"` | `//purgar-buffers` | Trunca arquivos de log para 0 bytes sem quebrar descritores abertos | `find /Users/lucasvinicius/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null` |
-| `"limpar temporários"`, `"esvaziar scratch"`, `"limpar temp"` | `//clean-scratch` | Esvazia diretórios de rascunho da IDE e temporários do SO | `rm -rf /Users/lucasvinicius/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null` |
+| `"purgar buffers"`, `"zerar logs"`, `"limpa os logs"` | `//purgar-buffers` | Trunca arquivos de log para 0 bytes sem quebrar descritores abertos | `find $HOME/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null` |
+| `"limpar temporários"`, `"esvaziar scratch"`, `"limpar temp"` | `//clean-scratch` | Esvazia diretórios de rascunho da IDE e temporários do SO | `rm -rf $HOME/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null` |
 | `"limpar pycache"`, `"tira lixo python"` | `//clean-pycache` | Exclui recursivamente todos os diretórios `__pycache__` e arquivos `.pyc` | `find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null; find . -name "*.pyc" -delete` |
 | `"apaga node_modules"`, `"limpa dependências"` | `//clean-modules` | Remove pastas de módulos do Node.js de forma ultra-rápida | `find . -maxdepth 3 -type d -name "node_modules" -prune -exec rm -rf {} + 2>/dev/null` |
 | `"limpar caches npm e pip"`, `"purgar pacotes"` | `//clean-pkg-cache` | Limpa o armazenamento local de cache do npm, yarn e pip | `npm cache clean --force 2>/dev/null; pip cache purge 2>/dev/null \|\| true` |
-| `"rotação de dados"`, `"reciclar logs"`, `"compactar logs"` | `//rotacionar-logs` | Compacta em gzip arquivos de log com mais de 50MB | `find /Users/lucasvinicius/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null` |
-| `"higieniza os logs"`, `"anonimiza o log"`, `"mascara os segredos"` | `//sanitize-logs` | Mascara CPFs, senhas e tokens Bearer em arquivos .log sem deletá-los | `agy_cmd sanitize-logs /Users/lucasvinicius/projetos` |
+| `"rotação de dados"`, `"reciclar logs"`, `"compactar logs"` | `//rotacionar-logs` | Compacta em gzip arquivos de log com mais de 50MB | `find $HOME/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null` |
+| `"higieniza os logs"`, `"anonimiza o log"`, `"mascara os segredos"` | `//sanitize-logs` | Mascara CPFs, senhas e tokens Bearer em arquivos .log sem deletá-los | `agy_cmd sanitize-logs $HOME/projetos` |
 | `"esvaziar lixeira"`, `"liberar espaço em disco"` | `//empty-trash` | Esvazia a lixeira do macOS via CLI com liberação imediata de blocos | `rm -rf ~/.Trash/* 2>/dev/null \|\| true` |
 
 ---
@@ -130,7 +130,7 @@
 | :--- | :--- | :--- | :--- |
 | `"diagnóstico completo"`, `"relatório de telemetria"` | `//telemetria-full` | Mapeamento instantâneo de consumo de hardware, CPU/RAM e partição | `top -l 1 -s 0 \| head -n 25 && df -h /` |
 | `"disco cheio?"`, `"quanto espaço tenho"` | `//disk-usage` | Exibe o espaço livre e ocupado no disco principal formatado em GB | `df -h /System/Volumes/Data \| awk 'NR==1 \|\| NR==2 {print $2, $3, $4, $5}'` |
-| `"mapear arquivos pesados"`, `"varrer disco"` | `//varrer-grandes` | Identifica todos os arquivos superiores a 50MB acumulados no projeto | `find /Users/lucasvinicius/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null` |
+| `"mapear arquivos pesados"`, `"varrer disco"` | `//varrer-grandes` | Identifica todos os arquivos superiores a 50MB acumulados no projeto | `find $HOME/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null` |
 | `"verificar integridade"`, `"check de runtime"` | `//check-health` | Valida versões instaladas do Node, Python, Git, Docker e da CLI `agy` | `sw_vers && which node python3 agy docker git && node -v && python3 --version` |
 | `"como tá o consumo"`, `"temperatura e carga"` | `//sys-load` | Mostra tempo de atividade contínua da máquina e médias de carga (Load Avg) | `uptime` |
 
@@ -155,8 +155,8 @@
 
 | Gatilhos Naturais / Gírias Comuns | `//comando` | Ação Operacional Real | Comando Shell / Ação no macOS |
 | :--- | :--- | :--- | :--- |
-| `"auditar permissões"`, `"quem pode ler"` | `//audit-perms` | Localiza arquivos com permissões abertas indevidas (world-writable) | `find /Users/lucasvinicius/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null` |
-| `"blindar"`, `"blindar acessos"`, `"trava as permissões"` | `//blindar`, `//harden-workspace` | Restringe permissões de leitura/escrita estritamente ao proprietário | `chmod -R 750 /Users/lucasvinicius/projetos 2>/dev/null` |
+| `"auditar permissões"`, `"quem pode ler"` | `//audit-perms` | Localiza arquivos com permissões abertas indevidas (world-writable) | `find $HOME/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null` |
+| `"blindar"`, `"blindar acessos"`, `"trava as permissões"` | `//blindar`, `//harden-workspace` | Restringe permissões de leitura/escrita estritamente ao proprietário | `chmod -R 750 $HOME/projetos 2>/dev/null` |
 | `"auditar sessões"`, `"histórico de logins"` | `//audit-logins` | Exibe o histórico das últimas sessões autenticadas na máquina | `last \| head -n 15` |
 | `"verifica segredos vazados"`, `"audita credenciais"` | `//audit-secrets` | Varre a árvore do Git por menções a chaves de API, senhas ou tokens | `git diff --staged \| grep -Ei "(API_KEY\|SECRET\|TOKEN\|PASSWORD\|PRIVATE_KEY)" \|\| echo "✅ Nenhum segredo detectado"` |
 
@@ -280,13 +280,13 @@ Para garantir que desenvolvedores e agentes operem com máxima sinergia e sem at
 
 ## 4. Roteador Shell Automático Expandido (`agy_cmd` v3.2)
 
-Para utilizar todos esses comandos diretamente no seu terminal macOS/zsh com autocompletar e despacho instantâneo, você pode carregar o script oficial localizado em `/Users/lucasvinicius/projetos/estruturas/agy_cmd.sh` ou conferir seu código-fonte sincronizado abaixo:
+Para utilizar todos esses comandos diretamente no seu terminal macOS/zsh com autocompletar e despacho instantâneo, você pode carregar o script oficial localizado em `$HOME/projetos/estruturas/agy_cmd.sh` ou conferir seu código-fonte sincronizado abaixo:
 
 ```bash
 #!/usr/bin/env bash
 # ==============================================================================
 # Roteador Canônico de Automação Antigravity (SRE / DevOps Dictionary v3.2)
-# Local: /Users/lucasvinicius/projetos/estruturas/agy_cmd.sh
+# Local: $HOME/projetos/estruturas/agy_cmd.sh
 # Escopo: macOS / Unix - Automação Determinística, Resiliência e SRE
 # ==============================================================================
 
@@ -354,7 +354,7 @@ agy_cmd() {
         # === FOCO 2: Faxina de Disco, Purga de Buffers & Caches ===
         "purgar-buffers"|"zerar-logs")
             echo "📄 Truncando arquivos de log para 0 bytes sem romper descritores..."
-            find /Users/lucasvinicius/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null
+            find $HOME/projetos -name "*.log" -exec truncate -s 0 {} + 2>/dev/null
             echo "✅ Todos os arquivos .log truncados com sucesso."
             ;;
         "deep-clean")
@@ -365,7 +365,7 @@ agy_cmd() {
             ;;
         "clean-scratch")
             echo "🗑️ Esvaziando diretórios scratch da IDE e temporários do SO..."
-            rm -rf /Users/lucasvinicius/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null || true
+            rm -rf $HOME/.gemini/antigravity-ide/scratch/* /tmp/antigravity_* 2>/dev/null || true
             echo "✅ Diretórios de rascunho limpos."
             ;;
         "clean-pycache")
@@ -387,7 +387,7 @@ agy_cmd() {
             ;;
         "rotacionar-logs")
             echo "🗜️ Compactando em gzip arquivos de log superiores a 50MB..."
-            find /Users/lucasvinicius/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null
+            find $HOME/projetos -name "*.log" -size +50M -exec gzip -f {} + 2>/dev/null
             echo "✅ Rotação de logs concluída."
             ;;
         "empty-trash")
@@ -528,7 +528,7 @@ agy_cmd() {
             ;;
         "varrer-grandes")
             echo "🔍 Mapeando arquivos maiores que 50MB no diretório de projetos..."
-            find /Users/lucasvinicius/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null | awk '{print $5, $9}'
+            find $HOME/projetos -type f -size +50M -exec ls -lh {} + 2>/dev/null | awk '{print $5, $9}'
             ;;
         "sys-load")
             echo "⏱️ Tempo de atividade e carga média do sistema:"
@@ -561,11 +561,11 @@ agy_cmd() {
         # === FOCO 9: Segurança & Auditoria de Permissões ===
         "audit-perms")
             echo "🔒 Verificando arquivos com permissões abertas indevidas (world-writable):"
-            find /Users/lucasvinicius/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null | head -n 20 || echo "✅ Nenhuma inconsistência encontrada."
+            find $HOME/projetos -type f \( -perm -o+w -o -perm -o+r \) -ls 2>/dev/null | head -n 20 || echo "✅ Nenhuma inconsistência encontrada."
             ;;
         "harden-workspace"|"blindar"|"blindar-workspace")
             echo "🛡️ Blindando permissões de workspace para acesso restrito (750)..."
-            chmod -R 750 /Users/lucasvinicius/projetos 2>/dev/null || true
+            chmod -R 750 $HOME/projetos 2>/dev/null || true
             echo "✅ Permissões aplicadas aos projetos."
             ;;
         "audit-logins")
@@ -841,12 +841,12 @@ for p in procs: p.join()
         # === Blindagem de Memória & Contexto Persistente ===
         "blindar")
             echo "🛡️ Aplicando blindagem de permissões e integridade no ecossistema..."
-            chmod -R 750 /Users/lucasvinicius/projetos/estruturas /Users/lucasvinicius/projetos/config 2>/dev/null || true
+            chmod -R 750 $HOME/projetos/estruturas $HOME/projetos/config 2>/dev/null || true
             echo "✅ Permissões restritas ao proprietário (750) em estruturas e config."
             ;;
         "travar")
             echo "🔒 Verificando diretriz de contexto persistente SYSTEM-CORE-ARCHITECTURE-V1..."
-            local directive_path="/Users/lucasvinicius/projetos/estruturas/DIRETRIZ_CONTEXTO_PERSISTENTE.md"
+            local directive_path="$HOME/projetos/estruturas/DIRETRIZ_CONTEXTO_PERSISTENTE.md"
             if [ -f "$directive_path" ]; then
                 echo "✅ Diretriz persistente validada em: $directive_path"
                 grep "IDENTIFICADOR:" "$directive_path" || true
@@ -857,7 +857,7 @@ for p in procs: p.join()
             ;;
         "validar-schema")
             local target_json="${1}"
-            local schema_path="/Users/lucasvinicius/projetos/estruturas/system_core_architecture_schema.json"
+            local schema_path="$HOME/projetos/estruturas/system_core_architecture_schema.json"
             if [ -z "$target_json" ]; then
                 echo "Uso: agy_cmd validar-schema <arquivo_payload.json>"
                 return 1
@@ -889,10 +889,10 @@ except Exception as e:
 "
             ;;
         "config-sync")
-            echo "🔄 Sincronizando estruturas e templates para /Users/lucasvinicius/projetos/config..."
-            mkdir -p /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas
-            cp -f /Users/lucasvinicius/projetos/estruturas/* /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/ 2>/dev/null || true
-            chmod 750 /Users/lucasvinicius/projetos/config/4-Automacao-e-Estruturas/agy_cmd.sh 2>/dev/null || true
+            echo "🔄 Sincronizando estruturas e templates para $HOME/projetos/config..."
+            mkdir -p $HOME/projetos/config/4-Automacao-e-Estruturas
+            cp -f $HOME/projetos/estruturas/* $HOME/projetos/config/4-Automacao-e-Estruturas/ 2>/dev/null || true
+            chmod 750 $HOME/projetos/config/4-Automacao-e-Estruturas/agy_cmd.sh 2>/dev/null || true
             echo "✅ Sincronização de estruturas concluída com sucesso."
             ;;
 
@@ -941,7 +941,7 @@ source ~/.zshrc
 Ou carregando diretamente o script:
 
 ```bash
-source /Users/lucasvinicius/projetos/estruturas/agy_cmd.sh
+source $HOME/projetos/estruturas/agy_cmd.sh
 ```
 
 Exemplos práticos de uso direto no shell:
@@ -958,7 +958,7 @@ agy_cmd bench-endpoint http://localhost:3000 # Mede estatísticas de latência H
 agy_cmd check-dns google.com               # Valida resolução e latência de DNS
 agy_cmd watch-port 3000                    # Monitora conexões ativas na porta 3000
 agy_cmd audit-ports-full                   # Lista todos os sockets TCP/UDP locais em LISTEN
-agy_cmd sanitize-logs /Users/lucasvinicius/projetos # Mascara dados sensíveis (tokens/senhas/CPFs) em logs
+agy_cmd sanitize-logs $HOME/projetos # Mascara dados sensíveis (tokens/senhas/CPFs) em logs
 agy_cmd quiet-mode npm run build           # Roda em modo ultra silencioso; exibe saída apenas se falhar
 agy_cmd deep-clean                         # Faxina profunda em caches de build, turbo, next e .DS_Store
 agy_cmd help                               # Exibe o menu completo de ações por categoria

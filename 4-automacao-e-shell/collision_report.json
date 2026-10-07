@@ -1,0 +1,754 @@
+{
+  "total_collisions": 58,
+  "generated_at": "2026-10-06T09:20:52.978014+00:00",
+  "silent_collisions_allowed": 0,
+  "collisions": [
+    {
+      "phrase": "${1:-http://localhost:3000}",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "bypass-ratelimit-test",
+      "candidates_total": 5,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "bypass-ratelimit-test",
+        "fuzz-api-extreme",
+        "inspect-headers",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${2:-500}",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${3:-25}",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "ataque ddos sintético",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "ataque de negação de serviço simulado",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "bombardeia a api com 1000 conexões",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "prova de carga extrema",
+      "candidate_1": "attack-ddos-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "attack-ddos-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "auditoria completa",
+      "candidate_1": "audit-all",
+      "candidate_2": "audit-full",
+      "candidates_total": 2,
+      "all_candidates": [
+        "audit-all",
+        "audit-full"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "execute uma auditoria completa e me entregue o relatorio.",
+      "candidate_1": "audit-all",
+      "candidate_2": "audit-full",
+      "candidates_total": 2,
+      "all_candidates": [
+        "audit-all",
+        "audit-full"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "faça uma auditoria completa",
+      "candidate_1": "audit-all",
+      "candidate_2": "audit-full",
+      "candidates_total": 2,
+      "all_candidates": [
+        "audit-all",
+        "audit-full"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "puxa a ficha de tudo",
+      "candidate_1": "audit-all",
+      "candidate_2": "audit-full",
+      "candidates_total": 2,
+      "all_candidates": [
+        "audit-all",
+        "audit-full"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "raio-x completo",
+      "candidate_1": "audit-all",
+      "candidate_2": "audit-full",
+      "candidates_total": 2,
+      "all_candidates": [
+        "audit-all",
+        "audit-full"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "$1",
+      "candidate_1": "backup-git-bundle",
+      "candidate_2": "cert-check",
+      "candidates_total": 28,
+      "all_candidates": [
+        "backup-git-bundle",
+        "cert-check",
+        "db-checkpoint",
+        "db-fragmentation",
+        "db-integrity",
+        "db-integrity-deep",
+        "db-reindex",
+        "db-stats-summary",
+        "db-vacuum",
+        "diff-db-schemas",
+        "explain-query",
+        "fd-count",
+        "git-blame-clean",
+        "git-pickaxe",
+        "kill-port",
+        "launchd-create",
+        "profile-cpu",
+        "sha256-check",
+        "shred-file",
+        "spindump-proc",
+        "trace-leaks",
+        "unlock-file",
+        "unlock-file-force",
+        "unlock-kill-by-name",
+        "unlock-launchd-service",
+        "unlock-quarantine",
+        "unlock-sqlite",
+        "vmmap-summary"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${1:-<http://localhost:3000}",
+      "candidate_1": "bench-endpoint",
+      "candidate_2": "check-endpoint",
+      "candidates_total": 3,
+      "all_candidates": [
+        "bench-endpoint",
+        "check-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "benchmark de ttfb do endpoint",
+      "candidate_1": "bench-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bench-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "dns: %{time_namelookup}s | tcp: %{time_connect}s | ttfb: %{time_starttransfer}s | total: %{time_total}s\\n",
+      "candidate_1": "bench-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bench-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "mede a latência da api",
+      "candidate_1": "bench-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bench-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "tempo de resposta da rota",
+      "candidate_1": "bench-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bench-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${1:-http://localhost:3000/api/login}",
+      "candidate_1": "bruteforce-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bruteforce-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "bruteforce sintético na autenticação",
+      "candidate_1": "bruteforce-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bruteforce-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "simula ataque de força bruta",
+      "candidate_1": "bruteforce-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bruteforce-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "testa bloqueio por tentativas de login",
+      "candidate_1": "bruteforce-sim",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bruteforce-sim",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "ataque de rotação de ip fake",
+      "candidate_1": "bypass-ratelimit-test",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bypass-ratelimit-test",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "simula spoofing de ip no header",
+      "candidate_1": "bypass-ratelimit-test",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bypass-ratelimit-test",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "testa se o rate limit é burlável",
+      "candidate_1": "bypass-ratelimit-test",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "bypass-ratelimit-test",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "bate no endpoint",
+      "candidate_1": "check-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "check-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "pinga o serviço",
+      "candidate_1": "check-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "check-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "status http: %{http_code} | total: %{time_total}s\\n",
+      "candidate_1": "check-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "check-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "vê se a api tá viva",
+      "candidate_1": "check-endpoint",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "check-endpoint",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "$@",
+      "candidate_1": "daemon-watch",
+      "candidate_2": "daemonize",
+      "candidates_total": 10,
+      "all_candidates": [
+        "daemon-watch",
+        "daemonize",
+        "disguise-proc",
+        "exec-raw",
+        "force-task",
+        "isolate-dir-exec",
+        "run-detached-subshell",
+        "run-idle",
+        "silence-terminal",
+        "stealth-exec"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${1:-database.sqlite}",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "db-integrity",
+      "candidates_total": 4,
+      "all_candidates": [
+        "db-checkpoint",
+        "db-integrity",
+        "unlock-sqlite-force",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "consolida wal",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "wal-checkpoint",
+      "candidates_total": 2,
+      "all_candidates": [
+        "db-checkpoint",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "descarrega o wal no disco",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "wal-checkpoint",
+      "candidates_total": 2,
+      "all_candidates": [
+        "db-checkpoint",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "força checkpoint wal",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "wal-checkpoint",
+      "candidates_total": 2,
+      "all_candidates": [
+        "db-checkpoint",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "pragma wal_checkpoint(truncate);",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "unlock-sqlite",
+      "candidates_total": 3,
+      "all_candidates": [
+        "db-checkpoint",
+        "unlock-sqlite",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "trunca log do sqlite",
+      "candidate_1": "db-checkpoint",
+      "candidate_2": "wal-checkpoint",
+      "candidates_total": 2,
+      "all_candidates": [
+        "db-checkpoint",
+        "wal-checkpoint"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "dá um trato no banco",
+      "candidate_1": "db-optimize-full",
+      "candidate_2": "db-vacuum",
+      "candidates_total": 3,
+      "all_candidates": [
+        "db-optimize-full",
+        "db-vacuum",
+        "sqlite-vacuum"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "otimiza o banco",
+      "candidate_1": "db-optimize-full",
+      "candidate_2": "db-vacuum",
+      "candidates_total": 3,
+      "all_candidates": [
+        "db-optimize-full",
+        "db-vacuum",
+        "sqlite-vacuum"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "passa o aspirador na base",
+      "candidate_1": "db-optimize-full",
+      "candidate_2": "db-vacuum",
+      "candidates_total": 3,
+      "all_candidates": [
+        "db-optimize-full",
+        "db-vacuum",
+        "sqlite-vacuum"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "revisa o sqlite",
+      "candidate_1": "db-optimize-full",
+      "candidate_2": "db-vacuum",
+      "candidates_total": 3,
+      "all_candidates": [
+        "db-optimize-full",
+        "db-vacuum",
+        "sqlite-vacuum"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "dá vacuum no sqlite",
+      "candidate_1": "db-vacuum",
+      "candidate_2": "sqlite-vacuum",
+      "candidates_total": 2,
+      "all_candidates": [
+        "db-vacuum",
+        "sqlite-vacuum"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "$2",
+      "candidate_1": "diff-db-schemas",
+      "candidate_2": "git-blame-clean",
+      "candidates_total": 3,
+      "all_candidates": [
+        "diff-db-schemas",
+        "git-blame-clean",
+        "launchd-create"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "limpa alucinações",
+      "candidate_1": "fixar",
+      "candidate_2": "travar",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fixar",
+        "travar"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "para de viajar e foca no escopo",
+      "candidate_1": "fixar",
+      "candidate_2": "travar",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fixar",
+        "travar"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "recarrega o contexto canônico",
+      "candidate_1": "fixar",
+      "candidate_2": "travar",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fixar",
+        "travar"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "trava a conversa",
+      "candidate_1": "fixar",
+      "candidate_2": "travar",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fixar",
+        "travar"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "volta pro foco",
+      "candidate_1": "fixar",
+      "candidate_2": "travar",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fixar",
+        "travar"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "ataque de injeção de borda",
+      "candidate_1": "fuzz-api-extreme",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fuzz-api-extreme",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "fuzzing na api com payloads extremos",
+      "candidate_1": "fuzz-api-extreme",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fuzz-api-extreme",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "injeta payload malicioso no endpoint",
+      "candidate_1": "fuzz-api-extreme",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fuzz-api-extreme",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "teste de boundary extrema",
+      "candidate_1": "fuzz-api-extreme",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "fuzz-api-extreme",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "inspeciona headers http",
+      "candidate_1": "inspect-headers",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "inspect-headers",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "vê cabeçalhos de segurança cors e hsts",
+      "candidate_1": "inspect-headers",
+      "candidate_2": "localhost",
+      "candidates_total": 2,
+      "all_candidates": [
+        "inspect-headers",
+        "localhost"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${1:-.}",
+      "candidate_1": "locked-dir",
+      "candidate_2": "sanitize-logs",
+      "candidates_total": 6,
+      "all_candidates": [
+        "locked-dir",
+        "sanitize-logs",
+        "unlock-dir",
+        "unlock-dir-tree",
+        "unlock-quarantine-recursive",
+        "unlock-spotlight-indexing"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "*.log",
+      "candidate_1": "log-rotate-force",
+      "candidate_2": "purgar-buffers",
+      "candidates_total": 3,
+      "all_candidates": [
+        "log-rotate-force",
+        "purgar-buffers",
+        "rotacionar-logs"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${2:-5}",
+      "candidate_1": "profile-cpu",
+      "candidate_2": "stress-ram",
+      "candidates_total": 2,
+      "all_candidates": [
+        "profile-cpu",
+        "stress-ram"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "*.lock",
+      "candidate_1": "unlock-git",
+      "candidate_2": "unlock-pids",
+      "candidates_total": 2,
+      "all_candidates": [
+        "unlock-git",
+        "unlock-pids"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    },
+    {
+      "phrase": "${1:-3000}",
+      "candidate_1": "unlock-port",
+      "candidate_2": "unlock-port-range",
+      "candidates_total": 2,
+      "all_candidates": [
+        "unlock-port",
+        "unlock-port-range"
+      ],
+      "reason": "Alias compartilhado entre intenções distintas",
+      "resolution": "Resolvedor exige qualificador adicional ou retorna AMBIGUOUS para desambiguação interativa"
+    }
+  ]
+}

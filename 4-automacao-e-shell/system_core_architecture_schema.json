@@ -15,14 +15,14 @@
     },
     "camada_superficie_frontend": {
       "type": "object",
-      "description": "Dados abertos que geram logs visíveis, interface, triggers do AutomationBot e controle do DOM/Estado.",
+      "description": "Dados abertos que geram logs visíveis, interface, triggers do SharkBot e controle do DOM/Estado.",
       "properties": {
         "exibir_logs_console": { "type": "boolean" },
         "state_manager_update": { "type": "string" },
-        "relatorio_aberto_appbot": { "type": "string" },
+        "relatorio_aberto_sharkbot": { "type": "string" },
         "logs_auditoria_visivel": { "type": "string" }
       },
-      "required": ["exibir_logs_console", "relatorio_aberto_appbot", "logs_auditoria_visivel"]
+      "required": ["exibir_logs_console", "relatorio_aberto_sharkbot", "logs_auditoria_visivel"]
     },
     "camada_profundezas_backend": {
       "type": "object",

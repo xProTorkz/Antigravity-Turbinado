@@ -1,0 +1,238 @@
+{
+  "version": "5.0",
+  "scoring_hierarchy": {
+    "exact_numeric_shortcut": 1000,
+    "exact_intent_id": 950,
+    "exact_slash_command": 900,
+    "exact_alias": 850,
+    "semantic_complete": 800,
+    "semantic_contextual": 750,
+    "semantic_partial": 650,
+    "minimum_confidence_threshold": 500,
+    "minimum_margin_to_second_candidate": 50
+  },
+  "macro_defaults": {
+    "audite": {
+      "action": "AUDIT",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY_FIRST",
+      "mutation_allowed": false
+    },
+    "faça um reconhecimento": {
+      "action": "RECON",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY",
+      "mutation_allowed": false
+    },
+    "reconhecimento": {
+      "action": "RECON",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY",
+      "mutation_allowed": false
+    },
+    "faça um mapeamento geral": {
+      "action": "MAP",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY",
+      "mutation_allowed": false
+    },
+    "mapeie": {
+      "action": "MAP",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY",
+      "mutation_allowed": false
+    },
+    "verifique rapidamente": {
+      "action": "AUDIT",
+      "depth": "LIGHT",
+      "intensity": "LOW",
+      "mode": "READ_ONLY_FIRST",
+      "mutation_allowed": false
+    },
+    "audit rápido": {
+      "action": "AUDIT",
+      "depth": "LIGHT",
+      "intensity": "LOW",
+      "mode": "READ_ONLY_FIRST",
+      "mutation_allowed": false
+    },
+    "audit completo": {
+      "action": "AUDIT",
+      "depth": "HARD",
+      "intensity": "HIGH",
+      "mode": "READ_ONLY_FIRST",
+      "mutation_allowed": false
+    },
+    "audit forense": {
+      "action": "AUDIT",
+      "depth": "FORENSIC",
+      "intensity": "EXTREME",
+      "mode": "READ_ONLY_FIRST",
+      "mutation_allowed": false
+    }
+  },
+  "audit_hard_phases": [
+    {
+      "phase": 1,
+      "name": "IDENTIDADE",
+      "scope": [
+        "alvo_atual",
+        "projeto",
+        "workspace",
+        "repositório",
+        "branch",
+        "estado",
+        "runtime"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "ARQUITETURA",
+      "scope": [
+        "componentes",
+        "dependências",
+        "serviços",
+        "processos",
+        "integrações",
+        "entradas",
+        "saídas",
+        "fluxos"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "SAÚDE",
+      "scope": [
+        "erros",
+        "warnings",
+        "deadlocks",
+        "processos_travados",
+        "recursos",
+        "disco",
+        "memória",
+        "runtime"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "GIT",
+      "scope": [
+        "status",
+        "branch",
+        "divergence",
+        "alterações",
+        "locks",
+        "integridade",
+        "commits_relevantes"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "REDE",
+      "scope": [
+        "serviços_locais",
+        "listeners",
+        "portas",
+        "bindings",
+        "endpoints",
+        "dns_tls"
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "CONFIGURAÇÃO",
+      "scope": [
+        "configs",
+        "env_drift",
+        "dependências",
+        "versões",
+        "serviços"
+      ]
+    },
+    {
+      "phase": 7,
+      "name": "SEGURANÇA_DEFENSIVA",
+      "scope": [
+        "exposição_acidental",
+        "segredos",
+        "permissões",
+        "configurações_frágeis",
+        "dependências_vulneráveis",
+        "superfícies_risco"
+      ]
+    },
+    {
+      "phase": 8,
+      "name": "DADOS",
+      "scope": [
+        "bases",
+        "integridade",
+        "locks",
+        "wal",
+        "schemas",
+        "armazenamento"
+      ]
+    },
+    {
+      "phase": 9,
+      "name": "OBSERVABILIDADE",
+      "scope": [
+        "logs",
+        "métricas",
+        "eventos",
+        "falhas_recentes",
+        "correlação_temporal"
+      ]
+    },
+    {
+      "phase": 10,
+      "name": "RESULTADO",
+      "scope": [
+        "PASS",
+        "WARN",
+        "FAIL",
+        "riscos",
+        "prioridades",
+        "recomendações",
+        "próximos_passos"
+      ]
+    }
+  ],
+  "discreet_execution_policy": {
+    "EXECUTION_VISIBILITY": "BACKGROUND",
+    "UI_FOCUS": false,
+    "OPEN_NEW_WINDOWS": false,
+    "OPEN_NEW_TABS": false,
+    "HEADLESS_BROWSER": false,
+    "VISIBLE_TERMINAL": false,
+    "AUDIT_LOGGING": true,
+    "SECURITY_LOGGING": true,
+    "RESUME_FROM_GATE": true,
+    "forbidden_mappings": [
+      "DELETE_HISTORY",
+      "DISGUISE_PROCESS",
+      "DISABLE_LOGGING",
+      "HIDE_FROM_SECURITY",
+      "BYPASS_MONITORING"
+    ]
+  },
+  "context_priority": [
+    "1_explicit_target_in_utterance",
+    "2_conversation_project",
+    "3_active_project",
+    "4_recently_mentioned_resource",
+    "5_operational_session",
+    "6_disambiguation_fallback"
+  ],
+  "policy_gates": {
+    "read_only_first_default": true,
+    "mutations_require_sentinela_gate": true,
+    "destructive_actions_require_human_gate": true,
+    "security_reference_execution_allowed": false
+  }
+}

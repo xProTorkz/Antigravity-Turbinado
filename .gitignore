@@ -54,4 +54,5 @@ scratch/
 *.log
 tunnel*.log
 *.pdf
-
+snapshots/
+*.tar.gz

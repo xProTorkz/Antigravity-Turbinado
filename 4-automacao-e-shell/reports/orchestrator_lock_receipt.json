@@ -1,0 +1,29 @@
+{
+  "timestamp_utc": "2026-10-06T21:03:38Z",
+  "host": "MacBook-Air-de-Lucas.local",
+  "status": "VALIDATED_AND_LOCKED",
+  "gateway_8765": {
+    "status": "PASS",
+    "endpoint": "http://127.0.0.1:8765/health",
+    "service": "Jarvis Remote Bridge"
+  },
+  "zero_token_guard": {
+    "status": "ACTIVE_PERMANENT_LOCK",
+    "enforced_by": "Sentinela Guardião & macOS zshrc",
+    "blocked_providers": ["openai", "anthropic", "openrouter", "together", "runpod", "gemini", "cohere", "mistral"],
+    "routing_null_socket": "http://127.0.0.1:0/token-lock",
+    "power_mode": "MAXIMUM_LOCAL_ENTERPRISE_HIGH_EFFORT",
+    "reasoning_effort": "high",
+    "preferred_model": "gemini-3.8-flash-high"
+  },
+  "system_limits": {
+    "ulimit_n": 65536,
+    "ulimit_u": 1333,
+    "caffeinate_running": true
+  },
+  "governance": {
+    "target_repo": "xProTorkz/antigravity-control-plane",
+    "target_project": "Jarvis Assistente",
+    "last_commit": "b543a5f"
+  }
+}
