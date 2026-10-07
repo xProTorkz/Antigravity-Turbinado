@@ -101,6 +101,16 @@
     "atualizar_sentinela": "Executar o atualizador canônico do Sentinela: puxar a versão mais recente do repositório Antigravity-Turbinado via git pull origin main e sincronizar o dicionário léxico e as skills do Sentinela.",
     "baixa_atualizacao_sentinela": "Gatilho de atualização: sincronizar a versão mais recente do Antigravity Turbinado, dicionário léxico e skills do Sentinela.",
     "auditoria_normal": "Executar auditoria operacional padrão cobrindo código, ambiente e incluindo compulsoriamente a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade de formulários/interface.",
+    "auditoria_total_replicador": "Pipeline completo de extração profunda de dados ocultos de um site: (1) interceptação de APIs via curl/mitmproxy, (2) extração de dados HTML ocultos via pup/jq, (3) varredura de histórico e endpoints via gau/waybackurls/linkfinder/trufflehog/gitleaks, (4) extração de metadados EXIF via exiftool, (5) brute force de rotas ocultas via gobuster/dirb/ffuf.",
+    "espelhamento_frontend_estatico": "Auditoria Total Replicador: baixar e recriar visualmente o frontend estático do site via wget recursivo, salvando em pasta dedicada em /Users/lucasvinicius/projetos/ e abrindo automaticamente no navegador.",
+    "copia": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
+    "clone": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
+    "espelho": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
+    "replicar": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
+    "interceptar_api": "Interceptar APIs ocultas de um site via curl com cookies/tokens ou via mitmproxy/mitmdump para capturar todo o tráfego de rede.",
+    "extrair_dados_ocultos_html": "Extrair dados escondidos em campos hidden, tags invisíveis e variáveis JS embutidas via pup e jq.",
+    "exiftool": "Extrair metadados EXIF ocultos (GPS, autor, câmera, software) de imagens, PDFs e documentos baixados do site.",
+    "brute_force_rotas": "Varredura de diretórios e rotas ocultas via gobuster, dirb ou ffuf testando milhares de palavras contra a URL alvo.",
     "inspecao_interface_irrestrita": "Executar script unificado de inspeção irrestrita de interface no DOM: remove filtros visuais e de segurança CSS (-webkit-text-security, blur), converte inputs confidenciais (password -> text), remove bloqueios de interação (disabled, readonly), elimina elementos bloqueadores invisíveis (overlays/divs flutuantes), extrai metadados em cache (.value, .innerText) e inspeciona atributos de acessibilidade (aria-labels, role) para auditoria completa de frontend.",
     "desmascarar_inputs_senha": "Converter inputs type=\"password\" para type=\"text\" para inspeção visual imediata e análise de conformidade de formulários.",
     "remover_travas_css_visual": "Remover propriedades visuais restritivas CSS, filtros de desfoque (blur) e propriedades text-security de todos os elementos.",
@@ -268,11 +278,12 @@
         "copia",
         "clone",
         "espelho",
-        "replicar"
+        "replicar",
+        "auditoria total replicador"
       ],
       "gatilhos": [
+        "auditoria total replicador",
         "faça uma cópia do que vê",
-        "copia tudo",
         "recriar tudo exatamente como vê",
         "recria tudo como vê",
         "recriar o que vê",
@@ -287,6 +298,99 @@
       "diretorio_raiz_projetos": "/Users/lucasvinicius/projetos",
       "regra_destino": "A cópia DEVE SEMPRE ser realizada e salva em uma pasta dedicada dentro de /Users/lucasvinicius/projetos/<NOME_PASTA>. O nome da pasta será fornecido pelo usuário no comando (ex: 'salvando na pasta X', 'em projetos/Nome'). Se não for informado explicitamente, o agente deve inferir o nome limpo do alvo em PascalCase. É proibido salvar na raiz de projetos ou em diretórios temporários.",
       "sintaxe_padrao": "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent [URL_FORNECIDA]"
+    },
+    "auditoria_total_replicador": {
+      "termos": [
+        "auditoria total replicador",
+        "interceptar api",
+        "interceptar apis ocultas",
+        "extrair dados ocultos",
+        "vasculhar site",
+        "pegar dados escondidos",
+        "extrair metadados",
+        "varredura de diretórios",
+        "brute force rotas",
+        "exiftool",
+        "mitmproxy",
+        "gobuster",
+        "dirb",
+        "ffuf",
+        "trufflehog",
+        "gitleaks",
+        "linkfinder",
+        "gau",
+        "waybackurls",
+        "pup"
+      ],
+      "gatilhos": [
+        "auditoria total replicador",
+        "interceptar api oculta",
+        "interceptar apis ocultas",
+        "extrair dados ocultos do site",
+        "pegar apis escondidas",
+        "vasculhar site completo",
+        "extrair metadados de arquivos",
+        "varredura de diretórios ocultos",
+        "brute force de rotas",
+        "descobrir páginas ocultas",
+        "rastrear histórico do site"
+      ],
+      "diretiva": "auditoria_total_replicador",
+      "execucao_material": true,
+      "descricao": "Auditoria Total Replicador: pipeline completo de extração profunda de dados ocultos de um site. Cobre interceptação de APIs, extração de camadas HTML invisíveis, varredura de histórico, metadados de arquivos e brute force de rotas ocultas.",
+      "pipeline_auditoria": {
+        "fase_1_interceptacao_api": {
+          "descricao": "Intercepta APIs em segundo plano que carregam dados ocultos não presentes no HTML",
+          "curl_com_auth": "curl -s -H 'Authorization: Bearer [TOKEN]' -H 'Cookie: [COOKIES_DO_NAVEGADOR]' https://[SITE]/api/endpoint",
+          "curl_com_cookies_arquivo": "curl -s -b cookies.txt https://[SITE]/api/endpoint | python3 -m json.tool",
+          "mitmproxy": "mitmproxy --mode transparent (intercepta tráfego em tempo real com interface visual)",
+          "mitmdump": "mitmdump -w captura.mitm (grava todo o tráfego de rede em arquivo para análise posterior)",
+          "mitmdump_filtrado": "mitmdump -q -s script_filtro.py (filtra e imprime apenas respostas JSON de APIs)",
+          "observacao": "Copie os cookies/tokens do DevTools do navegador (F12 > Network > Headers > Copy as cURL)"
+        },
+        "fase_2_extracao_html_oculto": {
+          "descricao": "Extrai dados escondidos em campos ocultos, tags invisíveis e variáveis JavaScript embutidas",
+          "pup_campos_ocultos": "curl -s https://[SITE] | pup 'input[type=\"hidden\"] attr{value}'",
+          "pup_atributos_data": "curl -s https://[SITE] | pup '[data-*] attr{data-id}'",
+          "pup_texto_oculto": "curl -s https://[SITE] | pup '[style*=\"display:none\"] text{}'",
+          "jq_next_data": "curl -s https://[SITE] | grep -o '__NEXT_DATA__.*</script>' | sed 's/.*>//;s/<.*//' | jq '.props.pageProps'",
+          "jq_campo_especifico": "curl -s https://[SITE] | grep 'NEXT_DATA' | jq '.props.pageProps.dadosOcultos'",
+          "grep_variaveis_js": "curl -s https://[SITE] | grep -oP '(?<=(var|const|let) [a-zA-Z_]+\\s*=\\s*)[^;]+'",
+          "grep_script_json": "curl -s https://[SITE] | grep -oP '(?<=<script type=\"application/json\">)[^<]+'",
+          "observacao": "Instalar pup: brew install pup | Instalar jq: brew install jq"
+        },
+        "fase_3_historico_e_endpoints": {
+          "descricao": "Vasculha o histórico público do site e arquivos JavaScript em busca de rotas e endpoints ocultos",
+          "linkfinder": "python3 linkfinder.py -i https://[SITE]/app.js -o cli (encontra URLs ocultas em arquivos .js)",
+          "linkfinder_recursivo": "for url in $(curl -s https://[SITE] | grep -oP 'src=\"\\K[^\"]+\\.js'); do python3 linkfinder.py -i $url -o cli; done",
+          "gau": "gau [SITE] (lista TODAS as URLs que o site já teve — histórico público do Wayback Machine)",
+          "waybackurls": "waybackurls [SITE] | grep -v '\\.' | sort -u (rotas antigas sem extensão)",
+          "waybackurls_filtrado": "waybackurls [SITE] | grep '\\.json\\|\\.env\\|\\.bak\\|\\.sql' (arquivos sensíveis esquecidos)",
+          "trufflehog": "trufflehog git https://[REPO_GIT_EXPOSTO] (varre histórico git procurando senhas e tokens)",
+          "gitleaks": "gitleaks detect --source . --report-format json --report-path vazamentos.json",
+          "gitleaks_remoto": "git clone https://[SITE]/.git /tmp/repo_capturado && gitleaks detect --source /tmp/repo_capturado",
+          "observacao": "Instalar: pip install trufflehog | brew install gitleaks | go install github.com/lc/gau/v2/cmd/gau@latest | go install github.com/tomnomnom/waybackurls@latest"
+        },
+        "fase_4_metadados_arquivos": {
+          "descricao": "Extrai metadados ocultos (EXIF, GPS, autor, software) de imagens, PDFs e documentos baixados do site",
+          "exiftool_imagem": "exiftool [ARQUIVO.jpg] (câmera, data, GPS, software de edição)",
+          "exiftool_pdf": "exiftool [ARQUIVO.pdf] (autor, empresa, data criação, software)",
+          "exiftool_multiplos": "exiftool *.jpg *.pdf | grep -i 'GPS\\|Author\\|Creator\\|Software'",
+          "exiftool_json": "exiftool -j [ARQUIVO] | python3 -m json.tool",
+          "download_e_analise": "wget -q https://[SITE]/foto.jpg && exiftool foto.jpg | grep -i 'GPS\\|Location'",
+          "observacao": "Instalar: brew install exiftool | apt install libimage-exiftool-perl"
+        },
+        "fase_5_brute_force_rotas": {
+          "descricao": "Testa milhares de rotas ocultas por segundo para encontrar páginas de admin, backups e configs não linkadas",
+          "gobuster": "gobuster dir -u https://[SITE] -w /usr/share/wordlists/dirb/common.txt -o rotas_encontradas.txt",
+          "gobuster_extensoes": "gobuster dir -u https://[SITE] -w wordlist.txt -x php,json,env,bak,sql,zip",
+          "dirb": "dirb https://[SITE] /usr/share/dirb/wordlists/common.txt",
+          "ffuf": "ffuf -w wordlist.txt -u https://[SITE]/FUZZ -mc 200,301,302,403",
+          "ffuf_subdomains": "ffuf -w subdomains.txt -u https://FUZZ.[SITE] -mc 200",
+          "wordlist_download": "wget https://raw.githubusercontent.com/v0re/dirb/master/wordlists/common.txt -O wordlist.txt",
+          "observacao": "Instalar: brew install gobuster | brew install ffuf | apt install dirb. USE APENAS EM SEUS PRÓPRIOS AMBIENTES OU COM AUTORIZAÇÃO EXPRESSA."
+        }
+      }
     },
     "atualizar_sentinela": {
       "termos": [
