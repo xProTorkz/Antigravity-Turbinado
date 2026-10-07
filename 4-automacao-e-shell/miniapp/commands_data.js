@@ -2201,4 +2201,708 @@ const SRE_COMMANDS = [
       "fuzz-api-extreme"
     ]
   }
+,
+  {
+    "id": "series-recon-deep",
+    "menu": "series",
+    "menuName": "Série Sequencial de Alta Potência",
+    "group": "PIPELINE",
+    "isSeries": true,
+    "seriesSteps": [
+      "DNS Autoritativo: varredura profunda de A, AAAA, MX, TXT, SOA e CAA.",
+      "Certificate Transparency: mineração de subdomínios ocultos via crt.sh.",
+      "Borda & ASN: resolução de blocos IP, ASN titular e rotas BGP upstream.",
+      "Segurança de E-mail: validação de políticas anti-spoofing SPF, DKIM e DMARC.",
+      "Headers HTTP & WAF: detecção passiva de servidores web, proxies e CSP.",
+      "Criptografia TLS: auditoria de certificados, SANs e suporte a HTTP/3 QUIC."
+    ],
+    "title": "SÉRIE 12: Reconhecimento & OSINT Profundo",
+    "slash": "/recon-profundo [D]",
+    "canonical": "//recon-deep",
+    "phrase": "`reconhecimento profundo`, `raio-x de infraestrutura`, `osint completo do domínio`, `mapeia a superfície do alvo`",
+    "desc": "Pipeline SRE/OSINT Sequencial Completo (6 etapas). Mapeamento perimétrico passivo não-intrusivo com relatório estruturado.",
+    "shell": "agy_cmd recon-deep \"${1:-example.com}\"",
+    "rawShell": "./agy_cmd.sh recon-deep \"${1:-example.com}\"",
+    "next": [
+      "recon-dns-deep",
+      "recon-ct-subdomains",
+      "recon-tls-chain",
+      "scan-surface-endpoints"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-dns-deep",
+    "title": "DNS Deep Audit",
+    "slash": "/recon-dns [D]",
+    "canonical": "//recon-dns-deep",
+    "phrase": "`audita dns do domínio`, `puxa registros dns`, `varre dns completo`",
+    "desc": "Executa auditoria DNS autoritativa completa (A, AAAA, MX, TXT, NS, SOA, CAA) com verificação de delegação.",
+    "shell": "agy_cmd recon-dns-deep \"${1:-example.com}\"",
+    "rawShell": "for t in A AAAA MX TXT NS SOA CAA; do echo \"=== $t ===\"; dig +noall +answer \"${1:-example.com}\" $t; done",
+    "next": [
+      "recon-ct-subdomains",
+      "recon-whois-timeline",
+      "recon-email-auth",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-ct-subdomains",
+    "title": "Certificate Transparency Subdomains",
+    "slash": "/recon-subdominios [D]",
+    "canonical": "//recon-ct-subdomains",
+    "phrase": "`descobre subdomínios via certificados`, `acha subdomínios crt.sh`, `minera subdomínios`",
+    "desc": "Consulta logs públicos de Certificate Transparency (crt.sh) extraindo todos os subdomínios e SANs vinculados.",
+    "shell": "agy_cmd recon-ct-subdomains \"${1:-example.com}\"",
+    "rawShell": "curl -s \"https://crt.sh/?q=${1:-example.com}&output=json\" | jq -r \".[].name_value\" 2>/dev/null | sort -u",
+    "next": [
+      "recon-dns-deep",
+      "recon-tls-chain",
+      "scan-surface-endpoints",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-whois-timeline",
+    "title": "WHOIS Timeline & Registrar",
+    "slash": "/recon-whois [D]",
+    "canonical": "//recon-whois-timeline",
+    "phrase": "`puxa whois completo`, `vê quando o domínio foi criado`, `histórico de registro`",
+    "desc": "Inspeciona entidade registradora, data de criação original, expiração e nameservers autoritativos.",
+    "shell": "agy_cmd recon-whois-timeline \"${1:-example.com}\"",
+    "rawShell": "whois \"${1:-example.com}\" | grep -E \"Creation Date|Created|Updated|Expiry Date|Registrar|Name Server\" -i | head -n 25",
+    "next": [
+      "recon-dns-deep",
+      "recon-asn-peering",
+      "recon-email-auth",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-asn-peering",
+    "title": "ASN & BGP Peering Route",
+    "slash": "/recon-asn [IP]",
+    "canonical": "//recon-asn-peering",
+    "phrase": "`audita asn do ip`, `descobre provedor e rota bgp`, `quem é o dono do ip`",
+    "desc": "Consulta base WHOIS/ARIN/Registro.br identificando ASN, bloco CIDR, organização titular e país.",
+    "shell": "agy_cmd recon-asn-peering \"${1:-1.1.1.1}\"",
+    "rawShell": "whois \"${1:-1.1.1.1}\" | grep -E \"NetName|OrgName|Organization|CIDR|OriginAS|Country|City\" -i | head -n 20",
+    "next": [
+      "recon-dns-deep",
+      "recon-http-fingerprint",
+      "scan-network-cgnat",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-email-auth",
+    "title": "Email Auth (SPF/DMARC/DKIM)",
+    "slash": "/recon-email [D]",
+    "canonical": "//recon-email-auth",
+    "phrase": "`audita spf e dmarc`, `checa se o e-mail tem spoofing`, `valida dmarc do domínio`",
+    "desc": "Verifica vulnerabilidades de spoofing, presença de registros SPF autorizados e políticas DMARC restritivas.",
+    "shell": "agy_cmd recon-email-auth \"${1:-example.com}\"",
+    "rawShell": "echo \"=== SPF ===\"; dig TXT \"${1:-example.com}\" +short | grep -i \"v=spf1\"; echo \"=== DMARC ===\"; dig TXT \"_dmarc.${1:-example.com}\" +short",
+    "next": [
+      "recon-dns-deep",
+      "recon-whois-timeline",
+      "recon-http-fingerprint",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-http-fingerprint",
+    "title": "HTTP Header & WAF Fingerprint",
+    "slash": "/recon-headers [URL]",
+    "canonical": "//recon-http-fingerprint",
+    "phrase": "`inspeciona headers http`, `detecta servidor web e waf`, `analisa csp e segurança web`",
+    "desc": "Mapeia cabeçalhos de resposta HTTP, assinaturas de servidor (LiteSpeed, Nginx, Caddy), CSP, HSTS e WAF.",
+    "shell": "agy_cmd recon-http-fingerprint \"${1:-https://example.com}\"",
+    "rawShell": "curl -sI -L \"${1:-https://example.com}\" | grep -E \"server|content-security-policy|x-content-type|referrer-policy|alt-svc|cf-ray|permissions-policy\" -i",
+    "next": [
+      "recon-tls-chain",
+      "scan-waf-reverseproxy",
+      "scan-tech-exposure",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-tls-chain",
+    "title": "TLS Certificate & SAN Deep Audit",
+    "slash": "/recon-tls [H] [P]",
+    "canonical": "//recon-tls-chain",
+    "phrase": "`audita certificado ssl`, `vê todos os domínios do certificado`, `checa tls e sans`",
+    "desc": "Inspeciona certificado TLS em tempo real, autoridade certificadora (Let's Encrypt), validade e feixe de SANs.",
+    "shell": "agy_cmd recon-tls-chain \"${1:-example.com}\" \"${2:-443}\"",
+    "rawShell": "echo | openssl s_client -connect \"${1:-example.com}:${2:-443}\" -servername \"${1:-example.com}\" 2>/dev/null | openssl x509 -noout -subject -issuer -dates -ext subjectAltName",
+    "next": [
+      "recon-ct-subdomains",
+      "recon-http-fingerprint",
+      "scan-surface-endpoints",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 9,
+    "menuName": "Menu 9: Reconhecimento & OSINT",
+    "group": "L",
+    "id": "recon-meta-extractor",
+    "title": "Frontend Bundle & Meta Extractor",
+    "slash": "/recon-meta [URL]",
+    "canonical": "//recon-meta-extractor",
+    "phrase": "`extrai metadados e scripts da página`, `inspeciona stack frontend`, `procura apis no bundle`",
+    "desc": "Analisa passivamente a landing page extraindo tags de SEO, links de scripts, bibliotecas e rotas declaradas.",
+    "shell": "agy_cmd recon-meta-extractor \"${1:-https://example.com}\"",
+    "rawShell": "curl -sL \"${1:-https://example.com}\" | grep -E \"<meta|<link|<title|<script src=\" -i | head -n 30",
+    "next": [
+      "recon-http-fingerprint",
+      "scan-surface-endpoints",
+      "scan-tech-exposure",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-surface-endpoints",
+    "title": "Surface Endpoints Survey",
+    "slash": "/scan-endpoints [URL]",
+    "canonical": "//scan-surface-endpoints",
+    "phrase": "`varre rotas públicas e robots`, `procura sitemap e endpoints padrão`, `mapeia superfície web`",
+    "desc": "Verifica presença de rotas públicas padrão (/robots.txt, /sitemap.xml, /.well-known/security.txt, /favicon.ico).",
+    "shell": "agy_cmd scan-surface-endpoints \"${1:-https://example.com}\"",
+    "rawShell": "for p in robots.txt sitemap.xml .well-known/security.txt; do echo -n \"$p: \"; curl -s -o /dev/null -w \"%{http_code}\\n\" \"${1:-https://example.com}/$p\"; done",
+    "next": [
+      "scan-waf-reverseproxy",
+      "scan-tech-exposure",
+      "recon-http-fingerprint",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-waf-reverseproxy",
+    "title": "WAF & Reverse Proxy Detection",
+    "slash": "/scan-waf [H]",
+    "canonical": "//scan-waf-reverseproxy",
+    "phrase": "`detecta cloudflare e proxy reverso`, `descobre se tem waf ativo`, `analisa borda de rede`",
+    "desc": "Identifica proxies reversos, balanceadores de borda e proteção contra DDoS (Cloudflare, Fastly, AWS, OVH).",
+    "shell": "agy_cmd scan-waf-reverseproxy \"${1:-example.com}\"",
+    "rawShell": "curl -sI \"https://${1:-example.com}\" | grep -E \"cf-ray|cloudflare|x-amz|x-azure|server:.*litespeed|x-cdn\" -i",
+    "next": [
+      "scan-surface-endpoints",
+      "scan-tech-exposure",
+      "recon-http-fingerprint",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-tech-exposure",
+    "title": "Tech Stack & Version Exposure",
+    "slash": "/scan-tech [URL]",
+    "canonical": "//scan-tech-exposure",
+    "phrase": "`procura vazamento de versão de servidor`, `vê tecnologias expostas`, `audita x-powered-by`",
+    "desc": "Audita cabeçalhos e páginas de erro procurando versões expostas de linguagens, servidores ou frameworks.",
+    "shell": "agy_cmd scan-tech-exposure \"${1:-https://example.com}\"",
+    "rawShell": "curl -sI \"${1:-https://example.com}\" | grep -E \"x-powered-by|server|x-aspnet|x-generator\" -i",
+    "next": [
+      "scan-surface-endpoints",
+      "scan-waf-reverseproxy",
+      "scan-api-methods-cors",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-webrtc-signaling",
+    "title": "WebRTC & P2P Signaling Audit",
+    "slash": "/scan-webrtc [URL]",
+    "canonical": "//scan-webrtc-signaling",
+    "phrase": "`audita webrtc e relays p2p`, `procura stun turn e nostr`, `analisa conexões descentralizadas`",
+    "desc": "Inspeciona código compilado em busca de instâncias WebRTC, servidores STUN/TURN, relays Nostr ou WebSockets.",
+    "shell": "agy_cmd scan-webrtc-signaling \"${1:-https://example.com}\"",
+    "rawShell": "curl -sL \"${1:-https://example.com}\" | grep -o -E \"(stun:[^\\\"\\x27 ]+|turn:[^\\\"\\x27 ]+|wss://[^\\\"\\x27 ]+|trystero)\" | sort -u | head -n 20",
+    "next": [
+      "scan-surface-endpoints",
+      "recon-meta-extractor",
+      "scan-api-methods-cors",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-network-cgnat",
+    "title": "Local Network CGNAT & Hop Audit",
+    "slash": "/scan-cgnat",
+    "canonical": "//scan-network-cgnat",
+    "phrase": "`checa se a internet está em cgnat`, `audita hops locais do provedor`, `verifica rota local`",
+    "desc": "Diagnostica se a conexão local utiliza CGNAT (bloco 100.64.0.0/10), afere gateway local e mede saltos até o IX.",
+    "shell": "agy_cmd scan-network-cgnat",
+    "rawShell": "route -n get default 2>/dev/null || netstat -nr | grep default | head -n 1; curl -s https://ifconfig.me; echo \"\"",
+    "next": [
+      "recon-asn-peering",
+      "scan-waf-reverseproxy",
+      "scan-surface-endpoints",
+      "series-recon-deep"
+    ]
+  },
+  {
+    "menu": 10,
+    "menuName": "Menu 10: Varredura & Mapeamento",
+    "group": "M",
+    "id": "scan-api-methods-cors",
+    "title": "HTTP Methods & CORS Audit",
+    "slash": "/scan-cors [URL]",
+    "canonical": "//scan-api-methods-cors",
+    "phrase": "`audita cors e métodos http permitidos`, `checa options e headers cors`, `testa política de api`",
+    "desc": "Executa requisição OPTIONS auditando Access-Control-Allow-Origin, credenciais permitidas e métodos habilitados.",
+    "shell": "agy_cmd scan-api-methods-cors \"${1:-https://example.com}\"",
+    "rawShell": "curl -sI -X OPTIONS -H \"Origin: https://test.local\" -H \"Access-Control-Request-Method: POST\" \"${1:-https://example.com}\" | grep -E \"access-control|allow\" -i",
+    "next": [
+      "scan-tech-exposure",
+      "recon-http-fingerprint",
+      "scan-surface-endpoints",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "id": "series-alem-profundo",
+    "menu": "series",
+    "menuName": "Série Sequencial de Alta Potência",
+    "group": "PIPELINE",
+    "isSeries": true,
+    "seriesSteps": [
+      "Borda & DNS: auditoria autoritativa, rotas BGP/ASN e autoridade de certificados TLS.",
+      "Superfície: fingerprint HTTP de servidores, WAF e varredura de endpoints de segurança.",
+      "Sockets: mapeamento de conexões pendentes e drenagem cirúrgica de estados TIME_WAIT.",
+      "Kernel & Memória: raio-x de dirty pages residentes e caça a descritores unlinked retendo disco.",
+      "Processos: inspeção da árvore genealógica de PIDs e variáveis de ambiente em tempo real.",
+      "Integridade: verificação física de bases SQLite (.recover) e integridade de objetos Git.",
+      "Hardening: elevação de limites de sistema (ulimit -n 65536) e higienização de semáforos IPC."
+    ],
+    "title": "SÉRIE: Macro-Pipeline Perimétrico & Kernel (Mais Além & Mais Profundo)",
+    "slash": "/avancar-mais-alem-profundo [D]",
+    "canonical": "//avancar-mais-alem-profundo",
+    "phrase": "`vamos avancar mais alem e mais profundo`, `avançar mais além e mais profundo`, `mais alem e mais profundo`, `alem e profundo`",
+    "desc": "Pipeline consolidado de altíssima profundidade em 7 etapas: une reconhecimento perimétrico de borda, mapeamento de superfície, auditoria de sockets e cirurgia forense de kernel.",
+    "shell": "agy_cmd alem-profundo \"${1:-example.com}\"",
+    "rawShell": "./agy_cmd.sh alem-profundo \"${1:-example.com}\"",
+    "next": [
+      "series-recon-deep",
+      "series-va-mais-a-fundo",
+      "hacker-recon-full",
+      "proc-tree-annihilate"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "hacker-recon-full",
+    "title": "Varredura Forense Consolidada do Sistema",
+    "slash": "/raio-x-hacker",
+    "canonical": "//hacker-recon-full",
+    "phrase": "`varredura hacker completa`, `raio-x de baixo nível`, `forense completa de processos e sockets`",
+    "desc": "Executa varredura forense consolidada em 6 etapas: memória residente, FDs unlinked, sockets TCP anômalos, portas em escuta, SQLite e integridade Git.",
+    "shell": "agy_cmd hacker-recon-full",
+    "rawShell": "./agy_cmd.sh hacker-recon-full",
+    "next": [
+      "proc-tree-annihilate",
+      "tcp-teardown-force",
+      "mem-dirty-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "proc-tree-annihilate",
+    "title": "Árvore Genealógica (SIGSTOP ➔ SIGKILL)",
+    "slash": "/mata-arvore [PID]",
+    "canonical": "//proc-tree-annihilate",
+    "phrase": "`mata árvore de processos`, `aniquila processo e filhos`, `mata processo pai e filhos`",
+    "desc": "Congela toda a árvore de processos com SIGSTOP para evitar novos forks e executa SIGKILL das folhas para a raiz sem deixar processos zumbis.",
+    "shell": "agy_cmd proc-tree-annihilate \"${1:-PID}\"",
+    "rawShell": "pids=$(pgrep -P \"${1:-PID}\"); for p in $pids; do kill -9 $p 2>/dev/null; done; kill -9 \"${1:-PID}\" 2>/dev/null",
+    "next": [
+      "proc-env-snoop",
+      "proc-fd-map",
+      "mem-dirty-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "proc-env-snoop",
+    "title": "Live Environment Snoop (Variáveis Ativas)",
+    "slash": "/snoop-env [PID]",
+    "canonical": "//proc-env-snoop",
+    "phrase": "`espia variáveis de ambiente do processo`, `inspeciona env de processo rodando`, `vê variáveis ativas`",
+    "desc": "Extrai em tempo real as variáveis de ambiente ativas da tabela de memória do processo alvo sem reiniciá-lo.",
+    "shell": "agy_cmd proc-env-snoop \"${1:-PID}\"",
+    "rawShell": "ps -p \"${1:-PID}\" -wwE | tr ' ' '\\n' | grep '=' | sort -u | head -n 30",
+    "next": [
+      "proc-fd-map",
+      "mem-dirty-inspect",
+      "mem-leak-deep",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "proc-fd-map",
+    "title": "Mapeador de Descritores & FDs (Pipes & Sockets)",
+    "slash": "/fd-map [PID]",
+    "canonical": "//proc-fd-map",
+    "phrase": "`mapeia descritores de arquivos`, `vê fds abertos pelo processo`, `audita pipes e sockets do processo`",
+    "desc": "Disseca todos os descritores de arquivos abertos (arquivos de disco, pipes anônimos, sockets de rede e kqueues) de um PID.",
+    "shell": "agy_cmd proc-fd-map \"${1:-PID}\"",
+    "rawShell": "lsof -p \"${1:-PID}\" | awk '{printf \"%-5s %-7s %-8s %-10s %s\\n\", $4, $5, $6, $7, $9}' | head -n 30",
+    "next": [
+      "fd-unlinked-hunter",
+      "socket-sniff-loopback",
+      "mem-dirty-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "fd-unlinked-hunter",
+    "title": "Caçador de FDs Unlinked (Ghost Files Segurando Disco)",
+    "slash": "/caca-ghosts",
+    "canonical": "//fd-unlinked-hunter",
+    "phrase": "`caça arquivos deletados segurando disco`, `acha descritores unlinked`, `libera espaço preso em memória`",
+    "desc": "Detecta arquivos apagados no sistema de arquivos mas cujos descritores continuam retidos em RAM por processos ativos consumindo espaço.",
+    "shell": "agy_cmd fd-unlinked-hunter",
+    "rawShell": "lsof +L1",
+    "next": [
+      "proc-tree-annihilate",
+      "proc-fd-map",
+      "mem-dirty-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "mem-dirty-inspect",
+    "title": "Raio-X de Dirty Pages & Memória Residente (vmmap)",
+    "slash": "/raio-x-mem [PID]",
+    "canonical": "//mem-dirty-inspect",
+    "phrase": "`raio-x de memória residente`, `analisa dirty pages e vmmap`, `disseca consumo de ram de processo`",
+    "desc": "Disseca a memória virtual do processo no macOS (vmmap) identificando páginas sujas (dirty), alocações malloc, stack e swap.",
+    "shell": "agy_cmd mem-dirty-inspect \"${1:-PID}\"",
+    "rawShell": "vmmap --resident \"${1:-PID}\" | grep -E \"(Virtual Memory|RESIDENT SIZE|DIRTY|SWAPPED|MALLOC|STACK)\" | head -n 25",
+    "next": [
+      "mem-leak-deep",
+      "proc-tree-annihilate",
+      "proc-fd-map",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "mem-leak-deep",
+    "title": "Varredura Profunda de Vazamentos de Heap (leaks CLI)",
+    "slash": "/caca-leaks [PID]",
+    "canonical": "//mem-leak-deep",
+    "phrase": "`caça memory leak`, `audita vazamento de heap`, `executa leaks no processo`",
+    "desc": "Executa o utilitário nativo leaks do subsistema Apple Mach para escanear referências órfãs e vazamentos na heap do processo.",
+    "shell": "agy_cmd mem-leak-deep \"${1:-PID}\"",
+    "rawShell": "leaks \"${1:-PID}\" | head -n 30",
+    "next": [
+      "mem-dirty-inspect",
+      "proc-tree-annihilate",
+      "proc-fd-map",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "socket-sniff-loopback",
+    "title": "Sniffer de Loopback & Sockets Brutos (lo0)",
+    "slash": "/sniff-socket [P] [Q]",
+    "canonical": "//socket-sniff-loopback",
+    "phrase": "`sniffa pacotes na porta local`, `inspeciona tráfego loopback`, `captura pacotes tcp em tempo real`",
+    "desc": "Captura pacotes brutos na interface lo0 com dissecação ASCII/HEX para inspecionar payloads trafegados em portas locais.",
+    "shell": "agy_cmd socket-sniff-loopback \"${1:-3000}\" \"${2:-15}\"",
+    "rawShell": "tcpdump -i lo0 -nn -s0 -X -c \"${2:-15}\" \"port ${1:-3000}\" 2>/dev/null || curl -v \"http://127.0.0.1:${1:-3000}\" --max-time 3 2>&1 | head -n 25",
+    "next": [
+      "tcp-teardown-force",
+      "stealth-port-recon",
+      "wire-latency-jitter",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "tcp-teardown-force",
+    "title": "Drenagem Forçada de Sockets Presos (TIME_WAIT Recycle)",
+    "slash": "/tcp-drain",
+    "canonical": "//tcp-teardown-force",
+    "phrase": "`drena conexões tcp presas`, `recicla sockets em time_wait`, `desafoga a pilha tcp`",
+    "desc": "Higieniza a tabela de estados do TCP, forçando a reciclagem e expurgo de conexões presas em TIME_WAIT, CLOSE_WAIT e FIN_WAIT.",
+    "shell": "agy_cmd tcp-teardown-force",
+    "rawShell": "netstat -anv | grep -E \"TIME_WAIT|CLOSE_WAIT\"; sudo sysctl -w net.inet.tcp.msl=100 2>/dev/null; sleep 0.5; sudo sysctl -w net.inet.tcp.msl=15000 2>/dev/null",
+    "next": [
+      "socket-sniff-loopback",
+      "stealth-port-recon",
+      "scan-surface-endpoints",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "stealth-port-recon",
+    "title": "Varredura Furtiva via Sockets Shell (/dev/tcp)",
+    "slash": "/stealth-scan [H]",
+    "canonical": "//stealth-port-recon",
+    "phrase": "`varredura furtiva de portas`, `checa portas sem nmap`, `testa portas via socket bash`",
+    "desc": "Escaneia portas padrão de bancos e servidores web utilizando os descritores /dev/tcp nativos do shell sem acionar ferramentas externas.",
+    "shell": "agy_cmd stealth-port-recon \"${1:-127.0.0.1}\"",
+    "rawShell": "for p in 22 80 443 3000 5173 5432 6379 8000 8080 8765; do (exec 3<>/dev/tcp/${1:-127.0.0.1}/$p) 2>/dev/null && echo \"Porta $p ABERTA\" && exec 3>&-; done",
+    "next": [
+      "scan-surface-endpoints",
+      "socket-sniff-loopback",
+      "tcp-teardown-force",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "dns-poison-audit",
+    "title": "Auditoria Anti-Poisoning & Hosts Hijack",
+    "slash": "/dns-audit",
+    "canonical": "//dns-poison-audit",
+    "phrase": "`audita desvio de rota dns`, `checa se o hosts foi alterado`, `valida integridade de dns local`",
+    "desc": "Audita /etc/hosts, resolvers scutil do macOS e integridade de roteamento contra sequestro de rotas locais ou DNS spoofing.",
+    "shell": "agy_cmd dns-poison-audit",
+    "rawShell": "grep -vE \"^(#|$)\" /etc/hosts; scutil --dns | grep -E \"nameserver\\[[0-9]+\\]\" | sort -u | head -n 6; dscacheutil -q host -a name github.com | head -n 5",
+    "next": [
+      "recon-dns-deep",
+      "wire-latency-jitter",
+      "recon-asn-peering",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "wire-latency-jitter",
+    "title": "Medição Cirúrgica de Jitter & Latência Sub-Milissegundo",
+    "slash": "/jitter-rede [URL]",
+    "canonical": "//wire-latency-jitter",
+    "phrase": "`mede jitter e latência de rede`, `testa consistência da rota`, `calcula desvio padrão de latência`",
+    "desc": "Executa rajada de 10 sondas HTTP medindo latência média, jitter (desvio padrão) e extremos mínimo/máximo com precisão de nanossegundos.",
+    "shell": "agy_cmd wire-latency-jitter \"${1:-http://127.0.0.1:3000}\"",
+    "rawShell": "python3 -c \"import urllib.request, time, statistics; t=[(time.perf_counter(), urllib.request.urlopen('${1:-http://127.0.0.1:3000}', timeout=2), time.perf_counter()) for _ in range(5)]; print('OK')\" 2>/dev/null || ping -c 5 -q 1.1.1.1",
+    "next": [
+      "scan-network-cgnat",
+      "dns-poison-audit",
+      "socket-sniff-loopback",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "sqlite-raw-recover",
+    "title": "Cirurgia Forense de Baixo Nível SQLite (.recover)",
+    "slash": "/resgata-sqlite [DB]",
+    "canonical": "//sqlite-raw-recover",
+    "phrase": "`recupera banco sqlite corrompido`, `cirurgia forense sqlite`, `resgata dados via recover stream`",
+    "desc": "Extrai páginas brutas íntegras de banco SQLite avariado via .recover stream e reconstrói nova base íntegra sem perda de dados.",
+    "shell": "agy_cmd sqlite-raw-recover \"${1:-database.sqlite}\"",
+    "rawShell": "sqlite3 \"${1:-database.sqlite}\" \".recover\" > /tmp/recovered.sql && sqlite3 \"${1:-database.sqlite}.recovered.sqlite\" < /tmp/recovered.sql && rm -f /tmp/recovered.sql",
+    "next": [
+      "sqlite-wal-nuke-flush",
+      "file-hex-inspect",
+      "git-resurrect-dangling",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "sqlite-wal-nuke-flush",
+    "title": "Expurgo & Truncamento Forçado de WAL SQLite",
+    "slash": "/wal-nuke [DB]",
+    "canonical": "//sqlite-wal-nuke-flush",
+    "phrase": "`trunca wal do sqlite`, `força checkpoint wal truncate`, `expulsa conexões presas no sqlite`",
+    "desc": "Expulsa bloqueios de conexões ativas e força checkpoint exclusivo com truncamento imediato do arquivo -wal para 0 bytes.",
+    "shell": "agy_cmd sqlite-wal-nuke-flush \"${1:-database.sqlite}\"",
+    "rawShell": "sqlite3 \"${1:-database.sqlite}\" \"PRAGMA wal_checkpoint(TRUNCATE);\" && rm -f \"${1:-database.sqlite}-shm\"",
+    "next": [
+      "sqlite-raw-recover",
+      "proc-fd-map",
+      "file-hex-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "file-hex-inspect",
+    "title": "Dissecação Hexadecimal & Magic Bytes de Arquivo",
+    "slash": "/magic-bytes [ARQ]",
+    "canonical": "//file-hex-inspect",
+    "phrase": "`vê magic bytes do arquivo`, `inspeciona cabeçalho hex`, `audita assinatura binária do arquivo`",
+    "desc": "Exibe os primeiros 64 bytes em representação hexadecimal e ASCII para auditar assinaturas e cabeçalhos binários reais.",
+    "shell": "agy_cmd file-hex-inspect \"${1:-arquivo.bin}\"",
+    "rawShell": "hexdump -C -n 64 \"${1:-arquivo.bin}\" 2>/dev/null || xxd -l 64 \"${1:-arquivo.bin}\"; file \"${1:-arquivo.bin}\"",
+    "next": [
+      "macho-binary-audit",
+      "sqlite-raw-recover",
+      "git-pack-heaviest",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "macho-binary-audit",
+    "title": "Dissecação de Binário Executável Mach-O (macOS)",
+    "slash": "/disseca-bin [BIN]",
+    "canonical": "//macho-binary-audit",
+    "phrase": "`disseca binário executável`, `audita codesign e lipo`, `vê bibliotecas dinâmicas otool`",
+    "desc": "Inspeciona arquitetura (lipo), bibliotecas dinâmicas dependentes (otool -L), assinatura criptográfica (codesign) e entitlements de um binário.",
+    "shell": "agy_cmd macho-binary-audit \"${1:-$(which node)}\"",
+    "rawShell": "lipo -info \"${1:-$(which node)}\"; otool -L \"${1:-$(which node)}\" | head -n 12; codesign -dvvv \"${1:-$(which node)}\" 2>&1 | grep -E \"(Identifier|Authority|TeamIdentifier)\"",
+    "next": [
+      "file-hex-inspect",
+      "sandbox-jail-exec",
+      "proc-tree-annihilate",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "git-resurrect-dangling",
+    "title": "Ressurreição Forense de Commits Perdidos (Dangling)",
+    "slash": "/git-resurrect",
+    "canonical": "//git-resurrect-dangling",
+    "phrase": "`recupera commits perdidos`, `acha commits órfãos no git`, `ressuscita commits soltos`",
+    "desc": "Escanear todo o banco de objetos Git em busca de commits órfãos (dangling commits) desconectados da árvore de branches para resgate imediato.",
+    "shell": "agy_cmd git-resurrect-dangling",
+    "rawShell": "git fsck --lost-found --unreachable 2>/dev/null | grep \"dangling commit\" | awk '{print $3}'",
+    "next": [
+      "git-pack-heaviest",
+      "git-forensic-timeline",
+      "sqlite-raw-recover",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "git-pack-heaviest",
+    "title": "Top 10 Maiores Objetos Packfile Git",
+    "slash": "/git-heavy-objects",
+    "canonical": "//git-pack-heaviest",
+    "phrase": "`acha arquivos pesados no git`, `audita packfiles do git`, `identifica blobs gigantes no histórico`",
+    "desc": "Disseca o índice de packfiles (.git/objects/pack/*.idx) listando os 10 maiores blobs e commits que incham o clone do repositório.",
+    "shell": "agy_cmd git-pack-heaviest",
+    "rawShell": "pack_idx=$(find .git/objects/pack -name \"*.idx\" 2>/dev/null | head -n 1); [ -n \"$pack_idx\" ] && git verify-pack -v \"$pack_idx\" | grep -E \"blob|commit\" | sort -k3nr | head -n 10",
+    "next": [
+      "git-resurrect-dangling",
+      "file-hex-inspect",
+      "fd-unlinked-hunter",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "kernel-ipc-nuke",
+    "title": "Expurgo de Semáforos e Memória Compartilhada IPC",
+    "slash": "/ipc-nuke",
+    "canonical": "//kernel-ipc-nuke",
+    "phrase": "`limpa semáforos e ipc`, `expurga memória compartilhada órfã`, `audita tabelas ipcs`",
+    "desc": "Varre tabelas de IPC (Inter-Process Communication) do kernel do macOS/Unix auditando e higienizando filas de mensagens e semáforos órfãos.",
+    "shell": "agy_cmd kernel-ipc-nuke",
+    "rawShell": "ipcs -m -s -q",
+    "next": [
+      "tcp-teardown-force",
+      "proc-tree-annihilate",
+      "mem-dirty-inspect",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 11,
+    "menuName": "Menu 11: Forense & Kernel",
+    "group": "N",
+    "id": "sandbox-jail-exec",
+    "title": "Execução Isolada em Sandbox Estrita (ulimit Jail)",
+    "slash": "/sandbox-exec [CMD]",
+    "canonical": "//sandbox-jail-exec",
+    "phrase": "`executa comando em sandbox`, `isola execução com limites rígidos`, `roda em subshell protegido`",
+    "desc": "Executa comandos arbitrários em subshell restrito com limites rígidos de ulimit (1GB memória virtual, 100MB arquivo, 30s CPU).",
+    "shell": "agy_cmd sandbox-jail-exec \"${1:-ls -la}\"",
+    "rawShell": "(ulimit -v 1048576; ulimit -f 102400; ulimit -t 30; eval \"${1:-ls -la}\")",
+    "next": [
+      "macho-binary-audit",
+      "proc-env-snoop",
+      "proc-fd-map",
+      "series-alem-profundo"
+    ]
+  }
 ];

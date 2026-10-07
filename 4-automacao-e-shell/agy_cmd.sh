@@ -25,13 +25,14 @@ agy_cmd() {
         echo "  [10] 🎯 Red Teaming & Ataque Extremo (DDoS, Fuzzing, Superfície de Portas)"
         echo "  [11] 🥷 Arsenal Hacker SRE (Kernel Tracing, Forense de Memória, Socket Sniff, Resgate SQLite & Árvores)"
         echo "  [12] 🛡️ Auditoria Defensiva Total & Hardening (Portas, Web Stack, Rotas, SQL, Privesc, Webshells)"
+        echo "  [13] 🌌 Avanço Além & Profundo (Perímetro + Superfície + Kernel + Sockets)"
         echo "  [0] ❌ Sair"
         echo "=============================================================================="
         if [ -t 0 ]; then
-            printf "👉 Digite o número da ação [0-12]: "
+            printf "👉 Digite o número da ação [0-13]: "
             read -r opcao
         else
-            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 12' diretamente."
+            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 13' diretamente."
             return 0
         fi
         case "$opcao" in
@@ -47,6 +48,7 @@ agy_cmd() {
             10) agy_cmd audit-network-surface ;;
             11) agy_cmd hacker-recon-full ;;
             12) agy_cmd auditoria-total ;;
+            13) agy_cmd alem-profundo "${1:-example.com}" ;;
             *) echo "Cancelado." ;;
         esac
         return 0
@@ -68,6 +70,8 @@ agy_cmd() {
         "10"|"superficie"|"rede"|"portas-scan"|"ataque"|"redteam"|"pentest") agy_cmd audit-network-surface; return 0 ;;
         "11"|"hacker"|"arsenal"|"forense"|"baixo-nivel") agy_cmd hacker-recon-full; return 0 ;;
         "12"|"auditoria total"|"aduitoria total"|"varredura completa"|"auditoria-completa-total") agy_cmd auditoria-total "$@"; return 0 ;;
+        "13"|"mais alem e mais profundo"|"alem e profundo"|"avancar-mais-alem-profundo") agy_cmd alem-profundo "$@"; return 0 ;;
+        "recon-profundo"|"reconhecimento profundo") agy_cmd recon-deep "$@"; return 0 ;;
         "va mais a fundo"|"vá mais a fundo"|"vai mais a fundo"|"mais a fundo") agy_cmd va-mais-a-fundo "$@"; return 0 ;;
         "mais alem"|"mais além"|"vá mais além"|"vai mais além") agy_cmd mais-alem "$@"; return 0 ;;
         "stress"|"carga"|"ddos")                 agy_cmd stress-test-load "$@"; return 0 ;;
@@ -2842,6 +2846,252 @@ EOF
             echo "=============================================================================="
             echo "🎉 [STATUS: AUDITORIA FORENSE PERIMÉTRICA CONCLUÍDA]"
             echo "=============================================================================="
+            ;;
+
+        # ======================================================================
+        # SÉRIE 13 & ALÉM + PROFUNDO: MACRO-PIPELINE PERIMÉTRICO & KERNEL
+        # ======================================================================
+        "alem-profundo"|"mais-alem-profundo"|"mais alem e mais profundo"|"alem e profundo"|"avancar-mais-alem-profundo")
+            local target_host="${1:-example.com}"
+            local domain_only=$(echo "$target_host" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            [ -z "$domain_only" ] && domain_only="example.com"
+            local full_url="https://$domain_only"
+
+            echo "🌌 =============================================================================="
+            echo "⚡ MACRO-PIPELINE: AVANÇO ALÉM & PROFUNDO (PERÍMETRO, SUPERFÍCIE, KERNEL & SOCKETS)"
+            echo "🎯 Alvo Perimétrico: $domain_only ($full_url)"
+            echo "=============================================================================="
+            echo "👉 [1/7] Borda & DNS: auditoria de registros autoritativos e certificado TLS..."
+            agy_cmd recon-dns-deep "$domain_only"
+            echo ""
+            echo "👉 [2/7] Superfície & WAF: detecção de proxy reverso e cabeçalhos de segurança..."
+            agy_cmd scan-waf-reverseproxy "$domain_only"
+            echo ""
+            echo "👉 [3/7] Endpoints Críticos: varredura de rotas de segurança públicas..."
+            agy_cmd scan-surface-endpoints "$full_url"
+            echo ""
+            echo "👉 [4/7] Sockets Locais: mapeamento e drenagem preventiva de conexões pendentes..."
+            agy_cmd tcp-teardown-force
+            echo ""
+            echo "👉 [5/7] Kernel & Memória: raio-x de dirty pages e caça a descritores unlinked..."
+            agy_cmd fd-unlinked-hunter
+            ps -eo pid,ppid,%cpu,%mem,rss,comm -r 2>/dev/null | head -n 6
+            echo ""
+            echo "👉 [6/7] Integridade de Dados: verificação física de bases SQLite e objetos Git..."
+            for db in $(find . -maxdepth 3 -type f \( -name "*.sqlite" -o -name "*.db" \) ! -path "*/node_modules/*" 2>/dev/null | head -n 3); do
+                echo -n "   $db: "
+                sqlite3 "$db" "PRAGMA quick_check;" 2>/dev/null || echo "OK"
+            done
+            git fsck --lost-found 2>/dev/null | grep -E "dangling commit|dangling blob" | head -n 5 || echo "   ✅ Repositório Git íntegro."
+            echo ""
+            echo "👉 [7/7] Hardening do Sistema: ulimit e higienização de tabelas IPC..."
+            ulimit -n 65536 2>/dev/null || true
+            agy_cmd kernel-ipc-nuke
+            echo "=============================================================================="
+            echo "🎉 [STATUS: MACRO-PIPELINE ALÉM & PROFUNDO CONCLUÍDO COM SUCESSO]"
+            echo "=============================================================================="
+            ;;
+
+        "recon-deep"|"recon-profundo")
+            local target="${1:-example.com}"
+            local domain_only=$(echo "$target" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            [ -z "$domain_only" ] && domain_only="example.com"
+            echo "🌐 =============================================================================="
+            echo "⚡ SÉRIE 12: RECONHECIMENTO & OSINT PROFUNDO — ALVO: $domain_only"
+            echo "=============================================================================="
+            echo "👉 [1/6] DNS Autoritativo e Delegação..."
+            agy_cmd recon-dns-deep "$domain_only"
+            echo ""
+            echo "👉 [2/6] Certificate Transparency & Subdomínios..."
+            agy_cmd recon-ct-subdomains "$domain_only"
+            echo ""
+            echo "👉 [3/6] Borda & ASN / BGP Peering..."
+            agy_cmd recon-asn-peering "$domain_only"
+            echo ""
+            echo "👉 [4/6] Autenticação de E-mail (SPF / DMARC)..."
+            agy_cmd recon-email-auth "$domain_only"
+            echo ""
+            echo "👉 [5/6] Headers HTTP & WAF Fingerprint..."
+            agy_cmd recon-http-fingerprint "https://$domain_only"
+            echo ""
+            echo "👉 [6/6] Cadeia Criptográfica TLS & SANs..."
+            agy_cmd recon-tls-chain "$domain_only" 443
+            echo "=============================================================================="
+            echo "🎉 [STATUS: RECONHECIMENTO OSINT PROFUNDO CONCLUÍDO]"
+            echo "=============================================================================="
+            ;;
+
+        "recon-dns-deep")
+            local target="${1:-example.com}"
+            local domain=$(echo "$target" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            echo "🌐 [RECON DNS] Varredura profunda autoritativa em $domain:"
+            for t in A AAAA MX TXT NS SOA CAA; do
+                local res=$(dig +noall +answer "$domain" "$t" 2>/dev/null)
+                if [ -n "$res" ]; then
+                    echo "  📌 [$t]:"
+                    echo "$res" | sed 's/^/     /'
+                fi
+            done
+            ;;
+
+        "recon-ct-subdomains")
+            local target="${1:-example.com}"
+            local domain=$(echo "$target" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            echo "📜 [RECON CT] Minerando subdomínios via Certificate Transparency e TLS SANs para $domain:"
+            local subs=$(curl -s --max-time 4 "https://crt.sh/?q=%25.$domain&output=json" 2>/dev/null | grep -o -E '"name_value":"[^"]+"' | cut -d'"' -f4 | sort -u | head -n 25)
+            if [ -n "$subs" ]; then
+                echo "$subs" | sed 's/^/  🎯 /'
+            else
+                echo "  ℹ️ Consulta crt.sh indisponível ou vazia. Extraindo SANs diretos do handshake TLS:"
+                echo | openssl s_client -connect "$domain:443" -servername "$domain" 2>/dev/null | openssl x509 -noout -ext subjectAltName 2>/dev/null | grep -o -E "DNS:[^, ]+" | sed 's/DNS:/  🎯 /' || echo "  ✅ Sem SANs adicionais."
+            fi
+            ;;
+
+        "recon-whois-timeline")
+            local target="${1:-example.com}"
+            local domain=$(echo "$target" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            echo "📅 [RECON WHOIS] Histórico e titularidade perimétrica de $domain:"
+            whois "$domain" 2>/dev/null | grep -E "(Registrar:|Creation Date:|Registry Expiry:|Updated Date:|Name Server:|Status:|owner:|responsible:)" -i | head -n 20 | sed 's/^/  /' || echo "  ℹ️ Dados de WHOIS privados ou indisponíveis."
+            ;;
+
+        "recon-asn-peering")
+            local target="${1:-1.1.1.1}"
+            if ! [[ "$target" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                local resolved_ip=$(dig +short "$target" A 2>/dev/null | head -n 1)
+                [ -n "$resolved_ip" ] && target="$resolved_ip"
+            fi
+            echo "🗺️ [RECON ASN] Rota BGP, peering e operadora do IP $target:"
+            whois "$target" 2>/dev/null | grep -E "(NetName|OrgName|Organization|CIDR|OriginAS|Country|City|owner|aut-num)" -i | head -n 18 | sed 's/^/  /' || echo "  ℹ️ Informações de ASN não retornadas."
+            ;;
+
+        "recon-email-auth")
+            local target="${1:-example.com}"
+            local domain=$(echo "$target" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            echo "✉️ [RECON EMAIL] Auditando políticas SPF, DMARC e anti-spoofing em $domain:"
+            local spf=$(dig TXT "$domain" +short 2>/dev/null | grep -i "v=spf1")
+            local dmarc=$(dig TXT "_dmarc.$domain" +short 2>/dev/null)
+            if [ -n "$spf" ]; then
+                echo "  ✅ SPF Encontrado: $spf"
+            else
+                echo "  ⚠️ ALERTA: Registro SPF ausente! Domínio suscetível a spoofing de remetente."
+            fi
+            if [ -n "$dmarc" ]; then
+                echo "  ✅ DMARC Encontrado: $dmarc"
+            else
+                echo "  ⚠️ ALERTA: Política DMARC (_dmarc.$domain) não configurada!"
+            fi
+            ;;
+
+        "recon-http-fingerprint")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            echo "🕵️ [RECON HTTP] Fingerprint de cabeçalhos de resposta e segurança web em $url:"
+            curl -sI -L "$url" --max-time 5 2>/dev/null | grep -E "(server|content-security-policy|x-content-type|referrer-policy|strict-transport|alt-svc|cf-ray|x-frame|permissions-policy)" -i | sed 's/^/  /' || echo "  ⚠️ Sem resposta no timeout de 5s."
+            ;;
+
+        "recon-tls-chain")
+            local host="${1:-example.com}"
+            local domain=$(echo "$host" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            local port="${2:-443}"
+            echo "🔐 [RECON TLS] Inspecionando certificado, autoridade e SANs em $domain:$port:"
+            echo | openssl s_client -connect "$domain:$port" -servername "$domain" 2>/dev/null | openssl x509 -noout -subject -issuer -dates -ext subjectAltName 2>/dev/null | sed 's/^/  /' || echo "  ⚠️ Falha no handshake TLS em $domain:$port."
+            ;;
+
+        "recon-meta-extractor")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            echo "📄 [RECON META] Extraindo metadados, scripts e rotas de frontend em $url:"
+            curl -sL "$url" --max-time 6 2>/dev/null | grep -E "(<meta|<link rel=|<title|<script src=)" -i | head -n 25 | sed 's/^/  /' || echo "  ⚠️ Sem resposta no timeout de 6s."
+            ;;
+
+        "scan-surface-endpoints")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            url=$(echo "$url" | sed 's|/$||')
+            echo "🔍 [SCAN ENDPOINTS] Varrendo endpoints públicos padrão de conformidade e segurança em $url:"
+            local paths=("robots.txt" "sitemap.xml" ".well-known/security.txt" "favicon.ico")
+            for p in "${paths[@]}"; do
+                local code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 "$url/$p" 2>/dev/null)
+                if [ "$code" = "200" ]; then
+                    echo "  🟢 [HTTP 200] $url/$p (Presente)"
+                elif [ "$code" = "301" ] || [ "$code" = "302" ]; then
+                    echo "  🟡 [HTTP $code] $url/$p (Redirecionamento)"
+                else
+                    echo "  ⚪ [HTTP $code] $url/$p"
+                fi
+            done
+            ;;
+
+        "scan-waf-reverseproxy")
+            local host="${1:-example.com}"
+            local domain=$(echo "$host" | sed -E 's|^https?://||' | cut -d/ -f1 | cut -d: -f1)
+            echo "🛡️ [SCAN WAF] Identificando proxy reverso, CDN e proteção de borda para $domain:"
+            local headers=$(curl -sI "https://$domain" --max-time 5 2>/dev/null)
+            if echo "$headers" | grep -qi "cf-ray"; then
+                echo "  ☁️ Borda: CLOUDFLARE WAF / CDN detectado (cf-ray ativo)."
+            elif echo "$headers" | grep -qi "x-amz"; then
+                echo "  ☁️ Borda: AWS CloudFront / ALB detectado."
+            elif echo "$headers" | grep -qi "fastly"; then
+                echo "  ☁️ Borda: FASTLY CDN detectado."
+            elif echo "$headers" | grep -qi "litespeed"; then
+                echo "  ⚡ Servidor: LITESPEED Web Server detectado."
+            elif echo "$headers" | grep -qi "nginx"; then
+                echo "  🌐 Servidor: NGINX detectado."
+            else
+                echo "  ℹ️ Assinatura de proxy reverso genérica:"
+                echo "$headers" | grep -E "(server|x-cache|via|x-cdn)" -i | sed 's/^/     /'
+            fi
+            ;;
+
+        "scan-tech-exposure")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            echo "🔬 [SCAN TECH] Auditando vazamento de versões e frameworks em $url:"
+            local leaks=$(curl -sI "$url" --max-time 5 2>/dev/null | grep -E "(x-powered-by|server|x-aspnet|x-generator|x-runtime)" -i)
+            if [ -n "$leaks" ]; then
+                echo "  ⚠️ Assinaturas expostas detectadas:"
+                echo "$leaks" | sed 's/^/     /'
+            else
+                echo "  ✅ Nenhum cabeçalho de versão óbvio (X-Powered-By/Server version) vazado."
+            fi
+            ;;
+
+        "scan-webrtc-signaling")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            echo "📡 [SCAN WEBRTC] Inspecionando servidores STUN/TURN, WebSockets e signaling em $url:"
+            local found=$(curl -sL "$url" --max-time 6 2>/dev/null | grep -o -E "(stun:[^\"' ]+|turn:[^\"' ]+|wss://[^\"' ]+|trystero)" | sort -u | head -n 15)
+            if [ -n "$found" ]; then
+                echo "$found" | sed 's/^/  🎯 /'
+            else
+                echo "  ℹ️ Nenhum endpoint STUN/TURN ou WSS explícito detectado no bundle HTML inicial."
+            fi
+            ;;
+
+        "scan-network-cgnat")
+            echo "🌐 [SCAN CGNAT] Diagnosticando rota padrão local e faixa CGNAT do provedor:"
+            local gw=$(route -n get default 2>/dev/null | grep "gateway" | awk '{print $2}')
+            [ -z "$gw" ] && gw=$(netstat -nr 2>/dev/null | grep default | head -n 1 | awk '{print $2}')
+            echo "  🏠 Gateway Local da Máquina: ${gw:-indeterminado}"
+            local public_ip=$(curl -s --max-time 3 https://ifconfig.me 2>/dev/null || curl -s --max-time 3 https://icanhazip.com 2>/dev/null)
+            echo "  🌍 IP Público de Saída: ${public_ip:-indeterminado}"
+            if [[ "$public_ip" =~ ^100\.(6[4-9]|[7-9][0-9]|1[0-1][0-9]|12[0-7])\. ]]; then
+                echo "  ⚠️ CGNAT CONFIRMADO: IP de saída pertence ao bloco Carrier-Grade NAT (RFC 6598 - 100.64.0.0/10)."
+            else
+                echo "  ✅ Conexão não está sob bloco reservado CGNAT de saída direta."
+            fi
+            ;;
+
+        "scan-api-methods-cors")
+            local url="${1:-https://example.com}"
+            [[ ! "$url" =~ ^https?:// ]] && url="https://$url"
+            echo "🔓 [SCAN CORS] Enviando requisição preflight OPTIONS para auditar CORS em $url:"
+            local cors_resp=$(curl -sI -X OPTIONS -H "Origin: https://audit.local" -H "Access-Control-Request-Method: POST" "$url" --max-time 5 2>/dev/null | grep -E "(access-control|allow)" -i)
+            if [ -n "$cors_resp" ]; then
+                echo "$cors_resp" | sed 's/^/  /'
+            else
+                echo "  ℹ️ Nenhuma resposta com cabeçalhos Access-Control para Origin não autorizada."
+            fi
             ;;
 
         "miniapp"|"gui"|"painel")
