@@ -297,7 +297,62 @@
       "abertura_automatica_navegador": true,
       "diretorio_raiz_projetos": "/Users/lucasvinicius/projetos",
       "regra_destino": "A cópia DEVE SEMPRE ser realizada e salva em uma pasta dedicada dentro de /Users/lucasvinicius/projetos/<NOME_PASTA>. O nome da pasta será fornecido pelo usuário no comando (ex: 'salvando na pasta X', 'em projetos/Nome'). Se não for informado explicitamente, o agente deve inferir o nome limpo do alvo em PascalCase. É proibido salvar na raiz de projetos ou em diretórios temporários.",
-      "sintaxe_padrao": "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent [URL_FORNECIDA]"
+      "sintaxe_padrao": "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent [URL_FORNECIDA]",
+      "ferramentas_clone": {
+        "categoria_1_nativos_http": {
+          "descricao": "Ferramentas nativas de linha de comando para download e espelhamento de sites",
+          "wget_mirror": "wget --mirror --convert-links --adjust-extension --page-requisites --no-parent https://[SITE]",
+          "wget_curto": "wget -mkEpnp https://[SITE]",
+          "wget_arquivo_unico": "wget -q -O index.html https://[SITE]",
+          "curl_download": "curl -O https://[SITE]/arquivo",
+          "curl_silencioso": "curl -s https://[SITE] -o saida.html",
+          "aria2c_paralelo": "aria2c -Z 'https://[SITE]/arquivo1' 'https://[SITE]/arquivo2'",
+          "aria2c_rapido": "aria2c -x 16 -s 16 https://[SITE]/arquivo_grande",
+          "httrack": "httrack https://[SITE] -O ./[PASTA_DESTINO] (espelhamento completo com interface interativa)",
+          "httrack_silencioso": "httrack https://[SITE] -O ./[PASTA_DESTINO] -%v0 --disable-security-limits"
+        },
+        "categoria_2_nodejs_modernos": {
+          "descricao": "Ferramentas Node.js para sites com JavaScript dinâmico (SPAs, React, Next.js)",
+          "website_scraper": "npx website-scraper --url https://[SITE] --directory ./site-clonado",
+          "single_file": "npx single-file-cli https://[SITE] --output ./pagina.html (salva tudo em 1 arquivo HTML autocontido)",
+          "puppeteer_screenshot": "npx puppeteer-cli screenshot https://[SITE] --full-page --output screenshot.png",
+          "puppeteer_pdf": "npx puppeteer-cli pdf https://[SITE] --output ./pagina.pdf",
+          "playwright_screenshot": "npx playwright screenshot https://[SITE] --full-page output.png",
+          "playwright_pdf": "npx playwright pdf https://[SITE] ./output.pdf",
+          "observacao": "Use Node.js para sites com React/Vue/Angular que não funcionam com wget simples"
+        },
+        "categoria_3_python_automacao": {
+          "descricao": "Frameworks Python para scraping e download avançado",
+          "scrapy_spider": "scrapy crawl [NOME_DO_SPIDER]",
+          "scrapy_shell": "scrapy shell https://[SITE] (REPL interativo para testar extratores CSS/XPath)",
+          "scrapy_item": "scrapy crawl [SPIDER] -o dados.json (salva resultado em JSON)",
+          "yt_dlp_video": "yt-dlp https://[SITE]/video",
+          "yt_dlp_audio": "yt-dlp --extract-audio --audio-format mp3 https://[SITE]/video",
+          "yt_dlp_playlist": "yt-dlp --yes-playlist https://[SITE]/playlist",
+          "observacao": "Instalar: pip install scrapy yt-dlp"
+        },
+        "categoria_4_servidor_infraestrutura": {
+          "descricao": "Comandos para copiar sites diretamente do servidor de origem (requer acesso SSH/SCP)",
+          "scp_site": "scp -r usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "rsync_site": "rsync -avz --progress usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "rsync_exclusoes": "rsync -avz --progress --exclude='*.log' --exclude='node_modules' usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "sftp": "sftp usuario@[SERVIDOR] (abre sessão interativa — use 'get -r /var/www/[SITE]' para baixar)",
+          "wordpress_export_db": "wp db export dump_$(date +%Y%m%d).sql --path=/var/www/[SITE]",
+          "wordpress_download_core": "wp core download --path=/var/www/[SITE] --locale=pt_BR",
+          "wordpress_export_completo": "wp export --path=/var/www/[SITE] --dir=./wp-export (exporta posts, páginas, mídia)",
+          "drush_archive": "drush archive-dump --destination=./dump_drupal_$(date +%Y%m%d).tar.gz",
+          "drush_sql_dump": "drush sql-dump > dump_$(date +%Y%m%d).sql",
+          "observacao": "Requer credenciais SSH e acesso ao servidor. Instalar wp-cli: brew install wp-cli"
+        },
+        "categoria_5_leitura_terminal": {
+          "descricao": "Navegadores de terminal para leitura e dump de conteúdo textual de páginas",
+          "lynx_dump": "lynx -dump https://[SITE] (texto limpo sem HTML, sem imagens)",
+          "lynx_source": "lynx -source https://[SITE] > pagina.html",
+          "w3m_dump": "w3m -dump https://[SITE] (alternativa ao lynx, suporte a tabelas)",
+          "w3m_render": "w3m https://[SITE] (browser interativo no terminal)",
+          "observacao": "Instalar: brew install lynx w3m"
+        }
+      }
     },
     "auditoria_total_replicador": {
       "termos": [
@@ -389,6 +444,48 @@
           "ffuf_subdomains": "ffuf -w subdomains.txt -u https://FUZZ.[SITE] -mc 200",
           "wordlist_download": "wget https://raw.githubusercontent.com/v0re/dirb/master/wordlists/common.txt -O wordlist.txt",
           "observacao": "Instalar: brew install gobuster | brew install ffuf | apt install dirb. USE APENAS EM SEUS PRÓPRIOS AMBIENTES OU COM AUTORIZAÇÃO EXPRESSA."
+        },
+        "fase_6_extracao_avancada_html": {
+          "descricao": "Extração avançada de dados de HTML/JSON usando ferramentas de linha de comando e navegadores de terminal",
+          "pup_links": "curl -s https://[SITE] | pup 'a attr{href}' (lista todos os links da página)",
+          "pup_hidden": "curl -s https://[SITE] | pup 'input[type=\"hidden\"] attr{value}'",
+          "jq_next_data": "curl -s https://[SITE] | grep '__NEXT_DATA__' | jq .props.pageProps",
+          "lynx_dump": "lynx -dump https://[SITE] (extrai texto puro da página sem HTML)",
+          "lynx_source": "lynx -source https://[SITE] > pagina.html",
+          "w3m_dump": "w3m -dump https://[SITE] (alternativa ao lynx, melhor para tabelas)",
+          "scrapy_shell": "scrapy shell https://[SITE] (REPL interativo — teste seletores CSS: response.css('h1::text').get())",
+          "scrapy_export": "scrapy crawl [SPIDER] -o dados.json",
+          "single_file_html": "npx single-file-cli https://[SITE] --output ./pagina_completa.html",
+          "observacao": "Instalar: brew install pup jq lynx w3m | pip install scrapy | npm install -g single-file-cli"
+        },
+        "fase_7_infraestrutura_servidor": {
+          "descricao": "Cópia direta do servidor origem via SSH/SCP/SFTP e exportação de CMS (WordPress, Drupal)",
+          "scp_site": "scp -r usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "rsync_site": "rsync -avz --progress usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "rsync_exclusoes": "rsync -avz --progress --exclude='*.log' --exclude='node_modules' usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
+          "sftp_interativo": "sftp usuario@[SERVIDOR] (depois: get -r /var/www/[SITE])",
+          "git_clone": "git clone https://[REPO_GIT] ./copia_local",
+          "git_pull": "git pull origin main",
+          "wordpress_db": "wp db export dump_$(date +%Y%m%d).sql --path=/var/www/[SITE]",
+          "wordpress_core": "wp core download --path=/var/www/[SITE] --locale=pt_BR",
+          "wordpress_export": "wp export --path=/var/www/[SITE] --dir=./wp-export",
+          "drush_archive": "drush archive-dump --destination=./dump_drupal_$(date +%Y%m%d).tar.gz",
+          "drush_sql": "drush sql-dump > dump_$(date +%Y%m%d).sql",
+          "observacao": "Requer acesso SSH ao servidor. Instalar: brew install rsync wp-cli"
+        },
+        "fase_8_captura_midia_e_pdf": {
+          "descricao": "Captura visual de páginas como screenshot, PDF ou download de mídia (vídeos, áudio)",
+          "puppeteer_screenshot": "npx puppeteer-cli screenshot https://[SITE] --full-page --output screenshot.png",
+          "puppeteer_pdf": "npx puppeteer-cli pdf https://[SITE] --output ./pagina.pdf",
+          "playwright_screenshot": "npx playwright screenshot https://[SITE] --full-page output.png",
+          "playwright_pdf": "npx playwright pdf https://[SITE] ./output.pdf",
+          "yt_dlp_video": "yt-dlp https://[URL_DO_VIDEO]",
+          "yt_dlp_audio": "yt-dlp --extract-audio --audio-format mp3 https://[URL_DO_VIDEO]",
+          "yt_dlp_playlist": "yt-dlp --yes-playlist https://[URL_DA_PLAYLIST]",
+          "aria2c_paralelo": "aria2c -Z 'https://[SITE]/arq1' 'https://[SITE]/arq2' (downloads paralelos)",
+          "aria2c_rapido": "aria2c -x 16 -s 16 https://[SITE]/arquivo_grande (16 conexões simultâneas)",
+          "httrack": "httrack https://[SITE] -O ./[PASTA_DESTINO]",
+          "observacao": "Instalar: npm install -g puppeteer-cli @playwright/test | pip install yt-dlp | brew install aria2 httrack"
         }
       }
     },
