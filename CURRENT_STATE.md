@@ -32,3 +32,4 @@
 2. **Isolamento de Projetos**: Cada relatório, descoberta ou memória operacional é armazenado estritamente na pasta do seu respectivo projeto.
 3. **Anti-Duplicação Git**: Todos os repositórios remotos possuem symlinks apontando diretamente para as pastas canônicas correspondentes em `/Users/lucasvinicius/projetos`.
 - [2026-10-07 01:34:58 UTC] feat(governance): salvar avancos no projeto e anti-duplicacao de pastas
+- [2026-10-07 01:35:10 UTC] chore(sync): salva avancos e descobertas do projeto
