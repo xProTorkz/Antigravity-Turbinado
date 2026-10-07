@@ -3102,7 +3102,7 @@ EOF
 
         "miniapp"|"gui"|"painel")
             echo "🚀 Abrindo Console de Comandos Rápidos & Chaining do Antigravity 2.0 no navegador..."
-            open "/Users/lucasvinicius/.gemini/antigravity-ide/miniapp/index.html" 2>/dev/null || echo "Abra no navegador: file:///Users/lucasvinicius/.gemini/antigravity-ide/miniapp/index.html"
+            open "/Users/lucasvinicius/projetos/estruturas/miniapp/index.html" 2>/dev/null || echo "Abra no navegador: file:///Users/lucasvinicius/projetos/estruturas/miniapp/index.html"
             ;;
 
         "menu"|"ajuda"|"help"|"help-full")
