@@ -4,7 +4,7 @@
   "descricao": "Dicionário canônico de abstração léxica, governança operacional, menu de comandos rápidos, red teaming defensivo e automação SRE/DevOps do ecossistema Sentinela / Antigravity 2.0.",
   "mapeamento": {
     "auditoria_completa": "Executar auditoria técnica completa de ambiente, permissões, processos e repositórios locais.",
-    "auditoria_total": "Executar auditoria total nas 10 camadas arquiteturais (UI, Lógica de Interação, Gerenciamento de Estado, Cliente de API/Rede, Gateway e Roteamento de Borda, Controladores/Entrada de API, Segurança e Middleware de Autenticação, Serviços e Regras de Negócio, Persistência e ORM, e Armazenamento/Banco de Dados), integrando compulsoriamente na camada de UI a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade, operando de forma invisível e silenciosa em segundo plano.",
+    "auditoria_total": "Executar auditoria total nas 10 camadas arquiteturais (UI, Lógica de Interação, Gerenciamento de Estado, Cliente de API/Rede, Gateway e Roteamento de Borda, Controladores/Entrada de API, Segurança e Middleware de Autenticação, Serviços e Regras de Negócio, Persistência e ORM, e Armazenamento/Banco de Dados), integrando compulsoriamente na camada de UI (Superfície Web) a suíte DevTools de depuração DOM e desmascaramento, além da captura e snapshot integral do DOM renderizado via single-file-cli com Google Chrome Headless para preservação de estado e análise de conformidade, operando de forma invisível e silenciosa em segundo plano.",
     "auditoria_global": "Executar auditoria global em 6 grandes domínios (Frontend [Surface Web], Transporte/Borda, Backend [Deep Web], Armazenamento & Análise de Dados, Hospedagem/Virtualização/DevOps [Abaixo do Backend], e Operações Transversais [CI/CD & Observabilidade]) cobrindo compulsoriamente 23 camadas arquiteturais estruturadas, integrando compulsoriamente no domínio Frontend a suíte DevTools de depuração DOM e desmascaramento para análise irrestrita de interface.",
     "estabilidade_servico": "Verificar a integridade, latência e estabilidade de serviços e endpoints ativos.",
     "otimizar_sharkbot": "Inspecionar e otimizar rotinas de automação e processamento de webhooks do módulo SharkBot.",
@@ -101,7 +101,7 @@
     "atualizar_sentinela": "Executar o atualizador canônico do Sentinela: puxar a versão mais recente do repositório Antigravity-Turbinado via git pull origin main e sincronizar o dicionário léxico e as skills do Sentinela.",
     "baixa_atualizacao_sentinela": "Gatilho de atualização: sincronizar a versão mais recente do Antigravity Turbinado, dicionário léxico e skills do Sentinela.",
     "auditoria_normal": "Executar auditoria operacional padrão cobrindo código, ambiente e incluindo compulsoriamente a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade de formulários/interface.",
-    "auditoria_total_replicador": "Pipeline completo de extração profunda de dados ocultos de um site: (1) interceptação de APIs via curl/mitmproxy, (2) extração de dados HTML ocultos via pup/jq, (3) varredura de histórico e endpoints via gau/waybackurls/linkfinder/trufflehog/gitleaks, (4) extração de metadados EXIF via exiftool, (5) brute force de rotas ocultas via gobuster/dirb/ffuf.",
+    "auditoria_total_replicador": "Pipeline completo de extração profunda de dados ocultos e replicação de interface: (1) interceptação de APIs via curl/mitmproxy, (2) extração de dados HTML ocultos via pup/jq, (3) varredura de histórico e endpoints via gau/waybackurls/linkfinder/trufflehog/gitleaks, (4) extração de metadados EXIF via exiftool, (5) brute force de rotas ocultas via gobuster/dirb/ffuf, (6) snapshot integral do DOM pós-renderização de SPAs dinâmicas com Google Chrome Headless via single-file-cli.",
     "espelhamento_frontend_estatico": "Auditoria Total Replicador: baixar e recriar visualmente o frontend estático do site via wget recursivo, salvando em pasta dedicada em /Users/lucasvinicius/projetos/ e abrindo automaticamente no navegador.",
     "copia": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
     "clone": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
@@ -133,7 +133,8 @@
     "sync": "Compara origem e destino, copiando apenas o que mudou para manter ambos os lados idênticos. Diff incremental bidirecional.",
     "listar_registros": "Listar registros ou arquivos disponíveis de forma resumida no terminal (ls, list, dir).",
     "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less).",
-    "chromedevtools_avancado": "Módulo Chrome DevTools Avançado: conexão silenciosa e em segundo plano ao Google Chrome já em execução no host. Proibido abrir novas abas ou janelas paralelas em rotinas de auditoria total/completa (exceto se o usuário pedir explicitamente para abrir um projeto local). Opera em modo headless/invisível utilizando as sessões e perfis já ativos no navegador."
+    "chromedevtools_avancado": "Módulo Chrome DevTools Avançado: conexão silenciosa e em segundo plano ao Google Chrome já em execução no host. Proibido abrir novas abas ou janelas paralelas em rotinas de auditoria total/completa (exceto se o usuário pedir explicitamente para abrir um projeto local). Opera em modo headless/invisível utilizando as sessões e perfis já ativos no navegador.",
+    "single_file_cli": "Executar captura e snapshot integral de páginas estáticas e SPAs dinâmicas em arquivo único HTML autocontido via single-file-cli, utilizando Google Chrome Headless nativo do macOS para renderização real e congelamento do DOM."
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [
@@ -263,7 +264,9 @@
       "copia",
       "clone",
       "espelho",
-      "replicar"
+      "replicar",
+      "auditoria_total_replicador",
+      "single_file_cli"
     ],
     "atualizacao_e_sincronizacao": [
       "atualizar_sentinela",
@@ -406,6 +409,9 @@
         "clonar com chrome headless",
         "renderizar spa com chrome",
         "single-file site",
+        "single-file-cli",
+        "auditoria total replicador com single-file-cli",
+        "clonar com single-file-cli",
         "snapshot dom completo"
       ],
       "diretiva": "auditoria_total_replicador",
@@ -659,7 +665,8 @@
       "termos": [
         "auditoria normal",
         "auditoria total",
-        "auditoria global"
+        "auditoria global",
+        "single-file-cli"
       ],
       "gatilhos": [
         "auditoria normal",
@@ -669,11 +676,13 @@
         "faça uma auditoria total",
         "faça uma auditoria global",
         "executar auditoria total",
-        "executar auditoria global"
+        "executar auditoria global",
+        "auditoria total com single-file-cli",
+        "auditoria com single-file-cli"
       ],
       "diretiva": "auditoria_com_suite_depuracao_dom",
       "execucao_material": true,
-      "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total ou auditoria global, incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend."
+      "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total ou auditoria global, incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend, acompanhada da captura e snapshot integral do DOM pós-renderização de SPAs dinâmicas via single-file-cli (Google Chrome Headless)."
     },
     "dump": {
       "termos": [
@@ -742,7 +751,7 @@
       "diretiva": "auditoria_completa_sistema",
       "execucao_material": true,
       "descricao": "Executa auditoria completa do sistema incluindo banco de dados, terminal, APIs e interface. Todos os comandos abaixo são incluídos obrigatoriamente no escopo.",
-      "inclusao_obrigatoria": "Ao executar auditoria completa ou auditoria total, incluir compulsoriamente todos os seguintes blocos de comandos: (1) Banco de Dados/DevOps — mysqldump, pg_dump, export, import, restore; (2) Terminal Linux/Bash — cat, head -n 40, tail -n 20, grep, less; (3) APIs — curl, wget; (4) Suíte de depuração de interface e desmascaramento de dados para conformidade de frontend.",
+      "inclusao_obrigatoria": "Ao executar auditoria completa ou auditoria total, incluir compulsoriamente todos os seguintes blocos de comandos: (1) Banco de Dados/DevOps — mysqldump, pg_dump, export, import, restore; (2) Terminal Linux/Bash — cat, head -n 40, tail -n 20, grep, less; (3) APIs — curl, wget; (4) Suíte de depuração de interface e desmascaramento de dados para conformidade de frontend; (5) Snapshot completo do DOM pós-renderização de SPAs dinâmicas via single-file-cli com Google Chrome Headless.",
       "comandos_banco_devops": {
         "dump_mysql": "mysqldump -u [USUARIO] -p [BANCO] > dump_$(date +%Y%m%d_%H%M%S).sql",
         "dump_postgresql": "pg_dump -U [USUARIO] -d [BANCO] -f dump_$(date +%Y%m%d_%H%M%S).sql",
@@ -762,6 +771,10 @@
         "wget": "wget https://api.exemplo.com/arquivo — Download direto de dados/payloads da web",
         "curl_com_auth": "curl -H 'Authorization: Bearer [TOKEN]' https://api.exemplo.com/endpoint",
         "curl_post": "curl -X POST -H 'Content-Type: application/json' -d '{\"key\":\"value\"}' https://api.exemplo.com/endpoint"
+      },
+      "comandos_snapshot_dom": {
+        "single_file_cli": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-args='[\"--no-sandbox\", \"--disable-gpu\", \"--disable-dev-shm-usage\"]' https://[SITE] index.html",
+        "single_file_npx": "npx single-file-cli https://[SITE] --output ./pagina_completa.html"
       }
     },
     "scrape": {
@@ -1099,7 +1112,9 @@
         "porta_padrao": "9222",
         "protocolo": "Chrome DevTools Protocol (CDP) / WebSocket",
         "injecao_script": "Injeta silenciosamente a suíte script_unificado_devtools no contexto ativo da aba sem intervenção manual",
-        "extracao_segura": "Coleta DOM renderizado, metadados de acessibilidade e estados desmascarados sem alterar o histórico de navegação"
+        "extracao_segura": "Coleta DOM renderizado, metadados de acessibilidade e estados desmascarados sem alterar o histórico de navegação",
+        "script_executor": "python3 /Users/lucasvinicius/projetos/SISTEMAS/Antigravity\\ Turbinado/4-automacao-e-shell/chrome_live_extractor.py [ALVO] --project [NOME_PROJETO] --audit-report",
+        "estrategia_hibrida": "Pilar 1 (Live Hook na aba aberta via AppleScript/CDP em 0.5s sem abrir janelas) com fallback automático para Pilar 2 (Shadow Copy em /tmp sem SingletonLock caso a aba esteja fechada)"
       }
     },
     "inspecao_interface_irrestrita": {
