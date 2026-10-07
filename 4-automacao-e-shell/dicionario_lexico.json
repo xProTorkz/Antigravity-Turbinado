@@ -666,7 +666,11 @@
         "auditoria normal",
         "auditoria total",
         "auditoria global",
-        "single-file-cli"
+        "single-file-cli",
+        "todas as camadas",
+        "ir em todas as camadas",
+        "todas as camadas ate o backend",
+        "todas as camadas até o backend"
       ],
       "gatilhos": [
         "auditoria normal",
@@ -678,11 +682,17 @@
         "executar auditoria total",
         "executar auditoria global",
         "auditoria total com single-file-cli",
-        "auditoria com single-file-cli"
+        "auditoria com single-file-cli",
+        "ir em todas as camadas",
+        "todas as camadas ate o backend",
+        "todas as camadas até o backend",
+        "auditoria em todas as camadas",
+        "explorar todas as camadas"
       ],
-      "diretiva": "auditoria_com_suite_depuracao_dom",
+      "diretiva": "auditoria_todas_as_camadas_material",
       "execucao_material": true,
-      "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total ou auditoria global, incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend, acompanhada da captura e snapshot integral do DOM pós-renderização de SPAs dinâmicas via single-file-cli (Google Chrome Headless)."
+      "regra_inviolavel_cadeia": "É ESTRITAMENTE PROIBIDO executar auditorias de camadas com respostas estáticas, mocks ou textos simulados. Ao disparar este comando, o executor DEVE compulsoriamente encadear e executar o pipeline material real de ponta a ponta: (1) Chrome Live Extractor (chrome_live_extractor.py) em segundo plano para desmascaramento e extração ativa do DOM/sessão via CDP; (2) Snapshot completo do DOM pós-renderização de SPAs via single-file com o Google Chrome Headless; (3) Mapeamento e teste de rotas/APIs; (4) Verificação de integridade e persistência de dados; (5) Consolidação dos resultados em relatório de auditoria.",
+      "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total, auditoria global ou 'todas as camadas', incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend, acompanhada da captura e snapshot integral do DOM pós-renderização de SPAs dinâmicas via single-file-cli (Google Chrome Headless) e verificação material das camadas de API e backend."
     },
     "dump": {
       "termos": [
@@ -1115,6 +1125,12 @@
         "extracao_segura": "Coleta DOM renderizado, metadados de acessibilidade e estados desmascarados sem alterar o histórico de navegação",
         "script_executor": "python3 /Users/lucasvinicius/projetos/SISTEMAS/Antigravity\\ Turbinado/4-automacao-e-shell/chrome_live_extractor.py [ALVO] --project [NOME_PROJETO] --audit-report",
         "estrategia_hibrida": "Pilar 1 (Live Hook na aba aberta via AppleScript/CDP em 0.5s sem abrir janelas) com fallback automático para Pilar 2 (Shadow Copy em /tmp sem SingletonLock caso a aba esteja fechada)"
+      },
+      "varredura_multitelas_spa": {
+        "descricao": "Protocolo de navegação e extração de múltiplas telas em SPAs (React/Vue/Vite) com sessão autenticada ativa",
+        "regra_navegacao_client_side": "PROIBIDO alterar URL via barra de endereços (set URL of tab), pois reloads forçados reiniciam o ciclo de vida do React e causam redirecionamento para /login. A navegação DEVE ser realizada via clique programático nos seletores do menu lateral (ex: document.querySelector('a[aria-label=Chats]').click()) ou via history.pushState com dispatch de evento popstate.",
+        "deteccao_conclusao_renderizacao": "Aguardar o descarte do backdrop de loading (ex: .MuiBackdrop-root sumir ou opacity 0) antes de capturar o DOM, garantindo que os dados da tela foram renderizados.",
+        "relativizacao_obrigatoria_assets": "Converter compulsoriamente href='/assets/' e src='/assets/' para links relativos locais e criar o symlink assets/ na raiz do projeto para permitir visualização offline fiel e sem quebra de layout."
       }
     },
     "inspecao_interface_irrestrita": {
