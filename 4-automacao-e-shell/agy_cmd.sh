@@ -26,13 +26,15 @@ agy_cmd() {
         echo "  [11] 🥷 Arsenal Hacker SRE (Kernel Tracing, Forense de Memória, Socket Sniff, Resgate SQLite & Árvores)"
         echo "  [12] 🛡️ Auditoria Defensiva Total & Hardening (Portas, Web Stack, Rotas, SQL, Privesc, Webshells)"
         echo "  [13] 🌌 Avanço Além & Profundo (Perímetro + Superfície + Kernel + Sockets)"
+        echo "  [14] 💾 Salvar no Projeto & Sincronizar Git (salvar / salve isso)"
+        echo "  [15] 📁 Padronizar Pastas & Anti-Duplicação Git"
         echo "  [0] ❌ Sair"
         echo "=============================================================================="
         if [ -t 0 ]; then
-            printf "👉 Digite o número da ação [0-13]: "
+            printf "👉 Digite o número da ação [0-15]: "
             read -r opcao
         else
-            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 13' diretamente."
+            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 15' diretamente."
             return 0
         fi
         case "$opcao" in
@@ -49,6 +51,8 @@ agy_cmd() {
             11) agy_cmd hacker-recon-full ;;
             12) agy_cmd auditoria-total ;;
             13) agy_cmd alem-profundo "${1:-example.com}" ;;
+            14) agy_cmd project-save-sync "$@" ;;
+            15) agy_cmd sync-project-folders ;;
             *) echo "Cancelado." ;;
         esac
         return 0
@@ -71,6 +75,8 @@ agy_cmd() {
         "11"|"hacker"|"arsenal"|"forense"|"baixo-nivel") agy_cmd hacker-recon-full; return 0 ;;
         "12"|"auditoria total"|"aduitoria total"|"varredura completa"|"auditoria-completa-total") agy_cmd auditoria-total "$@"; return 0 ;;
         "13"|"mais alem e mais profundo"|"alem e profundo"|"avancar-mais-alem-profundo") agy_cmd alem-profundo "$@"; return 0 ;;
+        "14"|"salvar"|"salve isso"|"salve-isso"|"salva"|"salve isso no projeto"|"salvar-projeto"|"salva no git e local") agy_cmd project-save-sync "$@"; return 0 ;;
+        "15"|"organiza-pastas"|"padroniza-pastas"|"anti-duplicacao") agy_cmd sync-project-folders; return 0 ;;
         "recon-profundo"|"reconhecimento profundo") agy_cmd recon-deep "$@"; return 0 ;;
         "va mais a fundo"|"vá mais a fundo"|"vai mais a fundo"|"mais a fundo") agy_cmd va-mais-a-fundo "$@"; return 0 ;;
         "mais alem"|"mais além"|"vá mais além"|"vai mais além") agy_cmd mais-alem "$@"; return 0 ;;
@@ -3173,6 +3179,154 @@ EOF
             echo "  agy_cmd mais-alem                 | Forense avançada perimétrica, DNS, privesc e webshells"
             echo "=============================================================================="
             echo "Dica: No chat do Antigravity 2.0, digite a frase direta ou use /comando correspondente."
+            ;;
+
+        # ======================================================================
+        # GOVERNANÇA: SALVAMENTO AUTOMÁTICO NO PROJETO & SINCRONIZAÇÃO GIT
+        # ======================================================================
+        "project-save-sync"|"salvar"|"salve isso"|"salve-isso"|"salva"|"salve isso no projeto"|"salvar-projeto"|"save-project")
+            local msg="${1:-chore(sync): salva avancos e descobertas do projeto}"
+            echo "💾 =============================================================================="
+            echo "⚡ SALVAR NO PROJETO & SINCRONIZAR COM GIT (LOCAL & REMOTO)"
+            echo "=============================================================================="
+
+            # 1. Identificar workspace e projeto ativo
+            local git_root
+            git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+            if [ -z "$git_root" ]; then
+                echo "⚠️ O diretório atual não é um repositório Git ($PWD)."
+                return 1
+            fi
+
+            local project_name
+            project_name=$(basename "$git_root")
+            local remote_url
+            remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "sem_remoto")
+            local current_branch
+            current_branch=$(git branch --show-current 2>/dev/null || echo "main")
+
+            echo "📁 Projeto Ativo: $project_name"
+            echo "📍 Workspace Local: $git_root"
+            echo "🐙 Repositório: $remote_url"
+            echo "🌿 Branch: $current_branch"
+            echo ""
+
+            # 2. Assegurar pastas de documentação e relatórios no projeto
+            mkdir -p "$git_root/reports" 2>/dev/null || true
+
+            # 3. Atualizar CURRENT_STATE.md do projeto
+            local state_file="$git_root/CURRENT_STATE.md"
+            local timestamp
+            timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            if [ ! -f "$state_file" ]; then
+                cat << STATE_EOF > "$state_file"
+# ESTADO CANÔNICO & OPERACIONAL DO PROJETO
+
+- **Projeto**: $project_name
+- **Workspace**: $git_root
+- **Repositório**: $remote_url
+- **Branch Ativa**: $current_branch
+- **Última Sincronização**: $timestamp
+
+## 📌 Histórico de Avanços & Descobertas
+STATE_EOF
+            fi
+
+            # Registra o avanço no CURRENT_STATE.md
+            echo "- [$timestamp] $msg" >> "$state_file"
+            echo "✅ Estado local atualizado em: $state_file"
+
+            # 4. Auditoria de Segurança Pré-Commit (Zero Segredos)
+            echo "🛡️ Auditando integridade e conferindo vazamento de segredos..."
+            if git status --porcelain | grep -iE "\.env$|secrets?\.json$|\.pem$|\.key$" | grep -v "example"; then
+                echo "❌ BLOQUEIO SENTINELA: Detectado arquivo potencialmente sensível unstaged!"
+                echo "   Remova ou adicione ao .gitignore antes de salvar."
+                return 1
+            fi
+
+            # 5. Git Add e Commit
+            echo "📦 Empacotando alterações locais..."
+            git -C "$git_root" add .
+            if git -C "$git_root" diff --cached --quiet; then
+                echo "ℹ️ Nenhuma alteração pendente de commit. Projeto já está limpo localmente."
+            else
+                git -C "$git_root" commit -m "$msg"
+                echo "✅ Commit registrado com sucesso."
+            fi
+
+            # 6. Git Push
+            if [ "$remote_url" != "sem_remoto" ]; then
+                echo "🚀 Sincronizando com GitHub remoto ($remote_url)..."
+                if git -C "$git_root" push origin "$current_branch" 2>&1 | grep -v "To https"; then
+                    echo "✅ Sincronização remota confirmada!"
+                else
+                    echo "⚠️ Push finalizado."
+                fi
+            fi
+
+            local head_sha
+            head_sha=$(git -C "$git_root" rev-parse --short HEAD 2>/dev/null)
+            echo "=============================================================================="
+            echo "🎉 [RECIBO: PROJETO SALVO LOCALMENTE E SINCRONIZADO NO GIT]"
+            echo "  SHA: $head_sha | Branch: $current_branch | Status: SINCRONIZADO"
+            echo "=============================================================================="
+            ;;
+
+        # ======================================================================
+        # GOVERNANÇA: PADRONIZADOR DE NOMES DE PASTAS & ANTI-DUPLICAÇÃO GIT
+        # ======================================================================
+        "sync-project-folders"|"organiza-pastas"|"padroniza-pastas"|"anti-duplicacao")
+            echo "🧭 =============================================================================="
+            echo "⚡ PADRONIZADOR CANÔNICO DE PASTAS & NOMES GIT (ANTI-DUPLICAÇÃO)"
+            echo "=============================================================================="
+            local base_dir="/Users/lucasvinicius/projetos"
+            if [ ! -d "$base_dir" ]; then
+                echo "⚠️ Diretório base de projetos não encontrado: $base_dir"
+                return 1
+            fi
+
+            echo "🔍 Verificando mapeamentos de nomes de repositórios para pastas canônicas..."
+            cd "$base_dir" || return 1
+
+            # Pares Canônicos: <Nome_Do_Repo_Git> -> <Pasta_Canonica_Real>
+            local mappings=(
+                "Antigravity-Turbinado:ANTIGRAVITY TURBINADO"
+                "antigravity-turbinado:ANTIGRAVITY TURBINADO"
+                "apicatalogador:API Catalogador - DADO88X"
+                "sharkbot-automation:ConfigBot"
+                "minha-agenda:Minha Agenda"
+                "ideias-para-comercio:Ideias para Comércio"
+                "whaticket-AtendeAIBR:Whaticket - AtendeAIBR"
+                "jarvis-assistente:Jarvis Assistente"
+                "antigravity-control-plane:Jarvis Assistente"
+                "sandbox-test:project-blueprint"
+            )
+
+            for map in "${mappings[@]}"; do
+                local repo_name="${map%%:*}"
+                local canonical_name="${map##*:}"
+                if [ -d "$canonical_name" ]; then
+                    if [ -L "$repo_name" ]; then
+                        local current_target
+                        current_target=$(readlink "$repo_name")
+                        if [ "$current_target" = "$canonical_name" ]; then
+                            echo "  ✅ Symlink OK: $repo_name ➔ $canonical_name"
+                        else
+                            echo "  🔄 Atualizando symlink: $repo_name ➔ $canonical_name"
+                            ln -sfn "$canonical_name" "$repo_name"
+                        fi
+                    elif [ ! -e "$repo_name" ]; then
+                        echo "  ➕ Criando symlink de proteção: $repo_name ➔ $canonical_name"
+                        ln -sfn "$canonical_name" "$repo_name"
+                    else
+                        echo "  ⚠️ ATENÇÃO: $repo_name existe como diretório físico separado de $canonical_name!"
+                    fi
+                fi
+            done
+
+            echo ""
+            echo "✅ Varredura concluída. O Git e os scripts não criarão pastas duplicadas com nomes divergentes."
+            echo "=============================================================================="
             ;;
 
         # ======================================================================

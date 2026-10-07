@@ -2904,5 +2904,41 @@ const SRE_COMMANDS = [
       "proc-fd-map",
       "series-alem-profundo"
     ]
+  },
+  {
+    "menu": 3,
+    "menuName": "Menu 3: Auditoria & Governança",
+    "group": "G",
+    "id": "project-save-sync",
+    "title": "Salvar no Projeto & Sincronizar Git",
+    "slash": "/salve-isso [MENSAGEM]",
+    "canonical": "//project-save-sync",
+    "phrase": "`salvar`, `salve isso`, `salve isso no projeto`, `salva no git e local`, `salvar projeto`",
+    "desc": "Atualiza automaticamente o CURRENT_STATE.md do projeto ativo, empacota descobertas locais com auditoria de segurança (Zero Segredos), executa commit e sincroniza com o GitHub via git push.",
+    "shell": "agy_cmd project-save-sync \"${1:-salva avancos e descobertas do projeto}\"",
+    "rawShell": "git add . && git commit -m \"${1:-chore(sync): salva avancos e descobertas}\" && git push origin HEAD",
+    "next": [
+      "sync-project-folders",
+      "hacker-recon-full",
+      "series-alem-profundo"
+    ]
+  },
+  {
+    "menu": 3,
+    "menuName": "Menu 3: Auditoria & Governança",
+    "group": "G",
+    "id": "sync-project-folders",
+    "title": "Padronizador de Pastas & Nomes Git",
+    "slash": "/organiza-pastas",
+    "canonical": "//sync-project-folders",
+    "phrase": "`organiza pastas de projetos`, `padroniza nomes de pastas`, `alinha nome local com git`, `evita pastas duplicadas`",
+    "desc": "Audita o diretório /Users/lucasvinicius/projetos e estabelece symlinks canônicos bidirecionais entre nomes de repositórios Git remotos e as pastas locais, impedindo clones duplicados.",
+    "shell": "agy_cmd sync-project-folders",
+    "rawShell": "./agy_cmd.sh sync-project-folders",
+    "next": [
+      "project-save-sync",
+      "audit-full",
+      "series-alem-profundo"
+    ]
   }
 ];
