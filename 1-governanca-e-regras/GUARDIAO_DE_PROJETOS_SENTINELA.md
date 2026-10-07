@@ -78,9 +78,14 @@ O Sentinela valida se a tarefa define claramente:
 1. **A Etapa do Pipeline:** Qual das 14 etapas está sendo executada.
 2. **A Skill Obrigatória (`required_skill`):** A `@skill` técnica vinculada (ex: `@fastapi-pro`, `@react-best-practices`, `@docker-expert`, `@zod-validation-expert`).
 
-#### Governança das Skills (100 Nativas + 2.487 Catalogadas)
-* O executor utiliza prioritariamente as 100 skills essenciais instaladas em `~/.agents/skills/`.
-* Para necessidades especializadas, o Sentinela orienta o carregamento sob demanda através do catálogo local (`Skills/` / `CATALOGO_SKILLS_COMPLETO.md`) ou via servidor MCP `aas-mcp` (`search_skills`, `get_skill`, `read_skill_file`).
+#### Governança Canônica das Skills: 1 Global + 3 Fixas por Projeto
+* **Única Skill Global Autorizada:** `@sentinela`, carregada de `~/.gemini/config/skills/sentinela/SKILL.md`. É o guardião supremo de governança, integridade, isolamento e validação.
+* **Trio Fixo de Skills Locais por Projeto:** Cada projeto ativo deve possuir e manter estritamente 3 skills locais fixas em seu ecossistema:
+  1. `frontend`: Interface, componentes visuais, DOM, renderização, acessibilidade (a11y) e UX.
+  2. `backend`: APIs, microsserviços, controladores, lógica de negócio, dados e resiliência.
+  3. `seguranca`: AppSec, OWASP, proteção de segredos, sanitização de inputs e conformidade.
+* **Skills Especializadas sob Demanda (GitHub Only):** Todas as demais skills técnicas (catálogo de mais de 2.400 skills) permanecem mantidas exclusivamente no GitHub (`xProTorkz/antigravity-skills-catalog`). Elas são referenciadas e carregadas temporariamente por tarefa nas Issues (`required_skills`), sendo terminantemente proibido mantê-las vinculadas de forma fixa localmente nos projetos, evitando poluição estrutural.
+* **Topologia e Nomenclatura Soberana:** Todos os projetos organizam-se fisicamente nas categorias `SITES/`, `APLICAÇÕES/` ou `SISTEMAS/`, adotando compulsoriamente a nomenclatura no formato `Nome Sobrenome` (ex: `Jarvis Assistente`, `Buy Station`, `Green Sinais`), mantendo mapeamento idêntico no GitHub e symlinks canônicos de compatibilidade na raiz `/Users/lucasvinicius/projetos`.
 * **PROIBIDO CRIAR NOVAS SKILLS AUTOMATICAMENTE:** Toda demanda técnica deve ser absorvida pelas skills existentes e pelo contexto do projeto. A criação de novas skills globais exige autorização humana expressa.
 * Antes de criar qualquer componente: **Search Before Create. Read Before Edit. Understand Before Change.** Reutilize código existente.
 * **Minimal Necessary Diff:** Modifique estritamente os arquivos autorizados na Issue (Scope Lock). Proibida refatoração oportunista.
