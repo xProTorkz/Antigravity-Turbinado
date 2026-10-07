@@ -1,15 +1,159 @@
 {
-  "_schema_version": "1.0",
-  "_description": "Registro determinístico de workspaces para o Antigravity Control Plane",
-  "exemplo-projeto": {
-    "canonical_name": "Exemplo Projeto",
-    "aliases": [
-      "exemplo-projeto",
-      "exemplo"
-    ],
-    "repo": "seu-usuario-github/exemplo-projeto",
-    "workspace": "/caminho/para/seu/workspace",
+  "ANTIGRAVITY TURBINADO": {
+    "name": "ANTIGRAVITY TURBINADO",
+    "aliases": ["ANTIGRAVITY TURBINADO", "antigravity-turbinado", "Antigravity Turbinado"],
+    "repo": "xProTorkz/Antigravity-Turbinado",
+    "workspace": "/Users/lucasvinicius/projetos/ANTIGRAVITY TURBINADO",
     "write_allowed": true,
-    "project_id": "00000000-0000-0000-0000-000000000000"
+    "project_id": "671b6a69-7264-4c65-a142-57273b8a0d20",
+    "queue_repo": "xProTorkz/Antigravity-Turbinado",
+    "description": "Ecossistema de orquestração e execução autônoma Antigravity Turbinado (inclui control-plane e installer)."
+  },
+  "API Catalogador - DADO88X": {
+    "name": "API Catalogador - DADO88X",
+    "aliases": ["API Catalogador - DADO88X", "api-catalogador-dado88x", "API Catalogador", "DADO88X"],
+    "repo": "xProTorkz/apicatalogador",
+    "workspace": "/Users/lucasvinicius/projetos/API Catalogador - DADO88X",
+    "write_allowed": true,
+    "project_id": "387a494d-9ec8-4b27-9b1d-a3bc6021b189",
+    "queue_repo": "xProTorkz/apicatalogador",
+    "submodules": ["sharkbot"]
+  },
+  "BUYSTATIONCC": {
+    "name": "BUYSTATIONCC",
+    "aliases": ["BUYSTATIONCC", "buystationcc", "buystationcc-audit"],
+    "repo": "xProTorkz/buystationcc-audit",
+    "workspace": "/Users/lucasvinicius/projetos/BUYSTATIONCC",
+    "write_allowed": true,
+    "project_id": "7f8b9c1d-2e3a-4b5c-6d7e-8f9a0b1c2d3e",
+    "queue_repo": "xProTorkz/buystationcc-audit"
+  },
+  "ConfigBot": {
+    "name": "ConfigBot",
+    "aliases": ["ConfigBot", "configbot", "sharkbot-automation"],
+    "repo": "xProTorkz/sharkbot-automation",
+    "workspace": "/Users/lucasvinicius/projetos/ConfigBot",
+    "write_allowed": true,
+    "project_id": "bfdf621c-f6db-47c1-9a60-c370fe4ac5e1",
+    "queue_repo": "xProTorkz/sharkbot-automation"
+  },
+  "DerivBot": {
+    "name": "DerivBot",
+    "aliases": ["DerivBot", "derivbot"],
+    "repo": "xProTorkz/DerivBot",
+    "workspace": "/Users/lucasvinicius/projetos/DerivBot",
+    "write_allowed": true,
+    "project_id": "61db5755-812d-4426-a425-07e137dfadaf",
+    "queue_repo": "xProTorkz/DerivBot"
+  },
+  "DiscordBot": {
+    "name": "DiscordBot",
+    "aliases": ["DiscordBot", "discordbot"],
+    "repo": "xProTorkz/DiscordBot",
+    "workspace": "/Users/lucasvinicius/projetos/DiscordBot",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/DiscordBot"
+  },
+  "GESTAO ARENA": {
+    "name": "GESTAO ARENA",
+    "aliases": ["GESTAO ARENA", "gestao-arena", "arena"],
+    "repo": "xProTorkz/gestao-arena",
+    "workspace": "/Users/lucasvinicius/Documents/GESTAO ARENA",
+    "write_allowed": true,
+    "project_id": "a3c571a0-ae98-4d23-9004-1b2c54bead56",
+    "queue_repo": "xProTorkz/gestao-arena"
+  },
+  "GreenSinais": {
+    "name": "GreenSinais",
+    "aliases": ["GreenSinais", "greensinais"],
+    "repo": "xProTorkz/greensinais",
+    "workspace": "/Users/lucasvinicius/projetos/GreenSinais",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/greensinais"
+  },
+  "Ideias para Comércio": {
+    "name": "Ideias para Comércio",
+    "aliases": ["Ideias para Comércio", "ideias-para-comercio"],
+    "repo": "xProTorkz/ideias-para-comercio",
+    "workspace": "/Users/lucasvinicius/projetos/Ideias para Comércio",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/ideias-para-comercio"
+  },
+  "Jarvis Assistente": {
+    "name": "Jarvis Assistente",
+    "aliases": ["Jarvis Assistente", "jarvis-assistente", "Jarvis"],
+    "repo": "xProTorkz/Jarvis-Assistente",
+    "workspace": "/Users/lucasvinicius/projetos/Jarvis Assistente",
+    "write_allowed": true,
+    "project_id": "3fe96838-28a1-4b9f-8ac1-83dcfc989648",
+    "queue_repo": "xProTorkz/Jarvis-Assistente"
+  },
+  "Joviania-Prev": {
+    "name": "Joviania-Prev",
+    "aliases": ["Joviania-Prev", "jovania-prev"],
+    "repo": "xProTorkz/jovania-prev",
+    "workspace": "/Users/lucasvinicius/projetos/Joviania-Prev",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/jovania-prev"
+  },
+  "Minha Agenda": {
+    "name": "Minha Agenda",
+    "aliases": ["Minha Agenda", "minha-agenda"],
+    "repo": "xProTorkz/minha-agenda",
+    "workspace": "/Users/lucasvinicius/projetos/Minha Agenda",
+    "write_allowed": true,
+    "project_id": "fb028a57-65a1-42e8-a747-a8eeef0ad3c4",
+    "queue_repo": "xProTorkz/minha-agenda"
+  },
+  "TELEGRAM STARS": {
+    "name": "TELEGRAM STARS",
+    "aliases": ["TELEGRAM STARS", "telegram-stars"],
+    "repo": "xProTorkz/telegram-stars",
+    "workspace": "/Users/lucasvinicius/projetos/TELEGRAM STARS",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/telegram-stars"
+  },
+  "Whaticket - AtendeAIBR": {
+    "name": "Whaticket - AtendeAIBR",
+    "aliases": ["Whaticket - AtendeAIBR", "whaticket-atendeaibr"],
+    "repo": "xProTorkz/whaticket-AtendeAIBR",
+    "workspace": "/Users/lucasvinicius/projetos/Whaticket - AtendeAIBR",
+    "write_allowed": true,
+    "project_id": "a98b7c6d-5e4f-3a2b-1c0d-whaticketsaas0",
+    "queue_repo": "xProTorkz/whaticket-AtendeAIBR"
+  },
+  "antigravity-skills-catalog": {
+    "name": "antigravity-skills-catalog",
+    "aliases": ["antigravity-skills-catalog", "skills-catalog"],
+    "repo": "xProTorkz/antigravity-skills-catalog",
+    "workspace": "/Users/lucasvinicius/projetos/antigravity-skills-catalog",
+    "write_allowed": true,
+    "project_id": "e4871b9c-5d1b-4f93-88ec-a3f28cf0e791",
+    "queue_repo": "xProTorkz/antigravity-skills-catalog"
+  },
+  "battlehost": {
+    "name": "battlehost",
+    "aliases": ["battlehost"],
+    "repo": "xProTorkz/battlehost",
+    "workspace": "/Users/lucasvinicius/projetos/battlehost",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/battlehost"
+  },
+  "project-blueprint": {
+    "name": "project-blueprint",
+    "aliases": ["project-blueprint"],
+    "repo": "xProTorkz/project-blueprint",
+    "workspace": "/Users/lucasvinicius/projetos/project-blueprint",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/project-blueprint"
+  },
+  "xProTorkz": {
+    "name": "xProTorkz",
+    "aliases": ["xProTorkz"],
+    "repo": "xProTorkz/xProTorkz",
+    "workspace": "/Users/lucasvinicius/projetos/xProTorkz",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/xProTorkz",
+    "description": "Repositório do perfil oficial GitHub do Lucas Vinicius (xProTorkz)."
   }
 }
