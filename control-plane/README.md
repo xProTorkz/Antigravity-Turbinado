@@ -17,7 +17,7 @@ O **Control Plane** é o núcleo de orquestração autônoma do **Antigravity Tu
 | **Lock Manager** | `ag_control_plane/lock_manager.py` | Gestão de concorrência e trava `MAX_WRITER_PER_PROJECT = 1`. |
 | **GitHub Client** | `ag_control_plane/github_client.py` | Comunicação com a API do GitHub (labels, issues, status). |
 | **Daemon** | `dispatcher_daemon.py` | Processo daemon em background para escuta de tarefas. |
-| **Registry** | `PROJECT_REGISTRY.json` | Mapeamento canônico dos projetos, repositórios e workspaces locais. |
+| **Registry** | `PROJECT_REGISTRY.json` | Registro de projetos, repositórios e workspaces locais. |
 
 ---
 

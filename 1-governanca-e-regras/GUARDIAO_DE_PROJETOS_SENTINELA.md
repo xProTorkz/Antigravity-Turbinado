@@ -33,44 +33,33 @@ A divisão canônica e inegociável de responsabilidades é:
 Antes de qualquer alteração, determine o projeto, workspace real, repositório, branch, Issue e ambiente correspondentes.
 
 #### Soberania da Pasta Local & Mapeamento 1:1 no GitHub
-* O nome da pasta local baixada na máquina (`basename` do workspace local) é a autoridade máxima e soberana sobre a nomenclatura do projeto.
+* **Inexistência de Projetos Canônicos:** Não existem "projetos canônicos" nem listas fechadas ou fixas de projetos. Todo e qualquer projeto existente na máquina é soberano e possui a mesma autoridade.
+* O nome da pasta local baixada na máquina (`basename` do workspace local em `/Users/lucasvinicius/projetos/<nome>` ou `/Users/lucasvinicius/Documents/<nome>`) é a autoridade máxima e soberana sobre a nomenclatura e identidade do projeto.
 * Todas as pastas e repositórios criados ou referenciados no GitHub devem possuir obrigatoriamente o mesmo nome dos projetos baixados localmente.
 * **Verificação Obrigatória Pré-Criação:** É mandatório verificar a existência física do diretório local antes de qualquer criação, vínculo ou despacho no GitHub, assegurando que o nome corresponda fielmente à pasta física existente na máquina.
 
-Priorize identificadores canônicos. Nunca identifique um projeto exclusivamente pelo nome da pasta ou por informações lembradas de conversas anteriores.
+A pasta local baixada na máquina é a autoridade máxima sobre a identidade do projeto. Não há listas canônicas pré-definidas; a resolução é estritamente dinâmica baseada no diretório físico real.
 
 Consulte somente o contexto necessário, nesta ordem:
 
-1. Governança global e regras específicas.
-2. Registro canônico do projeto.
-3. Estado operacional e tarefa ativa.
-4. Decisões e bloqueios arquiteturais.
-5. Branch, HEAD, alterações locais e remotas.
-6. Arquivos relacionados e dependências indispensáveis.
+1. Governança global e regras locais do projeto.
+2. Estado operacional e tarefa ativa na Issue do respectivo projeto.
+3. Decisões e bloqueios arquiteturais locais.
+4. Branch, HEAD, alterações locais e remotas.
+5. Arquivos relacionados e dependências indispensáveis.
 
 Reutilize contexto previamente recuperado quando ainda for válido, mas verifique informações que possam ter mudado antes de tomar decisões dependentes delas.
 
 Não examine outros projetos, repositórios ou Skills sem necessidade.
 
-**Configuração específica do ecossistema Jarvis**
-
-Para projetos vinculados ao Control Plane de xProTorkz, utilize, após verificar sua existência e localização:
-
-* `antigravity-control-plane/PROJECT_REGISTRY.json`
-* `TASK_PROTOCOL.md`
-* `PROJECT_MEMORY.md`
-* `CURRENT_STATE.json`
-
-Consulte também os bloqueios de arquitetura aplicáveis. Cada projeto utiliza seu próprio repositório para fila e execução (`queue_repo = target_repo`). Preserve o Router, o executor Antigravity e a sessão persistente por projeto, respeitando os bloqueios arquiteturais vigentes.
-
 ---
 
-### 3. ESCOPO, PIPELINE CANÔNICO (14 ETAPAS) E SKILLS
+### 3. ESCOPO, PIPELINE DE EXECUÇÃO E SKILLS
 
 Execute somente a tarefa autorizada.
 
-#### O Pipeline Canônico de 14 Etapas
-Toda atividade de produto e engenharia se enquadra obrigatoriamente no ciclo de vida de 14 etapas:
+#### O Pipeline de Ciclo de Vida (14 Etapas)
+Toda atividade de produto e engenharia se enquadra no ciclo de vida de 14 etapas:
 ```text
 01. Idear ➔ 02. Validar ➔ 03. Definir ➔ 04. Planejar ➔ 05. Projetar ➔ 06. Desenvolver ➔ 07. Integrar ➔ 08. Testar ➔ 09. Validar ➔ 10. Homologar ➔ 11. Implantar ➔ 12. Monitorar ➔ 13. Manter ➔ 14. Evoluir
 ```
@@ -78,14 +67,14 @@ O Sentinela valida se a tarefa define claramente:
 1. **A Etapa do Pipeline:** Qual das 14 etapas está sendo executada.
 2. **A Skill Obrigatória (`required_skill`):** A `@skill` técnica vinculada (ex: `@fastapi-pro`, `@react-best-practices`, `@docker-expert`, `@zod-validation-expert`).
 
-#### Governança Canônica das Skills: 1 Global + 3 Fixas por Projeto
+#### Governança das Skills: 1 Global + 3 Fixas por Projeto
 * **Única Skill Global Autorizada:** `@sentinela`, carregada de `~/.gemini/config/skills/sentinela/SKILL.md`. É o guardião supremo de governança, integridade, isolamento e validação.
 * **Trio Fixo de Skills Locais por Projeto:** Cada projeto ativo deve possuir e manter estritamente 3 skills locais fixas em seu ecossistema:
   1. `frontend`: Interface, componentes visuais, DOM, renderização, acessibilidade (a11y) e UX.
   2. `backend`: APIs, microsserviços, controladores, lógica de negócio, dados e resiliência.
   3. `seguranca`: AppSec, OWASP, proteção de segredos, sanitização de inputs e conformidade.
 * **Skills Especializadas sob Demanda (GitHub Only):** Todas as demais skills técnicas (catálogo de mais de 2.400 skills) permanecem mantidas exclusivamente no GitHub (`xProTorkz/antigravity-skills-catalog`). Elas são referenciadas e carregadas temporariamente por tarefa nas Issues (`required_skills`), sendo terminantemente proibido mantê-las vinculadas de forma fixa localmente nos projetos, evitando poluição estrutural.
-* **Topologia e Nomenclatura Soberana:** Todos os projetos organizam-se fisicamente nas categorias `SITES/`, `APLICAÇÕES/` ou `SISTEMAS/`, adotando compulsoriamente a nomenclatura no formato `Nome Sobrenome` (ex: `Jarvis Assistente`, `Buy Station`, `Green Sinais`), mantendo mapeamento idêntico no GitHub e symlinks canônicos de compatibilidade na raiz `/Users/lucasvinicius/projetos`.
+* **Soberania do Nome da Pasta:** O nome da pasta física baixada localmente na máquina é a autoridade soberana e rege o repositório no GitHub 1:1, sem prefixos arbitrários ou symlinks forçados.
 * **PROIBIDO CRIAR NOVAS SKILLS AUTOMATICAMENTE:** Toda demanda técnica deve ser absorvida pelas skills existentes e pelo contexto do projeto. A criação de novas skills globais exige autorização humana expressa.
 * Antes de criar qualquer componente: **Search Before Create. Read Before Edit. Understand Before Change.** Reutilize código existente.
 * **Minimal Necessary Diff:** Modifique estritamente os arquivos autorizados na Issue (Scope Lock). Proibida refatoração oportunista.

@@ -16,19 +16,20 @@ Seu objetivo não é procurar trabalho, sugerir melhorias ou reinventar soluçõ
 
 ---
 
-## 0. RESOLUÇÃO DE PROJETOS E MENÇÃO `@projeto`
+## 0. RESOLUÇÃO DE PROJETOS E SOBERANIA DA PASTA LOCAL
 
-Mesmo quando a conversa não estiver vinculada a nenhuma pasta de workspace (ou estiver em scratch), qualquer menção a `@projeto` (ou citação ao nome de um projeto) deve ser imediatamente resolvida para o seu diretório canônico correspondente:
+Mesmo quando a conversa não estiver vinculada a nenhuma pasta de workspace (ou estiver em scratch), qualquer menção a `@projeto` (ou citação ao nome de um projeto) deve ser imediatamente resolvida para o seu diretório correspondente na máquina:
 
-### Mapeamento Canônico de Projetos
-* `@Jarvis` / `@Jarvis Assistente` / `@antigravity-control-plane` → `/Users/lucasvinicius/projetos/Jarvis Assistente`
-* `@DerivBot` / `@DerivBot-main` → `/Users/lucasvinicius/projetos/DerivBot`
-* `@Sharkbot` → `/Users/lucasvinicius/projetos/Sharkbot`
-* `@Minha Agenda` → `/Users/lucasvinicius/projetos/Minha Agenda`
-* `@API Catalogador - DADO88X` / `@API_Catalogador-DADO88X` / `@API Catalogador` / `@DADO88X` / `@DADO88x` / `@DADO88x / API Catalogador` → `/Users/lucasvinicius/projetos/API Catalogador - DADO88X` (Nome Canônico: `API Catalogador - DADO88X`, Repositório: `xProTorkz/apicatalogador`, Módulo Interno: `sharkbot/`)
-* `@project-blueprint` / `@sandbox-test` → `/Users/lucasvinicius/projetos/project-blueprint`
-* `@GESTAO ARENA` → `/Users/lucasvinicius/Documents/GESTAO ARENA`
-* Demais projetos: verificar em `/Users/lucasvinicius/projetos/<nome>` ou configurações em `~/.gemini/config/projects/`.
+### Soberania da Pasta Local & Mapeamento 1:1 no GitHub
+* **Inexistência de Projetos Canônicos:** Não existem "projetos canônicos" nem listas fechadas ou fixas de projetos. Todo e qualquer projeto existente na máquina é soberano e possui a mesma autoridade.
+* O nome da pasta local baixada na máquina (`basename` do workspace local em `/Users/lucasvinicius/projetos/<nome>` ou `/Users/lucasvinicius/Documents/<nome>`) é a autoridade máxima e soberana sobre a nomenclatura e identidade do projeto.
+* Todas as pastas e repositórios criados ou referenciados no GitHub devem possuir obrigatoriamente o mesmo nome dos projetos baixados localmente.
+* **Verificação Obrigatória Pré-Criação:** É mandatório verificar a existência física do diretório local antes de qualquer criação, vínculo ou despacho no GitHub, assegurando que o nome corresponda fielmente à pasta física existente na máquina.
+
+### Resolução Dinâmica de Projetos
+* Qualquer menção a `@NomeDoProjeto` ou referência a um projeto resolve-se dinamicamente pela existência física do diretório em `/Users/lucasvinicius/projetos/<Nome>` (ou `/Users/lucasvinicius/Documents/<Nome>`).
+* Se a pasta física existir, ela é imediatamente assumida como o workspace real daquele projeto.
+* Se a pasta física não existir localmente, nenhuma operação é assumida nem criada no GitHub sem confirmação expressa do usuário.
 
 ### Protocolo de Ativação do Projeto
 1. Ao identificar a menção, assuma o diretório do projeto como escopo operacional e defina o diretório de trabalho (`Cwd`) correspondente para todos os comandos, testes, inspeções e edições.
@@ -40,7 +41,7 @@ Mesmo quando a conversa não estiver vinculada a nenhuma pasta de workspace (ou 
 
 ## 1. IDENTIFICAÇÃO E CONTEXTO
 
-Antes de qualquer tarefa, identifique o projeto utilizando o contexto ativo e seus identificadores canônicos.
+Antes de qualquer tarefa, identifique o projeto utilizando o diretório local ativo. A pasta física local é a autoridade máxima sobre a identidade do projeto.
 
 Consulte diretamente o repositório correspondente e recupere somente as informações relevantes: regras globais, regras específicas, estado atual, Issue, branch, HEAD, arquivos envolvidos e dependências necessárias.
 

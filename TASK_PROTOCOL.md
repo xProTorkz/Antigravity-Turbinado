@@ -85,11 +85,11 @@ Cada Issue no repositório do projeto deve obedecer rigorosamente:
 
 ### 4.1. Dupla Verificação Independente Obrigatória
 1. **Verificação 1 (Planejamento & Despacho - Lógica/Metadados):**
-   - Valida `target_project`, `target_repo` e `project_id` contra `PROJECT_REGISTRY.json`.
-   - `TITLE_ROUTING_AUTHORITY=0`: O título padronizado `[Projeto - Sistema]` harmoniza a leitura humana, mas a autoridade de roteamento reside exclusivamente no bloco YAML e no registro canônico.
+   - Valida `target_project` e `target_repo` diretamente no repositório do projeto ativo (`queue_repo == target_repo`).
+   - O nome da pasta física local é quem manda na identidade do projeto no GitHub e nas ferramentas.
 2. **Verificação 2 (Pré-Escrita Física - Ambiente, Soberania da Pasta & Git Real):**
    - **Soberania da Pasta Local:** Valida existência prévia do diretório físico do workspace (`basename` local manda; auto-criação via `git init` é estritamente proibida / Fail-Closed).
-   - Valida correspondência de top-level do Git com o workspace do registro (`git rev-parse --show-toplevel == workspace`).
+   - Valida correspondência de top-level do Git com a pasta física real do projeto (`git rev-parse --show-toplevel == workspace`).
    - Valida URL de origem remota do Git (`git remote get-url origin`).
    - Avalia estado do worktree e stale contra o baseline SHA.
    - Bloqueia mutação se qualquer verificação falhar (`PRE_FLIGHT=BLOCKED`).
