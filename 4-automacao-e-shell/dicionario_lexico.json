@@ -382,7 +382,13 @@
         "linkfinder",
         "gau",
         "waybackurls",
-        "pup"
+        "pup",
+        "single-file",
+        "single-file-cli",
+        "chrome headless",
+        "renderizar spa",
+        "clonar com chrome",
+        "snapshot dom"
       ],
       "gatilhos": [
         "auditoria total replicador",
@@ -395,11 +401,15 @@
         "varredura de diretórios ocultos",
         "brute force de rotas",
         "descobrir páginas ocultas",
-        "rastrear histórico do site"
+        "rastrear histórico do site",
+        "clonar com chrome headless",
+        "renderizar spa com chrome",
+        "single-file site",
+        "snapshot dom completo"
       ],
       "diretiva": "auditoria_total_replicador",
       "execucao_material": true,
-      "descricao": "Auditoria Total Replicador: pipeline completo de extração profunda de dados ocultos de um site. Cobre interceptação de APIs, extração de camadas HTML invisíveis, varredura de histórico, metadados de arquivos e brute force de rotas ocultas.",
+      "descricao": "Auditoria Total Replicador: pipeline completo de extração profunda de dados ocultos e clonagem renderizada de interface. Cobre interceptação de APIs, extração de camadas HTML invisíveis, varredura de histórico, metadados de arquivos, brute force de rotas ocultas e snapshot do DOM pós-renderização com Google Chrome Headless via single-file-cli.",
       "pipeline_auditoria": {
         "fase_1_interceptacao_api": {
           "descricao": "Intercepta APIs em segundo plano que carregam dados ocultos não presentes no HTML",
@@ -493,6 +503,13 @@
           "aria2c_rapido": "aria2c -x 16 -s 16 https://[SITE]/arquivo_grande (16 conexões simultâneas)",
           "httrack": "httrack https://[SITE] -O ./[PASTA_DESTINO]",
           "observacao": "Instalar: npm install -g puppeteer-cli @playwright/test | pip install yt-dlp | brew install aria2 httrack"
+        },
+        "fase_9_snapshot_dom_headless_chrome": {
+          "descricao": "Renderização e snapshot completo de SPAs dinâmicas (React, Vite, Vue, Angular) executando o Google Chrome Headless nativo do Mac via single-file-cli para capturar o DOM pós-execução de scripts",
+          "comando_padrao_mac": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-args='[\"--no-sandbox\", \"--disable-gpu\", \"--disable-dev-shm-usage\"]' https://[SITE] rendered_index.html",
+          "comando_com_espera_rede": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-wait-until=networkidle0 https://[SITE] index.html",
+          "comando_comprimir_html": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --compress-HTML=true https://[SITE] index.html",
+          "observacao": "Resolve o problema clássico de páginas SPA renderizando em branco (<div id=\"root\"></div> vazia com wget). Salva todas as fontes, SVGs e estilos Emotion/MUI embutidos em Base64 em 1 único arquivo autocontido."
         }
       }
     },
