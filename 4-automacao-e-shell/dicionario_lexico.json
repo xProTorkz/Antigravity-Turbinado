@@ -318,6 +318,95 @@
       "execucao_material": true,
       "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total ou auditoria global, incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend."
     },
+    "dump": {
+      "termos": [
+        "/dump",
+        "dump",
+        "fazer dump",
+        "exportar banco",
+        "exportar base",
+        "exportar dados",
+        "dump do banco",
+        "dump do banco de dados",
+        "backup banco",
+        "backup base de dados"
+      ],
+      "gatilhos": [
+        "/dump",
+        "dump",
+        "fazer dump",
+        "exportar banco",
+        "exportar base",
+        "exportar dados",
+        "dump do banco",
+        "dump do banco de dados",
+        "backup banco",
+        "backup base de dados",
+        "fazer backup do banco",
+        "salvar banco"
+      ],
+      "diretiva": "executar_dump_contextual",
+      "execucao_material": true,
+      "descricao": "Executa dump/exportação de banco de dados conforme o contexto identificado (MySQL, PostgreSQL, SQLite, etc.) ou lista os comandos equivalentes disponíveis.",
+      "comandos_por_contexto": {
+        "mysql": "mysqldump -u [USUARIO] -p [BANCO] > dump_$(date +%Y%m%d_%H%M%S).sql",
+        "postgresql": "pg_dump -U [USUARIO] -d [BANCO] -f dump_$(date +%Y%m%d_%H%M%S).sql",
+        "sqlite": "sqlite3 [ARQUIVO.db] .dump > dump_$(date +%Y%m%d_%H%M%S).sql",
+        "generico_export": "export / strapi export / npm run export",
+        "inspecao_arquivo": {
+          "cat": "cat arquivo.sql",
+          "head": "head -n 40 arquivo.sql",
+          "tail": "tail -n 20 arquivo.sql",
+          "grep": "grep \"termo\" arquivo.sql",
+          "less": "less arquivo.sql"
+        },
+        "restauracao": {
+          "mysql": "mysql -u [USUARIO] -p [BANCO] < dump.sql",
+          "postgresql": "psql -U [USUARIO] -d [BANCO] -f dump.sql"
+        }
+      }
+    },
+    "auditoria_completa": {
+      "termos": [
+        "auditoria completa",
+        "auditoria total",
+        "auditoria completa",
+        "/auditoria"
+      ],
+      "gatilhos": [
+        "auditoria completa",
+        "auditoria total",
+        "faça uma auditoria completa",
+        "execute auditoria completa",
+        "executar auditoria completa",
+        "auditoria total do sistema",
+        "/auditoria"
+      ],
+      "diretiva": "auditoria_completa_sistema",
+      "execucao_material": true,
+      "descricao": "Executa auditoria completa do sistema incluindo banco de dados, terminal, APIs e interface. Todos os comandos abaixo são incluídos obrigatoriamente no escopo.",
+      "inclusao_obrigatoria": "Ao executar auditoria completa ou auditoria total, incluir compulsoriamente todos os seguintes blocos de comandos: (1) Banco de Dados/DevOps — mysqldump, pg_dump, export, import, restore; (2) Terminal Linux/Bash — cat, head -n 40, tail -n 20, grep, less; (3) APIs — curl, wget; (4) Suíte de depuração de interface e desmascaramento de dados para conformidade de frontend.",
+      "comandos_banco_devops": {
+        "dump_mysql": "mysqldump -u [USUARIO] -p [BANCO] > dump_$(date +%Y%m%d_%H%M%S).sql",
+        "dump_postgresql": "pg_dump -U [USUARIO] -d [BANCO] -f dump_$(date +%Y%m%d_%H%M%S).sql",
+        "export": "export / strapi export / npm run export",
+        "import": "mysql/psql < dump.sql | strapi import | npm run import",
+        "restore": "Restaurar a partir de dump previamente gerado via import/psql/mysql"
+      },
+      "comandos_terminal": {
+        "cat": "cat arquivo.txt — Mostra todo o conteúdo do arquivo",
+        "head": "head -n 40 arquivo.txt — Mostra as primeiras 40 linhas",
+        "tail": "tail -n 20 arquivo.txt — Mostra as últimas 20 linhas",
+        "grep": "grep \"termo\" arquivo.txt — Filtra linhas pelo termo buscado",
+        "less": "less arquivo.txt — Abre o arquivo paginado para navegação"
+      },
+      "comandos_api": {
+        "curl": "curl https://api.exemplo.com/endpoint — Dispara requisição HTTP e retorna dados",
+        "wget": "wget https://api.exemplo.com/arquivo — Download direto de dados/payloads da web",
+        "curl_com_auth": "curl -H 'Authorization: Bearer [TOKEN]' https://api.exemplo.com/endpoint",
+        "curl_post": "curl -X POST -H 'Content-Type: application/json' -d '{\"key\":\"value\"}' https://api.exemplo.com/endpoint"
+      }
+    },
     "inspecao_interface_irrestrita": {
       "termos": [
         "inspecione",
