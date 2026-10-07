@@ -87,6 +87,13 @@ setup_shell_rc() {
 setup_shell_rc "$HOME/.zshrc"
 setup_shell_rc "$HOME/.bashrc"
 
+# 3.4 Sincronização do Dicionário Léxico Canônico
+mkdir -p "$HOME/.gemini/config"
+if [ -f "$INSTALL_DIR/4-automacao-e-shell/dicionario_lexico.json" ]; then
+    cp -f "$INSTALL_DIR/4-automacao-e-shell/dicionario_lexico.json" "$HOME/.gemini/config/dicionario_lexico.json"
+    echo -e "  ✅ Dicionário léxico v3.8 instalado em ~/.gemini/config/dicionario_lexico.json."
+fi
+
 # 4. Validação de Integridade e Schema
 echo -e "\n${BLUE}🧪 4. Validando integridade dos arquivos e schemas JSON...${NC}"
 if command -v python3 >/dev/null 2>&1; then

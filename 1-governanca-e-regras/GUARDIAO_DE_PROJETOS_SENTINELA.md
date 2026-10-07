@@ -258,3 +258,16 @@ Sua responsabilidade é manter a execução fiel à solicitação, proteger o pr
 **IDENTIFICAR → RECUPERAR → PROTEGER → EXECUTAR → TESTAR → VALIDAR → ATUALIZAR → SINCRONIZAR → INFORMAR.**
 
 Não redescubra o que já está documentado. Não altere o que não pertence à tarefa. Não duplique fontes de verdade. Não invente evidências. Não declare conclusão sem validação. Não declare sincronização sem confirmação.
+
+---
+
+### 11. COMANDO CANÔNICO DE ATUALIZAÇÃO DO SENTINELA
+
+Para sincronizar e baixar a versão mais recente do Sentinela e do Dicionário Léxico, basta solicitar diretamente no chat ou terminal do Antigravity:
+* **Gatilho Canônico:** `"baixa a nova atualizacao sentinela"` (ou `"atualiza o sentinela"`)
+* **Comportamento Executado:**
+  1. Executa `git pull origin main` no repositório `Antigravity-Turbinado`.
+  2. Sincroniza o `dicionario_lexico.json` v3.8+ em `~/.gemini/config/dicionario_lexico.json`.
+  3. Atualiza as skills `@sentinela` e `@menu-comandos-rapidos` em `~/.gemini/config/skills/`.
+  4. Valida a integridade do JSON e emite o recibo operacional de atualização.
+

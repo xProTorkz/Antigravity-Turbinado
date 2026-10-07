@@ -1,8 +1,8 @@
 {
   "version": "5.1",
   "total_intents": 215,
-  "total_slash_commands": 353,
-  "total_aliases": 1246,
+  "total_slash_commands": 355,
+  "total_aliases": 1251,
   "numeric_index": {
     "1": "unlock-git",
     "git": "unlock-git",
@@ -383,7 +383,9 @@
     "/testes": "test-project",
     "/valide": "test-project",
     "/salve-isso": "project-save-sync",
-    "/salvar-projeto": "project-save-sync"
+    "/salvar-projeto": "project-save-sync",
+    "/auditoria-global": "audit.project.hard",
+    "/audit-global": "audit.project.hard"
   },
   "alias_index": {
     "${1:-http://localhost:3000}": "inspect-headers",
@@ -1631,7 +1633,12 @@
     "sobe as alterações": "project-save-sync",
     "salve as alteracoes": "project-save-sync",
     "salvar alteracoes": "project-save-sync",
-    "sincronizar projeto": "project-save-sync"
+    "sincronizar projeto": "project-save-sync",
+    "auditoria global": "audit.project.hard",
+    "audit-global": "audit.project.hard",
+    "auditoria-global": "audit.project.hard",
+    "auditoria global em todas as camadas": "audit.project.hard",
+    "raio-x global": "audit.project.hard"
   },
   "unaccented_alias_index": {
     "${1:-http://localhost:3000}": "localhost",
@@ -2885,7 +2892,10 @@
     "testes": "test-project",
     "refatore": "refactor-code",
     "não mexe na tela": "execution.discreet.background",
-    "nao mexe na tela": "execution.discreet.background"
+    "nao mexe na tela": "execution.discreet.background",
+    "auditoria global": "audit.project.hard",
+    "audit-global": "audit.project.hard",
+    "auditoria-global": "audit.project.hard"
   },
   "surface_index": {
     "agy_background_intents": [

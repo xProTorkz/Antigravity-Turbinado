@@ -2,6 +2,18 @@
 
 Todas as alterações notáveis neste projeto serão documentadas neste arquivo, seguindo as diretrizes do [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/) e [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-07
+
+### Adicionado
+- **Dicionário Léxico Canônico v3.8 (`dicionario_lexico.json`):**
+  - Mapeamento e aliases de linguagem para espelhamento estático e recriação visual de frontend (`copia`, `clone`, `espelho`, `replicar`).
+  - Regra estrita de salvamento em diretório dedicado dentro de `/Users/lucasvinicius/projetos/<NOME_PASTA>`.
+  - Inicialização automática de servidor HTTP local e abertura no navegador (Google Chrome).
+- **Comando Canônico de Auto-Atualização do Sentinela:**
+  - Gatilho rápido por voz ou texto: `"baixa a nova atualizacao sentinela"`.
+  - Script oficial `scripts/atualizar_sentinela.sh` para sincronização via Git (`git pull origin main`) e atualização automática de `~/.gemini/config/dicionario_lexico.json` e skills da Sentinela.
+  - Integração nativa no roteador `agy_cmd.sh` e no `install.sh`.
+
 ---
 
 ## [0.1.0] - 2026-09-24

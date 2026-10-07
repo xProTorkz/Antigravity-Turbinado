@@ -94,6 +94,8 @@ class ResolvedIntent:
     modifiers_applied: List[str] = field(default_factory=list)
     mission_pipeline: List[str] = field(default_factory=list)
     sub_missions: List[Any] = field(default_factory=list)
+    total_layers: List[str] = field(default_factory=list)
+    global_domains: List[Dict[str, Any]] = field(default_factory=list)
 
     def generate_route_receipt(self) -> Dict[str, Any]:
         return self.route_receipt
@@ -103,6 +105,114 @@ class ResolvedIntent:
         for k, v in self.route_receipt.items():
             lines.append(f"{k}={v}")
         return "\n".join(lines)
+
+    def to_github_issue(self, raw_query: str = "", repo: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Converte a intenção resolvida em uma especificação estruturada de GitHub Issue.
+        Gera título, corpo em Markdown, labels e comando determinístico 'gh issue create'.
+        """
+        title = f"[TASK/{self.action}]: {self.intent_id} ({self.object})"
+        if self.intent_id == "project-save-sync":
+            title = "[SRE/GOVERNANCE]: Salvar e Sincronizar Projeto com GitHub"
+        elif "audit" in self.intent_id:
+            title = f"[AUDIT/SRE]: Inspeção Forense {self.scope} ({self.depth})"
+        elif "unlock" in self.intent_id:
+            title = f"[SRE/OPS]: Destravamento Operacional {self.object}"
+
+        plan_block = self.command_template
+        if self.is_compound and self.plan_steps:
+            plan_block = " && ".join([f"agy_cmd {step}" for step in self.plan_steps])
+
+        body_parts = [
+            "## 🎯 Objetivo da Tarefa",
+            f"Executar a operação técnica `{self.action}` sobre `{self.object}` no escopo `{self.scope}`.",
+            "",
+            "## 🧭 Rastreabilidade & Contexto Semântico",
+            f"- **Intenção Original:** \"{raw_query or self.canonical_phrase}\"",
+            f"- **Intent ID:** `{self.intent_id}`",
+            f"- **Superfície:** `{self.resolved_surface}` (`{self.execution_profile}`)",
+            f"- **Confiança do Roteamento:** `{self.confidence_score}%` via `{self.matched_by}`",
+            "- **Workspace Canônico:** `/Users/lucasvinicius/projetos/`",
+            "",
+            "## ⚡ Plano de Execução Canônico (Idempotente)",
+            "```bash",
+            plan_block,
+            "```",
+            "",
+            "## 🛡️ Governança & Restrições (Sentinela Guardião)",
+            "- **Zero-Token Guard:** Ativo (execução local sem consumo de tokens de API externa).",
+            "- **Scope Lock:** Minimal Necessary Diff (proibida refatoração oportunista).",
+            f"- **Política de Execução:** `{self.execution_policy}`",
+            f"- **Mutação Autorizada:** `{'Sim' if self.constraints.get('mutation_allowed', True) and not self.constraints.get('read_only', False) else 'Não (Read-Only)'}`",
+            f"- **Requer Confirmação/Gate:** `{'Sim' if self.requires_human_gate or self.destructive else 'Não'}`",
+            "",
+            "## 📋 Critérios de Aceitação (DoD)",
+            "- [ ] Execução determinística dos comandos canônicos com código de saída 0.",
+            "- [ ] Verificação de integridade pós-execução (baseline preservada, sem regressões).",
+            "- [ ] Sincronização verificável do estado sem vazamento de segredos."
+        ]
+        body = "\n".join(body_parts)
+
+        labels = ["ops", "sentinela", self.action.lower(), self.scope.lower().replace("_", "-")]
+        if self.destructive:
+            labels.append("high-risk")
+
+        escaped_title = title.replace('"', '\\"')
+        escaped_body = body.replace('"', '\\"')
+        gh_cmd = f'gh issue create --title "{escaped_title}" --body "{escaped_body}"'
+        if repo:
+            gh_cmd += f' --repo "{repo}"'
+
+        return {
+            "title": title,
+            "body": body,
+            "labels": labels,
+            "command": gh_cmd
+        }
+
+    def to_llm_prompt(self, raw_query: str = "") -> str:
+        """
+        Gera um prompt de engenharia de software ultra-estruturado e desprovido de termos
+        ambíguos ou gatilhos de moderação para LLMs externas ou locais (ChatGPT, Claude, Ollama).
+        """
+        plan_block = self.command_template
+        if self.is_compound and self.plan_steps:
+            plan_block = " && ".join([f"agy_cmd {step}" for step in self.plan_steps])
+
+        prompt_parts = [
+            "### ROLE & SYSTEM DIRECTIVE",
+            "Atue como Engenheiro de Confiabilidade de Sistemas (SRE) e Guardião de Projetos.",
+            "Sua responsabilidade é executar a tarefa técnica abaixo com precisão cirúrgica, segurança e determinismo.",
+            "",
+            "### TASK SPECIFICATION",
+            f"- **Objetivo:** Execução da operação técnica `{self.action}` em `{self.object}`.",
+            f"- **Solicitação Original:** \"{raw_query or self.canonical_phrase}\"",
+            f"- **Identificador Canônico:** `{self.intent_id}`",
+            f"- **Perfil de Execução:** `{self.resolved_surface}` / `{self.execution_profile}`",
+            "- **Diretório de Trabalho (Cwd):** `/Users/lucasvinicius/projetos/`",
+            "",
+            "### DETERMINISTIC COMMAND (SHELL / AGY_CMD)",
+            "Execute exatamente o comando no terminal:",
+            "```bash",
+            plan_block,
+            "```",
+            "",
+            "### OPERATIONAL CONSTRAINTS (INVARIANTS)",
+            "1. **Zero-Token Guard:** Execução estritamente em ambiente local, sem consumo de APIs pagas por token.",
+            "2. **Minimal Necessary Diff:** Modifique estritamente os arquivos necessários para cumprir o escopo.",
+            "3. **Zero Refatoração Oportunista:** Não altere arquivos ou lógicas fora da tarefa autorizada.",
+            "4. **Validação Obrigatória:** Execute testes antes de declarar a tarefa como concluída.",
+            "5. **Segurança de Credenciais:** Proibido comitar chaves, senhas, tokens ou arquivos `.env`.",
+            "",
+            "### EXPECTED OUTPUT & RECEIPT",
+            "Retorne um recibo conciso de conclusão no formato:",
+            "- STATUS: [IMPLEMENTADO / VALIDADO / SINCRONIZADO / DONE]",
+            f"- COMANDO_EXECUTADO: `{plan_block}`",
+            "- EVIDÊNCIAS: [Resultados dos testes ou diff verificado]",
+            "- PENDÊNCIAS: [Nenhuma ou bloqueios identificados]"
+        ]
+        return "\n".join(prompt_parts)
+
 
 class SurfaceRouter:
     """
@@ -801,8 +911,16 @@ class MissionResolver:
         else:
             exec_policy = it.get("execution_policy", "AUTO_ALLOWED")
 
+        norm_q = (raw_query or "").lower()
+        norm_u = (utterance or "").lower()
+        is_global_audit = any(g in norm_q or g in norm_u for g in ["auditoria global", "aduitoria global", "audit-global", "auditoria-global", "raio-x global"])
+        is_total_audit = any(t in norm_q or t in norm_u for t in ["auditoria total", "aduitoria total", "varredura completa"])
         phases = list(m_data.get("phases", []))
-        if mid == "AUDIT.HARD" and depth == "HARD":
+        if is_global_audit and self.resolver.audit_global_phases:
+            phases = self.resolver.audit_global_phases
+        elif is_total_audit and self.resolver.audit_total_phases:
+            phases = self.resolver.audit_total_phases
+        elif mid == "AUDIT.HARD" and depth == "HARD":
             phases = self.resolver.audit_phases
         if extra_attrs.get("extra_phases"):
             phases.extend(extra_attrs["extra_phases"])
@@ -820,9 +938,11 @@ class MissionResolver:
                 "output": m_data.get("canonical_meaning", "")
             }
         default_surf = defaults.get("default_surface", m_data.get("default_surface", "HYBRID"))
+        if is_global_audit or is_total_audit:
+            default_surf = "AGY_BACKGROUND"
         exec_plan["default_surface"] = default_surf
 
-        is_discreet = ("EXECUTION.DISCREET" in modifiers) or (mid == "EXECUTION.DISCREET") or self.resolver.is_discreet_requested(raw_query)
+        is_discreet = ("EXECUTION.DISCREET" in modifiers) or (mid == "EXECUTION.DISCREET") or self.resolver.is_discreet_requested(raw_query) or is_total_audit or is_global_audit
 
         template = it.get("command_template", f"agy_cmd {canon_id}")
         if "port" in params:
@@ -874,6 +994,66 @@ class MissionResolver:
         winning_surface, profile, scores, reasons, receipt = SurfaceRouter.route(
             res, raw_query or utterance, constraints, execution_surface, input_source
         )
+        if is_global_audit:
+            winning_surface = "AGY_BACKGROUND"
+            if receipt:
+                receipt["EXECUTION_SURFACE"] = "AGY_BACKGROUND"
+                receipt["BACKGROUND"] = True
+                receipt["UI_FOCUS"] = False
+            res.total_layers = [
+                "Camada de Apresentação (Interface de Usuário - UI)",
+                "Camada de Lógica de Interação",
+                "Camada de Gerenciamento de Estado",
+                "Camada de Rede (Cliente de API)",
+                "Camada de Segurança Perimetral (WAF - Firewall de Aplicação)",
+                "Camada de Redes de Entrega de Conteúdo (CDN)",
+                "Camada de Gateway e Roteamento de Borda (DNS e Load Balancers)",
+                "Camada de Entrada e Roteamento (Controladores / API)",
+                "Camada de Segurança e Autenticação (Middleware)",
+                "Camada de Regras de Negócio (Serviços)",
+                "Camada de Mensageria e Eventos (Filas Assíncronas)",
+                "Camada de Cache Distribuído",
+                "Camada de Acesso a Dados (Persistência / ORM)",
+                "Camada de Armazenamento Principal (Banco de Dados Relacional/Não-Relacional)",
+                "Camada de Réplicas de Leitura e Armazenamento Analítico (Data Warehouse / BI)",
+                "Camada de Servidores Web e Proxies Reversos",
+                "Camada de Virtualização e Containers",
+                "Camada de Orquestração de Containers",
+                "Camada de Sistema Operacional do Servidor",
+                "Camada de Infraestrutura como Código (IaC)",
+                "Camada de Hardware e Provedor de Nuvem (Cloud Computacional)",
+                "Camada de Integração e Entrega Contínua (CI/CD)",
+                "Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas)"
+            ]
+            res.global_domains = [
+                {"dominio": "1. Frontend (Client-Side)", "conceito": "Surface Web (Web Superficial)"},
+                {"dominio": "2. Transporte, Borda e Segurança Perimetral", "conceito": "Transporte, Borda & Perímetro"},
+                {"dominio": "3. Backend (Server-Side)", "conceito": "Deep Web (Web Profunda / Servidor)"},
+                {"dominio": "4. Armazenamento e Análise de Dados", "conceito": "Camadas Avançadas de Dados e Performance"},
+                {"dominio": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)", "conceito": "Camadas de Infraestrutura e DevOps (Abaixo do Backend)"},
+                {"dominio": "6. Operações Transversais (Cercam todas as outras)", "conceito": "Camadas de Operação e Segurança Transversal"}
+            ]
+            res.mode = "discreet_background"
+        elif is_total_audit:
+            winning_surface = "AGY_BACKGROUND"
+            if receipt:
+                receipt["EXECUTION_SURFACE"] = "AGY_BACKGROUND"
+                receipt["BACKGROUND"] = True
+                receipt["UI_FOCUS"] = False
+            res.total_layers = [
+                "Camada de Apresentação (Interface de Usuário - UI)",
+                "Camada de Lógica de Interação",
+                "Camada de Gerenciamento de Estado",
+                "Camada de Rede (Cliente de API)",
+                "Camada de Gateway e Roteamento de Borda",
+                "Camada de Entrada e Roteamento (Controladores / API)",
+                "Camada de Segurança e Autenticação (Middleware)",
+                "Camada de Regras de Negócio (Serviços)",
+                "Camada de Acesso a Dados (Persistência / ORM)",
+                "Camada de Armazenamento (Banco de Dados)"
+            ]
+            res.mode = "discreet_background"
+
         res.execution_surface = execution_surface
         res.resolved_surface = winning_surface
         res.execution_profile = profile
@@ -1006,6 +1186,10 @@ class SemanticResolver:
             "RESUME_FROM_GATE": True
         })
         self.audit_phases = self.rules.get("audit_hard_phases", [])
+        self.audit_total_phases = self.rules.get("audit_total_phases", [])
+        self.total_audit_rule = self.rules.get("regra_auditoria_total", {})
+        self.audit_global_phases = self.rules.get("audit_global_phases", [])
+        self.total_global_rule = self.rules.get("regra_auditoria_global", {})
         self.mission_resolver = MissionResolver(self)
         self._initialized = True
 
@@ -1114,6 +1298,9 @@ class SemanticResolver:
         return list(set(neg_tokens)), list(set(excluded_actions)), constraints
 
     def is_discreet_requested(self, text: str) -> bool:
+        norm_t = (text or "").lower()
+        if "auditoria total" in norm_t or "auditoria global" in norm_t or "invisivel" in norm_t or "invisível" in norm_t or "silenciosa" in norm_t or "silencioso" in norm_t:
+            return True
         discreet_triggers = self.sets.get("DISCREET_SETS", {}).get("triggers", [
             "modo silencioso", "roda sem aparecer", "faz em background",
             "não mexe na minha tela", "nao mexe na minha tela",
@@ -1607,8 +1794,18 @@ class SemanticResolver:
         elif constraints.get("mutation_allowed") and not it.get("destructive", False):
             exec_policy = "SENTINELA_GATE"
 
+        norm_low = (norm_phrase or "").lower()
+        raw_low = (raw_query or "").lower()
+        is_global_audit = any(g in norm_low or g in raw_low for g in ["auditoria global", "aduitoria global", "audit-global", "auditoria-global", "raio-x global"]) or match_by in ["auditoria global", "audit-global", "auditoria-global"]
+        is_total_audit = any(t in norm_low or t in raw_low for t in ["auditoria total", "aduitoria total", "varredura completa"]) or match_by in ["auditoria total", "auditoria-total"]
         phases_list = []
-        if intent_id.startswith("audit.") and depth == "HARD":
+        if is_global_audit and self.audit_global_phases:
+            phases_list = self.audit_global_phases
+            is_discreet = True
+        elif is_total_audit and self.audit_total_phases:
+            phases_list = self.audit_total_phases
+            is_discreet = True
+        elif intent_id.startswith("audit.") and depth == "HARD":
             phases_list = self.audit_phases
 
         res = ResolvedIntent(
@@ -1646,6 +1843,66 @@ class SemanticResolver:
         winning_surface, profile, scores, reasons, receipt = SurfaceRouter.route(
             res, raw_query or norm_phrase, constraints, execution_surface, input_source
         )
+        if is_global_audit:
+            winning_surface = "AGY_BACKGROUND"
+            if receipt:
+                receipt["EXECUTION_SURFACE"] = "AGY_BACKGROUND"
+                receipt["BACKGROUND"] = True
+                receipt["UI_FOCUS"] = False
+            res.total_layers = [
+                "Camada de Apresentação (Interface de Usuário - UI)",
+                "Camada de Lógica de Interação",
+                "Camada de Gerenciamento de Estado",
+                "Camada de Rede (Cliente de API)",
+                "Camada de Segurança Perimetral (WAF - Firewall de Aplicação)",
+                "Camada de Redes de Entrega de Conteúdo (CDN)",
+                "Camada de Gateway e Roteamento de Borda (DNS e Load Balancers)",
+                "Camada de Entrada e Roteamento (Controladores / API)",
+                "Camada de Segurança e Autenticação (Middleware)",
+                "Camada de Regras de Negócio (Serviços)",
+                "Camada de Mensageria e Eventos (Filas Assíncronas)",
+                "Camada de Cache Distribuído",
+                "Camada de Acesso a Dados (Persistência / ORM)",
+                "Camada de Armazenamento Principal (Banco de Dados Relacional/Não-Relacional)",
+                "Camada de Réplicas de Leitura e Armazenamento Analítico (Data Warehouse / BI)",
+                "Camada de Servidores Web e Proxies Reversos",
+                "Camada de Virtualização e Containers",
+                "Camada de Orquestração de Containers",
+                "Camada de Sistema Operacional do Servidor",
+                "Camada de Infraestrutura como Código (IaC)",
+                "Camada de Hardware e Provedor de Nuvem (Cloud Computacional)",
+                "Camada de Integração e Entrega Contínua (CI/CD)",
+                "Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas)"
+            ]
+            res.global_domains = [
+                {"dominio": "1. Frontend (Client-Side)", "conceito": "Surface Web (Web Superficial)"},
+                {"dominio": "2. Transporte, Borda e Segurança Perimetral", "conceito": "Transporte, Borda & Perímetro"},
+                {"dominio": "3. Backend (Server-Side)", "conceito": "Deep Web (Web Profunda / Servidor)"},
+                {"dominio": "4. Armazenamento e Análise de Dados", "conceito": "Camadas Avançadas de Dados e Performance"},
+                {"dominio": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)", "conceito": "Camadas de Infraestrutura e DevOps (Abaixo do Backend)"},
+                {"dominio": "6. Operações Transversais (Cercam todas as outras)", "conceito": "Camadas de Operação e Segurança Transversal"}
+            ]
+            res.mode = "discreet_background"
+        elif is_total_audit:
+            winning_surface = "AGY_BACKGROUND"
+            if receipt:
+                receipt["EXECUTION_SURFACE"] = "AGY_BACKGROUND"
+                receipt["BACKGROUND"] = True
+                receipt["UI_FOCUS"] = False
+            res.total_layers = [
+                "Camada de Apresentação (Interface de Usuário - UI)",
+                "Camada de Lógica de Interação",
+                "Camada de Gerenciamento de Estado",
+                "Camada de Rede (Cliente de API)",
+                "Camada de Gateway e Roteamento de Borda",
+                "Camada de Entrada e Roteamento (Controladores / API)",
+                "Camada de Segurança e Autenticação (Middleware)",
+                "Camada de Regras de Negócio (Serviços)",
+                "Camada de Acesso a Dados (Persistência / ORM)",
+                "Camada de Armazenamento (Banco de Dados)"
+            ]
+            res.mode = "discreet_background"
+
         res.execution_surface = execution_surface
         res.resolved_surface = winning_surface
         res.execution_profile = profile
@@ -1656,12 +1913,15 @@ class SemanticResolver:
 
 def main():
     if len(sys.argv) < 2:
-        print("Uso: python3 semantic_resolver.py [--command-only|--json|--context=<scope>] '<frase ou comando>'")
+        print("Uso: python3 semantic_resolver.py [--command-only|--json|--github-issue|--llm-prompt|--context=<scope>|--repo=<owner/repo>] '<frase ou comando>'")
         sys.exit(1)
 
     command_only = False
     as_json = False
+    as_github_issue = False
+    as_llm_prompt = False
     context_arg = None
+    repo_arg = None
     query_args = []
 
     for arg in sys.argv[1:]:
@@ -1669,8 +1929,16 @@ def main():
             command_only = True
         elif arg == "--json":
             as_json = True
+        elif arg == "--github-issue":
+            as_github_issue = True
+        elif arg == "--llm-prompt":
+            as_llm_prompt = True
         elif arg.startswith("--context="):
             context_arg = arg.split("=", 1)[1]
+        elif arg.startswith("--repo="):
+            repo_arg = arg.split("=", 1)[1]
+        elif arg == "--receipt":
+            pass
         else:
             query_args.append(arg)
 
@@ -1680,6 +1948,40 @@ def main():
     query = " ".join(query_args)
     resolver = SemanticResolver()
     res = resolver.resolve(query, context=context_arg)
+
+    if as_github_issue:
+        if res:
+            issue_data = res.to_github_issue(raw_query=query, repo=repo_arg)
+            if as_json:
+                print(json.dumps(issue_data, indent=2, ensure_ascii=False))
+            else:
+                print("📋 [GITHUB ISSUE GENERATOR]:")
+                print(f"Título: {issue_data['title']}")
+                print(f"Labels: {', '.join(issue_data['labels'])}")
+                print("\n--- [CORPO DA ISSUE] ---")
+                print(issue_data["body"])
+                print("\n--- [COMANDO GH DISPATCH] ---")
+                print(issue_data["command"])
+        else:
+            if as_json:
+                print(json.dumps({"error": "unresolved"}, indent=2))
+            else:
+                print("⚠️ [UNRESOLVED]: Nenhuma intenção superou o limiar de confiança.")
+        return
+
+    if as_llm_prompt:
+        if res:
+            prompt_str = res.to_llm_prompt(raw_query=query)
+            if as_json:
+                print(json.dumps({"llm_prompt": prompt_str, "intent_id": res.intent_id}, indent=2, ensure_ascii=False))
+            else:
+                print(prompt_str)
+        else:
+            if as_json:
+                print(json.dumps({"error": "unresolved"}, indent=2))
+            else:
+                print("⚠️ [UNRESOLVED]: Nenhuma intenção superou o limiar de confiança.")
+        return
 
     if command_only:
         if res:

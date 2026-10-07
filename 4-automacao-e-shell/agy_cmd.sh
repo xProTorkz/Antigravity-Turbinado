@@ -74,6 +74,7 @@ agy_cmd() {
         "10"|"superficie"|"rede"|"portas-scan"|"ataque"|"redteam"|"pentest") agy_cmd audit-network-surface; return 0 ;;
         "11"|"hacker"|"arsenal"|"forense"|"baixo-nivel") agy_cmd hacker-recon-full; return 0 ;;
         "12"|"auditoria total"|"aduitoria total"|"varredura completa"|"auditoria-completa-total") agy_cmd auditoria-total "$@"; return 0 ;;
+        "16"|"auditoria global"|"aduitoria global"|"auditoria-global"|"audit-global"|"raio-x global") agy_cmd auditoria-global "$@"; return 0 ;;
         "13"|"mais alem e mais profundo"|"alem e profundo"|"avancar-mais-alem-profundo") agy_cmd alem-profundo "$@"; return 0 ;;
         "14"|"salvar"|"salve isso"|"salve-isso"|"salva"|"salve isso no projeto"|"salvar-projeto"|"salva no git e local") agy_cmd project-save-sync "$@"; return 0 ;;
         "15"|"organiza-pastas"|"padroniza-pastas"|"anti-duplicacao") agy_cmd sync-project-folders; return 0 ;;
@@ -83,6 +84,7 @@ agy_cmd() {
         "stress"|"carga"|"ddos")                 agy_cmd stress-test-load "$@"; return 0 ;;
         "fuzz"|"boundary")                       agy_cmd test-api-boundaries "$@"; return 0 ;;
         "bruteforce"|"auth-test")                agy_cmd auth-rate-limit-test "$@"; return 0 ;;
+        "baixa a nova atualizacao sentinela"|"baixa a nova atualização sentinela"|"baixa atualizacao sentinela"|"atualizar-sentinela"|"atualiza-sentinela"|"update-sentinela") agy_cmd atualizar-sentinela "$@"; return 0 ;;
 
         # ======================================================================
         # FOCO 1: Processos, CPU, Memória RAM & Destravamento de Hardware
@@ -249,6 +251,15 @@ agy_cmd() {
         "sync-upstream")
             echo "🔄 Sincronizando com o upstream remoto da branch main..."
             git fetch origin && (git rebase origin/main || git merge origin/main)
+            ;;
+        "atualizar-sentinela")
+            echo "🔄 Disparando atualizador canônico do Sentinela & Dicionário..."
+            local script_path="/Users/lucasvinicius/projetos/ANTIGRAVITY TURBINADO/scripts/atualizar_sentinela.sh"
+            if [ -f "$script_path" ]; then
+                bash "$script_path"
+            else
+                echo "❌ Script atualizador não encontrado em $script_path"
+            fi
             ;;
         "clean-branches")
             echo "🧹 Removendo branches locais já mescladas..."
@@ -2808,6 +2819,34 @@ EOF
             echo "=============================================================================="
             ;;
 
+        "auditoria-global"|"auditoria global"|"aduitoria global"|"audit-global"|"raio-x global"|"auditoria global em todas as camadas")
+            echo "🌐 =============================================================================="
+            echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (6 DOMÍNIOS & 23 CAMADAS)"
+            echo "=============================================================================="
+            echo "👉 [1/6] DOMÍNIO 1: Frontend (Client-Side) [Surface Web] (UI, Interação, Estado, Rede API)..."
+            agy_cmd audit-web-stack "http://127.0.0.1:3000" 2>/dev/null || true
+            echo ""
+            echo "👉 [2/6] DOMÍNIO 2: Transporte, Borda e Segurança Perimetral (WAF, CDN, Gateway & DNS/LB)..."
+            agy_cmd audit-network-surface 2>/dev/null || true
+            echo ""
+            echo "👉 [3/6] DOMÍNIO 3: Backend (Server-Side) [Deep Web] (API, Auth, Regras, Filas, Cache, ORM)..."
+            agy_cmd audit-secrets-deep 2>/dev/null || true
+            agy_cmd audit-sql-sanitization . 2>/dev/null || true
+            echo ""
+            echo "👉 [4/6] DOMÍNIO 4: Armazenamento e Análise de Dados (Storage Principal SQL/NoSQL & DW/BI)..."
+            agy_cmd sqlite-vacuum "database.sqlite" 2>/dev/null || true
+            echo ""
+            echo "👉 [5/6] DOMÍNIO 5: Hospedagem, Virtualização e Infra (DevOps) (Web Server, Containers, K8s, SO, IaC, Cloud)..."
+            agy_cmd audit-privesc-vectors 2>/dev/null || true
+            agy_cmd audit-hidden-webshells . 2>/dev/null || true
+            echo ""
+            echo "👉 [6/6] DOMÍNIO 6: Operações Transversais (Dark Web / Transversal) (CI/CD, Telemetria & Logs)..."
+            agy_cmd audit-git-integrity 2>/dev/null || true
+            echo "=============================================================================="
+            echo "🎉 [STATUS: AUDITORIA GLOBAL COMPLETA (23 CAMADAS) CONCLUÍDA]"
+            echo "=============================================================================="
+            ;;
+
         "va-mais-a-fundo"|"va mais a fundo"|"vá mais a fundo"|"vai mais a fundo"|"mais a fundo")
             echo "🔬 =============================================================================="
             echo "⚡ MACRO-PIPELINE: INVESTIGAÇÃO TÉCNICA DE BAIXO NÍVEL EM PROFUNDIDADE"
@@ -3327,6 +3366,27 @@ STATE_EOF
             echo ""
             echo "✅ Varredura concluída. O Git e os scripts não criarão pastas duplicadas com nomes divergentes."
             echo "=============================================================================="
+            ;;
+
+        # ======================================================================
+        # Middleware Semântico & Formatação de Instruções (GitHub / LLM)
+        # ======================================================================
+        issue|github-issue)
+            local query="$*"
+            if [ -z "$query" ]; then
+                echo "Uso: agy_cmd issue '<frase ou comando informal>'"
+                return 1
+            fi
+            python3 /Users/lucasvinicius/projetos/estruturas/semantic_resolver.py --github-issue "$query"
+            ;;
+
+        prompt|llm-prompt)
+            local query="$*"
+            if [ -z "$query" ]; then
+                echo "Uso: agy_cmd prompt '<frase ou comando informal>'"
+                return 1
+            fi
+            python3 /Users/lucasvinicius/projetos/estruturas/semantic_resolver.py --llm-prompt "$query"
             ;;
 
         # ======================================================================

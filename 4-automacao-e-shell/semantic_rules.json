@@ -74,6 +74,30 @@
       "intensity": "EXTREME",
       "mode": "READ_ONLY_FIRST",
       "mutation_allowed": false
+    },
+    "auditoria total": {
+      "action": "AUDIT",
+      "depth": "TOTAL_LAYERS",
+      "intensity": "EXTREME",
+      "mode": "DISCREET_BACKGROUND",
+      "execution_visibility": "BACKGROUND",
+      "silent": true,
+      "invisible": true,
+      "ui_focus": false,
+      "visible_terminal": false,
+      "mutation_allowed": false
+    },
+    "auditoria global": {
+      "action": "AUDIT",
+      "depth": "GLOBAL_LAYERS",
+      "intensity": "MAXIMUM",
+      "mode": "DISCREET_BACKGROUND",
+      "execution_visibility": "BACKGROUND",
+      "silent": true,
+      "invisible": true,
+      "ui_focus": false,
+      "visible_terminal": false,
+      "mutation_allowed": false
     }
   },
   "audit_hard_phases": [
@@ -203,6 +227,545 @@
       ]
     }
   ],
+  "audit_total_phases": [
+    {
+      "phase": 1,
+      "name": "CAMADA_APRESENTACAO_UI",
+      "layer": "Camada de Apresentação (Interface de Usuário - UI)",
+      "tier": "Frontend",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "componentes_ui",
+        "templates",
+        "renderizacao",
+        "layouts",
+        "responsividade",
+        "acessibilidade"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "CAMADA_LOGICA_INTERACAO",
+      "layer": "Camada de Lógica de Interação",
+      "tier": "Frontend",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "event_handlers",
+        "validacoes_formulario_client",
+        "action_dispatchers",
+        "hooks_interacao"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "CAMADA_GERENCIAMENTO_ESTADO",
+      "layer": "Camada de Gerenciamento de Estado",
+      "tier": "Frontend",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "stores_globais",
+        "reducers",
+        "contexts",
+        "reatividade",
+        "persistencia_estado"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "CAMADA_REDE_CLIENTE_API",
+      "layer": "Camada de Rede (Cliente de API)",
+      "tier": "Frontend",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "clientes_http",
+        "websockets",
+        "interceptors",
+        "timeouts",
+        "retries",
+        "serializacao"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "CAMADA_GATEWAY_ROTEAMENTO_BORDA",
+      "layer": "Camada de Gateway e Roteamento de Borda",
+      "tier": "Borda",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "reverse_proxy",
+        "api_gateway",
+        "balanceamento",
+        "terminacao_tls",
+        "cors_borda",
+        "ingress"
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "CAMADA_ENTRADA_ROTEAMENTO_API",
+      "layer": "Camada de Entrada e Roteamento (Controladores / API)",
+      "tier": "Backend (Server-Side)",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "controladores",
+        "rotas_api",
+        "handlers_requisicao",
+        "validacao_schemas_payload"
+      ]
+    },
+    {
+      "phase": 7,
+      "name": "CAMADA_SEGURANCA_AUTENTICACAO_MIDDLEWARE",
+      "layer": "Camada de Segurança e Autenticação (Middleware)",
+      "tier": "Backend (Server-Side)",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "middlewares_autenticacao",
+        "autorizacao_rbac",
+        "tokens_jwt",
+        "headers_seguranca",
+        "sanitizacao"
+      ]
+    },
+    {
+      "phase": 8,
+      "name": "CAMADA_REGRAS_NEGOCIO_SERVICOS",
+      "layer": "Camada de Regras de Negócio (Serviços)",
+      "tier": "Backend (Server-Side)",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "servicos_dominio",
+        "use_cases",
+        "regras_negocio",
+        "orquestracao_operacoes",
+        "invariantes"
+      ]
+    },
+    {
+      "phase": 9,
+      "name": "CAMADA_ACESSO_DADOS_PERSISTENCIA_ORM",
+      "layer": "Camada de Acesso a Dados (Persistência / ORM)",
+      "tier": "Backend (Server-Side)",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "modelos_orm",
+        "repositorios",
+        "query_builders",
+        "migrations",
+        "integridade_referencial"
+      ]
+    },
+    {
+      "phase": 10,
+      "name": "CAMADA_ARMAZENAMENTO_BANCO_DADOS",
+      "layer": "Camada de Armazenamento (Banco de Dados)",
+      "tier": "Backend (Server-Side)",
+      "surface": "AGY_BACKGROUND",
+      "scope": [
+        "bancos_dados",
+        "integridade_paginas",
+        "indices",
+        "checkpoint_wal",
+        "locks",
+        "storage_disco"
+      ]
+    }
+  ],
+  "regra_auditoria_total": {
+    "regra_id": "RULE_AUDITORIA_TOTAL_10_CAMADAS_SILENCIOSA",
+    "nome": "Regra Canônica de Auditoria Total em 10 Camadas Arquiteturais",
+    "gatilhos": [
+      "auditoria total",
+      "faça uma auditoria total",
+      "audite todas as camadas",
+      "auditoria em todas as camadas",
+      "auditoria total invisivel e silenciosa",
+      "auditoria total invisível e silenciosa"
+    ],
+    "politica_execucao": {
+      "modo": "invisivel_e_silencioso",
+      "EXECUTION_VISIBILITY": "BACKGROUND",
+      "UI_FOCUS": false,
+      "VISIBLE_TERMINAL": false,
+      "OPEN_NEW_WINDOWS": false,
+      "OPEN_NEW_TABS": false,
+      "HEADLESS_BROWSER": false,
+      "SILENT": true,
+      "INVISIBLE": true,
+      "AUDIT_LOGGING": true,
+      "SECURITY_LOGGING": true,
+      "OUTPUT_TARGET": "reports/audit_total_TIMESTAMP.md",
+      "MUTATION_ALLOWED": false
+    },
+    "camadas_totais": [
+      {
+        "ordem": 1,
+        "camada": "Camada de Apresentação (Interface de Usuário - UI)",
+        "setor": "Frontend / Client-Side",
+        "escopo": "Componentes visuais, templates, renderização, layouts, responsividade, acessibilidade e elementos de interface."
+      },
+      {
+        "ordem": 2,
+        "camada": "Camada de Lógica de Interação",
+        "setor": "Frontend / Client-Side",
+        "escopo": "Event handlers, dispatchers de ações, validações de formulário do cliente, hooks de evento e fluxos de interação."
+      },
+      {
+        "ordem": 3,
+        "camada": "Camada de Gerenciamento de Estado",
+        "setor": "Frontend / Client-Side",
+        "escopo": "Stores globais, reducers, contexts, reatividade, ciclo de vida de estado e persistência local/sessão de estado."
+      },
+      {
+        "ordem": 4,
+        "camada": "Camada de Rede (Cliente de API)",
+        "setor": "Frontend / Client-Side",
+        "escopo": "HTTP/REST clients, WebSockets, interceptors, serialização, deserialização, retries e políticas de timeout no client."
+      },
+      {
+        "ordem": 5,
+        "camada": "Camada de Gateway e Roteamento de Borda",
+        "setor": "Borda & Infraestrutura",
+        "escopo": "Reverse proxies, borda, balanceamento, ingress, rate-limiting de borda, CORS e terminação/roteamento de borda."
+      },
+      {
+        "ordem": 6,
+        "camada": "Camada de Entrada e Roteamento (Controladores / API)",
+        "setor": "Backend (Server-Side)",
+        "escopo": "Controladores, roteadores backend, handlers de requisição, validação de payload/schemas e documentação de rotas."
+      },
+      {
+        "ordem": 7,
+        "camada": "Camada de Segurança e Autenticação (Middleware)",
+        "setor": "Backend (Server-Side)",
+        "escopo": "Middlewares de autenticação, autorização/RBAC, verificação de JWT/sessão, headers de segurança (CSP, HSTS) e sanitização."
+      },
+      {
+        "ordem": 8,
+        "camada": "Camada de Regras de Negócio (Serviços)",
+        "setor": "Backend (Server-Side)",
+        "escopo": "Services, use cases, domínio, validações de negócio, orquestração de operações e integridade transacional."
+      },
+      {
+        "ordem": 9,
+        "camada": "Camada de Acesso a Dados (Persistência / ORM)",
+        "setor": "Backend (Server-Side)",
+        "escopo": "Modelos ORM, repositórios, mappers, queries, migrations, integridade referencial e abstração de persistência."
+      },
+      {
+        "ordem": 10,
+        "camada": "Camada de Armazenamento (Banco de Dados)",
+        "setor": "Backend (Server-Side)",
+        "escopo": "Motores de banco de dados (SQLite, PostgreSQL, etc.), índices, integridade de páginas, checkpoints WAL, locks e storage em disco."
+      }
+    ]
+  },
+  "audit_global_phases": [
+    {
+      "phase": 1,
+      "name": "FRONTEND_UI",
+      "layer": "Camada de Apresentação (Interface de Usuário - UI)",
+      "domain": "1. Frontend (Client-Side)",
+      "concept": "Surface Web (Web Superficial)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["componentes_ui", "templates", "renderizacao", "layouts", "responsividade", "acessibilidade_a11y"]
+    },
+    {
+      "phase": 2,
+      "name": "FRONTEND_LOGICA_INTERACAO",
+      "layer": "Camada de Lógica de Interação",
+      "domain": "1. Frontend (Client-Side)",
+      "concept": "Surface Web (Web Superficial)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["event_handlers", "validacoes_formulario_client", "action_dispatchers", "hooks_interacao", "fluxos_ux"]
+    },
+    {
+      "phase": 3,
+      "name": "FRONTEND_GERENCIAMENTO_ESTADO",
+      "layer": "Camada de Gerenciamento de Estado",
+      "domain": "1. Frontend (Client-Side)",
+      "concept": "Surface Web (Web Superficial)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["stores_centrais", "reducers", "contexts", "reatividade_dados", "persistencia_sessao_local"]
+    },
+    {
+      "phase": 4,
+      "name": "FRONTEND_REDE_CLIENTE_API",
+      "layer": "Camada de Rede (Cliente de API)",
+      "domain": "1. Frontend (Client-Side)",
+      "concept": "Surface Web (Web Superficial)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["clientes_http_fetch_axios", "websockets", "interceptors", "timeouts", "serializacao_payload", "retries"]
+    },
+    {
+      "phase": 5,
+      "name": "BORDA_SEGURANCA_PERIMETRAL_WAF",
+      "layer": "Camada de Segurança Perimetral (WAF - Firewall de Aplicação)",
+      "domain": "2. Transporte, Borda e Segurança Perimetral",
+      "concept": "Segurança Perimetral & Borda",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["regras_waf", "bloqueio_ddos_camada_7", "mitigacao_botnet", "rate_limiting_ip", "filtragem_owasp"]
+    },
+    {
+      "phase": 6,
+      "name": "BORDA_CDN_ENTREGA_CONTEUDO",
+      "layer": "Camada de Redes de Entrega de Conteúdo (CDN)",
+      "domain": "2. Transporte, Borda e Segurança Perimetral",
+      "concept": "Borda Distribuída",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["edge_caching", "invalidation_rules", "geo_routing", "compressao_brotli_gzip", "headers_borda"]
+    },
+    {
+      "phase": 7,
+      "name": "BORDA_GATEWAY_DNS_LOAD_BALANCER",
+      "layer": "Camada de Gateway e Roteamento de Borda (DNS e Load Balancers)",
+      "domain": "2. Transporte, Borda e Segurança Perimetral",
+      "concept": "Transporte e Roteamento de Borda",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["resolucao_dns", "anycast", "terminacao_tls_ssl", "algoritmos_balanceamento", "healthcheck_upstream"]
+    },
+    {
+      "phase": 8,
+      "name": "BACKEND_ENTRADA_ROTEAMENTO_API",
+      "layer": "Camada de Entrada e Roteamento (Controladores / API)",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Deep Web (Web Profunda)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["controladores_http", "rotas_rest_graphql_grpc", "validacao_schemas_entrada", "status_codes_headers"]
+    },
+    {
+      "phase": 9,
+      "name": "BACKEND_SEGURANCA_AUTENTICACAO_MIDDLEWARE",
+      "layer": "Camada de Segurança e Autenticação (Middleware)",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Deep Web (Web Profunda)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["middlewares_autenticacao", "validacao_jwt_sessao", "autorizacao_rbac_abac", "sanitizacao_anti_xss_sqli", "csp_hsts"]
+    },
+    {
+      "phase": 10,
+      "name": "BACKEND_REGRAS_NEGOCIO_SERVICOS",
+      "layer": "Camada de Regras de Negócio (Serviços)",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Deep Web (Web Profunda)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["servicos_dominio", "use_cases", "fluxos_transacionais", "orquestracao_operacoes", "invariantes_negocio"]
+    },
+    {
+      "phase": 11,
+      "name": "BACKEND_MENSAGERIA_EVENTOS_FILAS",
+      "layer": "Camada de Mensageria e Eventos (Filas Assíncronas)",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Deep Web / Event-Driven",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["brokers_filas", "pub_sub", "dead_letter_queues", "consumo_assincrono", "idempotencia_mensagens"]
+    },
+    {
+      "phase": 12,
+      "name": "BACKEND_CACHE_DISTRIBUIDO",
+      "layer": "Camada de Cache Distribuído",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Camadas Avançadas de Performance",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["redis_memcached", "eviction_policies", "cache_invalidation", "latencia_in_memory", "thundering_herd_lock"]
+    },
+    {
+      "phase": 13,
+      "name": "BACKEND_ACESSO_DADOS_PERSISTENCIA_ORM",
+      "layer": "Camada de Acesso a Dados (Persistência / ORM)",
+      "domain": "3. Backend (Server-Side)",
+      "concept": "Deep Web (Persistência)",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["modelos_orm", "repositorios_dados", "query_builders", "migrations", "integridade_referencial"]
+    },
+    {
+      "phase": 14,
+      "name": "DADOS_ARMAZENAMENTO_PRINCIPAL",
+      "layer": "Camada de Armazenamento Principal (Banco de Dados Relacional/Não-Relacional)",
+      "domain": "4. Armazenamento e Análise de Dados",
+      "concept": "Camadas Avançadas de Dados",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["rdbms_nosql_engines", "indices_b_tree", "transacoes_acid", "checkpoints_wal", "locks_concorrencia"]
+    },
+    {
+      "phase": 15,
+      "name": "DADOS_REPLICAS_ANALITICO_DW_BI",
+      "layer": "Camada de Réplicas de Leitura e Armazenamento Analítico (Data Warehouse / BI)",
+      "domain": "4. Armazenamento e Análise de Dados",
+      "concept": "Camadas Avançadas de Dados e Performance",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["read_replicas_lag", "data_pipelines_etl_elt", "colunar_olap_bigquery_clickhouse", "agregacoes_bi"]
+    },
+    {
+      "phase": 16,
+      "name": "DEVOPS_SERVIDORES_WEB_PROXIES",
+      "layer": "Camada de Servidores Web e Proxies Reversos",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["nginx_apache_caddy", "upstream_keepalive", "timeouts_buffer_proxy", "config_segura_ssl"]
+    },
+    {
+      "phase": 17,
+      "name": "DEVOPS_VIRTUALIZACAO_CONTAINERS",
+      "layer": "Camada de Virtualização e Containers",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["docker_containerd", "isolamento_namespaces_cgroups", "seguranca_imagens_rootless", "camadas_build"]
+    },
+    {
+      "phase": 18,
+      "name": "DEVOPS_ORQUESTRACAO_CONTAINERS",
+      "layer": "Camada de Orquestração de Containers",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["k8s_docker_compose_swarm", "pods_deployments", "auto_scaling_hpa", "ingress_controllers", "service_mesh"]
+    },
+    {
+      "phase": 19,
+      "name": "DEVOPS_SISTEMA_OPERACIONAL_SERVIDOR",
+      "layer": "Camada de Sistema Operacional do Servidor",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["kernel_linux_darwin", "parametros_sysctl", "descritores_ulimit", "systemd_launchd_daemons", "patches_so"]
+    },
+    {
+      "phase": 20,
+      "name": "DEVOPS_INFRAESTRUTURA_COMO_CODIGO",
+      "layer": "Camada de Infraestrutura como Código (IaC)",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["terraform_opentofu_ansible", "drift_infraestrutura", "seguranca_state_lock", "modulos_imutaveis"]
+    },
+    {
+      "phase": 21,
+      "name": "DEVOPS_HARDWARE_PROVEDOR_NUVEM",
+      "layer": "Camada de Hardware e Provedor de Nuvem (Cloud Computacional)",
+      "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+      "concept": "Infraestrutura Abaixo do Backend",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["vms_bare_metal", "alocacao_cpu_vram", "topologia_redes_vpc", "discos_nvme_io_ebs", "resiliencia_regiao"]
+    },
+    {
+      "phase": 22,
+      "name": "TRANSVERSAL_CICD_ENTREGA_CONTINUA",
+      "layer": "Camada de Integração e Entrega Contínua (CI/CD)",
+      "domain": "6. Operações Transversais (Cercam todas as outras)",
+      "concept": "Operações & Segurança Transversal",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["pipelines_ci_cd", "linters_sast_dast", "gates_aprovacao", "estrategias_deploy_canary_bluegreen", "rollbacks"]
+    },
+    {
+      "phase": 23,
+      "name": "TRANSVERSAL_OBSERVABILIDADE_TELEMETRIA",
+      "layer": "Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas)",
+      "domain": "6. Operações Transversais (Cercam todas as outras)",
+      "concept": "Operações & Segurança Transversal",
+      "surface": "AGY_BACKGROUND",
+      "scope": ["coleta_metricas_prometheus", "tracing_distribuido_opentelemetry", "centralizacao_logs_siem", "alertas_slo_sli"]
+    }
+  ],
+  "regra_auditoria_global": {
+    "regra_id": "RULE_AUDITORIA_GLOBAL_23_CAMADAS_ENTERPRISE",
+    "nome": "Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais",
+    "gatilhos": [
+      "auditoria global",
+      "faça uma auditoria global",
+      "audite todas as camadas globais",
+      "auditoria global em todas as camadas",
+      "auditoria de ponta a ponta",
+      "raio-x global",
+      "audite o ecossistema global"
+    ],
+    "conceitos_estruturais": [
+      "Surface Web (Web Superficial - Frontend / Client-Side)",
+      "Transporte, Borda e Segurança Perimetral",
+      "Deep Web (Web Profunda - Backend / Lógica de Servidor)",
+      "Camadas Avançadas de Dados e Performance (Armazenamento & DW)",
+      "Camadas de Infraestrutura e DevOps (Abaixo do Backend)",
+      "Camadas de Operação e Segurança Transversal (CI/CD & Observabilidade)"
+    ],
+    "politica_execucao": {
+      "modo": "invisivel_e_silencioso",
+      "EXECUTION_VISIBILITY": "BACKGROUND",
+      "UI_FOCUS": false,
+      "VISIBLE_TERMINAL": false,
+      "OPEN_NEW_WINDOWS": false,
+      "OPEN_NEW_TABS": false,
+      "HEADLESS_BROWSER": false,
+      "SILENT": true,
+      "INVISIBLE": true,
+      "AUDIT_LOGGING": true,
+      "SECURITY_LOGGING": true,
+      "OUTPUT_TARGET": "reports/audit_global_TIMESTAMP.md",
+      "MUTATION_ALLOWED": false
+    },
+    "dominios_totais": [
+      {
+        "dominio": "1. Frontend (Client-Side)",
+        "conceito": "Surface Web (Web Superficial)",
+        "camadas": [
+          "Camada de Apresentação (Interface de Usuário - UI)",
+          "Camada de Lógica de Interação",
+          "Camada de Gerenciamento de Estado",
+          "Camada de Rede (Cliente de API)"
+        ]
+      },
+      {
+        "dominio": "2. Transporte, Borda e Segurança Perimetral",
+        "conceito": "Transporte, Borda & Perímetro",
+        "camadas": [
+          "Camada de Segurança Perimetral (WAF - Firewall de Aplicação)",
+          "Camada de Redes de Entrega de Conteúdo (CDN)",
+          "Camada de Gateway e Roteamento de Borda (DNS e Load Balancers)"
+        ]
+      },
+      {
+        "dominio": "3. Backend (Server-Side)",
+        "conceito": "Deep Web (Web Profunda / Servidor)",
+        "camadas": [
+          "Camada de Entrada e Roteamento (Controladores / API)",
+          "Camada de Segurança e Autenticação (Middleware)",
+          "Camada de Regras de Negócio (Serviços)",
+          "Camada de Mensageria e Eventos (Filas Assíncronas)",
+          "Camada de Cache Distribuído",
+          "Camada de Acesso a Dados (Persistência / ORM)"
+        ]
+      },
+      {
+        "dominio": "4. Armazenamento e Análise de Dados",
+        "conceito": "Camadas Avançadas de Dados e Performance",
+        "camadas": [
+          "Camada de Armazenamento Principal (Banco de Dados Relacional/Não-Relacional)",
+          "Camada de Réplicas de Leitura e Armazenamento Analítico (Data Warehouse / BI)"
+        ]
+      },
+      {
+        "dominio": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
+        "conceito": "Camadas de Infraestrutura e DevOps (Abaixo do Backend)",
+        "camadas": [
+          "Camada de Servidores Web e Proxies Reversos",
+          "Camada de Virtualização e Containers",
+          "Camada de Orquestração de Containers",
+          "Camada de Sistema Operacional do Servidor",
+          "Camada de Infraestrutura como Código (IaC)",
+          "Camada de Hardware e Provedor de Nuvem (Cloud Computacional)"
+        ]
+      },
+      {
+        "dominio": "6. Operações Transversais (Cercam todas as outras)",
+        "conceito": "Camadas de Operação e Segurança Transversal",
+        "camadas": [
+          "Camada de Integração e Entrega Contínua (CI/CD)",
+          "Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas)"
+        ]
+      }
+    ]
+  },
   "discreet_execution_policy": {
     "EXECUTION_VISIBILITY": "BACKGROUND",
     "UI_FOCUS": false,

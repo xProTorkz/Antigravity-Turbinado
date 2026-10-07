@@ -1718,7 +1718,14 @@
       "sem foco",
       "discreto",
       "segundo plano",
-      "opera nas sombras"
+      "opera nas sombras",
+      "invisivel",
+      "invisível",
+      "silenciosa",
+      "de forma invisivel e silenciosa",
+      "de forma invisível e silenciosa",
+      "auditoria total",
+      "auditoria global"
     ],
     "policy": {
       "EXECUTION_VISIBILITY": "BACKGROUND",

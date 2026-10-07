@@ -468,17 +468,66 @@ Módulo especializado em auditoria de segurança perimétrica, verificação de 
 Pipelines multi-comandos orientados a DAG que encadeiam diagnósticos e auditorias automáticas através de gírias e frases naturais:
 
 #### 1. `auditoria-total` / `"auditoria total"` / `"varredura completa"`
-Executa a suíte perimétrica completa de hardening e conformidade:
-1. **Varredura de Rede**: Identificação de portas abertas locais (`scan-ports-deep`).
-2. **Inspeção de Stack Web**: Checagem de cabeçalhos HTTP e vazamento de versão (`audit-web-stack`).
-3. **Fuzzing Defensivo de Rotas**: Caça a rotas sensíveis e arquivos de config expostos (`fuzz-routes-fast`).
-4. **Varredura de Segredos**: Análise profunda contra credenciais no código (`audit-secrets-deep`).
-5. **Auditoria SAST de SQL**: Verificação de consultas e sanitização no código (`audit-sql-sanitization`).
-6. **Caça a Webshells**: Busca por códigos ofuscados e backdoors (`audit-hidden-webshells`).
-7. **Hardening de Privilégios**: Verificação de SUID, LaunchDaemons e sudoers (`audit-privesc-vectors`).
-8. **Recibo de Conclusão**: Relatório estruturado de status e conformidade.
+**Regra Canônica de Auditoria Total em 10 Camadas Arquiteturais (Execução Invisível e Silenciosa):**  
+Quando solicitada a *"auditoria total"*, a verificação é compulsoriamente executada cobrindo todas as 10 camadas arquiteturais completas de ponta a ponta, operando de forma invisível e silenciosa em segundo plano (`AGY_BACKGROUND`, `UI_FOCUS=false`, `VISIBLE_TERMINAL=false`, `BACKGROUND=true`, supressão de ruído no terminal e sem foco/troca de janelas ou abas):
 
-#### 2. `va-mais-a-fundo` / `"va mais a fundo"` / `"vai mais a fundo"` / `"mais a fundo"`
+* **Frontend & Borda:**
+  1. **Camada de Apresentação (Interface de Usuário - UI):** Componentes visuais, templates, renderização, layouts, responsividade, formulários e acessibilidade (a11y).
+  2. **Camada de Lógica de Interação:** Event handlers, dispatchers de ações, validações de formulário do cliente, hooks de evento e fluxos de UX.
+  3. **Camada de Gerenciamento de Estado:** Stores centralizadas, reducers, contexts, reatividade de dados, ciclo de vida de estado e persistência local/sessão.
+  4. **Camada de Rede (Cliente de API):** Clientes HTTP/Fetch/Axios, WebSockets, interceptors, políticas de timeout, serialização e retries com backoff.
+  5. **Camada de Gateway e Roteamento de Borda:** Reverse proxies, API Gateway, balanceamento de carga, terminação TLS, CORS de borda e regras de ingress.
+* **Backend (Server-Side):**
+  6. **Camada de Entrada e Roteamento (Controladores / API):** Controladores HTTP, rotas REST/GraphQL, validação de payload/schemas e documentação de rotas.
+  7. **Camada de Segurança e Autenticação (Middleware):** Middlewares de autenticação, verificação JWT/sessão, autorização (RBAC/ABAC), sanitização anti-XSS/SQLi e headers de segurança (CSP/HSTS).
+  8. **Camada de Regras de Negócio (Serviços):** Serviços de domínio, use cases, fluxos transacionais, orquestração de operações e invariantes de negócio.
+  9. **Camada de Acesso a Dados (Persistência / ORM):** Mapeamento objeto-relacional (ORM), repositórios, query builders, migrations e integridade referencial.
+  10. **Camada de Armazenamento (Banco de Dados):** Motores de bancos de dados (SQLite, PostgreSQL, MySQL), integridade física de arquivos/páginas, checkpoints WAL, locks e latência de disco.
+
+* **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_total_TIMESTAMP.md`).
+
+#### 2. `auditoria-global` / `"auditoria global"` / `"//audit-global"` / `"/auditoria-global"` / `"raio-x global"`
+**Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais (Execução Invisível e Silenciosa):**  
+Quando solicitada a *"auditoria global"*, o sistema executa compulsoriamente a varredura profunda de ponta a ponta sobre os 6 domínios do ecossistema e suas 23 camadas arquiteturais estruturadas, operando de forma invisível e silenciosa em segundo plano (`AGY_BACKGROUND`, `UI_FOCUS=false`, `VISIBLE_TERMINAL=false`, `BACKGROUND=true`, supressão de ruído no terminal e sem foco/troca de janelas ou abas):
+
+* **Domínio 1: Frontend (Client-Side) [Surface Web (Web Superficial)]:**
+  1. **Camada de Apresentação (Interface de Usuário - UI):** Componentes visuais, templates, layouts, responsividade, formulários e acessibilidade (a11y).
+  2. **Camada de Lógica de Interação:** Event handlers, dispatchers de ações, validações de formulário do cliente, hooks de evento e fluxos de UX.
+  3. **Camada de Gerenciamento de Estado:** Stores centralizadas, reducers, contexts, reatividade de dados, ciclo de vida de estado e persistência local/sessão.
+  4. **Camada de Rede (Cliente de API):** Clientes HTTP/Fetch/Axios, WebSockets, interceptors, políticas de timeout, serialização e retries com backoff.
+
+* **Domínio 2: Transporte, Borda e Segurança Perimetral:**
+  5. **Camada de Segurança Perimetral (WAF - Firewall de Aplicação):** Filtragem de pacotes na borda, mitigação DDoS/OWASP, inspeção de cabeçalhos e regras perimétricas.
+  6. **Camada de Redes de Entrega de Conteúdo (CDN):** Cache geodistribuído de ativos estáticos, edge caching, políticas de expiração TTL e otimização de borda.
+  7. **Camada de Gateway e Roteamento de Borda (DNS e Load Balancers):** Resolução de nomes DNS, balanceadores de carga L4/L7, terminação TLS, ingress e roteamento perimétrico.
+
+* **Domínio 3: Backend (Server-Side) [Deep Web (Web Profunda / Servidor)]:**
+  8. **Camada de Entrada e Roteamento (Controladores / API):** Controladores HTTP, rotas REST/GraphQL, validação de payload/schemas e documentação de rotas.
+  9. **Camada de Segurança e Autenticação (Middleware):** Middlewares de autenticação, validação JWT/sessão, autorização (RBAC/ABAC), sanitização anti-XSS/SQLi e headers CSP/HSTS.
+  10. **Camada de Regras de Negócio (Serviços):** Serviços de domínio, use cases, fluxos transacionais, orquestração de operações e invariantes de negócio.
+  11. **Camada de Mensageria e Eventos (Filas Assíncronas):** Brokers de mensageria (Redis, RabbitMQ, Kafka), jobs em segundo plano, dead-letter queues e processamento assíncrono.
+  12. **Camada de Cache Distribuído:** Cache de aplicação (Redis/Memcached), cache de sessão, invalidação de chaves e otimização de latência em leitura.
+  13. **Camada de Acesso a Dados (Persistência / ORM):** Mapeamento objeto-relacional (ORM), repositórios, query builders, migrations e integridade referencial.
+
+* **Domínio 4: Armazenamento e Análise de Dados [Camadas Avançadas de Dados e Performance]:**
+  14. **Camada de Armazenamento Principal (Banco de Dados Relacional/Não-Relacional):** Motores SQL (PostgreSQL, MySQL, SQLite) e NoSQL (MongoDB), integridade física de arquivos/páginas, checkpoints WAL, locks e latência de disco.
+  15. **Camada de Réplicas de Leitura e Armazenamento Analítico (Data Warehouse / BI):** Réplicas de leitura para alívio de concorrência, data lakes, pipelines analíticos e bancos analíticos (ClickHouse, BigQuery).
+
+* **Domínio 5: Hospedagem, Virtualização e Infraestrutura (DevOps) [Abaixo do Backend]:**
+  16. **Camada de Servidores Web e Proxies Reversos:** Nginx, Apache, Caddy, terminação reversa local, buffers e multiplexação HTTP/2 e HTTP/3.
+  17. **Camada de Virtualização e Containers:** Runtimes Docker/Podman, imagens base, camadas de container, isolamento de namespaces e CGroups.
+  18. **Camada de Orquestração de Containers:** Clusters Kubernetes/Docker Compose, réplicas, service mesh, autoscaling (HPA) e health checks (liveness/readiness).
+  19. **Camada de Sistema Operacional do Servidor:** Kernel Linux/Darwin, patches de segurança, gerenciamento de memória swap, limites ulimits e systemd/launchd.
+  20. **Camada de Infraestrutura como Código (IaC):** Manifestos Terraform, Ansible, scripts de automação, inventário imutável e drift de configuração.
+  21. **Camada de Hardware e Provedor de Nuvem (Cloud Computacional):** Instâncias de nuvem (AWS, GCP, VPS Hostinger), CPU, memória RAM física, throughput de I/O em disco (IOPS) e conectividade de rede física.
+
+* **Domínio 6: Operações Transversais (Cercam todas as outras) [Camadas de Operação e Segurança Transversal]:**
+  22. **Camada de Integração e Entrega Contínua (CI/CD):** Pipelines de build automatizado, testes unitários contínuos, scans de SAST/DAST e esteiras de release seguro.
+  23. **Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas):** Coleta de métricas (Prometheus), tracing distribuído (OpenTelemetry), centralização de logs (SIEM, ELK, Grafana Loki) e alertas de SLO/SLI.
+
+* **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_global_TIMESTAMP.md`).
+
+#### 3. `va-mais-a-fundo` / `"va mais a fundo"` / `"vai mais a fundo"` / `"mais a fundo"`
 Executa a investigação técnica de baixo nível em máxima profundidade:
 1. **Dissecação de Memória**: Mapeia consumo residente (RSS) e dirty pages de processos ativos.
 2. **Caça a FDs Fantasma**: Localiza descritores unlinked que retêm espaço em disco (`fd-unlinked-hunter`).
