@@ -321,11 +321,12 @@
           "descricao": "Ferramentas Node.js para sites com JavaScript dinâmico (SPAs, React, Next.js)",
           "website_scraper": "npx website-scraper --url https://[SITE] --directory ./site-clonado",
           "single_file": "npx single-file-cli https://[SITE] --output ./pagina.html (salva tudo em 1 arquivo HTML autocontido)",
+          "single_file_chrome_headless": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-args='[\"--no-sandbox\", \"--disable-gpu\"]' https://[SITE] index.html (executa Chrome headless real do Mac, renderiza SPAs React/Vue e grava DOM final)",
           "puppeteer_screenshot": "npx puppeteer-cli screenshot https://[SITE] --full-page --output screenshot.png",
           "puppeteer_pdf": "npx puppeteer-cli pdf https://[SITE] --output ./pagina.pdf",
           "playwright_screenshot": "npx playwright screenshot https://[SITE] --full-page output.png",
           "playwright_pdf": "npx playwright pdf https://[SITE] ./output.pdf",
-          "observacao": "Use Node.js para sites com React/Vue/Angular que não funcionam com wget simples"
+          "observacao": "Use single-file com o binário nativo do Chrome (/Applications/Google Chrome.app) para capturar SPAs com React/Vue que dependem de renderização DOM"
         },
         "categoria_3_python_automacao": {
           "descricao": "Frameworks Python para scraping e download avançado",
