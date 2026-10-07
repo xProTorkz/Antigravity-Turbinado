@@ -1,11 +1,11 @@
 {
-  "versao": "3.8",
+  "versao": "3.9",
   "modulo": "sentinela_lexicon",
   "descricao": "Dicionário canônico de abstração léxica, governança operacional, menu de comandos rápidos, red teaming defensivo e automação SRE/DevOps do ecossistema Sentinela / Antigravity 2.0.",
   "mapeamento": {
     "auditoria_completa": "Executar auditoria técnica completa de ambiente, permissões, processos e repositórios locais.",
-    "auditoria_total": "Executar auditoria total nas 10 camadas arquiteturais (UI, Lógica de Interação, Gerenciamento de Estado, Cliente de API/Rede, Gateway e Roteamento de Borda, Controladores/Entrada de API, Segurança e Middleware de Autenticação, Serviços e Regras de Negócio, Persistência e ORM, e Armazenamento/Banco de Dados) operando de forma invisível e silenciosa em segundo plano.",
-    "auditoria_global": "Executar auditoria global em 6 grandes domínios (Frontend [Surface Web], Transporte/Borda, Backend [Deep Web], Armazenamento & Análise de Dados, Hospedagem/Virtualização/DevOps [Abaixo do Backend], e Operações Transversais [CI/CD & Observabilidade]) cobrindo compulsoriamente 23 camadas arquiteturais estruturadas de forma invisível e silenciosa em segundo plano.",
+    "auditoria_total": "Executar auditoria total nas 10 camadas arquiteturais (UI, Lógica de Interação, Gerenciamento de Estado, Cliente de API/Rede, Gateway e Roteamento de Borda, Controladores/Entrada de API, Segurança e Middleware de Autenticação, Serviços e Regras de Negócio, Persistência e ORM, e Armazenamento/Banco de Dados), integrando compulsoriamente na camada de UI a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade, operando de forma invisível e silenciosa em segundo plano.",
+    "auditoria_global": "Executar auditoria global em 6 grandes domínios (Frontend [Surface Web], Transporte/Borda, Backend [Deep Web], Armazenamento & Análise de Dados, Hospedagem/Virtualização/DevOps [Abaixo do Backend], e Operações Transversais [CI/CD & Observabilidade]) cobrindo compulsoriamente 23 camadas arquiteturais estruturadas, integrando compulsoriamente no domínio Frontend a suíte DevTools de depuração DOM e desmascaramento para análise irrestrita de interface.",
     "estabilidade_servico": "Verificar a integridade, latência e estabilidade de serviços e endpoints ativos.",
     "otimizar_sharkbot": "Inspecionar e otimizar rotinas de automação e processamento de webhooks do módulo SharkBot.",
     "validar_auth_fallback": "Validar rotinas de fallback e tratamento de exceções para autenticação offline.",
@@ -99,7 +99,15 @@
     "espelho": "Alias de espelhamento e recriação: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
     "replicar": "Alias de espelhamento e recriação: baixar recursivamente o frontend via wget na pasta indicada em /Users/lucasvinicius/projetos/<NOME_PASTA> e abrir no navegador.",
     "atualizar_sentinela": "Executar o atualizador canônico do Sentinela: puxar a versão mais recente do repositório Antigravity-Turbinado via git pull origin main e sincronizar o dicionário léxico e as skills do Sentinela.",
-    "baixa_atualizacao_sentinela": "Gatilho de atualização: sincronizar a versão mais recente do Antigravity Turbinado, dicionário léxico e skills do Sentinela."
+    "baixa_atualizacao_sentinela": "Gatilho de atualização: sincronizar a versão mais recente do Antigravity Turbinado, dicionário léxico e skills do Sentinela.",
+    "auditoria_normal": "Executar auditoria operacional padrão cobrindo código, ambiente e incluindo compulsoriamente a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade de formulários/interface.",
+    "inspecao_interface_irrestrita": "Executar script unificado de inspeção irrestrita de interface no DOM: remove filtros visuais e de segurança CSS (-webkit-text-security, blur), converte inputs confidenciais (password -> text), remove bloqueios de interação (disabled, readonly), elimina elementos bloqueadores invisíveis (overlays/divs flutuantes), extrai metadados em cache (.value, .innerText) e inspeciona atributos de acessibilidade (aria-labels, role) para auditoria completa de frontend.",
+    "desmascarar_inputs_senha": "Converter inputs type=\"password\" para type=\"text\" para inspeção visual imediata e análise de conformidade de formulários.",
+    "remover_travas_css_visual": "Remover propriedades visuais restritivas CSS, filtros de desfoque (blur) e propriedades text-security de todos os elementos.",
+    "extrair_valores_cache_dom": "Varrer e imprimir no Console todos os valores reais armazenados na árvore DOM (.value, getAttribute(\"value\"), .innerText).",
+    "destravar_estados_elementos": "Remover atributos de bloqueio disabled e readonly de inputs, selects, textareas e botões.",
+    "remover_overlays_invisiveis": "Localizar e neutralizar divs flutuantes transparentes ou camadas de bloqueio de ponteiro que impedem clique ou inspeção.",
+    "varrer_acessibilidade_aria": "Extrair e tabular no Console textos alternativos ocultos em atributos de acessibilidade (aria-label, aria-description, title, alt)."
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [
@@ -176,7 +184,8 @@
       "auditoria_global",
       "verificar_permissoes",
       "otimizar_sqlite",
-      "higienizar_logs"
+      "higienizar_logs",
+      "auditoria_normal"
     ],
     "versionamento_e_git": [
       "sincronizar_estruturas",
@@ -219,7 +228,9 @@
       "criar_backup_git_bundle",
       "auditar_vazamento_fd_open_files",
       "auditar_rotas_rede_kernel",
-      "limpar_clipboard_sensivel"
+      "limpar_clipboard_sensivel",
+      "auditoria_normal",
+      "inspecao_interface_irrestrita"
     ],
     "espelhamento_e_download_estatico": [
       "espelhamento_frontend_estatico",
@@ -231,6 +242,15 @@
     "atualizacao_e_sincronizacao": [
       "atualizar_sentinela",
       "baixa_atualizacao_sentinela"
+    ],
+    "inspecao_e_depuracao_dom": [
+      "inspecao_interface_irrestrita",
+      "desmascarar_inputs_senha",
+      "remover_travas_css_visual",
+      "extrair_valores_cache_dom",
+      "destravar_estados_elementos",
+      "remover_overlays_invisiveis",
+      "varrer_acessibilidade_aria"
     ]
   },
   "aliases_linguagem": {
@@ -277,6 +297,56 @@
       "diretiva": "atualizar_sentinela",
       "execucao_material": true,
       "comando": "bash /Users/lucasvinicius/projetos/ANTIGRAVITY\\ TURBINADO/scripts/atualizar_sentinela.sh"
+    },
+    "gatilhos_auditoria_com_depuracao_dom": {
+      "termos": [
+        "auditoria normal",
+        "auditoria total",
+        "auditoria global"
+      ],
+      "gatilhos": [
+        "auditoria normal",
+        "auditoria total",
+        "auditoria global",
+        "faça uma auditoria normal",
+        "faça uma auditoria total",
+        "faça uma auditoria global",
+        "executar auditoria total",
+        "executar auditoria global"
+      ],
+      "diretiva": "auditoria_com_suite_depuracao_dom",
+      "execucao_material": true,
+      "inclusao_obrigatoria": "Ao executar auditorias contendo os termos auditoria normal, auditoria total ou auditoria global, incluir compulsoriamente a suíte de scripts de depuração de interface e desmascaramento de dados para análise de conformidade de frontend."
+    },
+    "inspecao_interface_irrestrita": {
+      "termos": [
+        "inspecione",
+        "faça a inspeção",
+        "faca a inspecao",
+        "faça a nova verificação",
+        "faca a nova verificacao",
+        "analise",
+        "faça a análise",
+        "faca a analise"
+      ],
+      "gatilhos": [
+        "inspecione",
+        "faça a inspeção",
+        "faca a inspecao",
+        "faça a nova verificação",
+        "faca a nova verificacao",
+        "analise",
+        "faça a análise",
+        "faca a analise",
+        "inspeção irrestrita",
+        "inspecione a interface",
+        "revelar dados ocultos",
+        "remover overlays",
+        "desmascarar campos"
+      ],
+      "diretiva": "inspecao_irrestrita_interface",
+      "execucao_material": true,
+      "script_unificado_devtools": "(() => {\n  console.group('🛡️ [SENTINELA] INSPEÇÃO IRRESTRITA DE INTERFACE & DEPURAÇÃO DOM');\n  const rel = {\n    senhasDesmascaradas: 0,\n    travasCssRemovidas: 0,\n    camposDesbloqueados: 0,\n    overlaysRemovidos: 0,\n    valoresCacheColetados: [],\n    metadadosAriaColetados: []\n  };\n\n  // 1. Desmascaramento de inputs confidenciais (password -> text)\n  document.querySelectorAll('input[type=\"password\"]').forEach((i) => {\n    i.type = 'text';\n    i.setAttribute('data-sentinela-unmasked', 'true');\n    i.style.border = '2px dashed #f59e0b';\n    rel.senhasDesmascaradas++;\n  });\n\n  // 2. Sobrescrita de regras de segurança visual CSS (blur, text-security)\n  document.querySelectorAll('*').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    let mod = false;\n    if (s.filter && s.filter !== 'none') { el.style.filter = 'none'; mod = true; }\n    if (s.webkitTextSecurity && s.webkitTextSecurity !== 'none') { el.style.webkitTextSecurity = 'none'; mod = true; }\n    if (s.textSecurity && s.textSecurity !== 'none') { el.style.textSecurity = 'none'; mod = true; }\n    if (s.userSelect === 'none') { el.style.userSelect = 'text'; mod = true; }\n    if (mod) rel.travasCssRemovidas++;\n  });\n\n  // 3. Liberação de estados de elementos (disabled / readonly)\n  document.querySelectorAll('input, select, textarea, button').forEach((el) => {\n    let d = false;\n    if (el.hasAttribute('disabled')) { el.removeAttribute('disabled'); d = true; }\n    if (el.hasAttribute('readonly')) { el.removeAttribute('readonly'); d = true; }\n    if (d) rel.camposDesbloqueados++;\n  });\n\n  // 4. Remoção de elementos bloqueadores invisíveis (Overlays transparentes)\n  document.querySelectorAll('div, section, span, aside').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    const isFixedOrAbsolute = s.position === 'fixed' || s.position === 'absolute';\n    const occupiesScreen = el.offsetWidth >= window.innerWidth * 0.8 && el.offsetHeight >= window.innerHeight * 0.8;\n    if (isFixedOrAbsolute && occupiesScreen) {\n      if (el.innerText.trim().length === 0) {\n        el.remove();\n        rel.overlaysRemovidos++;\n      } else {\n        el.style.pointerEvents = 'none';\n        rel.overlaysRemovidos++;\n      }\n    }\n  });\n\n  // 5. Varredura de propriedades em cache interno (.value, innerText)\n  document.querySelectorAll('input, select, textarea').forEach((el) => {\n    const id = el.id || el.name || el.getAttribute('placeholder') || 'anônimo';\n    const val = el.value || el.getAttribute('value') || el.innerText?.trim();\n    if (val) {\n      rel.valoresCacheColetados.push({\n        elemento: el.tagName.toLowerCase(),\n        identificador: id,\n        tipo: el.type || 'text',\n        valorReal: val\n      });\n    }\n  });\n\n  // 6. Varredura de atributos de acessibilidade (Aria-labels / Alt / Title)\n  document.querySelectorAll('[aria-label], [aria-description], [title], [alt]').forEach((el) => {\n    const txt = el.getAttribute('aria-label') || el.getAttribute('aria-description') || el.getAttribute('title') || el.getAttribute('alt');\n    if (txt) {\n      rel.metadadosAriaColetados.push({\n        tag: el.tagName.toLowerCase(),\n        identificador: el.id || el.className || 'sem-id',\n        atributo: el.hasAttribute('aria-label') ? 'aria-label' : (el.hasAttribute('title') ? 'title' : 'outros'),\n        textoOculto: txt\n      });\n    }\n  });\n\n  console.log(`✅ [1/6] Senhas desmascaradas: ${rel.senhasDesmascaradas}`);\n  console.log(`✅ [2/6] Trava(s) visuais e filtros CSS sobrescritos: ${rel.travasCssRemovidas}`);\n  console.log(`✅ [3/6] Elementos destravados (disabled/readonly): ${rel.camposDesbloqueados}`);\n  console.log(`✅ [4/6] Overlays neutralizados: ${rel.overlaysRemovidos}`);\n  console.log(`✅ [5/6] Valores em cache coletados: ${rel.valoresCacheColetados.length}`);\n  if (rel.valoresCacheColetados.length > 0) console.table(rel.valoresCacheColetados);\n  console.log(`✅ [6/6] Metadados de acessibilidade extraídos: ${rel.metadadosAriaColetados.length}`);\n  if (rel.metadadosAriaColetados.length > 0) console.table(rel.metadadosAriaColetados.slice(0, 30));\n  console.groupEnd();\n  return rel;\n})();"
     }
   }
 }
