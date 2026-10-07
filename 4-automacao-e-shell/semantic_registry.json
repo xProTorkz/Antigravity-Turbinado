@@ -3,7 +3,7 @@
   "dictionary_version": "5.1",
   "source_version": "3.2",
   "generated_at": "2026-10-06T11:21:06.763835+00:00",
-  "total_intents": 214,
+  "total_intents": 215,
   "intents": {
     "attack-ddos-sim": {
       "intent_id": "attack-ddos-sim",
@@ -29713,6 +29713,155 @@
         },
         {
           "slash_command": "/valide",
+          "slash_source": "EXPLICIT",
+          "slash_explicit": true,
+          "slash_validated": true
+        }
+      ]
+    },
+    "project-save-sync": {
+      "intent_id": "project-save-sync",
+      "domain": "system",
+      "category": "GOVERNANCE",
+      "subcategory": "git_sync",
+      "canonical_phrase": "salvar no projeto e sincronizar git",
+      "legacy_ids": [
+        "//project-save-sync",
+        "/salve-isso",
+        "/salvar-projeto",
+        "agy_cmd project-save-sync"
+      ],
+      "semantic": {
+        "verbs": [
+          "salvar",
+          "sincronizar",
+          "atualizar",
+          "subir",
+          "comitar",
+          "enviar"
+        ],
+        "objects": [
+          "projeto",
+          "branch",
+          "alteracoes",
+          "correcoes",
+          "git",
+          "repositorio"
+        ],
+        "qualifiers": [
+          "default",
+          "safe"
+        ],
+        "intensity": [
+          "normal"
+        ],
+        "quantity": [
+          "single"
+        ],
+        "scopes": [
+          "local",
+          "current_workspace"
+        ],
+        "contexts": [
+          "git",
+          "governance"
+        ],
+        "modes": [
+          "cli",
+          "chat"
+        ],
+        "negations": [],
+        "temporal": [
+          "immediate"
+        ],
+        "output_preferences": [
+          "structured"
+        ],
+        "restrictions": [
+          "no_secrets"
+        ]
+      },
+      "aliases": [
+        "salvar",
+        "salve isso",
+        "salve isso no projeto",
+        "salva no git e local",
+        "salvar projeto",
+        "atualize a branch e suba as correções",
+        "atualiza a branch e sobe as correções",
+        "suba as alterações",
+        "sobe as alterações",
+        "salve as alteracoes",
+        "salvar alteracoes",
+        "sincronizar projeto"
+      ],
+      "slang": [
+        "salve isso",
+        "salva aí",
+        "sobe tudo"
+      ],
+      "slash_commands": [
+        "/salve-isso",
+        "/salvar-projeto"
+      ],
+      "numeric_shortcuts": [
+        "14"
+      ],
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Mensagem opcional de commit/registro"
+          }
+        }
+      },
+      "target_selector": "auto_detect",
+      "preconditions": [
+        "git_repository_present"
+      ],
+      "dependencies": [],
+      "conflicts": [],
+      "excludes": [],
+      "command_target": "agy_cmd",
+      "command_template": "agy_cmd project-save-sync",
+      "risk_class": "low",
+      "destructive": false,
+      "sensitive": false,
+      "requires_confirmation": false,
+      "requires_human_gate": false,
+      "execution_policy": "SENTINELA_GATE",
+      "rollback": "git status",
+      "source_kind": "canonical_core",
+      "source_reference": "## GOVERNANÇA: SALVAMENTO AUTOMÁTICO & GIT SYNC",
+      "deprecated_forms": [],
+      "examples_positive": [
+        "salve isso",
+        "salve isso no projeto",
+        "atualize a branch e suba as correções",
+        "salvar"
+      ],
+      "examples_negative": [],
+      "side_effects": {
+        "filesystem_write": true,
+        "process_kill": false,
+        "network_change": true,
+        "config_change": false,
+        "credential_touch": false,
+        "privilege_change": false,
+        "destructive": false,
+        "reversible": true
+      },
+      "idempotency": "CONDITIONALLY_IDEMPOTENT",
+      "slash_metadata": [
+        {
+          "slash_command": "/salve-isso",
+          "slash_source": "EXPLICIT",
+          "slash_explicit": true,
+          "slash_validated": true
+        },
+        {
+          "slash_command": "/salvar-projeto",
           "slash_source": "EXPLICIT",
           "slash_explicit": true,
           "slash_validated": true

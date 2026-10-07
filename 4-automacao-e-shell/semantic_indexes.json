@@ -1,8 +1,8 @@
 {
   "version": "5.1",
-  "total_intents": 214,
-  "total_slash_commands": 351,
-  "total_aliases": 1206,
+  "total_intents": 215,
+  "total_slash_commands": 353,
+  "total_aliases": 1246,
   "numeric_index": {
     "1": "unlock-git",
     "git": "unlock-git",
@@ -27,7 +27,8 @@
     "banco": "sqlite-vacuum",
     "sqlite": "sqlite-vacuum",
     "9": "backup-quick",
-    "backup": "backup-quick"
+    "backup": "backup-quick",
+    "14": "project-save-sync"
   },
   "slash_index": {
     "/ataque-ddos": "attack-ddos-sim",
@@ -380,7 +381,9 @@
     "/refatore": "refactor-code",
     "/test-project": "test-project",
     "/testes": "test-project",
-    "/valide": "test-project"
+    "/valide": "test-project",
+    "/salve-isso": "project-save-sync",
+    "/salvar-projeto": "project-save-sync"
   },
   "alias_index": {
     "${1:-http://localhost:3000}": "inspect-headers",
@@ -1616,7 +1619,19 @@
     "valide": "test-project",
     "validação": "test-project",
     "não mexe na tela": "execution.discreet.background",
-    "nao mexe na tela": "execution.discreet.background"
+    "nao mexe na tela": "execution.discreet.background",
+    "salvar": "project-save-sync",
+    "salve isso": "project-save-sync",
+    "salve isso no projeto": "project-save-sync",
+    "salva no git e local": "project-save-sync",
+    "salvar projeto": "project-save-sync",
+    "atualize a branch e suba as correções": "project-save-sync",
+    "atualiza a branch e sobe as correções": "project-save-sync",
+    "suba as alterações": "project-save-sync",
+    "sobe as alterações": "project-save-sync",
+    "salve as alteracoes": "project-save-sync",
+    "salvar alteracoes": "project-save-sync",
+    "sincronizar projeto": "project-save-sync"
   },
   "unaccented_alias_index": {
     "${1:-http://localhost:3000}": "localhost",
@@ -2808,7 +2823,19 @@
     "faz em background": "execution.discreet.background",
     "nao mexe na minha tela": "execution.discreet.background",
     "nao troca minha janela": "execution.discreet.background",
-    "execucao discreta": "execution.discreet.background"
+    "execucao discreta": "execution.discreet.background",
+    "salvar": "project-save-sync",
+    "salve isso": "project-save-sync",
+    "salve isso no projeto": "project-save-sync",
+    "salva no git e local": "project-save-sync",
+    "salvar projeto": "project-save-sync",
+    "atualize a branch e suba as correcoes": "project-save-sync",
+    "atualiza a branch e sobe as correcoes": "project-save-sync",
+    "suba as alteracoes": "project-save-sync",
+    "sobe as alteracoes": "project-save-sync",
+    "salve as alteracoes": "project-save-sync",
+    "salvar alteracoes": "project-save-sync",
+    "sincronizar projeto": "project-save-sync"
   },
   "macro_index": {
     "audite": "audit.project.hard",

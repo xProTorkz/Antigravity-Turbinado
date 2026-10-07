@@ -34,3 +34,4 @@
 - [2026-10-07 01:34:58 UTC] feat(governance): salvar avancos no projeto e anti-duplicacao de pastas
 - [2026-10-07 01:35:10 UTC] chore(sync): salva avancos e descobertas do projeto
 - [2026-10-07 01:45:35 UTC] fix(miniapp): sincroniza caminho canonico do miniapp para pasta de projetos
+- [2026-10-07 02:14:10 UTC] chore(sync): salva avancos e descobertas do projeto
