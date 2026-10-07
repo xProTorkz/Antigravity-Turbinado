@@ -107,7 +107,16 @@
     "extrair_valores_cache_dom": "Varrer e imprimir no Console todos os valores reais armazenados na árvore DOM (.value, getAttribute(\"value\"), .innerText).",
     "destravar_estados_elementos": "Remover atributos de bloqueio disabled e readonly de inputs, selects, textareas e botões.",
     "remover_overlays_invisiveis": "Localizar e neutralizar divs flutuantes transparentes ou camadas de bloqueio de ponteiro que impedem clique ou inspeção.",
-    "varrer_acessibilidade_aria": "Extrair e tabular no Console textos alternativos ocultos em atributos de acessibilidade (aria-label, aria-description, title, alt)."
+    "varrer_acessibilidade_aria": "Extrair e tabular no Console textos alternativos ocultos em atributos de acessibilidade (aria-label, aria-description, title, alt).",
+    "scrape": "Raspagem de dados: acessar páginas web, ler o HTML e extrair informações textuais estruturadas. Sinônimos: scrap, scraping.",
+    "crawl": "Navegar automaticamente por uma árvore de links na web para mapear páginas antes do scraping. Retorna mapa de URLs encontradas.",
+    "harvest": "Coleta em massa de dados específicos na internet (e-mails, leads, preços, registros). Combina crawl + scrape em escala.",
+    "fetch": "Busca direta e pontual de um dado ou recurso específico de uma API ou servidor externo. Equivalente a um GET simples e cirúrgico.",
+    "pull": "Baixa e atualiza dados ou arquivos de um repositório ou serviço central para o ambiente local. Equivale a git pull ou sync unidirecional.",
+    "parse": "Lê um arquivo bruto (dump, JSON, CSV, HTML) e o traduz em estrutura compreensível para o próximo processamento.",
+    "sync": "Compara origem e destino, copiando apenas o que mudou para manter ambos os lados idênticos. Diff incremental bidirecional.",
+    "listar_registros": "Listar registros ou arquivos disponíveis de forma resumida no terminal (ls, list, dir).",
+    "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less)."
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [
@@ -405,6 +414,312 @@
         "wget": "wget https://api.exemplo.com/arquivo — Download direto de dados/payloads da web",
         "curl_com_auth": "curl -H 'Authorization: Bearer [TOKEN]' https://api.exemplo.com/endpoint",
         "curl_post": "curl -X POST -H 'Content-Type: application/json' -d '{\"key\":\"value\"}' https://api.exemplo.com/endpoint"
+      }
+    },
+    "scrape": {
+      "termos": [
+        "scrape",
+        "scrap",
+        "scraping",
+        "raspar",
+        "raspagem",
+        "extrair da web",
+        "extrair do site",
+        "pegar dados do site"
+      ],
+      "gatilhos": [
+        "scrape",
+        "scrap",
+        "scraping",
+        "raspar",
+        "raspagem",
+        "extrair da web",
+        "extrair do site",
+        "pegar dados do site",
+        "fazer scraping",
+        "fazer scrape",
+        "raspar a página"
+      ],
+      "diretiva": "executar_scraping_web",
+      "execucao_material": true,
+      "descricao": "Raspagem de dados: acessa páginas web, lê o HTML e extrai informações textuais estruturadas. Usa curl/wget para download bruto e grep/python/beautifulsoup para extração estruturada.",
+      "comandos_por_contexto": {
+        "download_bruto": "curl -s [URL] | grep -oP '(?<=<tag>)[^<]+'",
+        "wget_pagina": "wget -q -O - [URL] | grep 'seletor'",
+        "python_basico": "python3 -c \"import urllib.request; html = urllib.request.urlopen('[URL]').read().decode(); print(html)\"",
+        "python_beautifulsoup": "pip install beautifulsoup4 requests && python3 scrape.py",
+        "observacao": "Para scraping avançado com JS (SPAs), prefira Playwright ou Puppeteer"
+      }
+    },
+    "crawl": {
+      "termos": [
+        "crawl",
+        "crawler",
+        "crawling",
+        "rastrear",
+        "rastreamento",
+        "mapear links",
+        "mapear o site",
+        "navegar pelos links"
+      ],
+      "gatilhos": [
+        "crawl",
+        "crawler",
+        "crawling",
+        "rastrear",
+        "rastreamento web",
+        "mapear links",
+        "mapear o site",
+        "navegar pelos links",
+        "fazer crawl",
+        "rodar crawler"
+      ],
+      "diretiva": "executar_crawl_web",
+      "execucao_material": true,
+      "descricao": "Navega automaticamente por uma árvore de links na web para mapear páginas antes do scraping. Retorna lista de URLs encontradas.",
+      "comandos_por_contexto": {
+        "wget_recursivo": "wget --spider --recursive --no-verbose --level=2 [URL] 2>&1 | grep 'https\\?://'",
+        "curl_links": "curl -s [URL] | grep -oP 'href=\"\\K[^\"]*'",
+        "sitemap": "curl -s [URL]/sitemap.xml | grep '<loc>' | sed 's/<[^>]*>//g'",
+        "observacao": "Combine com scrape para: crawl (mapear) → scrape (extrair conteúdo)"
+      }
+    },
+    "harvest": {
+      "termos": [
+        "harvest",
+        "colheita",
+        "coleta em massa",
+        "harvesting",
+        "coletar leads",
+        "coletar emails",
+        "coletar preços",
+        "minerar dados"
+      ],
+      "gatilhos": [
+        "harvest",
+        "colheita de dados",
+        "coleta em massa",
+        "harvesting",
+        "coletar leads",
+        "coletar emails",
+        "coletar preços",
+        "minerar dados",
+        "fazer harvest",
+        "varredura em massa"
+      ],
+      "diretiva": "executar_harvest_dados",
+      "execucao_material": true,
+      "descricao": "Coleta em massa de dados específicos na internet (e-mails, leads, preços, registros). Combina crawl + scrape em escala com salvamento estruturado.",
+      "comandos_por_contexto": {
+        "emails": "grep -oE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}' arquivo_ou_pagina.html",
+        "precos": "curl -s [URL] | grep -oP '(?<=R\\$)[0-9,.]+'",
+        "salvar_csv": "echo 'campo1,campo2' > resultado.csv && echo 'valor1,valor2' >> resultado.csv",
+        "observacao": "Para harvest em escala utilize Scrapy (Python) ou Playwright com loop"
+      }
+    },
+    "fetch": {
+      "termos": [
+        "fetch",
+        "buscar",
+        "pegar dado",
+        "trazer dado",
+        "obter recurso",
+        "chamar api",
+        "fazer get",
+        "requisitar"
+      ],
+      "gatilhos": [
+        "fetch",
+        "buscar dado",
+        "pegar dado",
+        "trazer dado",
+        "obter recurso",
+        "chamar api",
+        "fazer get",
+        "requisitar endpoint",
+        "fazer fetch",
+        "fetch da api"
+      ],
+      "diretiva": "executar_fetch_dado",
+      "execucao_material": true,
+      "descricao": "Busca direta e pontual de um dado ou recurso específico de uma API ou servidor externo. Equivalente a um GET simples e cirúrgico.",
+      "comandos_por_contexto": {
+        "get_simples": "curl -s [URL]",
+        "get_com_header": "curl -s -H 'Accept: application/json' [URL]",
+        "get_com_auth": "curl -s -H 'Authorization: Bearer [TOKEN]' [URL]",
+        "get_formatado": "curl -s [URL] | python3 -m json.tool",
+        "wget_silencioso": "wget -q -O - [URL]"
+      }
+    },
+    "pull": {
+      "termos": [
+        "pull",
+        "baixar",
+        "puxar",
+        "atualizar local",
+        "sincronizar local",
+        "trazer do remoto",
+        "git pull",
+        "download dados"
+      ],
+      "gatilhos": [
+        "pull",
+        "baixar dados",
+        "puxar dados",
+        "atualizar local",
+        "sincronizar local",
+        "trazer do remoto",
+        "git pull",
+        "fazer pull",
+        "atualizar do repositório"
+      ],
+      "diretiva": "executar_pull_dados",
+      "execucao_material": true,
+      "descricao": "Baixa e atualiza dados ou arquivos de um repositório ou serviço central para o ambiente local. Equivale a git pull ou sync unidirecional entrada.",
+      "comandos_por_contexto": {
+        "git": "git pull origin [BRANCH]",
+        "git_all": "git fetch --all && git pull",
+        "rsync": "rsync -avz [USUARIO@HOST:/origem/] [/destino/local/]",
+        "curl_arquivo": "curl -O [URL_DO_ARQUIVO]",
+        "wget_arquivo": "wget [URL_DO_ARQUIVO]"
+      }
+    },
+    "parse": {
+      "termos": [
+        "parse",
+        "parsear",
+        "parsear arquivo",
+        "interpretar arquivo",
+        "traduzir arquivo",
+        "processar arquivo",
+        "ler json",
+        "ler csv",
+        "ler xml"
+      ],
+      "gatilhos": [
+        "parse",
+        "parsear",
+        "parsear arquivo",
+        "interpretar arquivo",
+        "traduzir arquivo",
+        "processar arquivo",
+        "ler json",
+        "ler csv",
+        "ler xml",
+        "fazer parse",
+        "converter arquivo"
+      ],
+      "diretiva": "executar_parse_arquivo",
+      "execucao_material": true,
+      "descricao": "Lê um arquivo bruto (dump, JSON, CSV, HTML, XML) e o traduz em estrutura compreensível para o próximo processamento.",
+      "comandos_por_contexto": {
+        "json": "python3 -m json.tool arquivo.json",
+        "json_campo": "cat arquivo.json | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['campo'])\"",
+        "csv": "python3 -c \"import csv; [print(r) for r in csv.DictReader(open('arquivo.csv'))]\"",
+        "xml": "python3 -c \"import xml.etree.ElementTree as ET; tree=ET.parse('arquivo.xml'); print(ET.tostring(tree.getroot(), encoding='unicode'))\"",
+        "jq": "cat arquivo.json | jq '.campo'",
+        "grep_chave": "grep -o '\"chave\":[^,}]*' arquivo.json"
+      }
+    },
+    "sync": {
+      "termos": [
+        "sync",
+        "sincronizar",
+        "sincronização",
+        "espelhar",
+        "manter sincronizado",
+        "igualar pastas",
+        "rsync"
+      ],
+      "gatilhos": [
+        "sync",
+        "sincronizar",
+        "sincronização",
+        "espelhar pastas",
+        "manter sincronizado",
+        "igualar pastas",
+        "fazer sync",
+        "rsync",
+        "sincronizar origem destino"
+      ],
+      "diretiva": "executar_sync_dados",
+      "execucao_material": true,
+      "descricao": "Compara origem e destino, copiando apenas o que mudou para manter ambos os lados idênticos. Diff incremental bidirecional.",
+      "comandos_por_contexto": {
+        "rsync_local": "rsync -avz --delete [/origem/] [/destino/]",
+        "rsync_remoto": "rsync -avz --delete [/local/] [USUARIO@HOST:/remoto/]",
+        "git_sync": "git fetch --all && git reset --hard origin/[BRANCH]",
+        "cp_incremental": "cp -u [origem] [destino]",
+        "observacao": "Use --dry-run no rsync antes de executar para validar o que será copiado/deletado"
+      }
+    },
+    "listar_registros": {
+      "termos": [
+        "list",
+        "ls",
+        "listar",
+        "liste",
+        "listar registros",
+        "listar arquivos",
+        "mostrar lista",
+        "show list"
+      ],
+      "gatilhos": [
+        "list",
+        "ls",
+        "listar",
+        "liste",
+        "listar registros",
+        "listar arquivos",
+        "mostrar lista",
+        "show list",
+        "quais arquivos",
+        "quais registros"
+      ],
+      "diretiva": "listar_registros_terminal",
+      "execucao_material": true,
+      "descricao": "Lista registros ou arquivos disponíveis de forma resumida no terminal.",
+      "comandos_por_contexto": {
+        "ls_simples": "ls -lh [DIRETORIO]",
+        "ls_detalhado": "ls -lahF [DIRETORIO]",
+        "ls_por_data": "ls -lt [DIRETORIO] | head -20",
+        "ls_arquivos_tipo": "find [DIRETORIO] -name '*.json' | head -20",
+        "tree": "tree -L 2 [DIRETORIO]"
+      }
+    },
+    "visualizar_registro": {
+      "termos": [
+        "show",
+        "view",
+        "ver",
+        "visualizar",
+        "abrir",
+        "mostrar registro",
+        "exibir arquivo",
+        "mostrar conteúdo"
+      ],
+      "gatilhos": [
+        "show",
+        "view",
+        "ver arquivo",
+        "visualizar arquivo",
+        "abrir arquivo",
+        "mostrar registro",
+        "exibir arquivo",
+        "mostrar conteúdo",
+        "show arquivo",
+        "ver o conteúdo"
+      ],
+      "diretiva": "visualizar_conteudo_arquivo",
+      "execucao_material": true,
+      "descricao": "Abre detalhadamente um único arquivo ou registro específico. Escolhe o comando ideal conforme o tamanho do arquivo.",
+      "comandos_por_contexto": {
+        "cat": "cat [ARQUIVO] — Arquivo pequeno: exibe tudo de uma vez",
+        "less": "less [ARQUIVO] — Arquivo grande: paginado com setas do teclado",
+        "head": "head -n 40 [ARQUIVO] — Primeiras 40 linhas",
+        "tail": "tail -n 20 [ARQUIVO] — Últimas 20 linhas",
+        "tail_live": "tail -f [ARQUIVO] — Monitoramento em tempo real (logs)",
+        "wc": "wc -l [ARQUIVO] — Conta quantas linhas tem o arquivo"
       }
     },
     "inspecao_interface_irrestrita": {
