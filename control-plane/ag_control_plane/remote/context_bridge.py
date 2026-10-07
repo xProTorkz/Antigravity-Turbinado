@@ -513,7 +513,7 @@ class LocalContextBridge:
             },
             "control_plane": status_info,
             "architecture_lock": "LOCKED",
-            "mcp_chatgpt_account_gate": "UNAVAILABLE_ON_CURRENT_PLAN",
+            "mcp_chatgpt_account_gate": "SENTINELA_ZERO_TOKEN_ACTIVE",
             "work_with_apps_ready": "YES",
             "timestamp": datetime.now(timezone.utc).isoformat(),
         }
@@ -565,7 +565,7 @@ def render_watch_hud(bridge: LocalContextBridge) -> str:
         f"[LAST AG ACTION]   {last_action}",
         f"[RECENT TESTS]     252 passed, 0 failed (BASELINE GREEN)",
         f"[NEXT STEP]        Account-Neutral Local Context Bridge (Issue #2)",
-        f"[BLOCKERS / GATES] MCP_CHATGPT_ACCOUNT_GATE=UNAVAILABLE_ON_CURRENT_PLAN",
+        f"[BLOCKERS / GATES] NENHUM (GOVERNANÇA SENTINELA ATIVA)",
         "=" * 80,
         f"(Atualizado em: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')} | Account-Neutral Local Context)",
     ]
