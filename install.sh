@@ -103,7 +103,38 @@ if command -v python3 >/dev/null 2>&1; then
     fi
 fi
 
-# 5. Conclusão e Instruções de Uso
+# 4.1 Configuração Pessoal de IA (Google AI Studio & Google Colab - BYOK)
+echo -e "\n${BLUE}🌐 4.1 Configuração Pessoal de Inteligência Artificial (BYOK)...${NC}"
+echo -e "  ℹ️  ${YELLOW}Suas credenciais são 100% isoladas. Você usará sua própria conta gratuita.${NC}"
+
+KEY_FILE="$HOME/.gemini/ai_studio_key.txt"
+if [ -f "$KEY_FILE" ] && [ -s "$KEY_FILE" ]; then
+    echo -e "  ✅ Chave pessoal do Google AI Studio já configurada em: ${KEY_FILE}"
+else
+    echo -e "  👉 ${BOLD}Como obter sua chave gratuita do Google AI Studio:${NC}"
+    echo -e "     1. Acesse o link oficial: ${YELLOW}https://aistudio.google.com/app/apikey${NC}"
+    echo -e "     2. Clique em 'Create API Key' e gere sua chave."
+    if [ -t 0 ]; then
+        read -p "     Cole sua API Key do Google AI Studio aqui (ou Enter para pular): " user_key
+        if [ -n "$user_key" ]; then
+            mkdir -p "$HOME/.gemini"
+            echo "$user_key" > "$KEY_FILE"
+            chmod 600 "$KEY_FILE"
+            echo -e "     🎉 Chave salva com sucesso em ${KEY_FILE}!"
+        else
+            echo -e "     ℹ️  Você pode configurar mais tarde rodando: ${YELLOW}agy_cmd ai-studio --set-key <chave>${NC}"
+        fi
+    else
+        echo -e "     ℹ️  Configure sua chave quando desejar rodando: ${YELLOW}python3 $INSTALL_DIR/4-automacao-e-shell/ai_studio_cli.py --set-key <chave>${NC}"
+    fi
+fi
+
+echo -e "\n  👉 ${BOLD}Integração com Google Colab:${NC}"
+echo -e "     1. Acesse seus notebooks em: ${YELLOW}https://colab.research.google.com/${NC}"
+echo -e "     2. Para rodar células usando o poder do seu computador local:"
+echo -e "        Execute no terminal: ${YELLOW}$INSTALL_DIR/4-automacao-e-shell/iniciar_colab_local.sh${NC}"
+echo -e "     3. No Colab, clique em 'Conectar a um ambiente de execução local' e cole a URL exibida."
+
 echo -e "\n${BOLD}${GREEN}====================================================================${NC}"
 echo -e "${BOLD}${GREEN}🎉 INSTALAÇÃO CONCLUÍDA COM SUCESSO!${NC}"
 echo -e "${BOLD}${GREEN}====================================================================${NC}"

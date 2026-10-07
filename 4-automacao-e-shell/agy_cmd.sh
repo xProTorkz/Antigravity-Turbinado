@@ -28,13 +28,15 @@ agy_cmd() {
         echo "  [13] 🌌 Avanço Além & Profundo (Perímetro + Superfície + Kernel + Sockets)"
         echo "  [14] 💾 Salvar no Projeto & Sincronizar Git (salvar / salve isso)"
         echo "  [15] 📁 Padronizar Pastas & Anti-Duplicação Git"
+        echo "  [16] 🤖 Google AI Studio (Configurar chave própria & enviar prompts)"
+        echo "  [17] 📓 Google Colab Local (Iniciar runtime local seguro para o usuário)"
         echo "  [0] ❌ Sair"
         echo "=============================================================================="
         if [ -t 0 ]; then
-            printf "👉 Digite o número da ação [0-15]: "
+            printf "👉 Digite o número da ação [0-17]: "
             read -r opcao
         else
-            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 15' diretamente."
+            echo "Dica: Execute 'agy_cmd 1' a 'agy_cmd 17' diretamente."
             return 0
         fi
         case "$opcao" in
@@ -53,6 +55,8 @@ agy_cmd() {
             13) agy_cmd alem-profundo "${1:-example.com}" ;;
             14) agy_cmd project-save-sync "$@" ;;
             15) agy_cmd sync-project-folders ;;
+            16) agy_cmd ai-studio "$@" ;;
+            17) agy_cmd colab-local "$@" ;;
             *) echo "Cancelado." ;;
         esac
         return 0
@@ -83,8 +87,25 @@ agy_cmd() {
         "mais alem"|"mais além"|"vá mais além"|"vai mais além") agy_cmd mais-alem "$@"; return 0 ;;
         "stress"|"carga"|"ddos")                 agy_cmd stress-test-load "$@"; return 0 ;;
         "fuzz"|"boundary")                       agy_cmd test-api-boundaries "$@"; return 0 ;;
-        "bruteforce"|"auth-test")                agy_cmd auth-rate-limit-test "$@"; return 0 ;;
         "baixa a nova atualizacao sentinela"|"baixa a nova atualização sentinela"|"baixa atualizacao sentinela"|"atualizar-sentinela"|"atualiza-sentinela"|"update-sentinela") agy_cmd atualizar-sentinela "$@"; return 0 ;;
+        "ai-studio"|"aistudio"|"gemini-prompt")
+            local script_path="/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/ai_studio_cli.py"
+            if [ -f "$script_path" ]; then
+                python3 "$script_path" "$@"
+            else
+                python3 -c "print('❌ Script ai_studio_cli.py não encontrado.')"
+            fi
+            return 0
+            ;;
+        "colab-local"|"colab"|"jupyter-colab"|"17")
+            local colab_script="/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/iniciar_colab_local.sh"
+            if [ -f "$colab_script" ]; then
+                bash "$colab_script" "$@"
+            else
+                echo "❌ Script iniciar_colab_local.sh não encontrado."
+            fi
+            return 0
+            ;;
 
         # ======================================================================
         # FOCO 1: Processos, CPU, Memória RAM & Destravamento de Hardware
