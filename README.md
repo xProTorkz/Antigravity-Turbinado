@@ -46,6 +46,18 @@ O **Antigravity Turbinado** é um kit de engenharia e orquestração autônoma p
 
 ---
 
+## 🌐 Conexão de Contas Pessoais (BYOK)
+
+Este ecossistema opera sob o modelo **Bring Your Own Key (BYOK)** — cada usuário conecta exclusivamente as **suas próprias contas** (Google AI Studio, Google Colab e GitHub), garantindo isolamento total e zero compartilhamento de credenciais.
+
+👉 **Consulte o guia completo em:** [CONEXOES_E_CONTAS.md](CONEXOES_E_CONTAS.md)
+- Como obter sua chave gratuita do **Google AI Studio** (`aistudio.google.com`).
+- Como conectar o **Google Colab** ao hardware local (`colab.research.google.com`).
+- Como autenticar no **GitHub** (`gh auth login`).
+- Desbloqueio automatizado do **PowerShell no Windows** (`.\install.ps1`).
+
+---
+
 ## 💎 Modelos Comerciais & Planos de Acesso
 
 O produto é distribuído e suportado através do nosso canal oficial de atendimento:

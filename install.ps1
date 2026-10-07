@@ -92,44 +92,14 @@ foreach ($path in $VscodeSettingsPaths) {
 }
 
 # ------------------------------------------------------------------------------
-# Passo 4: Onboarding Pessoal — Google AI Studio & Google Colab (BYOK)
+# Conclusão e Guia de Contas
 # ------------------------------------------------------------------------------
-Write-Host "`n🌐 4. Configuração Pessoal de Inteligência Artificial (BYOK)..." -ForegroundColor Yellow
-Write-Host "  ⚠️ Atenção: Para sua total segurança, suas credenciais são 100% isoladas." -ForegroundColor DarkYellow
-Write-Host "  Você utilizará sua própria conta gratuita do Google (sem risco de compartilhamento)." -ForegroundColor DarkYellow
-
-$KeyDir = "$env:USERPROFILE\.gemini"
-$KeyFile = "$KeyDir\ai_studio_key.txt"
-
-if (-not (Test-Path $KeyDir)) {
-    New-Item -ItemType Directory -Path $KeyDir -Force | Out-Null
-}
-
-if (Test-Path $KeyFile) {
-    Write-Host "  ✅ Chave pessoal do Google AI Studio já configurada em: $KeyFile" -ForegroundColor Green
-} else {
-    Write-Host "`n  👉 Passo para obter sua chave gratuita do Google AI Studio:" -ForegroundColor Cyan
-    Write-Host "     1. Acesse o link oficial: https://aistudio.google.com/app/apikey" -ForegroundColor White
-    Write-Host "     2. Faça login com sua conta Google e clique em 'Create API Key'." -ForegroundColor White
-    Write-Host "     3. Cole sua chave abaixo (ou aperte Enter para configurar depois):" -ForegroundColor White
-    
-    $UserKey = Read-Host "     Sua API Key do Google AI Studio"
-    if (![string]::IsNullOrWhiteSpace($UserKey)) {
-        Set-Content -Path $KeyFile -Value $UserKey.Trim() -Encoding UTF8
-        Write-Host "     🎉 Chave salva com sucesso em $KeyFile!" -ForegroundColor Green
-    } else {
-        Write-Host "     ℹ️ Chave não informada no momento. Quando quiser ativar, acesse:" -ForegroundColor DarkGray
-        Write-Host "        https://aistudio.google.com/app/apikey e salve com: python 4-automacao-e-shell\ai_studio_cli.py --set-key <chave>" -ForegroundColor DarkGray
-    }
-}
-
-Write-Host "`n  👉 Integração com Google Colab:" -ForegroundColor Cyan
-Write-Host "     1. Acesse seus notebooks em: https://colab.research.google.com/" -ForegroundColor White
-Write-Host "     2. Para rodar células usando o poder do seu PC local:" -ForegroundColor White
-Write-Host "        Execute no terminal: bash 4-automacao-e-shell/iniciar_colab_local.sh (ou use o menu agy_cmd)" -ForegroundColor White
-Write-Host "     3. No Colab, clique em 'Conectar a um ambiente de execução local' e cole a URL exibida." -ForegroundColor White
+Write-Host "`n📖 4. Conexões de Contas Pessoais (Google AI Studio, Colab e GitHub):" -ForegroundColor Yellow
+Write-Host "  Consulte o guia canônico: CONEXOES_E_CONTAS.md" -ForegroundColor White
+Write-Host "  Lá estão todos os links e passos para conectar suas próprias contas sem complexidade." -ForegroundColor Gray
 
 Write-Host "`n====================================================================" -ForegroundColor Cyan
-Write-Host "🎉 INSTALAÇÃO NO WINDOWS CONCLUÍDA COM SUCESSO!" -ForegroundColor Green
+Write-Host "🎉 DESBLOQUEIO DO WINDOWS CONCLUÍDO COM SUCESSO!" -ForegroundColor Green
 Write-Host "====================================================================" -ForegroundColor Cyan
 Write-Host "💡 Dica: Reinicie o terminal ou o Antigravity para carregar todas as políticas." -ForegroundColor Gray
+
