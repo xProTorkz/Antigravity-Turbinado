@@ -132,7 +132,8 @@
     "parse": "Lê um arquivo bruto (dump, JSON, CSV, HTML) e o traduz em estrutura compreensível para o próximo processamento.",
     "sync": "Compara origem e destino, copiando apenas o que mudou para manter ambos os lados idênticos. Diff incremental bidirecional.",
     "listar_registros": "Listar registros ou arquivos disponíveis de forma resumida no terminal (ls, list, dir).",
-    "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less)."
+    "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less).",
+    "chromedevtools_avancado": "Módulo Chrome DevTools Avançado: conexão silenciosa e em segundo plano ao Google Chrome já em execução no host. Proibido abrir novas abas ou janelas paralelas em rotinas de auditoria total/completa (exceto se o usuário pedir explicitamente para abrir um projeto local). Opera em modo headless/invisível utilizando as sessões e perfis já ativos no navegador."
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [
@@ -1067,6 +1068,38 @@
         "tail": "tail -n 20 [ARQUIVO] — Últimas 20 linhas",
         "tail_live": "tail -f [ARQUIVO] — Monitoramento em tempo real (logs)",
         "wc": "wc -l [ARQUIVO] — Conta quantas linhas tem o arquivo"
+      }
+    },
+    "chromedevtools_avancado": {
+      "termos": [
+        "chromedevtools avancado",
+        "chromedevtools avançado",
+        "chromedevtools",
+        "chrome devtools avancado",
+        "devtools avancado",
+        "inspecao silenciosa chrome",
+        "inspecao sem janela",
+        "depuracao chrome ativo",
+        "usar chrome aberto"
+      ],
+      "gatilhos": [
+        "chromedevtools avancado",
+        "usar chrome ja aberto",
+        "auditoria no chrome ativo",
+        "inspecao silenciosa chrome",
+        "depurar chrome sem nova janela",
+        "usar perfil logado chrome"
+      ],
+      "diretiva": "chromedevtools_avancado_background",
+      "execucao_material": true,
+      "modo_operacao": "headless_background_passivo",
+      "regra_inviolavel_sessao": "PROIBIDO abrir nova janela, novo navegador ou abas paralelas ativas quando o Chrome já estiver rodando. Operar 100% em modo silencioso/headless em segundo plano, conectando-se ao processo existente do Chrome do usuário e executando a auditoria sem roubar foco da tela. Exceção única e expressa: quando o usuário solicitar explicitamente a abertura de um arquivo/projeto local em desenvolvimento (ex: 'abrir index.html no navegador').",
+      "integracao_auditoria_total": "Em qualquer solicitação de 'auditoria completa' ou 'auditoria total' envolvendo o navegador, utilizar compulsoriamente a sessão já aberta em background no Google Chrome sem invocar novos processos executáveis visíveis.",
+      "mecanismo_cdp": {
+        "porta_padrao": "9222",
+        "protocolo": "Chrome DevTools Protocol (CDP) / WebSocket",
+        "injecao_script": "Injeta silenciosamente a suíte script_unificado_devtools no contexto ativo da aba sem intervenção manual",
+        "extracao_segura": "Coleta DOM renderizado, metadados de acessibilidade e estados desmascarados sem alterar o histórico de navegação"
       }
     },
     "inspecao_interface_irrestrita": {
