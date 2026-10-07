@@ -112,8 +112,8 @@
     "exiftool": "Extrair metadados EXIF ocultos (GPS, autor, câmera, software) de imagens, PDFs e documentos baixados do site.",
     "brute_force_rotas": "Varredura de diretórios e rotas ocultas via gobuster, dirb ou ffuf testando milhares de palavras contra a URL alvo.",
     "inspecao_interface_irrestrita": "Executar script unificado de inspeção irrestrita de interface no DOM: remove filtros visuais e de segurança CSS (-webkit-text-security, blur), converte inputs confidenciais (password -> text), remove bloqueios de interação (disabled, readonly), elimina elementos bloqueadores invisíveis (overlays/divs flutuantes), extrai metadados em cache (.value, .innerText) e inspeciona atributos de acessibilidade (aria-labels, role) para auditoria completa de frontend.",
-    "game_hacking_reversa": "🎮 Game Hacking & Engenharia Reversa: pipeline de 6 fases para análise de binários (strings/readelf/file), descompilação (apktool/jadx/ilspycmd), edição de memória RAM (gdb/scanmem), manipulação Android via ADB, captura de pacotes (tcpdump/tshark) e compilação de DLLs injetáveis (mingw/gcc).",
-    "game_hacking": "Alias de game_hacking_reversa. Ativa o pipeline completo de engenharia reversa e criação de hacks/trainers para jogos.",
+    "trainer_de_jogo": "🎮 Trainer de Jogo & Engenharia Reversa: pipeline de 6 fases para análise de binários (strings/readelf/file), descompilação (apktool/jadx/ilspycmd), edição de memória RAM (gdb/scanmem), manipulação Android via ADB, captura de pacotes (tcpdump/tshark) e compilação de DLLs injetáveis (mingw/gcc).",
+    "trainer": "Alias de trainer_de_jogo. Ativa o pipeline completo de engenharia reversa e criação de trainers/mods para jogos.",
     "dll_injection": "Compilar e injetar DLL personalizada em processo de jogo via mingw32-g++ ou gcc. Gera hack_injetavel.dll pronto para injeção via Process Hollowing ou LoadLibrary.",
     "analise_binario_jogo": "Análise estática de executável de jogo: strings, file, readelf, ldd, nm, objdump para mapear funções, símbolos e proteções sem executar o programa.",
     "descompilar_jogo": "Descompilar APK Android via apktool/jadx ou DLL Unity/.NET via ilspycmd para extrair código-fonte C# ou Java original.",
@@ -495,16 +495,19 @@
         }
       }
     },
-    "game_hacking_reversa": {
+    "trainer_de_jogo": {
       "termos": [
+        "trainer de jogo",
+        "trainer",
+        "criar trainer",
+        "mod de jogo",
+        "mod jogo",
         "game hacking",
         "hack de jogo",
         "hackear jogo",
         "engenharia reversa jogo",
         "reversa de jogo",
         "cheat engine",
-        "trainer",
-        "mod jogo",
         "injetar dll",
         "dll injection",
         "memoria do jogo",
@@ -519,13 +522,16 @@
         "tshark jogo"
       ],
       "gatilhos": [
+        "trainer de jogo",
+        "criar trainer",
+        "trainer",
+        "mod de jogo",
         "game hacking",
         "hack de jogo",
         "hackear jogo",
         "engenharia reversa jogo",
         "reversa do jogo",
         "criar hack",
-        "criar trainer",
         "criar cheat",
         "criar mod",
         "injetar dll",
@@ -536,9 +542,9 @@
         "analisar binario do jogo",
         "capturar pacotes do jogo"
       ],
-      "diretiva": "game_hacking_engenharia_reversa",
+      "diretiva": "trainer_de_jogo",
       "execucao_material": true,
-      "descricao": "🎮 Game Hacking & Engenharia Reversa: pipeline completo para análise, descompilação, manipulação de memória, interceptação de pacotes e criação de hacks/trainers para jogos. Use apenas em ambientes de teste e jogos single-player ou com autorização expressa.",
+      "descricao": "🎮 Trainer de Jogo & Engenharia Reversa: pipeline completo para análise, descompilação, manipulação de memória, interceptação de pacotes e criação de trainers/mods para jogos. Use apenas em ambientes de teste e jogos single-player ou com autorização expressa.",
       "pipeline_reversa": {
         "fase_1_analise_binario": {
           "descricao": "Extrai informações e strings de dentro do executável do jogo sem executá-lo",
