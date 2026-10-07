@@ -406,5 +406,20 @@
     "workspace": "/Users/lucasvinicius/projetos/SISTEMAS/Syntx Core",
     "write_allowed": true,
     "queue_repo": "xProTorkz/syntx-core"
+  },
+  "Premium Car": {
+    "name": "Premium Car",
+    "category": "SISTEMAS",
+    "status": "active",
+    "aliases": [
+      "Premium Car",
+      "premium car",
+      "premium-car",
+      "PremiumCar"
+    ],
+    "repo": "xProTorkz/PremiumCar",
+    "workspace": "/Users/lucasvinicius/projetos/SISTEMAS/Premium Car",
+    "write_allowed": true,
+    "queue_repo": "xProTorkz/PremiumCar"
   }
 }
