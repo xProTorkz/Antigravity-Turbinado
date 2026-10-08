@@ -84,6 +84,7 @@ agy_cmd() {
         "stress"|"carga"|"ddos")                 agy_cmd stress-test-load "$@"; return 0 ;;
         "fuzz"|"boundary")                       agy_cmd test-api-boundaries "$@"; return 0 ;;
         "baixa a nova atualizacao sentinela"|"baixa a nova atualização sentinela"|"baixa atualizacao sentinela"|"atualizar-sentinela"|"atualiza-sentinela"|"update-sentinela") agy_cmd atualizar-sentinela "$@"; return 0 ;;
+        "audit-pci-cards"|"scan-cards"|"scan-pci"|"audit-cards"|"scan-pan") agy_cmd audit-pci-cards "$@"; return 0 ;;
 
         # ======================================================================
         # FOCO 1: Processos, CPU, Memória RAM & Destravamento de Hardware
@@ -2786,6 +2787,12 @@ else:
 EOF
             ;;
 
+        "audit-pci-cards"|"scan-cards"|"scan-pci"|"audit-cards"|"scan-pan")
+            local target="${1:-.}"
+            local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+            python3 "$script_dir/scan_cards_pci.py" "$target" "${@:2}"
+            ;;
+
         # ======================================================================
         # MACRO-PIPELINES DE EXECUÇÃO EM LINGUAGEM NATURAL & GATILHOS DIRETOS
         # ======================================================================
@@ -2825,8 +2832,10 @@ EOF
             agy_cmd audit-hidden-webshells . 2>/dev/null || true
             agy_cmd audit-privesc-vectors 2>/dev/null || true
             echo ""
-            echo "👉 [8/8] Governança Expandida: Detecção de PII em Logs, Artefatos de Build & GitOps Anti-Tampering..."
+            echo "👉 [8/8] Governança Expandida: Detecção de PII/PCI em Logs, Artefatos de Build & GitOps Anti-Tampering..."
             echo "   • Varredura forense contra vazamento de PII (senhas, tokens JWT, dados sensíveis) em logs e console"
+            echo "   • Varredura universal de vazamento de cartões de crédito (PAN) e conformidade PCI-DSS..."
+            agy_cmd audit-pci-cards . 2>/dev/null || true
             echo "   • Análise de exposição acidental de artefatos de build e CI/CD (.git/, .github/, Dockerfile)"
             echo "   • Auditoria de integridade do pipeline e GitOps Anti-Tampering (validação de hashes e assinaturas)"
             echo "   • Gerando hub_replicado.html, index.html, start_local.sh e sincronização Git 1:1"
