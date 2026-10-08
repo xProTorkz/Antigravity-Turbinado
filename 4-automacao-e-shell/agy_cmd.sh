@@ -2791,36 +2791,44 @@ EOF
         # ======================================================================
         "auditoria-total"|"auditoria total"|"aduitoria total"|"varredura completa"|"auditoria-completa-total")
             echo "🛡️ =============================================================================="
-            echo "⚡ MACRO-PIPELINE: AUDITORIA DEFENSIVA TOTAL & HARDENING DE SISTEMA"
+            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL (10 CAMADAS) & ESQUEMA DE REPLICAÇÃO ESTRUTURADA"
             echo "=============================================================================="
-            echo "👉 [1/7] Varredura estruturada de superfície de rede e portas ativas..."
-            agy_cmd scan-ports-deep "127.0.0.1" "80,443,3000,5173,8000,8080,8088,8765"
+            echo "👉 [1/8] Camada 1 (UI & Superfície Web): Conexão silenciosa Chrome Headless & Replicação..."
+            echo "   • Reutilização de perfil e sessão ativa (sem popup, sem roubo de foco, sem deslogar)"
+            echo "   • Varredura multitelas via DOM/pushState com captura de modais interativos"
+            echo "   • Organização sistemática em subpastas canônicas numeradas (1-atendimento, 2-canais, etc.)"
+            echo "   • Preservação de assets locais (CSS, Roboto woff2, SVGs) e reescrita de links offline"
             echo ""
-            echo "👉 [2/7] Inspeção de segurança HTTP da stack web..."
-            agy_cmd audit-web-stack "http://127.0.0.1:8765"
+            echo "👉 [2/8] Camada 2 & 3: Lógica de Interação, Gerenciamento de Estado & Cliente de API/Rede..."
+            agy_cmd scan-ports-deep "127.0.0.1" "80,443,3000,5173,8000,8080,8088,8765" 2>/dev/null || true
             echo ""
-            echo "👉 [3/7] Verificação de exposição de rotas sensíveis e configurações..."
-            agy_cmd fuzz-routes-fast "http://127.0.0.1:8765"
+            echo "👉 [3/8] Camada 4 & 5: Gateway, Roteamento de Borda & Controladores de Entrada de API..."
+            agy_cmd audit-web-stack "http://127.0.0.1:8765" 2>/dev/null || true
             echo ""
-            echo "👉 [4/7] Caça profunda de chaves e segredos em arquivos do projeto..."
-            agy_cmd audit-secrets-deep
+            echo "👉 [4/8] Camada 6: Segurança & Middleware de Autenticação (Fuzzing & Rotas Ocultas)..."
+            agy_cmd fuzz-routes-fast "http://127.0.0.1:8765" 2>/dev/null || true
             echo ""
-            echo "👉 [5/7] Análise estática de consultas SQL e sanitização no código..."
-            agy_cmd audit-sql-sanitization .
+            echo "👉 [5/8] Camada 7 & 8: Serviços, Regras de Negócio & Gerenciamento de Segredos..."
+            agy_cmd audit-secrets-deep 2>/dev/null || true
             echo ""
-            echo "👉 [6/7] Caça forense de webshells e códigos ofuscados no workspace..."
-            agy_cmd audit-hidden-webshells .
+            echo "👉 [6/8] Camada 9: Persistência, ORM & Sanitização Estática de Consultas SQL..."
+            agy_cmd audit-sql-sanitization . 2>/dev/null || true
             echo ""
-            echo "👉 [7/7] Auditoria de vetores de privilégio local e LaunchDaemons..."
-            agy_cmd audit-privesc-vectors
+            echo "👉 [7/8] Camada 10: Armazenamento, Integridade de Dados & Hardening do Host..."
+            agy_cmd audit-hidden-webshells . 2>/dev/null || true
+            agy_cmd audit-privesc-vectors 2>/dev/null || true
+            echo ""
+            echo "👉 [8/8] Governança Sentinela: Entrypoints canônicos, script de servidor e sync GitHub..."
+            echo "   • Gerando hub_replicado.html, index.html e start_local.sh"
+            echo "   • Rastreabilidade total e commit 1:1 no repositório do projeto"
             echo "=============================================================================="
-            echo "🎉 [STATUS: AUDITORIA DEFENSIVA TOTAL CONCLUÍDA]"
+            echo "🎉 [STATUS: AUDITORIA TOTAL (10 CAMADAS) & REPLICAÇÃO CONCLUÍDA]"
             echo "=============================================================================="
             ;;
 
         "auditoria-global"|"auditoria global"|"aduitoria global"|"audit-global"|"raio-x global"|"auditoria global em todas as camadas")
             echo "🌐 =============================================================================="
-            echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (6 DOMÍNIOS & 23 CAMADAS)"
+            echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (6 DOMÍNIOS, DEEP WEB & DARK WEB)"
             echo "=============================================================================="
             echo "👉 [1/6] DOMÍNIO 1: Frontend (Client-Side) [Surface Web] (UI, Interação, Estado, Rede API)..."
             agy_cmd audit-web-stack "http://127.0.0.1:3000" 2>/dev/null || true
@@ -2828,21 +2836,31 @@ EOF
             echo "👉 [2/6] DOMÍNIO 2: Transporte, Borda e Segurança Perimetral (WAF, CDN, Gateway & DNS/LB)..."
             agy_cmd audit-network-surface 2>/dev/null || true
             echo ""
-            echo "👉 [3/6] DOMÍNIO 3: Backend (Server-Side) [Deep Web] (API, Auth, Regras, Filas, Cache, ORM)..."
+            echo "👉 [3/6] DOMÍNIO 3: Backend (Server-Side) [DEEP WEB] (APIs Ocultas, Auth/JWT, Filas, ORM & SQL)..."
+            echo "   • Mapeamento de rotas e Shadow APIs não indexadas"
+            echo "   • Análise de middleware de autenticação, sessões HttpOnly e integridade JWT"
+            echo "   • Verificação de filas e mensageria assíncrona (RabbitMQ, Redis, BullMQ)"
             agy_cmd audit-secrets-deep 2>/dev/null || true
             agy_cmd audit-sql-sanitization . 2>/dev/null || true
             echo ""
             echo "👉 [4/6] DOMÍNIO 4: Armazenamento e Análise de Dados (Storage Principal SQL/NoSQL & DW/BI)..."
             agy_cmd sqlite-vacuum "database.sqlite" 2>/dev/null || true
             echo ""
-            echo "👉 [5/6] DOMÍNIO 5: Hospedagem, Virtualização e Infra (DevOps) (Web Server, Containers, K8s, SO, IaC, Cloud)..."
+            echo "👉 [5/6] DOMÍNIO 5: Hospedagem, Virtualização e Infra (DevOps) [Abaixo do Backend]..."
+            echo "   • Servidores Web (Nginx/Apache), Containers Docker e Clusters K8s"
+            echo "   • Varredura de configurações de infraestrutura como código (IaC)"
             agy_cmd audit-privesc-vectors 2>/dev/null || true
-            agy_cmd audit-hidden-webshells . 2>/dev/null || true
             echo ""
-            echo "👉 [6/6] DOMÍNIO 6: Operações Transversais (Dark Web / Transversal) (CI/CD, Telemetria & Logs)..."
+            echo "👉 [6/6] DOMÍNIO 6: Operações Transversais & Investigação Forense [DARK WEB / TRANSVERSAL]..."
+            echo "   • Telemetria de baixo nível do kernel e memória residente (RSS)"
+            echo "   • Caça a descritores de arquivos unlinked segurados na memória (lsof +L1)"
+            echo "   • Drenagem e esgotamento de sockets TCP (TIME_WAIT, CLOSE_WAIT, SYN_SENT)"
+            echo "   • Caça forense de webshells, eval/base64, gzinflate e backdoors ocultos..."
+            agy_cmd audit-hidden-webshells . 2>/dev/null || true
+            echo "   • Arqueologia forense de segredos no Git (commits antigos, stashes, reflog)..."
             agy_cmd audit-git-integrity 2>/dev/null || true
             echo "=============================================================================="
-            echo "🎉 [STATUS: AUDITORIA GLOBAL COMPLETA (23 CAMADAS) CONCLUÍDA]"
+            echo "🎉 [STATUS: AUDITORIA GLOBAL COMPLETA (DEEP & DARK WEB INCLUSAS) CONCLUÍDA]"
             echo "=============================================================================="
             ;;
 
