@@ -2828,7 +2828,13 @@ EOF
 
         "auditoria-global"|"auditoria global"|"aduitoria global"|"audit-global"|"raio-x global"|"auditoria global em todas as camadas")
             echo "🌐 =============================================================================="
-            echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (6 DOMÍNIOS, DEEP WEB & DARK WEB)"
+            echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (TUDO DA AUDITORIA TOTAL + DEEP & DARK WEB)"
+            echo "=============================================================================="
+            echo "📦 [FASE 1/2] EXECUTANDO AUDITORIA TOTAL COMPLETA COM ESQUEMA DE REPLICAÇÃO..."
+            agy_cmd auditoria-total "$@"
+            echo ""
+            echo "🌐 =============================================================================="
+            echo "🔬 [FASE 2/2] APROFUNDAMENTO FORENSE NOS 6 DOMÍNIOS (DEEP WEB & DARK WEB)"
             echo "=============================================================================="
             echo "👉 [1/6] DOMÍNIO 1: Frontend (Client-Side) [Surface Web] (UI, Interação, Estado, Rede API)..."
             agy_cmd audit-web-stack "http://127.0.0.1:3000" 2>/dev/null || true
@@ -2860,7 +2866,7 @@ EOF
             echo "   • Arqueologia forense de segredos no Git (commits antigos, stashes, reflog)..."
             agy_cmd audit-git-integrity 2>/dev/null || true
             echo "=============================================================================="
-            echo "🎉 [STATUS: AUDITORIA GLOBAL COMPLETA (DEEP & DARK WEB INCLUSAS) CONCLUÍDA]"
+            echo "🎉 [STATUS: AUDITORIA GLOBAL COMPLETA CONCLUÍDA (AUDITORIA TOTAL + DEEP & DARK WEB)]"
             echo "=============================================================================="
             ;;
 
