@@ -468,31 +468,59 @@ Módulo especializado em auditoria de segurança perimétrica, verificação de 
 Pipelines multi-comandos orientados a DAG que encadeiam diagnósticos e auditorias automáticas através de gírias e frases naturais:
 
 #### 1. `auditoria-total` / `"auditoria total"` / `"varredura completa"`
-**Regra Canônica de Auditoria Total em 10 Camadas Arquiteturais (Execução Invisível e Silenciosa):**  
-Quando solicitada a *"auditoria total"*, a verificação é compulsoriamente executada cobrindo todas as 10 camadas arquiteturais completas de ponta a ponta, operando de forma invisível e silenciosa em segundo plano (`AGY_BACKGROUND`, `UI_FOCUS=false`, `VISIBLE_TERMINAL=false`, `BACKGROUND=true`, supressão de ruído no terminal e sem foco/troca de janelas ou abas):
+**Regra Canônica de Execução: Auditoria Total Replicador**
 
-* **Frontend & Borda:**
+##### 🧭 Diretriz de Rastreamento (Engine Rule)
+O motor de busca **NÃO PODE** pular fases. Para avançar da Fase `N` para a Fase `N+1`, o arquivo declarado em `saida_esperada` na Fase `N` deve existir em disco, ser validado e conter dados estruturados não nulos.
+
+##### 🛡️ Orquestração Furtiva de Segurança
+* **Modo**: `READ_ONLY_FIRST = true`
+* **Mutação**: `MUTATION_ALLOWED = false` (Bloqueio estrito de requisições POST/PUT/DELETE que alterem estado do alvo).
+* **Rastreabilidade**: `AUDIT_LOGGING = true`. Toda ação gera um log incremental que será compilado no laudo final.
+
+##### 📊 Matriz de Mapeamento das 10 Camadas de Auditoria
+A execução das 10 Fases descritas no `dicionario_lexico.json` deve cobrir obrigatoriamente as 10 camadas de arquitetura do alvo. O relatório consolidado `./reports/audit_total_TIMESTAMP.md` deve estruturar as falhas mapeando:
+
+| Divisão | # | Camada Auditada | Fase Principal de Captura |
+| :--- | :--- | :--- | :--- |
+| **Frontend & Borda** | 1 | Apresentação / UI | Fase 8 (Captura de Mídia) & Fase 9 (DOM Headless) |
+| | 2 | Lógica de Interação | Fase 2 (HTML Oculto) & Fase 6 (Extração Avançada) |
+| | 3 | Gerenciamento de Estado | Fase 2 (__NEXT_DATA__ / Redux / Contexts) |
+| | 4 | Rede / Clientes de API | Fase 1 (Interceptação de Tráfego) |
+| | 5 | Gateway & Borda (TLS/CORS) | Fase 1 & Fase 3 (Endpoints) |
+| **Backend & Dados** | 6 | Controladores & Rotas | Fase 3 (LinkFinder) & Fase 5 (Brute Force) |
+| | 7 | Segurança & Auth Middleware | Fase 1 (Validação de Expiração/Uso de Sessão Ativa) |
+| | 8 | Regras de Negócio | Fase 1 & Fase 7 (Análise de Comportamento dos Endpoints)|
+| | 9 | Acesso a Dados (ORM/SQL) | Fase 7 (WP-CLI / Dumps estruturados permitidos) |
+| | 10| Armazenamento & Banco | Fase 7 & Fase 10 (Segregação de Dados Financeiros) |
+
+##### 💳 Padrão do Exportador Tabular Compulsório (Fase 10)
+Caso qualquer string correspondente à Categoria 2 de Risco Financeiro seja identificada (PAN exposto), o motor de busca deve interromper processos de replicação externa e gerar imediatamente a saída tabular estritamente formatada no arquivo `./reports/compliance_pci_audit.json` e espelhada no laudo sob a máscara:
+
+```text
+BIN|BRAND|LEVEL|BANK|HAVE_CARDHOLDER_NAME|VALUE|TITULAR_PREVIEW
+```
+*Nota: Proibido salvar dados de cartão não mascarados (PAN completo, CVV ou senhas)*
+
+* **Detalhamento das 10 Camadas Arquiteturais Canônicas:**
   1. **Camada de Apresentação (Interface de Usuário - UI):** Componentes visuais, templates, renderização, layouts, responsividade, formulários e acessibilidade (a11y).
   2. **Camada de Lógica de Interação:** Event handlers, dispatchers de ações, validações de formulário do cliente, hooks de evento e fluxos de UX.
   3. **Camada de Gerenciamento de Estado:** Stores centralizadas, reducers, contexts, reatividade de dados, ciclo de vida de estado e persistência local/sessão.
   4. **Camada de Rede (Cliente de API):** Clientes HTTP/Fetch/Axios, WebSockets, interceptors, políticas de timeout, serialização e retries com backoff.
   5. **Camada de Gateway e Roteamento de Borda:** Reverse proxies, API Gateway, balanceamento de carga, terminação TLS, CORS de borda e regras de ingress.
-* **Backend (Server-Side):**
   6. **Camada de Entrada e Roteamento (Controladores / API):** Controladores HTTP, rotas REST/GraphQL, validação de payload/schemas e documentação de rotas.
   7. **Camada de Segurança e Autenticação (Middleware):** Middlewares de autenticação, verificação JWT/sessão, autorização (RBAC/ABAC), sanitização anti-XSS/SQLi e headers de segurança (CSP/HSTS).
   8. **Camada de Regras de Negócio (Serviços):** Serviços de domínio, use cases, fluxos transacionais, orquestração de operações e invariantes de negócio.
   9. **Camada de Acesso a Dados (Persistência / ORM):** Mapeamento objeto-relacional (ORM), repositórios, query builders, migrations e integridade referencial.
   10. **Camada de Armazenamento (Banco de Dados):** Motores de bancos de dados (SQLite, PostgreSQL, MySQL), integridade física de arquivos/páginas, checkpoints WAL, locks e latência de disco.
 
-* **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_total_TIMESTAMP.md`).
-* **Auditoria de Conformidade de Dados Financeiros (PCI-DSS Segregation):** Análise e segregação das respostas da aplicação em 3 categorias canônicas estritas:
+* **Auditoria de Conformidade de Dados Financeiros (PCI-DSS Segregation em 3 Categorias Canônicas):**
   1. **Mapeamento de Controle (Metadados Permitidos):** Extração lógica de ID, `bin` (6 dígitos para roteamento regulatório), `brand` (Bandeira), `bank` (Banco Emissor), `level` (Categoria do Cartão) e `card_token` (Referência transacional segura).
   2. **Verificação de Vulnerabilidade (Sinalização de Risco):**
      - Validação de `card_preview`: Se diferente de `null` ou contendo mais que os 4 últimos dígitos visíveis/PAN desmascarado, emissão de **ALERTA CRÍTICO** de vazamento de PAN (`CRITICAL_PAN_LEAK`).
      - Validação de `have_cardholder_number`: Se valor igual a 1 ou se o número bruto estiver persistido/exposto na resposta, classificação imediata como **NÃO CONFORME** (`NON_COMPLIANT_CARDHOLDER_DATA_RETENTION`).
      - Verificação de Dados de Autenticação Sensíveis (SAD): Se houver presença de campos como `card_password`, `cvv` ou `security_code` com valor verdadeiro ou string, disparo de **BLOQUEIO IMEDIATO** no pipeline por violação estrita do **PCI-DSS Requirement 3.2**.
   3. **Log de Compliance (Saída Estruturada):** Gravação obrigatória dos resultados no arquivo de governança local `./reports/compliance_pci_audit.json`, contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados sensíveis em conformidade com o **PCI-DSS Requirement 3.3**.
-* **Varredura Recursiva de Shadow APIs & Extração Estruturada de Objetos:** Sondagem ativa de rotas transacionais suspeitas (`/api/v1/cards`, `/api/v1/checkout`, `/api/v1/wallet/list`, `/api/v1/user/payments`, `/api/v1/consultas`) via GET e POST diagnósticos (`{"modalidade": "Consultável", "check": true}`), varrendo recursivamente estruturas JSON por chaves canônicas (`bin`, `card_token`, `titular_preview`), avaliando se `card_preview` é nulo (projeção segura PCI-DSS) e gerando exportação tabular padronizada no formato: `BIN|BRAND|LEVEL|BANK|HAVE_CARDHOLDER_NAME|VALUE|TITULAR_PREVIEW`.
 
 #### 2. `auditoria-global` / `"auditoria global"` / `"//audit-global"` / `"/auditoria-global"` / `"raio-x global"`
 **Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais (Execução Invisível e Silenciosa):**  

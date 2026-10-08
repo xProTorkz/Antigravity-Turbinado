@@ -415,112 +415,171 @@
       ],
       "diretiva": "auditoria_total_replicador",
       "execucao_material": true,
-      "descricao": "Auditoria Total Replicador: pipeline completo de extração profunda de dados ocultos e clonagem renderizada de interface. Cobre interceptação de APIs, extração de camadas HTML invisíveis, varredura de histórico, metadados de arquivos, brute force de rotas ocultas e snapshot do DOM pós-renderização com Google Chrome Headless via single-file-cli.",
-      "pipeline_auditoria": {
-        "fase_1_interceptacao_api": {
-          "descricao": "Intercepta APIs em segundo plano que carregam dados ocultos não presentes no HTML",
-          "curl_com_auth": "curl -s -H 'Authorization: Bearer [TOKEN]' -H 'Cookie: [COOKIES_DO_NAVEGADOR]' https://[SITE]/api/endpoint",
-          "curl_com_cookies_arquivo": "curl -s -b cookies.txt https://[SITE]/api/endpoint | python3 -m json.tool",
-          "mitmproxy": "mitmproxy --mode transparent (intercepta tráfego em tempo real com interface visual)",
-          "mitmdump": "mitmdump -w captura.mitm (grava todo o tráfego de rede em arquivo para análise posterior)",
-          "mitmdump_filtrado": "mitmdump -q -s script_filtro.py (filtra e imprime apenas respostas JSON de APIs)",
-          "observacao": "Copie os cookies/tokens do DevTools do navegador (F12 > Network > Headers > Copy as cURL)"
+      "modo_operacional": "FURTIVO_BACKGROUND",
+      "restricoes_estritas": {
+        "READ_ONLY_FIRST": true,
+        "MUTATION_ALLOWED": false,
+        "AUDIT_LOGGING": true
+      },
+      "gatilhos_mapeados": [
+        "auditoria total replicador",
+        "interceptar api oculta",
+        "extrair dados ocultos",
+        "vasculhar site completo",
+        "brute force de rotas",
+        "snapshot dom completo",
+        "single-file-cli"
+      ],
+      "pipeline_execucao_passo_a_passo": [
+        {
+          "fase": 1,
+          "id": "fase_1_interceptacao_api",
+          "depende_de": [],
+          "ferramentas": [
+            "cURL (autenticado)",
+            "mitmproxy"
+          ],
+          "acao": "Capturar tráfego de APIs em background preservando o cookie/sessão ativo do navegador.",
+          "saida_esperada": "./artifacts/raw_api_traffic.json"
         },
-        "fase_2_extracao_html_oculto": {
-          "descricao": "Extrai dados escondidos em campos ocultos, tags invisíveis e variáveis JavaScript embutidas",
-          "pup_campos_ocultos": "curl -s https://[SITE] | pup 'input[type=\"hidden\"] attr{value}'",
-          "pup_atributos_data": "curl -s https://[SITE] | pup '[data-*] attr{data-id}'",
-          "pup_texto_oculto": "curl -s https://[SITE] | pup '[style*=\"display:none\"] text{}'",
-          "jq_next_data": "curl -s https://[SITE] | grep -o '__NEXT_DATA__.*</script>' | sed 's/.*>//;s/<.*//' | jq '.props.pageProps'",
-          "jq_campo_especifico": "curl -s https://[SITE] | grep 'NEXT_DATA' | jq '.props.pageProps.dadosOcultos'",
-          "grep_variaveis_js": "curl -s https://[SITE] | grep -oP '(?<=(var|const|let) [a-zA-Z_]+\\s*=\\s*)[^;]+'",
-          "grep_script_json": "curl -s https://[SITE] | grep -oP '(?<=<script type=\"application/json\">)[^<]+'",
-          "observacao": "Instalar pup: brew install pup | Instalar jq: brew install jq"
+        {
+          "fase": 2,
+          "id": "fase_2_extracao_html_oculto",
+          "depende_de": [
+            "fase_1_interceptacao_api"
+          ],
+          "ferramentas": [
+            "pup",
+            "jq"
+          ],
+          "acao": "Varrer o DOM capturado em busca de inputs hidden, variáveis globais JS e blocos __NEXT_DATA__.",
+          "saida_esperada": "./artifacts/hidden_fields_state.json"
         },
-        "fase_3_historico_e_endpoints": {
-          "descricao": "Vasculha o histórico público do site e arquivos JavaScript em busca de rotas e endpoints ocultos",
-          "linkfinder": "python3 linkfinder.py -i https://[SITE]/app.js -o cli (encontra URLs ocultas em arquivos .js)",
-          "linkfinder_recursivo": "for url in $(curl -s https://[SITE] | grep -oP 'src=\"\\K[^\"]+\\.js'); do python3 linkfinder.py -i $url -o cli; done",
-          "gau": "gau [SITE] (lista TODAS as URLs que o site já teve — histórico público do Wayback Machine)",
-          "waybackurls": "waybackurls [SITE] | grep -v '\\.' | sort -u (rotas antigas sem extensão)",
-          "waybackurls_filtrado": "waybackurls [SITE] | grep '\\.json\\|\\.env\\|\\.bak\\|\\.sql' (arquivos sensíveis esquecidos)",
-          "trufflehog": "trufflehog git https://[REPO_GIT_EXPOSTO] (varre histórico git procurando senhas e tokens)",
-          "gitleaks": "gitleaks detect --source . --report-format json --report-path vazamentos.json",
-          "gitleaks_remoto": "git clone https://[SITE]/.git /tmp/repo_capturado && gitleaks detect --source /tmp/repo_capturado",
-          "observacao": "Instalar: pip install trufflehog | brew install gitleaks | go install github.com/lc/gau/v2/cmd/gau@latest | go install github.com/tomnomnom/waybackurls@latest"
+        {
+          "fase": 3,
+          "id": "fase_3_historico_e_endpoints",
+          "depende_de": [
+            "fase_2_extracao_html_oculto"
+          ],
+          "ferramentas": [
+            "LinkFinder",
+            "gau",
+            "waybackurls",
+            "trufflehog",
+            "gitleaks"
+          ],
+          "acao": "Mapear rotas estáticas e dinâmicas dentro dos arquivos .js e caçar segredos/tokens expostos.",
+          "saida_esperada": "./artifacts/mapped_endpoints_and_secrets.json"
         },
-        "fase_4_metadados_arquivos": {
-          "descricao": "Extrai metadados ocultos (EXIF, GPS, autor, software) de imagens, PDFs e documentos baixados do site",
-          "exiftool_imagem": "exiftool [ARQUIVO.jpg] (câmera, data, GPS, software de edição)",
-          "exiftool_pdf": "exiftool [ARQUIVO.pdf] (autor, empresa, data criação, software)",
-          "exiftool_multiplos": "exiftool *.jpg *.pdf | grep -i 'GPS\\|Author\\|Creator\\|Software'",
-          "exiftool_json": "exiftool -j [ARQUIVO] | python3 -m json.tool",
-          "download_e_analise": "wget -q https://[SITE]/foto.jpg && exiftool foto.jpg | grep -i 'GPS\\|Location'",
-          "observacao": "Instalar: brew install exiftool | apt install libimage-exiftool-perl"
+        {
+          "fase": 4,
+          "id": "fase_4_metadados_arquivos",
+          "depende_de": [
+            "fase_3_historico_e_endpoints"
+          ],
+          "ferramentas": [
+            "exiftool"
+          ],
+          "acao": "Extração forense de metadados (EXIF/GPS/Autoria) de todas as mídias e PDFs descobertos.",
+          "saida_esperada": "./artifacts/metadata_forensics_report.json"
         },
-        "fase_5_brute_force_rotas": {
-          "descricao": "Testa milhares de rotas ocultas por segundo para encontrar páginas de admin, backups e configs não linkadas",
-          "gobuster": "gobuster dir -u https://[SITE] -w /usr/share/wordlists/dirb/common.txt -o rotas_encontradas.txt",
-          "gobuster_extensoes": "gobuster dir -u https://[SITE] -w wordlist.txt -x php,json,env,bak,sql,zip",
-          "dirb": "dirb https://[SITE] /usr/share/dirb/wordlists/common.txt",
-          "ffuf": "ffuf -w wordlist.txt -u https://[SITE]/FUZZ -mc 200,301,302,403",
-          "ffuf_subdomains": "ffuf -w subdomains.txt -u https://FUZZ.[SITE] -mc 200",
-          "wordlist_download": "wget https://raw.githubusercontent.com/v0re/dirb/master/wordlists/common.txt -O wordlist.txt",
-          "observacao": "Instalar: brew install gobuster | brew install ffuf | apt install dirb. USE APENAS EM SEUS PRÓPRIOS AMBIENTES OU COM AUTORIZAÇÃO EXPRESSA."
+        {
+          "fase": 5,
+          "id": "fase_5_brute_force_rotas",
+          "depende_de": [
+            "fase_3_historico_e_endpoints"
+          ],
+          "ferramentas": [
+            "gobuster",
+            "dirb",
+            "ffuf"
+          ],
+          "acao": "Executar fuzzing e descoberta de diretórios ocultos, arquivos de backup (.bak, .old) e painéis.",
+          "saida_esperada": "./artifacts/discovered_hidden_routes.txt"
         },
-        "fase_6_extracao_avancada_html": {
-          "descricao": "Extração avançada de dados de HTML/JSON usando ferramentas de linha de comando e navegadores de terminal",
-          "pup_links": "curl -s https://[SITE] | pup 'a attr{href}' (lista todos os links da página)",
-          "pup_hidden": "curl -s https://[SITE] | pup 'input[type=\"hidden\"] attr{value}'",
-          "jq_next_data": "curl -s https://[SITE] | grep '__NEXT_DATA__' | jq .props.pageProps",
-          "lynx_dump": "lynx -dump https://[SITE] (extrai texto puro da página sem HTML)",
-          "lynx_source": "lynx -source https://[SITE] > pagina.html",
-          "w3m_dump": "w3m -dump https://[SITE] (alternativa ao lynx, melhor para tabelas)",
-          "scrapy_shell": "scrapy shell https://[SITE] (REPL interativo — teste seletores CSS: response.css('h1::text').get())",
-          "scrapy_export": "scrapy crawl [SPIDER] -o dados.json",
-          "single_file_html": "npx single-file-cli https://[SITE] --output ./pagina_completa.html",
-          "observacao": "Instalar: brew install pup jq lynx w3m | pip install scrapy | npm install -g single-file-cli"
+        {
+          "fase": 6,
+          "id": "fase_6_extracao_avancada_html",
+          "depende_de": [
+            "fase_2_extracao_html_oculto",
+            "fase_5_brute_force_rotas"
+          ],
+          "ferramentas": [
+            "seletores_estruturados_custom"
+          ],
+          "acao": "Raspagem profunda de conteúdo textual e estrutural das novas rotas descobertas.",
+          "saida_esperada": "./artifacts/scraped_structured_content.json"
         },
-        "fase_7_infraestrutura_servidor": {
-          "descricao": "Cópia direta do servidor origem via SSH/SCP/SFTP e exportação de CMS (WordPress, Drupal)",
-          "scp_site": "scp -r usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
-          "rsync_site": "rsync -avz --progress usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
-          "rsync_exclusoes": "rsync -avz --progress --exclude='*.log' --exclude='node_modules' usuario@[SERVIDOR]:/var/www/[SITE] ./copia_local",
-          "sftp_interativo": "sftp usuario@[SERVIDOR] (depois: get -r /var/www/[SITE])",
-          "git_clone": "git clone https://[REPO_GIT] ./copia_local",
-          "git_pull": "git pull origin main",
-          "wordpress_db": "wp db export dump_$(date +%Y%m%d).sql --path=/var/www/[SITE]",
-          "wordpress_core": "wp core download --path=/var/www/[SITE] --locale=pt_BR",
-          "wordpress_export": "wp export --path=/var/www/[SITE] --dir=./wp-export",
-          "drush_archive": "drush archive-dump --destination=./dump_drupal_$(date +%Y%m%d).tar.gz",
-          "drush_sql": "drush sql-dump > dump_$(date +%Y%m%d).sql",
-          "observacao": "Requer acesso SSH ao servidor. Instalar: brew install rsync wp-cli"
+        {
+          "fase": 7,
+          "id": "fase_7_espelhamento_backend",
+          "depende_de": [
+            "fase_1_interceptacao_api"
+          ],
+          "ferramentas": [
+            "rsync",
+            "SSH",
+            "WP-CLI"
+          ],
+          "acao": "Sincronizar estruturas autorizadas de arquivos de servidor e dumps permitidos em modo leitura.",
+          "saida_esperada": "./artifacts/backend_mirror_structure/"
         },
-        "fase_8_captura_midia_e_pdf": {
-          "descricao": "Captura visual de páginas como screenshot, PDF ou download de mídia (vídeos, áudio)",
-          "puppeteer_screenshot": "npx puppeteer-cli screenshot https://[SITE] --full-page --output screenshot.png",
-          "puppeteer_pdf": "npx puppeteer-cli pdf https://[SITE] --output ./pagina.pdf",
-          "playwright_screenshot": "npx playwright screenshot https://[SITE] --full-page output.png",
-          "playwright_pdf": "npx playwright pdf https://[SITE] ./output.pdf",
-          "yt_dlp_video": "yt-dlp https://[URL_DO_VIDEO]",
-          "yt_dlp_audio": "yt-dlp --extract-audio --audio-format mp3 https://[URL_DO_VIDEO]",
-          "yt_dlp_playlist": "yt-dlp --yes-playlist https://[URL_DA_PLAYLIST]",
-          "aria2c_paralelo": "aria2c -Z 'https://[SITE]/arq1' 'https://[SITE]/arq2' (downloads paralelos)",
-          "aria2c_rapido": "aria2c -x 16 -s 16 https://[SITE]/arquivo_grande (16 conexões simultâneas)",
-          "httrack": "httrack https://[SITE] -O ./[PASTA_DESTINO]",
-          "observacao": "Instalar: npm install -g puppeteer-cli @playwright/test | pip install yt-dlp | brew install aria2 httrack"
+        {
+          "fase": 8,
+          "id": "fase_8_captura_midia_e_pdf",
+          "depende_de": [
+            "fase_5_brute_force_rotas"
+          ],
+          "ferramentas": [
+            "Puppeteer",
+            "Playwright"
+          ],
+          "acao": "Gerar capturas de tela cheia (full-page screenshots) e PDFs de auditoria visual de cada rota.",
+          "saida_esperada": "./artifacts/visual_snapshots/"
         },
-        "fase_9_snapshot_dom_headless_chrome": {
-          "descricao": "Renderização e snapshot completo de SPAs dinâmicas (React, Vite, Vue, Angular) executando o Google Chrome Headless nativo do Mac via single-file-cli para capturar o DOM pós-execução de scripts",
-          "comando_padrao_mac": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-args='[\"--no-sandbox\", \"--disable-gpu\", \"--disable-dev-shm-usage\"]' https://[SITE] rendered_index.html",
-          "comando_com_espera_rede": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --browser-wait-until=networkidle0 https://[SITE] index.html",
-          "comando_comprimir_html": "single-file --browser-executable-path=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --compress-HTML=true https://[SITE] index.html",
-          "observacao": "Resolve o problema clássico de páginas SPA renderizando em branco (<div id=\"root\"></div> vazia com wget). Salva todas as fontes, SVGs e estilos Emotion/MUI embutidos em Base64 em 1 único arquivo autocontido."
+        {
+          "fase": 9,
+          "id": "fase_9_snapshot_dom_headless_chrome",
+          "depende_de": [
+            "fase_6_extracao_avancada_html"
+          ],
+          "ferramentas": [
+            "Google Chrome Headless",
+            "single-file-cli"
+          ],
+          "acao": "Renderizar de ponta a ponta as SPAs dinâmicas, congelando o DOM final e salvando como arquivo offline autônomo.",
+          "saida_esperada": "./artifacts/offline_distribution_hub/"
         },
-        "fase_10_conformidade_financeira_pci": {
-          "descricao": "Auditoria de conformidade de dados financeiros (PCI-DSS) com segregação em 3 categorias canônicas: (1) Mapeamento de Controle (ID, BIN 6 dígitos, Brand, Bank, Level, Hash Token), (2) Verificação de Vulnerabilidade (card_preview vazando PAN >4 dígitos, have_cardholder_number=1, e bloqueio imediato por CVV/card_password sob PCI Req 3.2), (3) Log de Compliance estruturado em ./reports/compliance_pci_audit.json com hashes SHA-256.",
-          "comando": "agy_cmd audit-pci-cards . --output ./reports/compliance_pci_audit.json"
+        {
+          "fase": 10,
+          "id": "fase_10_conformidade_financeira_pci",
+          "depende_de": [
+            "fase_1_interceptacao_api",
+            "fase_2_extracao_html_oculto",
+            "fase_6_extracao_avancada_html"
+          ],
+          "ferramentas": [
+            "audit_pci_cards"
+          ],
+          "acao": "Varredura universal compulsória contra vazamento de PAN e validação das 3 Categorias Canônicas PCI-DSS.",
+          "saida_esperada": "./reports/compliance_pci_audit.json"
         }
+      ],
+      "compilacao_laudo_final": "./reports/audit_total_{TIMESTAMP}.md"
+    },
+    "audit_pci_cards": {
+      "strict_requirement": "PCI-DSS Req 3.2",
+      "categorias_canonicas": {
+        "1_mapeamento_controle": [
+          "ID",
+          "BIN",
+          "Brand",
+          "Bank",
+          "Level",
+          "Card_Token_Hash"
+        ],
+        "2_verificacao_vulnerabilidade": "Gatilho de bloqueio imediato se card_preview > 4 dígitos OU have_cardholder_number = 1 com número bruto OU presenca de card_password/CVV",
+        "3_log_compliance": "./reports/compliance_pci_audit.json"
       }
     },
     "trainer_de_jogo": {
