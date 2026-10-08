@@ -2791,38 +2791,47 @@ EOF
         # ======================================================================
         "auditoria-total"|"auditoria total"|"aduitoria total"|"varredura completa"|"auditoria-completa-total")
             echo "🛡️ =============================================================================="
-            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL (10 CAMADAS) & ESQUEMA DE REPLICAÇÃO ESTRUTURADA"
+            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL (10 CAMADAS) & HARDENING EXPANDIDO"
             echo "=============================================================================="
-            echo "👉 [1/8] Camada 1 (UI & Superfície Web): Conexão silenciosa Chrome Headless & Replicação..."
-            echo "   • Reutilização de perfil e sessão ativa (sem popup, sem roubo de foco, sem deslogar)"
-            echo "   • Varredura multitelas via DOM/pushState com captura de modais interativos"
-            echo "   • Organização sistemática em subpastas canônicas numeradas (1-atendimento, 2-canais, etc.)"
-            echo "   • Preservação de assets locais (CSS, Roboto woff2, SVGs) e reescrita de links offline"
+            echo "👉 [1/8] Camada 1: Client-Side Expandido (Stealth Anti-Bot, Supply Chain, CSP & SRI, DOM XSS)..."
+            echo "   • Evasão avançada WAF/Anti-Bot em Stealth Mode (hardware fingerprint real, bypass navigator.webdriver, delays humanos)"
+            echo "   • Inventário de scripts de terceiros e Supply Chain Security (GTM, Meta Pixel, chats externos e trackers)"
+            echo "   • Auditoria de políticas de segurança: Content Security Policy (CSP) e Subresource Integrity (SRI)"
+            echo "   • Mapeamento de vulnerabilidades DOM-Based (manipulação insegura de URL params e localStorage)"
+            echo "   • Conexão silenciosa Chrome Headless (sessão ativa sem deslogar, replicação SPA e subpastas temáticas numeradas)"
             echo ""
-            echo "👉 [2/8] Camada 2 & 3: Lógica de Interação, Gerenciamento de Estado & Cliente de API/Rede..."
+            echo "👉 [2/8] Camadas 2 & 3: Borda, DNS, Subdomínios & Superfície de Rede..."
+            echo "   • Enumeração de subdomínios ativos e prevenção a Subdomain Takeover (apontamentos CNAME órfãos)"
             agy_cmd scan-ports-deep "127.0.0.1" "80,443,3000,5173,8000,8080,8088,8765" 2>/dev/null || true
             echo ""
-            echo "👉 [3/8] Camada 4 & 5: Gateway, Roteamento de Borda & Controladores de Entrada de API..."
+            echo "👉 [3/8] Camada 4 & 5: Gateways, Controladores & Mapeamento de Shadow APIs..."
+            echo "   • Mapeamento de Shadow APIs & rotas não documentadas via cruzamento de bundles JS com OpenAPI/Swagger"
             agy_cmd audit-web-stack "http://127.0.0.1:8765" 2>/dev/null || true
             echo ""
-            echo "👉 [4/8] Camada 6: Segurança & Middleware de Autenticação (Fuzzing & Rotas Ocultas)..."
+            echo "👉 [4/8] Camada 6: Autorização de Objetos (IDOR/BOLA) & Rate Limiting..."
+            echo "   • Auditoria de controle de acesso a nível de objeto IDOR / BOLA em rotas de API com parâmetros"
+            echo "   • Verificação de Rate Limiting e resiliência a DoS de aplicação (prevenção de abuso por IP)"
             agy_cmd fuzz-routes-fast "http://127.0.0.1:8765" 2>/dev/null || true
             echo ""
-            echo "👉 [5/8] Camada 7 & 8: Serviços, Regras de Negócio & Gerenciamento de Segredos..."
+            echo "👉 [5/8] Camada 7 & 8: Regras de Negócio, SCA & Gerenciamento de Segredos..."
+            echo "   • Análise de Composição de Software (SCA) em package.json/requirements.txt contra CVEs conhecidos"
             agy_cmd audit-secrets-deep 2>/dev/null || true
             echo ""
             echo "👉 [6/8] Camada 9: Persistência, ORM & Sanitização Estática de Consultas SQL..."
             agy_cmd audit-sql-sanitization . 2>/dev/null || true
             echo ""
-            echo "👉 [7/8] Camada 10: Armazenamento, Integridade de Dados & Hardening do Host..."
+            echo "👉 [7/8] Camada 10: Infraestrutura, Cloud Storage & Hardening do Host..."
+            echo "   • Auditoria de permissões de Cloud Storage (Bucket Misconfiguration: S3, GCS e Azure Blobs públicos)"
             agy_cmd audit-hidden-webshells . 2>/dev/null || true
             agy_cmd audit-privesc-vectors 2>/dev/null || true
             echo ""
-            echo "👉 [8/8] Governança Sentinela: Entrypoints canônicos, script de servidor e sync GitHub..."
-            echo "   • Gerando hub_replicado.html, index.html e start_local.sh"
-            echo "   • Rastreabilidade total e commit 1:1 no repositório do projeto"
+            echo "👉 [8/8] Governança Expandida: Detecção de PII em Logs, Artefatos de Build & GitOps Anti-Tampering..."
+            echo "   • Varredura forense contra vazamento de PII (senhas, tokens JWT, dados sensíveis) em logs e console"
+            echo "   • Análise de exposição acidental de artefatos de build e CI/CD (.git/, .github/, Dockerfile)"
+            echo "   • Auditoria de integridade do pipeline e GitOps Anti-Tampering (validação de hashes e assinaturas)"
+            echo "   • Gerando hub_replicado.html, index.html, start_local.sh e sincronização Git 1:1"
             echo "=============================================================================="
-            echo "🎉 [STATUS: AUDITORIA TOTAL (10 CAMADAS) & REPLICAÇÃO CONCLUÍDA]"
+            echo "🎉 [STATUS: AUDITORIA TOTAL EXPANDIDA (10 CAMADAS) CONCLUÍDA]"
             echo "=============================================================================="
             ;;
 
