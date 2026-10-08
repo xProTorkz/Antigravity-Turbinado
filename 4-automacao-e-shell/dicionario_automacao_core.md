@@ -473,6 +473,17 @@ Pipelines multi-comandos orientados a DAG que encadeiam diagnósticos e auditori
 ##### 🧭 Diretriz de Rastreamento (Engine Rule)
 O motor de busca **NÃO PODE** pular fases. Para avançar da Fase `N` para a Fase `N+1`, o arquivo declarado em `saida_esperada` na Fase `N` deve existir em disco, ser validado e conter dados estruturados não nulos.
 
+##### 🔁 Regra Dinâmica de Retroalimentação (Recursive Discovery)
+Se durante a execução da **Fase 3 (Histórico)** ou da **Fase 5 (Brute Force de Rotas)** o motor descobrir novos endpoints, subdiretórios ou arquivos `.js` que não constavam no mapa inicial, ele é obrigado a:
+1. **Injetar** essas novas rotas retroativamente na fila de execução da **Fase 1** (para interceptação de requisições) e da **Fase 2** (para varredura de HTML Oculto).
+2. O pipeline de auditoria só será considerado concluído quando uma varredura completa (`Fase 1` até `Fase 6`) for executada sem encontrar nenhuma nova rota adicional (**Estado de Convergência Zero**).
+
+##### 🎯 Onde os Locais Ocultos Costumam "Se Esconder" (Checklist para o Motor)
+Para garantir que o motor inspecione os vetores críticos de dados ocultos, os seguintes alvos são obrigatórios na **Fase 2** e na **Fase 6**:
+1. **Estado Hidratado de Frameworks Modernos:** Varredura obrigatória dentro das tags `<script id="__NEXT_DATA__">`, `window.__Nuxt__`, `window.__INITIAL_STATE__` ou nós de Contexto do React/Vue. É ali que ficam guardados IDs, chaves de API e payloads de backend inteiros antes da página renderizar.
+2. **Mapeamento de Rotas no Front (Client-Side Routing):** O motor deve buscar padrões de dicionários de rotas dentro dos arquivos `.js` compilados (ex: caminhos contendo `path: "/..."`, `component:` ou Lazy Loading de componentes).
+3. **Parâmetros Ocultos por Força Bruta:** Não basta buscar páginas ocultas, o motor deve testar parâmetros comuns ocultos em URLs válidas (ex: `?debug=true`, `?admin=1`, `?export=json`).
+
 ##### 🛡️ Orquestração Furtiva de Segurança
 * **Modo**: `READ_ONLY_FIRST = true`
 * **Mutação**: `MUTATION_ALLOWED = false` (Bloqueio estrito de requisições POST/PUT/DELETE que alterem estado do alvo).
