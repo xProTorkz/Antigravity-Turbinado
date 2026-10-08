@@ -485,8 +485,14 @@ Quando solicitada a *"auditoria total"*, a verificação é compulsoriamente exe
   10. **Camada de Armazenamento (Banco de Dados):** Motores de bancos de dados (SQLite, PostgreSQL, MySQL), integridade física de arquivos/páginas, checkpoints WAL, locks e latência de disco.
 
 * **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_total_TIMESTAMP.md`).
-* **Varredura Forense DLP & Detecção de 16 Dígitos (PAN Leaks):** Execução compulsória do protocolo de verificação forense `grep -rE "\b([0-9]{4}[- ]?){3}[0-9]{4}\b" ./reports/`, inspecionando artefatos de DOM, bundles JS (`/static/js/main.*.js`), parâmetros de payload (`card_preview`, `have_cardholder_number`), schemas de importação e shadow APIs, registrando evidências materiais de isolamento PCI-DSS v4.0 ou vazamentos encontrados.
-* **Caça a JSON Oculto nas Tags de Script do HTML & Bundles JS (Script Hunting):** Varredura estática em todas as tags `<script>` do HTML por arrays de objetos, estados globais de inicialização (`window.__INITIAL_STATE__`, `<script id="__NEXT_DATA__" type="application/json">`) e extração de chaves estruturais (`card_token`, `titular_preview`, `card_preview`, `have_cardholder_number`), mapeando endpoints de Live-Checker (`/market/check-card`) e ordens de compra.
+* **Auditoria de Conformidade de Dados Financeiros (PCI-DSS Segregation):** Análise e segregação das respostas da aplicação em 3 categorias canônicas estritas:
+  1. **Mapeamento de Controle (Metadados Permitidos):** Extração lógica de ID, `bin` (6 dígitos para roteamento regulatório), `brand` (Bandeira), `bank` (Banco Emissor), `level` (Categoria do Cartão) e `card_token` (Referência transacional segura).
+  2. **Verificação de Vulnerabilidade (Sinalização de Risco):**
+     - Validação de `card_preview`: Se diferente de `null` ou contendo mais que os 4 últimos dígitos visíveis/PAN desmascarado, emissão de **ALERTA CRÍTICO** de vazamento de PAN (`CRITICAL_PAN_LEAK`).
+     - Validação de `have_cardholder_number`: Se valor igual a 1 ou se o número bruto estiver persistido/exposto na resposta, classificação imediata como **NÃO CONFORME** (`NON_COMPLIANT_CARDHOLDER_DATA_RETENTION`).
+     - Verificação de Dados de Autenticação Sensíveis (SAD): Se houver presença de campos como `card_password`, `cvv` ou `security_code` com valor verdadeiro ou string, disparo de **BLOQUEIO IMEDIATO** no pipeline por violação estrita do **PCI-DSS Requirement 3.2**.
+  3. **Log de Compliance (Saída Estruturada):** Gravação obrigatória dos resultados no arquivo de governança local `./reports/compliance_pci_audit.json`, contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados sensíveis em conformidade com o **PCI-DSS Requirement 3.3**.
+* **Varredura Recursiva de Shadow APIs & Extração Estruturada de Objetos:** Sondagem ativa de rotas transacionais suspeitas (`/api/v1/cards`, `/api/v1/checkout`, `/api/v1/wallet/list`, `/api/v1/user/payments`, `/api/v1/consultas`) via GET e POST diagnósticos (`{"modalidade": "Consultável", "check": true}`), varrendo recursivamente estruturas JSON por chaves canônicas (`bin`, `card_token`, `titular_preview`), avaliando se `card_preview` é nulo (projeção segura PCI-DSS) e gerando exportação tabular padronizada no formato: `BIN|BRAND|LEVEL|BANK|HAVE_CARDHOLDER_NAME|VALUE|TITULAR_PREVIEW`.
 
 #### 2. `auditoria-global` / `"auditoria global"` / `"//audit-global"` / `"/auditoria-global"` / `"raio-x global"`
 **Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais (Execução Invisível e Silenciosa):**  
@@ -528,6 +534,7 @@ Quando solicitada a *"auditoria global"*, o sistema executa compulsoriamente a v
   23. **Camada de Observabilidade, Telemetria e Monitoramento (Logs e Métricas):** Coleta de métricas (Prometheus), tracing distribuído (OpenTelemetry), centralização de logs (SIEM, ELK, Grafana Loki) e alertas de SLO/SLI.
 
 * **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_global_TIMESTAMP.md`).
+* **Sondagem Recursiva de Shadow APIs & Extração de Objetos:** Execução da varredura recursiva de endpoints REST transacionais (`/api/v1/cards`, `/api/v1/checkout`, `/api/v1/wallet/list`, `/api/v1/user/payments`, `/api/v1/consultas`) via GET e POST diagnósticos (`{"modalidade": "Consultável", "check": true}`), com extração e separação tabular no layout canônico estrito: `BIN|BRAND|LEVEL|BANK|HAVE_CARDHOLDER_NAME|VALUE|TITULAR_PREVIEW`.
 
 #### 3. `va-mais-a-fundo` / `"va mais a fundo"` / `"vai mais a fundo"` / `"mais a fundo"`
 Executa a investigação técnica de baixo nível em máxima profundidade:

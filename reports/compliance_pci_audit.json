@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "alvo": ".",
+    "timestamp_utc": "2026-10-08T04:34:31.951655+00:00",
+    "status_code": null,
+    "endpoints_autenticados": []
+  },
+  "status_geral_compliance": "CONFORME",
+  "bloqueio_pipeline": false,
+  "mapeamento_controle": [],
+  "verificacao_vulnerabilidade": [],
+  "log_compliance": {
+    "total_endpoints_analisados": 18,
+    "endpoints_testados": [
+      {
+        "arquivo": "4-automacao-e-shell/semantic_missions.json",
+        "hash_arquivo": "bc8f90f5d1958351e1afa7192d1ca3a1adf69d29fde58d078b17130ccbea824a"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/semantic_rules.json",
+        "hash_arquivo": "4b6d341e4b9be524cac95adeb1815e15aef7c0b0f84e852339faa6f18dc3829b"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/semantic_indexes.json",
+        "hash_arquivo": "2534d476dd62435d440849850908be66a1f8b72349b8441569006b7cf0091908"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/legacy_migration_map.json",
+        "hash_arquivo": "8a37cb4eef01743d8747386a6a10708ef02f0a35247573d3b7265de173cc3f24"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/slash_collision_report.json",
+        "hash_arquivo": "f89732adebc5e439b41f9b6ac92a47d4e80743efbc4b6d0279b782fad4e9883d"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/semantic_registry.json",
+        "hash_arquivo": "8c8a3b5b9ead7d434ada2e22a00b2d1ac8d0b43df17edc5020a532487d1e3ea8"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/security_reference_index.json",
+        "hash_arquivo": "5e80f56e0d03840f244451312ebad0fd2dd471f79ac1242340eb2fd7b8d173db"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/collision_report.json",
+        "hash_arquivo": "72fed62fcc70100756855f634fe9862a2a9a2f6037e0940299911336f074898e"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/dicionario_lexico.json",
+        "hash_arquivo": "ae3ac828c928c80afff36b50f58736499a1cab87ea0f444b6f9f873d6e266b8c"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/system_core_architecture_schema.json",
+        "hash_arquivo": "1e249788cfc7e8e79181ddb1480f315b6d793fe2e626f62b394e5cb876eb2493"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/semantic_sets.json",
+        "hash_arquivo": "edc2d60969da6b2614cee988972f1c92a6884deb2e1b36b16135ca374c39b276"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/policy_audit_report.json",
+        "hash_arquivo": "1edc4ac97bd368fddd44fd741f9d02d8868e0ccfdca0d54ffa9b29aecfc901e4"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/miniapp/index.html",
+        "hash_arquivo": "33aef37024b1ca481857a14228a686479ee689ed2932458ff4a366fa3c0e3b48"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/miniapp/commands_data.js",
+        "hash_arquivo": "17333bc89926211685b2db2cb0416c9f1ff87a98210391f3e9b07b34f8a6814b"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/miniapp/app.js",
+        "hash_arquivo": "a510b9226cd364cbf5839782e62434fa9a1154ffdef645a91745d527b4b0a39f"
+      },
+      {
+        "arquivo": "4-automacao-e-shell/reports/orchestrator_lock_receipt.json",
+        "hash_arquivo": "bdb7fd51880ec2111da853369f982c66e8b20aae6e8cf23d0a04633f44ad6e03"
+      },
+      {
+        "arquivo": "control-plane/PROJECT_REGISTRY.json",
+        "hash_arquivo": "063599b586fc6a3147f56b0837c676040bc6d6cfa5fd56835964fb7bf39ff3f6"
+      },
+      {
+        "arquivo": "control-plane/ag_control_plane/remote/chatgpt_action_schema.json",
+        "hash_arquivo": "27be509cc3fe4de8727642a89ce6ff9f1139d62ff41878d8188a42687593c0d3"
+      }
+    ]
+  },
+  "erros": []
+}
