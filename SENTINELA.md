@@ -218,6 +218,10 @@ Nunca utilize inclusão indiscriminada de arquivos.
 
 Não inclua credenciais, tokens, cookies, perfis autenticados, bancos de dados reais, logs sensíveis ou informações privadas não necessárias.
 
+#### Auditoria Mandatória contra Vazamento de PAN & Conformidade PCI-DSS (scan_cards_pci)
+* Em todas as rotinas de **Auditoria Total** e **Auditoria Global**, é obrigatória a execução do módulo universal `audit-pci-cards` (`scan_cards_pci.py`).
+* Ele audita o código-fonte, templates de UI, respostas de Shadow APIs de pagamento e arquivos de log, validando BINs oficiais (Visa, Mastercard, Amex, Elo, Hipercard, Discover, Diners) e o algoritmo matemático de Luhn Mod 10, com mascaramento estrito (PCI-DSS 3.3) para garantir zero vazamento de dados de cartão de crédito.
+
 Em repositórios públicos, não publique inventários de projetos privados, caminhos pessoais, informações de infraestrutura ou detalhes operacionais confidenciais.
 
 Quando autorizado, realize commit e push exclusivamente das alterações pertencentes à tarefa, respeitando as proteções de branch e o fluxo de Pull Requests do projeto.

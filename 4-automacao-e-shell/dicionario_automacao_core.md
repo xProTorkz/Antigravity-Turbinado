@@ -485,6 +485,8 @@ Quando solicitada a *"auditoria total"*, a verificação é compulsoriamente exe
   10. **Camada de Armazenamento (Banco de Dados):** Motores de bancos de dados (SQLite, PostgreSQL, MySQL), integridade física de arquivos/páginas, checkpoints WAL, locks e latência de disco.
 
 * **Modo Operacional:** Furtivo, invisível e silencioso em background (`READ_ONLY_FIRST`, `MUTATION_ALLOWED=false`, `AUDIT_LOGGING=true`, compilação em `reports/audit_total_TIMESTAMP.md`).
+* **Varredura Forense DLP & Detecção de 16 Dígitos (PAN Leaks):** Execução compulsória do protocolo de verificação forense `grep -rE "\b([0-9]{4}[- ]?){3}[0-9]{4}\b" ./reports/`, inspecionando artefatos de DOM, bundles JS (`/static/js/main.*.js`), parâmetros de payload (`card_preview`, `have_cardholder_number`), schemas de importação e shadow APIs, registrando evidências materiais de isolamento PCI-DSS v4.0 ou vazamentos encontrados.
+* **Caça a JSON Oculto nas Tags de Script do HTML & Bundles JS (Script Hunting):** Varredura estática em todas as tags `<script>` do HTML por arrays de objetos, estados globais de inicialização (`window.__INITIAL_STATE__`, `<script id="__NEXT_DATA__" type="application/json">`) e extração de chaves estruturais (`card_token`, `titular_preview`, `card_preview`, `have_cardholder_number`), mapeando endpoints de Live-Checker (`/market/check-card`) e ordens de compra.
 
 #### 2. `auditoria-global` / `"auditoria global"` / `"//audit-global"` / `"/auditoria-global"` / `"raio-x global"`
 **Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais (Execução Invisível e Silenciosa):**  
