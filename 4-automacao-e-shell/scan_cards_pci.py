@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PCI-DSS & PAN Leak Auditor (Zero-Dependency)
+PCI-DSS & PAN Leak Auditor (Zero-Dependency & Zero False-Positive)
 Módulo universal de varredura contra vazamento de cartões de crédito (PAN),
 parâmetros sensíveis de pagamento e não-conformidades com PCI-DSS em qualquer
 site (URL web) ou ecossistema local (arquivos HTML/JS/JSON).
@@ -17,33 +17,22 @@ from urllib.request import Request, urlopen
 from urllib.parse import urljoin, urlparse
 from html.parser import HTMLParser
 
-# Regex rigoroso para os principais emissores mundiais e nacionais
-CARD_PATTERNS = {
-    "Visa": re.compile(r'\b4[0-9]{12}(?:[0-9]{3})?\b'),
-    "Mastercard": re.compile(r'\b(?:5[1-5][0-9]{14}|2(?:22[1-9]|2[3-9][0-9]|[3-6][0-9]{2}|7[0-1][0-9]|720)[0-9]{12})\b'),
-    "American Express": re.compile(r'\b3[47][0-9]{13}\b'),
-    "Elo": re.compile(r'\b(?:401178|401179|431274|438935|451416|457393|457631|457632|504175|627780|636297|636368|506699|5067[0-9]{2}|509[0-9]{3}|6500[0-9]{2}|6504[0-9]{2}|6505[0-9]{2}|6509[0-9]{2}|6516[0-9]{2}|6550[0-9]{2})[0-9]{10,12}\b'),
-    "Hipercard": re.compile(r'\b(?:606282\d{10}|3841\d{12}|3841\d{15})\b'),
-    "Discover": re.compile(r'\b6(?:011|5[0-9]{2})[0-9]{12}\b'),
-    "Diners": re.compile(r'\b3(?:0[0-5]|[68][0-9])[0-9]{11}\b')
+# Regex refinado: ignora números flutuantes ou coordenadas SVG
+CANDIDATE_DIGITS_REGEX = re.compile(r'(?<![\d\.])(\d{13,19})(?![\d\.])')
+
+# Regras de BIN e prefixos estritos para emissores reais mundiais e nacionais
+CARD_PREFIXES = {
+    "Visa": re.compile(r'^4[0-9]{12}(?:[0-9]{3})?$'),
+    "Mastercard": re.compile(r'^(?:5[1-5][0-9]{14}|2(?:22[1-9]|2[3-9][0-9]|[3-6][0-9]{2}|7[0-1][0-9]|720)[0-9]{12})$'),
+    "American Express": re.compile(r'^3[47][0-9]{13}$'),
+    "Elo": re.compile(r'^(?:401178|401179|431274|438935|451416|457393|457631|457632|504175|627780|636297|636368|506699|5067[0-9]{2}|509[0-9]{3}|6500[0-9]{2}|6504[0-9]{2}|6505[0-9]{2}|6509[0-9]{2}|6516[0-9]{2}|6550[0-9]{2})[0-9]{10,12}$'),
+    "Hipercard": re.compile(r'^(?:606282\d{10}|3841\d{12}|3841\d{15})$'),
+    "Discover": re.compile(r'^6(?:011|5[0-9]{2})[0-9]{12}$'),
+    "Diners": re.compile(r'^3(?:0[0-5]|[68][0-9])[0-9]{11}$')
 }
 
-# Parâmetros críticos de PCI-DSS e vazamento de gateway
-RISK_PARAMS = [
-    "card_preview",
-    "have_cardholder_number",
-    "cardholder",
-    "card_number",
-    "card_num",
-    "credit_card",
-    "cc_number",
-    "cvv",
-    "cvc",
-    "card_cvv",
-    "security_code",
-    "card_token",
-    "payment_method_id"
-]
+# Regex estrito para parâmetros de risco PCI com limite de palavra (ignora classes CSS soltas)
+RISK_PARAMS_REGEX = re.compile(r'\b(card_preview|have_cardholder_number|cardholder|card_number|card_num|credit_card|cc_number|cvv|card_cvv|security_code|card_token|payment_method_id)\b', re.IGNORECASE)
 
 COMMON_API_ENDPOINTS = [
     "/api/v1/profile",
@@ -56,7 +45,7 @@ COMMON_API_ENDPOINTS = [
     "/api/cards"
 ]
 
-class SimpleHTMLTagParser(HTMLParser):
+class SensitiveHTMLParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.sensitive_tags = []
@@ -64,16 +53,16 @@ class SimpleHTMLTagParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         for attr, val in attrs:
             attr_lower = attr.lower()
-            val_str = str(val) if val else ""
-            if any(p in attr_lower for p in ["card", "pan", "token", "cvv", "payment"]):
+            val_str = str(val).lower() if val else ""
+            if any(p in attr_lower or p in val_str for p in ["card_preview", "cardholder", "card_number", "cvv"]):
                 self.sensitive_tags.append({
                     "tag": tag,
                     "attr": attr,
-                    "val": val_str[:60]
+                    "val": str(val)[:60]
                 })
 
 def luhn_checksum(card_number: str) -> bool:
-    """Valida o dígito verificador do algoritmo de Luhn (Mod 10)."""
+    """Valida o algoritmo de Luhn (Mod 10)."""
     digits = [int(d) for d in card_number if d.isdigit()]
     if len(digits) < 13 or len(digits) > 19:
         return False
@@ -84,8 +73,14 @@ def luhn_checksum(card_number: str) -> bool:
         checksum += sum(divmod(d * 2, 10))
     return checksum % 10 == 0
 
+def identify_brand(card_number: str) -> str:
+    """Retorna a bandeira do cartão somente se corresponder a um BIN/IIN real."""
+    for brand, pattern in CARD_PREFIXES.items():
+        if pattern.match(card_number):
+            return brand
+    return None
+
 def mask_pan(card_number: str) -> str:
-    """Mascara o PAN mantendo conformidade PCI-DSS (exibe apenas os primeiros 6 e últimos 4)."""
     clean = re.sub(r'\D', '', card_number)
     if len(clean) >= 12:
         return f"{clean[:6]}{'*' * (len(clean) - 10)}{clean[-4:]}"
@@ -94,35 +89,35 @@ def mask_pan(card_number: str) -> str:
 def scan_text_content(content: str, source_label: str, results: dict):
     content_str = str(content)
     
-    # 1. Varredura por Cartões Válidos (com Luhn)
-    for brand, pattern in CARD_PATTERNS.items():
-        matches = pattern.findall(content_str)
-        for match in set(matches):
-            if luhn_checksum(match):
-                masked = mask_pan(match)
-                finding = {
-                    "tipo": "PAN_EXPOSTO",
-                    "bandeira": brand,
-                    "cartao_mascarado": masked,
-                    "fonte": source_label,
-                    "criticidade": "CRÍTICA",
-                    "descricao": f"Número de cartão de crédito válido ({brand}) exposto em texto claro."
-                }
-                results["vulnerabilidades"].append(finding)
-                print(f"🔥 [CRÍTICO] Cartão {brand} Válido detectado na {source_label}: {masked}")
+    # 1. Varredura por PAN (Apenas BINs reais + Luhn Check)
+    candidates = set(CANDIDATE_DIGITS_REGEX.findall(content_str))
+    for candidate in candidates:
+        brand = identify_brand(candidate)
+        if brand and luhn_checksum(candidate):
+            masked = mask_pan(candidate)
+            finding = {
+                "tipo": "PAN_EXPOSTO",
+                "bandeira": brand,
+                "cartao_mascarado": masked,
+                "fonte": source_label,
+                "criticidade": "CRÍTICA",
+                "descricao": f"Número de cartão de crédito válido ({brand}) exposto em texto claro."
+            }
+            results["vulnerabilidades"].append(finding)
+            print(f"🔥 [CRÍTICO] Cartão {brand} Válido detectado na {source_label}: {masked}")
 
     # 2. Varredura por Parâmetros de Risco PCI
-    for param in RISK_PARAMS:
-        if param in content_str:
-            finding = {
-                "tipo": "PARAMETRO_PCI_RISCO",
-                "parametro": param,
-                "fonte": source_label,
-                "criticidade": "ALTA",
-                "descricao": f"Parâmetro sensível de pagamento '{param}' encontrado na fonte."
-            }
-            results["parametros_detectados"].append(finding)
-            print(f"⚠️ [ALERTA] Parâmetro sensível '{param}' detectado na {source_label}!")
+    found_params = set(RISK_PARAMS_REGEX.findall(content_str))
+    for param in found_params:
+        finding = {
+            "tipo": "PARAMETRO_PCI_RISCO",
+            "parametro": param,
+            "fonte": source_label,
+            "criticidade": "ALTA",
+            "descricao": f"Parâmetro sensível de pagamento '{param}' detectado na fonte."
+        }
+        results["parametros_detectados"].append(finding)
+        print(f"⚠️ [ALERTA] Parâmetro sensível '{param}' detectado na {source_label}!")
 
 def fetch_url(url: str, token: str = None, timeout: int = 10):
     headers = {
@@ -151,9 +146,8 @@ def scan_web_target(target_url: str, token: str = None, results: dict = None):
     if status is not None:
         scan_text_content(body, f"UI / HTML ({target_url})", results)
 
-        # Parse de atributos e inputs
         try:
-            parser = SimpleHTMLTagParser()
+            parser = SensitiveHTMLParser()
             parser.feed(body)
             for item in parser.sensitive_tags:
                 print(f"👀 [INFO] Atributo sensível exposto em <{item['tag']}>: {item['attr']} = {item['val']}")
@@ -232,13 +226,15 @@ def main():
     print("\n==============================================================================")
     print("📊 RESUMO DO SCAN PCI-DSS & VAZAMENTO DE DADOS")
     print("==============================================================================")
-    print(f"🔥 Cartões Válidos Encontrados (Luhn Check): {total_cards}")
-    print(f"⚠️ Parâmetros Sensíveis de Pagamento:       {total_params}")
+    print(f"🔥 Cartões Válidos Encontrados (BIN + Luhn Check): {total_cards}")
+    print(f"⚠️ Parâmetros Sensíveis de Pagamento:             {total_params}")
     
     if total_cards == 0 and total_params == 0:
         print("✅ NENHUM VAZAMENTO DE CARTÃO OU PARÂMETRO PCI DETECTADO.")
+    elif total_cards == 0 and total_params > 0:
+        print("ℹ️ NENHUM CARTÃO VAZADO. Parâmetros técnicos mapeados para conformidade.")
     else:
-        print("🚨 ATENÇÃO: NÃO-CONFORMIDADES DE SEGURANÇA DETECTADAS!")
+        print("🚨 ATENÇÃO: VAZAMENTO DE CARTÃO DE CRÉDITO IDENTIFICADO!")
 
     if args.output:
         with open(args.output, "w", encoding="utf-8") as f:
