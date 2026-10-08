@@ -441,6 +441,21 @@
         "2_mapeamento_rotas_client_side": "Buscar padrões de dicionários de rotas dentro dos arquivos .js compilados (caminhos contendo path: '/...', component: ou Lazy Loading de componentes).",
         "3_parametros_ocultos_forca_bruta": "Testar parâmetros comuns ocultos em URLs válidas (ex: ?debug=true, ?admin=1, ?export=json)."
       },
+      "protocolo_persistencia_sessao": {
+        "keep_alive_intervalo_segundos": 60,
+        "acao_keep_alive": "Disparar requisição batimento cardíaco (ping) legítima em background a cada 60s usando a sessão autenticada para impedir expiração de token em varreduras longas.",
+        "gatilho_alerta_deslogamento": "Se qualquer requisição mudar de 200 OK para 401 Unauthorized ou 403 Forbidden nas Fases 1 a 6, pausar execução imediatamente e alertar o operador para re-autenticação, impedindo falsos-negativos."
+      },
+      "varredura_eventos_dom": {
+        "fase_alvo": 9,
+        "simulacao_interacao_espelhada": "Disparar de forma programática eventos de Click, Focus e Hover em todos os elementos <button>, <a>, <li> e tab identificados no DOM.",
+        "captura_mutacao": "Capturar o estado do DOM antes e depois de cada clique, isolando novos nós de HTML dinâmicos (modais, popups, logs e abas ocultas)."
+      },
+      "evasao_bloqueios_rede": {
+        "fases_alvo": [3, 5],
+        "fuzzy_jitter_delay": "Atraso pseudo-aleatório entre 0.8s e 2.4s com rotação de User-Agents simulando navegadores reais (Chrome, Safari, Firefox).",
+        "throttling_inteligente": "Ao receber HTTP 429 Too Many Requests, reduzir taxa de busca pela metade e aguardar intervalo do cabeçalho Retry-After."
+      },
       "pipeline_execucao_passo_a_passo": [
         {
           "fase": 1,
@@ -558,7 +573,7 @@
             "Google Chrome Headless",
             "single-file-cli"
           ],
-          "acao": "Renderizar de ponta a ponta as SPAs dinâmicas, congelando o DOM final e salvando como arquivo offline autônomo.",
+          "acao": "Renderizar SPAs com simulação de interação espelhada (Click, Focus, Hover em buttons, links e tabs), captura de mutação pré/pós eventos (isolando nós dinâmicos como modais, popups e abas) e congelamento do DOM autônomo offline.",
           "saida_esperada": "./artifacts/offline_distribution_hub/"
         },
         {

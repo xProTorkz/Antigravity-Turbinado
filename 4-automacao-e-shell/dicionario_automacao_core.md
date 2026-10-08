@@ -484,6 +484,21 @@ Para garantir que o motor inspecione os vetores críticos de dados ocultos, os s
 2. **Mapeamento de Rotas no Front (Client-Side Routing):** O motor deve buscar padrões de dicionários de rotas dentro dos arquivos `.js` compilados (ex: caminhos contendo `path: "/..."`, `component:` ou Lazy Loading de componentes).
 3. **Parâmetros Ocultos por Força Bruta:** Não basta buscar páginas ocultas, o motor deve testar parâmetros comuns ocultos em URLs válidas (ex: `?debug=true`, `?admin=1`, `?export=json`).
 
+##### 🛑 Protocolo de Persistência de Sessão Ativa (Anti-Deslogamento)
+O motor de busca opera sob a premissa de que o ambiente alvo monitora ativamente a sessão do usuário:
+* **Session Keep-Alive:** A cada 60 segundos, o motor dispara uma requisição "batimento cardíaco" (ping) legítima em background usando a sessão autenticada para impedir que o token expire durante varreduras longas de força bruta.
+* **Gatilho de Alerta de Deslogamento:** Caso qualquer requisição mude o status de `200 OK` para `401 Unauthorized` ou `403 Forbidden` nas Fases 1 a 6, o motor pausa a execução imediatamente e emite alerta ao operador para re-autenticação, impedindo falsos-negativos (evitando interpretar como inexistente um recurso protegido por sessão expirada).
+
+##### 🚀 Varredura por Eventos de DOM (Gatilhos de Interface na Fase 9)
+Na **Fase 9 (Headless Chrome)**, o motor não realiza apenas a leitura do DOM estático, executando dinamicamente:
+* **Simulação de Interação Espelhada:** Disparo programático de eventos de `Click`, `Focus` e `Hover` em todos os elementos interativos (`<button>`, `<a>`, `<li>` e abas `tab`) identificados na árvore do DOM.
+* **Captura de Mutação:** Monitoramento do DOM *antes* e *depois* de cada clique/interação, isolando novos nós de HTML que apareçam dinamicamente (modais de configuração, abas de histórico, popups informativos, logs ocultos ou novos links).
+
+##### 🥷 Evasão de Bloqueios de Rede & Políticas Anti-Bot (Fases 3 e 5)
+Para garantir que o Brute Force (Fase 5) e o Histórico (Fase 3) não sofram interrupção perimétrica por Firewalls (WAF):
+* **Fuzzy Jitter Delay:** As requisições automáticas contêm atraso pseudo-aleatório variável (entre 0.8s e 2.4s) e rotação de User-Agents reais simulando navegadores legítimos (Chrome, Safari, Firefox).
+* **Throttling Inteligente:** Se o servidor responder `429 Too Many Requests`, o motor reduz a velocidade de busca imediatamente pela metade e aguarda o intervalo indicado no cabeçalho `Retry-After`.
+
 ##### 🛡️ Orquestração Furtiva de Segurança
 * **Modo**: `READ_ONLY_FIRST = true`
 * **Mutação**: `MUTATION_ALLOWED = false` (Bloqueio estrito de requisições POST/PUT/DELETE que alterem estado do alvo).
