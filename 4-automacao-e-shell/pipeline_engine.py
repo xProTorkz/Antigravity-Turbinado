@@ -42,6 +42,222 @@ BOLD = "\033[1m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 
+ESTRUTURA_COMPLETA_VASCULHAMENTO_7_CAMADAS = {
+    "titulo": "ESTRUTURA COMPLETA PARA VASCULHAR UM SISTEMA INTEIRO",
+    "descricao": "Mapa mental + checklist de tudo que existe para inspecionar, organizado pelas 7 camadas.",
+    "estrutura_geral": [
+        {"camada": 1, "nome": "DOM / HTML", "foco": "estrutura da página"},
+        {"camada": 2, "nome": "CSS / Estilo", "foco": "como é renderizado"},
+        {"camada": 3, "nome": "JavaScript", "foco": "lógica e estado"},
+        {"camada": 4, "nome": "Storage", "foco": "dados persistidos"},
+        {"camada": 5, "nome": "Rede (Network)", "foco": "o que sai e entra"},
+        {"camada": 6, "nome": "Backend / API", "foco": "endpoints e contratos"},
+        {"camada": 7, "nome": "Infra / Meta", "foco": "headers, certificados, infra"}
+    ],
+    "camadas_detalhadas": {
+        "camada_1_dom_html": {
+            "numero": 1,
+            "nome": "DOM / HTML",
+            "foco": "estrutura da página",
+            "o_que_ver": [
+                "Árvore completa de elementos",
+                "Atributos data-* (escondem valores reais)",
+                "Inputs hidden, password, readonly",
+                "Comentários HTML (<!-- -->)",
+                "Meta tags",
+                "Scripts inline"
+            ],
+            "onde": "Elements / Inspector",
+            "comandos": [
+                "document.documentElement.outerHTML           // HTML completo",
+                "document.querySelectorAll('*').length        // total de elementos",
+                "[...document.querySelectorAll('*')].map(e => e.tagName)  // todos os elementos",
+                "document.querySelectorAll('[data-*]')        // elementos com data-attributes"
+            ]
+        },
+        "camada_2_css_estilo": {
+            "numero": 2,
+            "nome": "CSS / Estilo",
+            "foco": "como é renderizado",
+            "o_que_ver": [
+                "Stylesheets carregadas",
+                "Regras aplicadas",
+                "Elementos escondidos (display:none, visibility:hidden, opacity:0)",
+                "Pseudo-elementos com conteúdo (::before, ::after)"
+            ],
+            "onde": "Elements → Styles / Computed",
+            "comandos": [
+                "document.styleSheets.length                  // total de stylesheets",
+                "[...document.styleSheets].forEach(s => console.log(s.href))",
+                "// Achar elementos escondidos",
+                "[...document.querySelectorAll('*')].filter(e => { const s = getComputedStyle(e); return s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0'; })"
+            ]
+        },
+        "camada_3_javascript": {
+            "numero": 3,
+            "nome": "JavaScript",
+            "foco": "lógica e estado",
+            "o_que_ver": [
+                "Arquivos JS carregados",
+                "Funções globais",
+                "Event listeners",
+                "Variáveis de state (React/Vue/Angular)",
+                "Objetos globais do framework"
+            ],
+            "onde": "Sources / Debugger + Console",
+            "comandos": [
+                "// Todos os scripts carregados: [...document.scripts].map(s => s.src)",
+                "// Todas as funções globais: Object.keys(window).filter(k => typeof window[k] === 'function')",
+                "// Event listeners de um elemento: getEventListeners(document.querySelector('SEU_SELECTOR'))",
+                "// State de frameworks: window.__INITIAL_STATE__ || window.__NUXT__ || window.__NEXT_DATA__ || window._sharedData"
+            ]
+        },
+        "camada_4_storage": {
+            "numero": 4,
+            "nome": "Storage",
+            "foco": "dados persistidos",
+            "o_que_ver": [
+                "LocalStorage",
+                "SessionStorage",
+                "Cookies (com flags)",
+                "IndexedDB",
+                "Cache Storage",
+                "Service Workers",
+                "Web SQL (legado)"
+            ],
+            "onde": "Application / Storage",
+            "comandos": [
+                "console.log('LOCAL:', {...localStorage});",
+                "console.log('SESSION:', {...sessionStorage});",
+                "console.log('COOKIES:', document.cookie);",
+                "indexedDB.databases().then(d => console.log('IDB:', d));",
+                "caches.keys().then(k => console.log('CACHE:', k));",
+                "navigator.serviceWorker.getRegistrations().then(r => console.log('SW:', r));"
+            ]
+        },
+        "camada_5_rede_network": {
+            "numero": 5,
+            "nome": "Rede (Network)",
+            "foco": "o que sai e entra",
+            "o_que_ver": [
+                "Todas as requisições (Fetch, XHR, Doc, WS, SSE, Img, Font, etc.)",
+                "Headers enviados e recebidos",
+                "Payloads e respostas",
+                "Cookies trafegados",
+                "WebSockets (frames)",
+                "EventStreams"
+            ],
+            "onde": "Network",
+            "filtros": ["Fetch/XHR", "WS", "Doc", "CSS", "JS", "Img", "Media", "Font", "Other"],
+            "comandos": [
+                "// Todas as requisições da página: performance.getEntriesByType('resource').map(r => r.name)",
+                "// Interceptar tudo: const of = window.fetch; window.fetch = (...a) => { console.log('→', a[0], a[1]); return of(...a).then(r => { console.log('←', r.status, a[0]); return r; }); };"
+            ]
+        },
+        "camada_6_backend_api": {
+            "numero": 6,
+            "nome": "Backend / API",
+            "foco": "endpoints e contratos",
+            "o_que_ver": [
+                "Endpoints descobertos",
+                "Métodos HTTP (GET, POST, PUT, DELETE)",
+                "Autenticação (Bearer, Cookie, API Key)",
+                "Contratos (JSON schemas)",
+                "Rate limits",
+                "Versionamento (/v1/, /v2/)"
+            ],
+            "onde": "Network → filtro Fetch/XHR → analisar cada endpoint",
+            "comandos": [
+                "// Listar todos os endpoints chamados: [...new Set(performance.getEntriesByType('resource').map(r => r.name).filter(u => u.includes('/api/') || u.includes('/v1/') || u.includes('/graphql')))]",
+                "// Reproduzir requisição: botão direito → Copy as cURL"
+            ]
+        },
+        "camada_7_infra_meta": {
+            "numero": 7,
+            "nome": "Infra / Meta",
+            "foco": "headers, certificados, infra",
+            "o_que_ver": [
+                "Certificado TLS",
+                "IPs dos servidores",
+                "CDN usado",
+                "Headers de segurança (CSP, HSTS, X-Frame-Options)",
+                "Tecnologias detectadas",
+                "Robots.txt, sitemap.xml, manifest.json",
+                "Well-known endpoints"
+            ],
+            "onde": "Cadeado da barra de endereço + Network + arquivos diretos",
+            "comandos": [
+                "// Meta tags: [...document.querySelectorAll('meta')].map(m => ({name: m.name, content: m.content}))",
+                "// Manifest: document.querySelector('link[rel=\"manifest\"]')?.href",
+                "// Tecnologias (via headers): Veja Response Headers Server, X-Powered-By, X-Generator"
+            ],
+            "urls_para_checar": [
+                "/robots.txt",
+                "/sitemap.xml",
+                "/.well-known/security.txt",
+                "/manifest.json",
+                "/sw.js",
+                "/api",
+                "/graphql"
+            ]
+        }
+    }
+}
+
+CHECKLIST_VASCULHAMENTO_COMPLETO_25_ITENS = [
+    {"numero": 1, "item": "HTML completo", "onde": "Elements"},
+    {"numero": 2, "item": "Inputs (hidden, password)", "onde": "Elements + Console"},
+    {"numero": 3, "item": "Atributos data-*", "onde": "Elements"},
+    {"numero": 4, "item": "Comentários HTML", "onde": "Elements"},
+    {"numero": 5, "item": "Elementos escondidos", "onde": "Console"},
+    {"numero": 6, "item": "Scripts carregados", "onde": "Sources"},
+    {"numero": 7, "item": "Funções globais", "onde": "Console"},
+    {"numero": 8, "item": "State de framework", "onde": "Console"},
+    {"numero": 9, "item": "LocalStorage", "onde": "Application"},
+    {"numero": 10, "item": "SessionStorage", "onde": "Application"},
+    {"numero": 11, "item": "Cookies", "onde": "Application"},
+    {"numero": 12, "item": "IndexedDB", "onde": "Application"},
+    {"numero": 13, "item": "Service Workers", "onde": "Application"},
+    {"numero": 14, "item": "Cache Storage", "onde": "Application"},
+    {"numero": 15, "item": "Requisições de rede", "onde": "Network"},
+    {"numero": 16, "item": "Headers de req/resp", "onde": "Network"},
+    {"numero": 17, "item": "Payloads", "onde": "Network"},
+    {"numero": 18, "item": "WebSockets", "onde": "Network → WS"},
+    {"numero": 19, "item": "Endpoints de API", "onde": "Network"},
+    {"numero": 20, "item": "Certificado TLS", "onde": "Cadeado"},
+    {"numero": 21, "item": "Headers de segurança", "onde": "Network"},
+    {"numero": 22, "item": "robots.txt / sitemap", "onde": "URL direta"},
+    {"numero": 23, "item": "manifest.json", "onde": "URL direta"},
+    {"numero": 24, "item": "Meta tags", "onde": "Elements"},
+    {"numero": 25, "item": "Tecnologias", "onde": "Headers (Server, X-Powered-By)"}
+]
+
+SCRIPT_MESTRE_JAVASCRIPT = r"""(function VASCULAR_TUDO() {
+  const R = {};
+  R.url = location.href;
+  R.title = document.title;
+  R.meta = [...document.querySelectorAll('meta')].map(m => ({n: m.name||m.getAttribute('property'), c: m.content}));
+  R.scripts = [...document.scripts].map(s => s.src || 'inline');
+  R.links = [...document.querySelectorAll('link')].map(l => ({rel: l.rel, href: l.href}));
+  R.inputs = [...document.querySelectorAll('input,textarea,select')].map(i => ({tag: i.tagName, name: i.name, id: i.id, type: i.type, value: i.value}));
+  R.forms = [...document.forms].map(f => ({action: f.action, method: f.method, fields: [...f.elements].map(e => e.name)}));
+  R.dataAttrs = [...document.querySelectorAll('*')].filter(e => [...e.attributes].some(a => a.name.startsWith('data-'))).map(e => ({tag: e.tagName, attrs: [...e.attributes].filter(a => a.name.startsWith('data-')).map(a => [a.name, a.value])}));
+  R.comments = (document.documentElement.outerHTML.match(/<!--[\s\S]*?-->/g) || []);
+  R.hiddenElements = [...document.querySelectorAll('*')].filter(e => {
+    const s = getComputedStyle(e);
+    return s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0';
+  }).map(e => ({tag: e.tagName, id: e.id, class: e.className}));
+  R.storage = {
+    local: {...localStorage},
+    session: {...sessionStorage},
+    cookies: document.cookie
+  };
+  R.resources = performance.getEntriesByType('resource').map(r => r.name);
+  R.apiEndpoints = [...new Set(R.resources.filter(u => u.includes('/api/') || u.includes('/v1/') || u.includes('/v2/') || u.includes('/graphql')))];
+  R.frameworkState = window.__INITIAL_STATE__ || window.__NUXT__ || window.__NEXT_DATA__ || window._sharedData || null;
+  return R;
+})();"""
+
 
 def normalize_text(text: str) -> str:
     """Normaliza texto: remove acentos, pontuação excessiva e converte para minúsculas."""
@@ -650,8 +866,8 @@ class PipelineEngine:
             dirty = True
 
         current_ver = str(self.dictionary_data.get("versao", "4.0"))
-        if current_ver < "4.1":
-            self.dictionary_data["versao"] = "4.1"
+        if current_ver < "4.2":
+            self.dictionary_data["versao"] = "4.2"
             dirty = True
 
         if dirty:
@@ -937,7 +1153,10 @@ class PipelineEngine:
                         "10. Governança PCI-DSS - Varredura universal de cartões de crédito (PAN) e parâmetros de risco em 3 categorias canônicas via scan_cards_pci.py",
                         "11. Verificação de replicação e snapshots offline do DOM (index.html, hub_replicado.html)",
                         "12. Compilação do laudo pericial unificado das 10 camadas via compile_audit_report.py"
-                    ]
+                    ],
+                    "estrutura_completa_vasculhamento_7_camadas": ESTRUTURA_COMPLETA_VASCULHAMENTO_7_CAMADAS,
+                    "checklist_vasculhamento_completo_25_itens": CHECKLIST_VASCULHAMENTO_COMPLETO_25_ITENS,
+                    "script_mestre_javascript": SCRIPT_MESTRE_JAVASCRIPT
                 }
             },
             "AUDITORIA_TOTAL_REPLICADOR": {
@@ -1076,7 +1295,10 @@ class PipelineEngine:
                         "10. Snapshot do DOM com Google Chrome Headless / single-file-cli em hub offline autocontido",
                         "11. Varredura compulsória PCI-DSS / PAN leaks (scan_cards_pci.py) em 3 categorias canônicas",
                         "12. Compilação do laudo pericial unificado das 10 camadas (compile_audit_report.py)"
-                    ]
+                    ],
+                    "estrutura_completa_vasculhamento_7_camadas": ESTRUTURA_COMPLETA_VASCULHAMENTO_7_CAMADAS,
+                    "checklist_vasculhamento_completo_25_itens": CHECKLIST_VASCULHAMENTO_COMPLETO_25_ITENS,
+                    "script_mestre_javascript": SCRIPT_MESTRE_JAVASCRIPT
                 }
             }
         }
@@ -1395,6 +1617,21 @@ class PipelineEngine:
             print(f"\n{CYAN}{BOLD}📋 ROTEIRO DETALHADO DAS ETAPAS (PARTE POR PARTE):{RESET}")
             for item in pipeline.metadata["lista_comandos_execucao"]:
                 print(f"  {DIM}• {item}{RESET}")
+
+        # Estrutura Completa de Vasculhamento (7 Camadas)
+        if "estrutura_completa_vasculhamento_7_camadas" in pipeline.metadata:
+            e7 = pipeline.metadata["estrutura_completa_vasculhamento_7_camadas"]
+            print(f"\n{CYAN}{BOLD}🏛️ {e7.get('titulo', 'ESTRUTURA COMPLETA PARA VASCULHAR UM SISTEMA INTEIRO')}:{RESET}")
+            for cam in e7.get("estrutura_geral", []):
+                print(f"  {CYAN}Camada {cam['camada']}: {BOLD}{cam['nome']:<18}{RESET} {DIM}→ {cam['foco']}{RESET}")
+
+        # Checklist de Vasculhamento Completo (25 Itens)
+        if "checklist_vasculhamento_completo_25_itens" in pipeline.metadata:
+            c25 = pipeline.metadata["checklist_vasculhamento_completo_25_itens"]
+            print(f"\n{CYAN}{BOLD}📋 CHECKLIST DE VASCULHAMENTO COMPLETO (25 ITENS MAPEADOS):{RESET}")
+            for it in c25:
+                num = it.get('numero') or it.get('item_id', 0)
+                print(f"  {DIM}[{num:02d}] {it['item']:<30} (Onde: {it['onde']}){RESET}")
         print()
 
         t_start = time.time()

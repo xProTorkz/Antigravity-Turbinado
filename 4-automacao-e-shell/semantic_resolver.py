@@ -1191,6 +1191,7 @@ class SemanticResolver:
         self.audit_global_phases = self.rules.get("audit_global_phases", [])
         self.total_global_rule = self.rules.get("regra_auditoria_global", {})
         self.mission_resolver = MissionResolver(self)
+        self._cache = {}
         self._initialized = True
 
     @staticmethod
@@ -1358,6 +1359,15 @@ class SemanticResolver:
         return "CONTEXT_INFERRED", "NEEDS_SCOPE_RESOLUTION"
 
     def resolve(self, utterance: str, context: Optional[Union[Dict[str, Any], str]] = None, execution_surface: str = "AUTO", input_source: str = "CHATGPT") -> Optional[ResolvedIntent]:
+        cache_key = (utterance, str(context), execution_surface, input_source)
+        if hasattr(self, "_cache") and cache_key in self._cache:
+            return self._cache[cache_key]
+        res = self._resolve_uncached(utterance, context, execution_surface, input_source)
+        if hasattr(self, "_cache"):
+            self._cache[cache_key] = res
+        return res
+
+    def _resolve_uncached(self, utterance: str, context: Optional[Union[Dict[str, Any], str]] = None, execution_surface: str = "AUTO", input_source: str = "CHATGPT") -> Optional[ResolvedIntent]:
         t0 = time.perf_counter()
         raw = utterance.strip()
         norm = self.normalize(raw)
