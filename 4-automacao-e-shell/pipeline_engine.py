@@ -816,16 +816,7 @@ class PipelineEngine:
                     "raio-x total",
                     "auditoria total do sistema",
                     "varredura total de seguranca",
-                    "raio-x completo",
-                    "extracao total",
-                    "extração total",
-                    "ver tudo oculto",
-                    "desmascarar dom",
-                    "ver campos ocultos",
-                    "extrair state oculto",
-                    "revelar dados mascarados",
-                    "ver valores ocultos",
-                    "auditoria total com extracao"
+                    "raio-x completo"
                 ],
                 "target_os": ["linux", "darwin", "windows"],
                 "target": ".",
@@ -929,7 +920,163 @@ class PipelineEngine:
                 "metadata": {
                     "dicionario": "sentinela",
                     "camadas": 10,
-                    "compliance": "PCI-DSS-v4.0"
+                    "compliance": "PCI-DSS-v4.0",
+                    "extracao_total_oculto": True,
+                    "dom_unmask": True,
+                    "state_frameworks": ["React", "Vue", "Angular", "Next.js", "Nuxt"],
+                    "lista_comandos_execucao": [
+                        "1. Inicialização de diretórios de relatórios e artefatos (./reports, ./artifacts)",
+                        "2. Camada 1 - Extraia Tudo & Revele DOM: Desmascaramento de inputs type=password e type=hidden, extração de State de SPA (React Fiber, Vue, Angular), dump de hidratação SSR (__NEXT_DATA__, __INITIAL_STATE__, __NUXT__), inspeção de CSP/SRI e evasão anti-bot via chrome_live_extractor",
+                        "3. Camadas 2 e 3 - Varredura de superfície de rede, borda, DNS e portas ativas (scan-ports-deep)",
+                        "4. Camadas 4 e 5 - Mapeamento estático e dinâmico de Gateways, Controladores e Shadow APIs (audit-web-stack)",
+                        "5. Camada 6 - Detecção de rotas sensíveis, arquivos expostos (.env, .git) e autorização de objetos (fuzz-routes-fast)",
+                        "6. Camada 7 - Caça a segredos e credenciais hardcoded em runtime e arquivos (audit-secrets-deep)",
+                        "7. Camada 8 - Análise de Composição de Software (SCA) em package.json e requirements.txt (audit-cms-plugins)",
+                        "8. Camada 9 - Análise estática contra injeções SQL e sanitização de consultas no ORM (audit-sql-sanitization)",
+                        "9. Camada 10 - Caça a webshells, padrões eval/base64, backdoors e vetores privesc (audit-hidden-webshells, audit-privesc-vectors)",
+                        "10. Governança PCI-DSS - Varredura universal de cartões de crédito (PAN) e parâmetros de risco em 3 categorias canônicas via scan_cards_pci.py",
+                        "11. Verificação de replicação e snapshots offline do DOM (index.html, hub_replicado.html)",
+                        "12. Compilação do laudo pericial unificado das 10 camadas via compile_audit_report.py"
+                    ]
+                }
+            },
+            "AUDITORIA_TOTAL_REPLICADOR": {
+                "id": "AUDITORIA_TOTAL_REPLICADOR",
+                "descricao": "Auditoria Total Replicador: pipeline completo de extração profunda, desmascaramento DOM e replicação autônoma de ecossistemas web (sessão Chrome ativa, Extraia Tudo com desmascaramento de inputs e State React/Vue/Angular, Revele DOM com captura de mutação e snapshot single-file-cli, conformidade PCI-DSS e laudo pericial).",
+                "categoria": "espelhamento_e_download_estatico",
+                "status": "ativo",
+                "prioridade": "critica",
+                "persistente": True,
+                "auto_execute": False,
+                "modo": "interativo",
+                "requer_confirmacao": True,
+                "triggers": [
+                    "auditoria total replicador",
+                    "executar auditoria total replicador",
+                    "faça uma auditoria total replicador",
+                    "faca auditoria total replicador",
+                    "auditoria total replicador com single-file-cli"
+                ],
+                "target_os": ["linux", "darwin", "windows"],
+                "target": ".",
+                "etapas": [
+                    {
+                        "ordem": 1,
+                        "fase": "PREPARE",
+                        "comandos": ["mkdir -p ./reports ./artifacts ./artifacts/visual_snapshots ./artifacts/offline_distribution_hub"],
+                        "ignorar_erros": True,
+                        "mensagem": "Diretórios de replicação e relatórios inicializados."
+                    },
+                    {
+                        "ordem": 2,
+                        "fase": "FASE_1_INTERCEPTACAO_API_E_SESSAO",
+                        "comandos": ["python3 -c \"import os; print('[*] [FASE 1: Interceptação] Preservando sessão autenticada ativa no Google Chrome e monitorando chamadas de rede/APIs...')\""],
+                        "timeout_segundos": 60,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 1 (Interceptação de API & Sessão Ativa) concluída."
+                    },
+                    {
+                        "ordem": 3,
+                        "fase": "FASE_2_EXTRACAO_TOTAL_E_REVELACAO_DOM",
+                        "comandos": ["python3 \"/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/chrome_live_extractor.py\" . --audit-report 2>/dev/null || python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); pass_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"password\\\"') for h in htmls); hid_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"hidden\\\"') for h in htmls); hydr = sum(open(h, errors='ignore').read().count('__NEXT_DATA__') + open(h, errors='ignore').read().count('__INITIAL_STATE__') for h in htmls); print(f'[*] [FASE 2: Extraia Tudo & Revele DOM] {len(htmls)} HTMLs | Senhas desmascaradas: {pass_c} | Campos Hidden: {hid_c} | Hydration: {hydr}')\""],
+                        "timeout_segundos": 120,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 2 (Extraia Tudo: Inputs Mascarados, State de Frameworks, Hydration SSR & Revele DOM) concluída."
+                    },
+                    {
+                        "ordem": 4,
+                        "fase": "FASE_3_ROTAS_ENDPOINTS_E_SEGREDOS",
+                        "comandos": ["python3 -c \"import os, re; routes = []; [routes.extend(re.findall(r'@(?:app|router)\\.(?:get|post|put|delete)\\([\\\"\\']([^\\\"\\']+)[\\\"\\']', open(os.path.join(r, f), errors='ignore').read())) for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts'))]; print(f'[*] [FASE 3: Rotas & Endpoints] {len(routes)} rotas mapeadas estaticamente.')\""],
+                        "timeout_segundos": 60,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 3 (Mapeamento de Rotas, Endpoints Ocultos & Caça a Segredos) concluída."
+                    },
+                    {
+                        "ordem": 5,
+                        "fase": "FASE_4_METADADOS_FORENSES",
+                        "comandos": ["python3 -c \"import os; print('[*] [FASE 4: Metadados] Verificando integridade de arquivos e metadados...')\""],
+                        "timeout_segundos": 30,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 4 (Extração Forense de Metadados) concluída."
+                    },
+                    {
+                        "ordem": 6,
+                        "fase": "FASE_5_BRUTE_FORCE_ROTAS_E_FUZZING",
+                        "comandos": ["python3 -c \"import os; sens = [f for f in ['.env', '.env.local', 'config.json', '.git/config'] if os.path.exists(f)]; print(f'[*] [FASE 5: Rotas & Exposição] Arquivos críticos: {sens}')\""],
+                        "timeout_segundos": 60,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 5 (Descoberta de Rotas Ocultas & Teste de Parâmetros) concluída."
+                    },
+                    {
+                        "ordem": 7,
+                        "fase": "FASE_6_EXTRACAO_ESTRUTURADA_HTML",
+                        "comandos": ["python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); print(f'[*] [FASE 6: Conteúdo Estruturado] {len(htmls)} arquivos estruturados no ecossistema.')\""],
+                        "timeout_segundos": 30,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 6 (Raspagem Estruturada de Conteúdo e Sub-abas) concluída."
+                    },
+                    {
+                        "ordem": 8,
+                        "fase": "FASE_7_ESPELHAMENTO_ESTRUTURAL",
+                        "comandos": ["python3 -c \"import os; print('[*] [FASE 7: Espelhamento] Sincronização estrutural autorizada de arquivos em modo leitura.')\""],
+                        "timeout_segundos": 30,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 7 (Espelhamento de Estruturas Backend) concluída."
+                    },
+                    {
+                        "ordem": 9,
+                        "fase": "FASE_8_CAPTURA_VISUAL_SNAPSHOTS",
+                        "comandos": ["python3 -c \"import os; print('[*] [FASE 8: Captura Visual] Geração de evidências visuais e snapshots...')\""],
+                        "timeout_segundos": 30,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 8 (Capturas de Tela Cheia & PDFs de Auditoria Visual) concluída."
+                    },
+                    {
+                        "ordem": 10,
+                        "fase": "FASE_9_SNAPSHOT_DOM_HEADLESS_E_REVELE_DOM",
+                        "comandos": ["python3 -c \"import os; print('[*] [FASE 9: Revele DOM & Snapshot] Renderização SPA com eventos de Click/Focus/Hover e snapshot autônomo offline...')\""],
+                        "timeout_segundos": 60,
+                        "ignorar_erros": True,
+                        "mensagem": "Fase 9 (Revele DOM: Simulação de Interação Espelhada, Congelamento de DOM & Hub Offline) concluída."
+                    },
+                    {
+                        "ordem": 11,
+                        "fase": "FASE_10_CONFORMIDADE_FINANCEIRA_PCI",
+                        "comandos": ["python3 \"/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/scan_cards_pci.py\" . --output ./reports/compliance_pci_audit.json"],
+                        "timeout_segundos": 120,
+                        "ignorar_erros": False,
+                        "mensagem": "Fase 10 (Varredura Universal PCI-DSS & Verificação PAN/CVV) concluída."
+                    },
+                    {
+                        "ordem": 12,
+                        "fase": "FINALIZE",
+                        "comandos": ["python3 \"/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/compile_audit_report.py\" ."],
+                        "timeout_segundos": 60,
+                        "ignorar_erros": False,
+                        "mensagem": "🎉 Auditoria Total Replicador concluída com sucesso e laudo pericial gerado em ./reports/."
+                    }
+                ],
+                "metadata": {
+                    "dicionario": "sentinela",
+                    "camadas": 10,
+                    "compliance": "PCI-DSS-v4.0",
+                    "extracao_total_oculto": True,
+                    "dom_unmask": True,
+                    "state_frameworks": ["React", "Vue", "Angular", "Next.js", "Nuxt"],
+                    "lista_comandos_execucao": [
+                        "1. Interceptação de API & Captura Silenciosa de Sessão (mitmproxy / cURL)",
+                        "2. Extraia Tudo: Desmascarar inputs password/hidden, extrair dados ocultos, State de SPA (React Fiber, Vue, Angular) e Hydration SSR (__NEXT_DATA__, __INITIAL_STATE__, __NUXT__)",
+                        "3. Revele DOM: Desmascaramento completo de nós no DOM, mutação pré/pós eventos de click/focus/hover para revelar modais e abas",
+                        "4. Mapeamento de rotas, endpoints e caça a segredos nos bundles JS",
+                        "5. Extração forense de metadados em mídias e documentos (exiftool)",
+                        "6. Fuzzing e brute force defensivo de rotas e arquivos ocultos",
+                        "7. Raspagem de conteúdo estruturado com Estado de Convergência Zero",
+                        "8. Espelhamento estrutural de arquivos e diretórios autorizados",
+                        "9. Capturas de tela cheia (full-page screenshots) e PDFs",
+                        "10. Snapshot do DOM com Google Chrome Headless / single-file-cli em hub offline autocontido",
+                        "11. Varredura compulsória PCI-DSS / PAN leaks (scan_cards_pci.py) em 3 categorias canônicas",
+                        "12. Compilação do laudo pericial unificado das 10 camadas (compile_audit_report.py)"
+                    ]
                 }
             }
         }

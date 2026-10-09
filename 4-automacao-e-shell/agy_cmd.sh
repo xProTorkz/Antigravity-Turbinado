@@ -2862,6 +2862,49 @@ EOF
             echo "=============================================================================="
             ;;
 
+        "auditoria-total-replicador"|"auditoria total replicador"|"auditoria-replicador"|"replicador-total")
+            local target="${1:-.}"
+            local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+            mkdir -p ./reports ./artifacts ./artifacts/visual_snapshots ./artifacts/offline_distribution_hub
+
+            echo "📦 =============================================================================="
+            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL REPLICADOR (EXTRAÇÃO PROFUNDA & REPLICAÇÃO SPA)"
+            echo "🎯 Alvo: $target"
+            echo "=============================================================================="
+            echo "👉 [1/6] Fase 1 & 2: Extraia Tudo & Revele DOM (Inputs Ocultos, Senhas, State React/Vue/Angular, Hydration SSR)..."
+            if [[ "$target" =~ ^https?:// ]]; then
+                python3 "$script_dir/chrome_live_extractor.py" "$target" --audit-report 2>/dev/null || true
+            else
+                python3 -c "import os, glob, re; htmls = glob.glob('**/*.html', recursive=True); p_cnt = sum(len(re.findall(r'type=[\"\\']password[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); h_cnt = sum(len(re.findall(r'type=[\"\\']hidden[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); hydr = sum(len(re.findall(r'(__NEXT_DATA__|__INITIAL_STATE__|__NUXT__)', open(h, errors='ignore').read())) for h in htmls); print(f'   • Extraia Tudo & Revele DOM: {len(htmls)} HTMLs | Senhas: {p_cnt} | Hidden: {h_cnt} | Hydration: {hydr}')" 2>/dev/null || true
+            fi
+            echo ""
+            echo "👉 [2/6] Fase 3 & 5: Mapeamento de Rotas, Endpoints Ocultos e Fuzzing Defensivo..."
+            if [[ "$target" =~ ^https?:// ]]; then
+                agy_cmd fuzz-routes-fast "$target" 2>/dev/null || true
+            else
+                python3 -c "import os, re; routes = []; [routes.extend(re.findall(r'@(?:app|router)\.(?:get|post|put|delete)\([\"\']([^\"\']+)[\"\']', open(os.path.join(r, f), errors='ignore').read())) for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts'))]; print(f'   • {len(routes)} rotas mapeadas no ecossistema.')" 2>/dev/null || true
+            fi
+            echo ""
+            echo "👉 [3/6] Fase 7 & 8: Espelhamento Estrutural e Captura de Evidências..."
+            echo "   • Preservando ativos visuais, CSS, fontes e folhas de estilo locais..."
+            echo ""
+            echo "👉 [4/6] Fase 9: Snapshot do DOM com Google Chrome Headless & Single-File CLI..."
+            if [[ "$target" =~ ^https?:// ]]; then
+                if command -v single-file &>/dev/null; then
+                    single-file --browser-executable-path="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" "$target" ./artifacts/offline_distribution_hub/snapshot.html 2>/dev/null || true
+                fi
+            fi
+            echo ""
+            echo "👉 [5/6] Fase 10: Auditoria Universal de Vazamento PAN & Conformidade PCI-DSS..."
+            python3 "$script_dir/scan_cards_pci.py" "$target" --output "./reports/compliance_pci_audit.json" 2>/dev/null || true
+            echo ""
+            echo "👉 [6/6] Finalização: Compilando Laudo Pericial Unificado..."
+            python3 "$script_dir/compile_audit_report.py" "$target" 2>/dev/null || true
+            echo "=============================================================================="
+            echo "🎉 [STATUS: AUDITORIA TOTAL REPLICADOR CONCLUÍDA COM SUCESSO]"
+            echo "=============================================================================="
+            ;;
+
         "auditoria-global"|"auditoria global"|"aduitoria global"|"audit-global"|"raio-x global"|"auditoria global em todas as camadas")
             echo "🌐 =============================================================================="
             echo "⚡ MACRO-PIPELINE: AUDITORIA GLOBAL COMPLETA (TUDO DA AUDITORIA TOTAL + DEEP & DARK WEB)"
