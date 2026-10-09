@@ -322,14 +322,65 @@ def main():
     with open(latest_file, "w", encoding="utf-8") as f:
         f.write(md_content)
 
-    print("\n" + "=" * 78)
-    print("📋 LAUDO PERICIAL DA AUDITORIA TOTAL COMPILADO COM SUCESSO!")
-    print("=" * 78)
-    print(f"📄 Relatório Timestamp: {out_file}")
-    print(f"📄 Relatório Canônico:  {latest_file}")
-    print(f"🔒 Hash SHA-256:        {calculate_sha256(out_file)}")
-    print(f"🎯 Status de Governança: [{pci_data.get('status_geral_compliance', 'CONFORME')}]")
-    print("=" * 78 + "\n")
+    # 5. Exibe o detalhamento completo no terminal (Passando pelas etapas detalhadamente)
+    pci_status = pci_data.get("status_geral_compliance", "CONFORME")
+    pci_records = len(pci_data.get("mapeamento_controle", []))
+    pci_vulns = len(pci_data.get("verificacao_vulnerabilidade", []))
+    pci_icon = "✅" if pci_status == "CONFORME" else "🚨"
+
+    live = static_meta.get("live_audit_data") or {}
+    unmasked = live.get("senhasDesmascaradas", static_meta.get("unmasked_passwords", 0))
+    hidden = len(live.get("inputsHidden", [])) if "inputsHidden" in live else static_meta.get("hidden_inputs", 0)
+    masked_txt = len(live.get("textosMascarados", []))
+    hydr = list(live.get("variaveisGlobaisState", {}).keys()) or static_meta.get("hydration_variables", [])
+
+    c1_status = f"Auditado ({static_meta['html_files']} HTMLs)" if static_meta["html_files"] > 0 else "Inspecionado"
+    c2_status = f"{len(port_list)} porta(s) ativa(s)" if port_list else "Portas fechadas / Seguro"
+    c6_status = f"{len(static_meta['sensitive_files'])} arquivo(s) crítico(s)" if static_meta["sensitive_files"] else "Conforme (sem exposição)"
+    c7_status = f"{len(static_meta['secrets_found'])} alerta(s)" if static_meta["secrets_found"] else "Conforme (zero credenciais)"
+    deps_info = ", ".join([f"{k}: {v}" for k, v in static_meta["dependencies"].items()]) or "Sem dependências"
+    c9_status = f"{len(static_meta['sql_concatenations'])} suspeita(s)" if static_meta["sql_concatenations"] else "Conforme (queries parametrizadas)"
+    c10_status = f"{len(static_meta['webshells_found'])} anomalia(s)" if static_meta["webshells_found"] else "Conforme (zero webshells)"
+
+    print("\n" + "═" * 78)
+    print("📋 LAUDO PERICIAL DA AUDITORIA TOTAL (10 CAMADAS) — RESUMO DETALHADO")
+    print("═" * 78)
+    print(f"🎯 Status Geral:        [{pci_status}]")
+    print(f"🎯 Alvo Inspecionado:   {args.target}")
+    print(f"📁 Diretório Workspace: {scan_dir}")
+    print("─" * 78)
+    print("📊 RESULTADOS DETALHADOS DAS 10 CAMADAS ARQUITETURAIS:")
+    print(f"  ▶ [CAMADA 1]  Client-Side / Extraia Tudo & Revele DOM:   {c1_status}")
+    print(f"                • Senhas Desmascaradas: {unmasked} | Inputs Hidden: {hidden} | Mascarados: {masked_txt}")
+    print(f"                • Variáveis SSR / State: {', '.join(hydr) if hydr else 'Nenhuma declarada estaticamente'}")
+    if live.get("stateFrameworks"):
+        rf = len(live["stateFrameworks"].get("react", []))
+        vf = len(live["stateFrameworks"].get("vue", []))
+        af = len(live["stateFrameworks"].get("angular", []))
+        print(f"                • State de Frameworks: React ({rf}) | Vue ({vf}) | Angular ({af})")
+    if live.get("storage"):
+        ls_count = len(live["storage"].get("localStorage", {}))
+        ss_count = len(live["storage"].get("sessionStorage", {}))
+        ck_count = len(live["storage"].get("cookies", []))
+        print(f"                • Storage & Sessões: localStorage ({ls_count}) | sessionStorage ({ss_count}) | cookies ({ck_count})")
+    print(f"  ▶ [CAMADA 2-3] Borda, DNS & Superfície de Rede:         {c2_status}")
+    if port_list:
+        print(f"                • Portas ativas: {', '.join([str(p['port']) + '/' + p['service'] for p in port_list])}")
+    print(f"  ▶ [CAMADA 4-5] Gateways, APIs & Controladores:          Auditado (Rotas e Shadow APIs mapeadas)")
+    print(f"  ▶ [CAMADA 6]  Rotas Sensíveis & Exposição:              {c6_status}")
+    if static_meta["sensitive_files"]:
+        print(f"                • Arquivos: {', '.join(static_meta['sensitive_files'])}")
+    print(f"  ▶ [CAMADA 7]  Gerenciamento de Segredos & Chaves:       {c7_status}")
+    print(f"  ▶ [CAMADA 8]  Regras de Negócio & SCA:                  {deps_info}")
+    print(f"  ▶ [CAMADA 9]  Persistência, ORM & Sanitização SQL:      {c9_status}")
+    print(f"  ▶ [CAMADA 10] Infraestrutura, Host & Hardening:         {c10_status}")
+    print(f"  ▶ [PCI-DSS]   Governança Financeira & PAN (16 dígitos):  {pci_icon} {pci_status}")
+    print(f"                • Mapeamento de Controle: {pci_records} | Vulnerabilidades: {pci_vulns}")
+    print("─" * 78)
+    print(f"📄 Laudo Timestamp: {out_file}")
+    print(f"📄 Laudo Canônico:  {latest_file}")
+    print(f"🔒 Hash SHA-256:    {calculate_sha256(out_file)}")
+    print("═" * 78 + "\n")
 
     return 0
 

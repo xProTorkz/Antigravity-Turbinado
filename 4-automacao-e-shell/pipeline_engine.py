@@ -1388,10 +1388,18 @@ class PipelineEngine:
         print(f"{CYAN}{BOLD}║ 🚀 EXECUTANDO PIPELINE: {pipeline.id:<41} ║{RESET}")
         print(f"{CYAN}{BOLD}╚═══════════════════════════════════════════════════════════════════╝{RESET}")
         print(f"{DIM}[*] Categoria: {pipeline.categoria} | Modo: {pipeline.modo} | OS: {current_os} | Target: {pipeline.target or 'local'}{RESET}")
-        print(f"{DIM}[*] Diretório de Trabalho: {work_dir}{RESET}\n")
+        print(f"{DIM}[*] Diretório de Trabalho: {work_dir}{RESET}")
+
+        # Roteiro Completo Parte por Parte
+        if "lista_comandos_execucao" in pipeline.metadata:
+            print(f"\n{CYAN}{BOLD}📋 ROTEIRO DETALHADO DAS ETAPAS (PARTE POR PARTE):{RESET}")
+            for item in pipeline.metadata["lista_comandos_execucao"]:
+                print(f"  {DIM}• {item}{RESET}")
+        print()
 
         t_start = time.time()
         success = True
+        total_etapas = len(pipeline.etapas)
 
         for step in pipeline.etapas:
             ordem = step.get("ordem", 1)
@@ -1401,7 +1409,9 @@ class PipelineEngine:
             ignorar_erros = step.get("ignorar_erros", False)
             timeout = step.get("timeout_segundos", 60)
 
-            print(f"{YELLOW}▶ Etapa {ordem} [{fase}]{RESET}")
+            print(f"{YELLOW}{BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RESET}")
+            print(f"{YELLOW}{BOLD}▶ [ETAPA {ordem}/{total_etapas}] FASE: {fase}{RESET}")
+            print(f"{YELLOW}{BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RESET}")
 
             step_record = {
                 "ordem": ordem,
@@ -1445,8 +1455,10 @@ class PipelineEngine:
                     err = (p.stderr or "").strip()
 
                     if out:
-                        for line in out.splitlines()[:5]:
-                            print(f"    {DIM}│ {line}{RESET}")
+                        step_record["saidas"].append(out)
+                        for line in out.splitlines():
+                            print(f"    {CYAN}│{RESET} {line}")
+
                     if p.returncode != 0:
                         if not ignorar_erros:
                             print(f"    {RED}[X] Erro (exit {p.returncode}): {err or out}{RESET}")
@@ -1455,7 +1467,8 @@ class PipelineEngine:
                             success = False
                             break
                         else:
-                            print(f"    {YELLOW}[!] Aviso ignorado (exit {p.returncode}): {err}{RESET}")
+                            if err:
+                                print(f"    {YELLOW}[!] Aviso ignorado (exit {p.returncode}): {err}{RESET}")
                 except subprocess.TimeoutExpired:
                     print(f"    {RED}[X] Timeout de {timeout}s atingido.{RESET}")
                     step_record["status"] = "TIMEOUT"
@@ -1468,10 +1481,11 @@ class PipelineEngine:
                     break
 
             if msg:
-                # Interpola variáveis também na mensagem
                 interp_msg = self._interpolate_command(msg, pipeline, work_dir)
-                print(f"  {GREEN}✓ {interp_msg}{RESET}")
+                print(f"  {GREEN}{BOLD}✓ [ETAPA {ordem}/{total_etapas} CONCLUÍDA]{RESET} {GREEN}{interp_msg}{RESET}\n")
                 receipt["mensagens"].append(interp_msg)
+            else:
+                print(f"  {GREEN}{BOLD}✓ [ETAPA {ordem}/{total_etapas} CONCLUÍDA]{RESET}\n")
 
             receipt["etapas_executadas"].append(step_record)
             if not success and not ignorar_erros:
