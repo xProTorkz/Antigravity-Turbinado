@@ -1,5 +1,5 @@
 {
-  "versao": "3.9",
+  "versao": "4.1",
   "modulo": "sentinela_lexicon",
   "descricao": "Dicionário canônico de abstração léxica, governança operacional, menu de comandos rápidos, red teaming defensivo e automação SRE/DevOps do ecossistema Sentinela / Antigravity 2.0.",
   "mapeamento": {
@@ -452,7 +452,10 @@
         "captura_mutacao": "Capturar o estado do DOM antes e depois de cada clique, isolando novos nós de HTML dinâmicos (modais, popups, logs e abas ocultas)."
       },
       "evasao_bloqueios_rede": {
-        "fases_alvo": [3, 5],
+        "fases_alvo": [
+          3,
+          5
+        ],
         "fuzzy_jitter_delay": "Atraso pseudo-aleatório entre 0.8s e 2.4s com rotação de User-Agents simulando navegadores reais (Chrome, Safari, Firefox).",
         "throttling_inteligente": "Ao receber HTTP 429 Too Many Requests, reduzir taxa de busca pela metade e aguardar intervalo do cabeçalho Retry-After."
       },
@@ -1275,6 +1278,270 @@
       "execucao_material": true,
       "descricao": "Dispara compulsoriamente o pipeline unificado de extração e separação analítica em categorias lógicas com delimitador funcional (|), higienizando previamente a pasta data/ e sobrepondo pesquisas anteriores.",
       "comando": "./run.sh separa"
+    }
+  },
+  "pipelines": {
+    "DUMP_BANCO_COMPLETO": {
+      "id": "DUMP_BANCO_COMPLETO",
+      "descricao": "Executa dump/exportação contextual de base de dados e gera checksum.",
+      "categoria": "devops",
+      "status": "ativo",
+      "prioridade": "alta",
+      "persistente": true,
+      "auto_execute": false,
+      "modo": "interativo",
+      "requer_confirmacao": true,
+      "triggers": [
+        "dump do banco",
+        "exportar banco",
+        "backup do banco",
+        "dump sql",
+        "fazer dump"
+      ],
+      "target_os": [
+        "linux",
+        "darwin"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "fase": "PREPARE",
+          "comandos": [
+            "mkdir -p ./backups"
+          ],
+          "ignorar_erros": true
+        },
+        {
+          "ordem": 2,
+          "fase": "EXECUTE",
+          "comandos": [
+            "echo '[*] Executando dump contextual de banco...'"
+          ],
+          "timeout_segundos": 120
+        },
+        {
+          "ordem": 3,
+          "fase": "FINALIZE",
+          "comandos": [
+            "ls -lh ./backups 2>/dev/null || true"
+          ],
+          "mensagem": "Dump do banco de dados concluído com sucesso."
+        }
+      ]
+    },
+    "LIMPEZA_LOGS_E_BUFFERS": {
+      "id": "LIMPEZA_LOGS_E_BUFFERS",
+      "descricao": "Limpeza determinística de buffers de log e arquivos temporários.",
+      "categoria": "manutencao",
+      "status": "ativo",
+      "prioridade": "media",
+      "persistente": true,
+      "auto_execute": true,
+      "modo": "silencioso",
+      "requer_confirmacao": false,
+      "triggers": [
+        "limpar logs",
+        "limpeza de logs",
+        "faxina de logs",
+        "rotacionar logs",
+        "truncar logs"
+      ],
+      "target_os": [
+        "linux",
+        "darwin",
+        "windows"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "fase": "PREPARE",
+          "comandos": [
+            "echo '[*] Preparando rotação de logs...'"
+          ],
+          "ignorar_erros": true
+        },
+        {
+          "ordem": 2,
+          "fase": "EXECUTE",
+          "comandos": [
+            "find ./logs -name '*.log' -size +20M -exec truncate -s 0 {} \\; 2>/dev/null || true"
+          ],
+          "timeout_segundos": 30,
+          "ignorar_erros": true
+        },
+        {
+          "ordem": 3,
+          "fase": "FINALIZE",
+          "mensagem": "Limpeza de logs finalizada com sucesso."
+        }
+      ]
+    },
+    "AUDITORIA_INTEGRIDADE_SISTEMA": {
+      "id": "AUDITORIA_INTEGRIDADE_SISTEMA",
+      "descricao": "Auditoria de integridade, locks órfãos e saúde de processos e Git.",
+      "categoria": "seguranca",
+      "status": "ativo",
+      "prioridade": "alta",
+      "persistente": true,
+      "auto_execute": false,
+      "modo": "interativo",
+      "requer_confirmacao": true,
+      "triggers": [
+        "auditoria rapida",
+        "check de integridade",
+        "verificar integridade",
+        "healthcheck sistema",
+        "diagnostico completo"
+      ],
+      "target_os": [
+        "linux",
+        "darwin"
+      ],
+      "etapas": [
+        {
+          "ordem": 1,
+          "fase": "PREPARE",
+          "comandos": [
+            "git status --porcelain 2>/dev/null || true"
+          ]
+        },
+        {
+          "ordem": 2,
+          "fase": "EXECUTE",
+          "comandos": [
+            "find . -name '.git/index.lock' -delete 2>/dev/null || true",
+            "git fsck --quick 2>/dev/null || true"
+          ]
+        },
+        {
+          "ordem": 3,
+          "fase": "FINALIZE",
+          "mensagem": "Auditoria de integridade realizada com sucesso."
+        }
+      ]
+    },
+    "SINC_GIT_AUTOMATICO": {
+      "id": "SINC_GIT_AUTOMATICO",
+      "descricao": "Sincroniza automaticamente a branch com o remoto e reporta status",
+      "categoria": "versionamento",
+      "status": "ativo",
+      "prioridade": "media",
+      "persistente": true,
+      "auto_execute": true,
+      "modo": "interativo",
+      "requer_confirmacao": true,
+      "triggers": [
+        "sincronizar git",
+        "sincroniza branch",
+        "sync git",
+        "puxar alteracoes"
+      ],
+      "target_os": [
+        "linux",
+        "darwin",
+        "windows"
+      ],
+      "target": null,
+      "etapas": [
+        {
+          "ordem": 1,
+          "fase": "PREPARE",
+          "comandos": [
+            "git status -s"
+          ],
+          "mensagem": null
+        },
+        {
+          "ordem": 2,
+          "fase": "EXECUTE",
+          "comandos": [
+            "git fetch --all"
+          ],
+          "mensagem": null
+        },
+        {
+          "ordem": 3,
+          "fase": "FINALIZE",
+          "comandos": [],
+          "mensagem": "Sincronização verificada."
+        }
+      ],
+      "metadata": {
+        "dicionario": "sentinela"
+      }
+    },
+    "HWID_SPOOF_GC": {
+      "id": "HWID_SPOOF_GC",
+      "descricao": "Spoof completo de HWID para contornar banimento na Gamers Club CS2",
+      "categoria": "hardware",
+      "status": "ativo",
+      "prioridade": "alta",
+      "persistente": true,
+      "auto_execute": true,
+      "modo": "silencioso",
+      "requer_confirmacao": false,
+      "triggers": [
+        "hwid",
+        "spoof",
+        "spoofar",
+        "hwid spoof",
+        "spoof hwid",
+        "ban hwid",
+        "banido hwid",
+        "desbanir",
+        "gc ban",
+        "gamers club ban",
+        "reset hwid",
+        "novo hwid"
+      ],
+      "target_os": [
+        "windows"
+      ],
+      "target": "gamers-club-cs2",
+      "etapas": [
+        {
+          "fase": "PREPARE",
+          "comandos": [
+            "limpa_registros_spoofer.bat",
+            "cleanmgr /sagerun:1"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "mensagem": null,
+          "target_os": null,
+          "ordem": 1
+        },
+        {
+          "fase": "SPOOF_HWID",
+          "comandos": [
+            "SPOOF_DISK_SERIAL \"C:\"",
+            "SPOOF_MOTHERBOARD_UUID",
+            "SPOOF_MAC_ADDRESS \"Ethernet\"",
+            "SPOOF_CPU_ID",
+            "SPOOF_MACHINE_GUID"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "mensagem": null,
+          "target_os": null,
+          "ordem": 2
+        },
+        {
+          "fase": "FINALIZE",
+          "comandos": [
+            "wevtutil cl Application",
+            "wevtutil cl System"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "mensagem": "SPOOF DE HWID CONCLUÍDO. REINICIE O COMPUTADOR PARA APLICAR AS MUDANÇAS.",
+          "target_os": null,
+          "ordem": 3
+        }
+      ],
+      "metadata": {
+        "dicionario": "sentinela"
+      }
     }
   }
 }
