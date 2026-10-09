@@ -62,8 +62,22 @@ def analyze_workspace_static(scan_dir: Path) -> dict:
         "sql_concatenations": [],
         "secrets_found": [],
         "webshells_found": [],
-        "dependencies": {}
+        "dependencies": {},
+        "unmasked_passwords": 0,
+        "hidden_inputs": 0,
+        "hydration_variables": [],
+        "live_audit_data": None
     }
+
+    # Verifica se há relatório de auditoria do Chrome Live Extractor (.audit.json)
+    for audit_candidate in [scan_dir / "index_live.audit.json", scan_dir / "reports" / "chrome_live_audit.json"]:
+        if audit_candidate.exists():
+            try:
+                with open(audit_candidate, "r", encoding="utf-8") as f:
+                    metrics["live_audit_data"] = json.load(f)
+                    break
+            except Exception:
+                pass
 
     # Verifica package.json
     pkg_file = scan_dir / "package.json"
@@ -95,6 +109,7 @@ def analyze_workspace_static(scan_dir: Path) -> dict:
             metrics["sensitive_files"].append(cname)
 
     # Varredura de arquivos
+    import re
     for root, dirs, files in os.walk(scan_dir):
         dirs[:] = [d for d in dirs if d not in [".git", "node_modules", ".venv", "__pycache__", ".pytest_cache", ".gemini", "reports", "backups"]]
         for fname in files:
@@ -113,6 +128,13 @@ def analyze_workspace_static(scan_dir: Path) -> dict:
                         metrics["external_scripts"].append(f"{fpath.name}: Google Tag Manager / Analytics")
                     if "connect.facebook.net" in content:
                         metrics["external_scripts"].append(f"{fpath.name}: Meta Pixel")
+                    
+                    # Extração de campos ocultos no DOM
+                    metrics["unmasked_passwords"] += len(re.findall(r'type=["\']password["\']', content, re.IGNORECASE))
+                    metrics["hidden_inputs"] += len(re.findall(r'type=["\']hidden["\']', content, re.IGNORECASE))
+                    for h_var in ["__NEXT_DATA__", "__INITIAL_STATE__", "__NUXT__", "_sharedData", "__APOLLO_STATE__", "__REDUX_STATE__"]:
+                        if h_var in content and h_var not in metrics["hydration_variables"]:
+                            metrics["hydration_variables"].append(h_var)
                 except Exception:
                     pass
 
@@ -189,6 +211,31 @@ def build_markdown_report(target: str, scan_dir: Path, pci_data: dict, port_list
     # Governança PCI-DSS
     pci_icon = "✅" if pci_status == "CONFORME" else "🚨"
     md.append(f"| **PCI-DSS** | Dados Financeiros & PAN | Algoritmo de Luhn, BIN check e isolamento | {pci_icon} {pci_status} |\n")
+
+    md.append("### 1.1 EXTRAÇÃO TOTAL & DADOS OCULTOS (CLIENT-SIDE)")
+    md.append("Inspeção de desmascaramento do DOM, state interno de frameworks e variáveis de hidratação:")
+    
+    live = static_meta.get("live_audit_data") or {}
+    unmasked = live.get("senhasDesmascaradas", static_meta.get("unmasked_passwords", 0))
+    hidden = len(live.get("inputsHidden", [])) if "inputsHidden" in live else static_meta.get("hidden_inputs", 0)
+    masked_txt = len(live.get("textosMascarados", []))
+    hydr = list(live.get("variaveisGlobaisState", {}).keys()) or static_meta.get("hydration_variables", [])
+    
+    md.append(f"- **Inputs Password Desmascarados:** `{unmasked}`")
+    md.append(f"- **Inputs Hidden Mapeados:** `{hidden}`")
+    md.append(f"- **Textos com Máscara Visual Identificados:** `{masked_txt}`")
+    md.append(f"- **Variáveis Globais de State / Hidratação:** `{', '.join(hydr) if hydr else 'Nenhuma declarada estaticamente'}`")
+    if live.get("stateFrameworks"):
+        rf = len(live["stateFrameworks"].get("react", []))
+        vf = len(live["stateFrameworks"].get("vue", []))
+        af = len(live["stateFrameworks"].get("angular", []))
+        md.append(f"- **State de Frameworks SPA:** `React Fiber ({rf}) | Vue ({vf}) | Angular ({af})`")
+    if live.get("storage"):
+        ls_count = len(live["storage"].get("localStorage", {}))
+        ss_count = len(live["storage"].get("sessionStorage", {}))
+        ck_count = len(live["storage"].get("cookies", []))
+        md.append(f"- **Storage & Sessões:** `localStorage ({ls_count}) | sessionStorage ({ss_count}) | cookies ({ck_count})`")
+    md.append("")
 
     md.append("---")
     md.append("## 2. AUDITORIA DE CONFORMIDADE PCI-DSS & DADOS FINANCEIROS\n")

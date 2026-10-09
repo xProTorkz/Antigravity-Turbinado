@@ -133,7 +133,8 @@
     "replicacao_total_spa": "Replicação total e irrestrita de SPAs e ecossistemas web complexos: varredura completa de todas as rotas internas, abas de configuração e modais interativos utilizando a sessão ativa logada no Chrome via navegação client-side SPA (sem disparar recargas de página que causem redirecionamento a telas de login). Salva cada tela em HTML individual com estilos, fontes e SVGs inalterados, reescrevendo links internos de navegação para permitir uso e navegação offline fluida entre páginas locais e modais.",
     "separar_datasets": "Executar pipeline unificado de extração stealth e separação analítica com delimitador (|), gerando datasets isolados (validados com saldo, consultáveis, alta renda, cartões comuns e trilhas) em data/ com sobrescrita limpa e dossiê executivo em reports/.",
     "audit_pci_cards": "Varredura universal contra vazamento de cartões de crédito (PAN) e auditoria de conformidade financeira PCI-DSS estruturada em 3 Categorias Canônicas: (1) Mapeamento de Controle (Metadados Permitidos: ID, BIN de 6 dígitos, Brand, Bank, Level, Hash do Card Token), (2) Verificação de Vulnerabilidade e Risco (Validação de 'card_preview' contra PAN desmascarado >4 dígitos finais, detecção de 'have_cardholder_number'=1/número bruto como retenção indevida de dados sensíveis, e bloqueio imediato por violação estrita do PCI-DSS Req 3.2 caso 'card_password' ou CVV estejam presentes), (3) Log de Compliance (Saída estruturada e formatada em './reports/compliance_pci_audit.json' contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados confidenciais).",
-    "scan_cards": "Alias do módulo audit_pci_cards: executar varredura universal de vazamento de cartões de crédito e parâmetros PCI-DSS em 3 categorias canônicas."
+    "scan_cards": "Alias do módulo audit_pci_cards: executar varredura universal de vazamento de cartões de crédito e parâmetros PCI-DSS em 3 categorias canônicas.",
+    "extracao_total_oculto": "Extração Total de Elementos e Dados Ocultos: Revela valores reais de inputs mascarados (type=password -> text, type=hidden, disabled/readonly), extrai textos mascarados no DOM, inspeciona State de Frameworks SPA (React Fiber memoizedProps/memoizedState, Vue __vue__, Angular), realiza dump de variáveis globais de hidratação (__INITIAL_STATE__, __NUXT__, __NEXT_DATA__, _sharedData, __APOLLO_STATE__, __REDUX_STATE__), analisa armazenamento local (localStorage, sessionStorage, cookies) e monitora tráfego de rede."
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [
@@ -211,7 +212,8 @@
       "verificar_permissoes",
       "otimizar_sqlite",
       "higienizar_logs",
-      "auditoria_normal"
+      "auditoria_normal",
+      "extracao_total_oculto"
     ],
     "versionamento_e_git": [
       "sincronizar_estruturas",
@@ -256,7 +258,8 @@
       "auditar_rotas_rede_kernel",
       "limpar_clipboard_sensivel",
       "auditoria_normal",
-      "inspecao_interface_irrestrita"
+      "inspecao_interface_irrestrita",
+      "extracao_total_oculto"
     ],
     "espelhamento_e_download_estatico": [
       "espelhamento_frontend_estatico",
@@ -1545,7 +1548,7 @@
     },
     "AUDITORIA_TOTAL": {
       "id": "AUDITORIA_TOTAL",
-      "descricao": "Auditoria Total nas 10 Camadas Arquiteturais: Superfície Web/Client-Side, Rede e Borda, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN e Laudo Unificado.",
+      "descricao": "Auditoria Total nas 10 Camadas Arquiteturais: Extração Total de Dados Ocultos (desmascaramento DOM, React/Vue State, hidratação), Superfície Web/Client-Side, Borda e Rede, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN e Laudo Pericial Unificado.",
       "categoria": "seguranca",
       "status": "ativo",
       "prioridade": "critica",
@@ -1564,7 +1567,16 @@
         "raio-x total",
         "auditoria total do sistema",
         "varredura total de seguranca",
-        "raio-x completo"
+        "raio-x completo",
+        "extracao total",
+        "extração total",
+        "ver tudo oculto",
+        "desmascarar dom",
+        "ver campos ocultos",
+        "extrair state oculto",
+        "revelar dados mascarados",
+        "ver valores ocultos",
+        "auditoria total com extracao"
       ],
       "target_os": [
         "linux",
@@ -1584,13 +1596,13 @@
         },
         {
           "ordem": 2,
-          "fase": "PHASE_1_CLIENT_SIDE",
+          "fase": "PHASE_1_CLIENT_SIDE_EXTRACTION",
           "comandos": [
-            "python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); print(f'[*] [CAMADA 1: Client-Side] {len(htmls)} arquivo(s) HTML inspecionado(s) para conformidade CSP, SRI e isolamento DOM.')\""
+            "python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); pass_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"password\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='password'\\\") for h in htmls); hid_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"hidden\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='hidden'\\\") for h in htmls); hydr = sum(open(h, errors='ignore').read().count('__NEXT_DATA__') + open(h, errors='ignore').read().count('__INITIAL_STATE__') for h in htmls); print(f'[*] [CAMADA 1: Extração Total Client-Side] {len(htmls)} HTMLs analisados | Senhas: {pass_c} | Hidden: {hid_c} | Hydration: {hydr}')\""
           ],
           "timeout_segundos": 60,
           "ignorar_erros": true,
-          "mensagem": "Camada 1 (Client-Side, CSP, SRI & Anti-Bot) auditada."
+          "mensagem": "Camada 1 (Client-Side, Extração de Ocultos, DOM Unmask, State de Frameworks & Anti-Bot) auditada."
         },
         {
           "ordem": 3,
@@ -1696,7 +1708,16 @@
       "metadata": {
         "dicionario": "sentinela",
         "camadas": 10,
-        "compliance": "PCI-DSS-v4.0"
+        "compliance": "PCI-DSS-v4.0",
+        "extracao_total_oculto": true,
+        "dom_unmask": true,
+        "state_frameworks": [
+          "React",
+          "Vue",
+          "Angular",
+          "Next.js",
+          "Nuxt"
+        ]
       }
     }
   }

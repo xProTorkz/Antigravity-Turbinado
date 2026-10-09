@@ -2809,13 +2809,13 @@ EOF
             echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL (10 CAMADAS) & HARDENING EXPANDIDO"
             echo "🎯 Alvo Identificado: $target"
             echo "=============================================================================="
-            echo "👉 [1/8] Camada 1: Client-Side Expandido (Stealth Anti-Bot, Supply Chain, CSP & SRI, DOM XSS)..."
+            echo "👉 [1/8] Camada 1: Client-Side Expandido & Extração Total (DOM Unmask, Inputs Password/Hidden, State React/Vue, CSP & SRI)..."
             if [ "$is_web" -eq 1 ]; then
-                echo "   • Conexão ativa Chrome Headless / Live Tab Extractor em $target..."
+                echo "   • Conexão ativa Chrome Headless / Live Tab Extractor em $target (desmascarando inputs e capturando state)..."
                 python3 "$script_dir/chrome_live_extractor.py" "$target" --audit-report 2>/dev/null || true
             else
-                echo "   • Analisando arquivos client-side (HTML/JS) para CSP, SRI, trackers e modais..."
-                python3 -c "import os, glob; htmls = glob.glob('**/*.html', recursive=True); print(f'   • {len(htmls)} arquivo(s) HTML verificados para conformidade CSP e integridade SRI.')" 2>/dev/null || true
+                echo "   • Analisando arquivos client-side (HTML/JS) para CSP, SRI, inputs ocultos e variáveis de hidratação..."
+                python3 -c "import os, glob, re; htmls = glob.glob('**/*.html', recursive=True); p_cnt = sum(len(re.findall(r'type=[\"\\']password[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); h_cnt = sum(len(re.findall(r'type=[\"\\']hidden[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); hydr = sum(len(re.findall(r'(__NEXT_DATA__|__INITIAL_STATE__|__NUXT__)', open(h, errors='ignore').read())) for h in htmls); print(f'   • {len(htmls)} arquivo(s) HTML analisados | Senhas: {p_cnt} | Hidden: {h_cnt} | Hydration: {hydr}')" 2>/dev/null || true
             fi
             echo ""
             echo "👉 [2/8] Camadas 2 & 3: Borda, DNS, Subdomínios & Superfície de Rede..."

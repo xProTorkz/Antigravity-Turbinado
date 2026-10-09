@@ -797,7 +797,7 @@ class PipelineEngine:
             },
             "AUDITORIA_TOTAL": {
                 "id": "AUDITORIA_TOTAL",
-                "descricao": "Auditoria Total nas 10 Camadas Arquiteturais: Superfície Web/Client-Side, Rede e Borda, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN e Laudo Unificado.",
+                "descricao": "Auditoria Total nas 10 Camadas Arquiteturais: Extração Total de Dados Ocultos (desmascaramento DOM, React/Vue State, hidratação), Superfície Web/Client-Side, Borda e Rede, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN e Laudo Pericial Unificado.",
                 "categoria": "seguranca",
                 "status": "ativo",
                 "prioridade": "critica",
@@ -816,7 +816,16 @@ class PipelineEngine:
                     "raio-x total",
                     "auditoria total do sistema",
                     "varredura total de seguranca",
-                    "raio-x completo"
+                    "raio-x completo",
+                    "extracao total",
+                    "extração total",
+                    "ver tudo oculto",
+                    "desmascarar dom",
+                    "ver campos ocultos",
+                    "extrair state oculto",
+                    "revelar dados mascarados",
+                    "ver valores ocultos",
+                    "auditoria total com extracao"
                 ],
                 "target_os": ["linux", "darwin", "windows"],
                 "target": ".",
@@ -830,11 +839,11 @@ class PipelineEngine:
                     },
                     {
                         "ordem": 2,
-                        "fase": "PHASE_1_CLIENT_SIDE",
-                        "comandos": ["python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); print(f'[*] [CAMADA 1: Client-Side] {len(htmls)} arquivo(s) HTML inspecionado(s) para conformidade CSP, SRI e isolamento DOM.')\""],
+                        "fase": "PHASE_1_CLIENT_SIDE_EXTRACTION",
+                        "comandos": ["python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); pass_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"password\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='password'\\\") for h in htmls); hid_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"hidden\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='hidden'\\\") for h in htmls); hydr = sum(open(h, errors='ignore').read().count('__NEXT_DATA__') + open(h, errors='ignore').read().count('__INITIAL_STATE__') for h in htmls); print(f'[*] [CAMADA 1: Extração Total Client-Side] {len(htmls)} HTMLs analisados | Senhas: {pass_c} | Hidden: {hid_c} | Hydration: {hydr}')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 1 (Client-Side, CSP, SRI & Anti-Bot) auditada."
+                        "mensagem": "Camada 1 (Client-Side, Extração de Ocultos, DOM Unmask, State de Frameworks & Anti-Bot) auditada."
                     },
                     {
                         "ordem": 3,

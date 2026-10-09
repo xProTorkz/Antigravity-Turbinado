@@ -27,22 +27,146 @@ SENTINELA_AUDIT_JS = """(() => {
     travasCssRemovidas: 0,
     camposDesbloqueados: 0,
     overlaysRemovidos: 0,
+    inputsHidden: [],
+    inputsForm: [],
+    textosMascarados: [],
+    stateFrameworks: { react: [], vue: [], angular: [] },
+    variaveisGlobaisState: {},
+    storage: { localStorage: {}, sessionStorage: {}, cookies: [] },
     valoresCacheColetados: [],
     metadadosAriaColetados: [],
-    inputs: [],
     botoes: [],
-    html: document.documentElement.outerHTML
+    html: ""
   };
 
-  // 1. Desmascarar senhas
+  // 1. VER VALORES OCULTOS NO DOM: Desmascarar TODOS os inputs password
   document.querySelectorAll('input[type="password"]').forEach((i) => {
     i.type = 'text';
     i.setAttribute('data-sentinela-unmasked', 'true');
     i.style.border = '2px dashed #f59e0b';
     rel.senhasDesmascaradas++;
+    rel.inputsForm.push({
+      tipo: 'password_desmascarado',
+      name: i.name || '',
+      id: i.id || '',
+      valor: i.value || ''
+    });
   });
 
-  // 2. Remover travas CSS visuais
+  // Ver TODOS os inputs hidden e seus valores reais
+  document.querySelectorAll('input[type="hidden"]').forEach((i) => {
+    rel.inputsHidden.push({
+      name: i.name || '',
+      id: i.id || '',
+      valor: i.value || ''
+    });
+  });
+
+  // Ver TODOS os inputs, textarea, select e valores
+  document.querySelectorAll('input, textarea, select').forEach((i) => {
+    if (i.type !== 'password' && i.type !== 'hidden') {
+      rel.inputsForm.push({
+        tag: i.tagName.toLowerCase(),
+        tipo: i.type || 'text',
+        name: i.name || '',
+        id: i.id || '',
+        placeholder: i.placeholder || '',
+        valor: i.value || ''
+      });
+    }
+  });
+
+  // 2. VER O TEXTO REAL DE ELEMENTOS MASCARADOS
+  document.querySelectorAll('*').forEach((el) => {
+    if (el.children.length === 0) {
+      const txt = el.textContent?.trim();
+      if (txt && (/number|cardhold|masked|hidden|•••|\*{3,}/i.test(txt) || /number|cardhold|masked/i.test(el.className))) {
+        rel.textosMascarados.push({
+          tag: el.tagName.toLowerCase(),
+          classe: el.className || '',
+          texto: txt.slice(0, 150)
+        });
+      }
+    }
+  });
+
+  // 3. VER O STATE DO FRAMEWORK (React, Vue, Angular)
+  try {
+    document.querySelectorAll('*').forEach((el) => {
+      // React Fiber
+      const fiberKey = Object.keys(el).find(k => k.startsWith('__reactFiber') || k.startsWith('__reactInternalInstance'));
+      if (fiberKey && rel.stateFrameworks.react.length < 20) {
+        let fiber = el[fiberKey];
+        while (fiber) {
+          if (fiber.memoizedProps && Object.keys(fiber.memoizedProps).length > 0) {
+            try {
+              const propsStr = JSON.stringify(fiber.memoizedProps, (k, v) => (typeof v === 'function' ? '[Func]' : v));
+              if (propsStr && propsStr.length > 2 && propsStr.length < 2000) {
+                rel.stateFrameworks.react.push({
+                  tag: el.tagName.toLowerCase(),
+                  classe: el.className || '',
+                  props: JSON.parse(propsStr)
+                });
+                break;
+              }
+            } catch(e) {}
+          }
+          fiber = fiber.return;
+        }
+      }
+      // Vue Instance
+      if (el.__vue__ && rel.stateFrameworks.vue.length < 10) {
+        try {
+          rel.stateFrameworks.vue.push({
+            tag: el.tagName.toLowerCase(),
+            data: JSON.parse(JSON.stringify(el.__vue__.$data || {}))
+          });
+        } catch(e) {}
+      }
+      // Angular Component
+      if (window.ng && typeof window.ng.getComponent === 'function' && rel.stateFrameworks.angular.length < 10) {
+        try {
+          const comp = window.ng.getComponent(el);
+          if (comp) {
+            rel.stateFrameworks.angular.push({
+              tag: el.tagName.toLowerCase(),
+              compName: comp.constructor?.name || 'Component'
+            });
+          }
+        } catch(e) {}
+      }
+    });
+  } catch(e) {}
+
+  // 4. VER VARIÁVEIS GLOBAIS DE STATE (hidratação SPA)
+  ['__INITIAL_STATE__', '__NUXT__', '__NEXT_DATA__', '_sharedData', '__APOLLO_STATE__', '__REDUX_STATE__', '__PRELOADED_STATE__'].forEach((k) => {
+    if (window[k]) {
+      try {
+        rel.variaveisGlobaisState[k] = JSON.parse(JSON.stringify(window[k]));
+      } catch(e) {
+        rel.variaveisGlobaisState[k] = '[Presente mas não serializável]';
+      }
+    }
+  });
+
+  // 5. VER TUDO DO STORAGE (localStorage, sessionStorage, cookies)
+  try {
+    Object.entries(localStorage).forEach(([k, v]) => {
+      rel.storage.localStorage[k] = String(v).slice(0, 500);
+    });
+  } catch(e) {}
+  try {
+    Object.entries(sessionStorage).forEach(([k, v]) => {
+      rel.storage.sessionStorage[k] = String(v).slice(0, 500);
+    });
+  } catch(e) {}
+  try {
+    document.cookie.split(';').forEach(c => {
+      if (c.trim()) rel.storage.cookies.push(c.trim());
+    });
+  } catch(e) {}
+
+  // 6. Remover travas CSS visuais (filter, security, user-select)
   document.querySelectorAll('*').forEach((el) => {
     const s = window.getComputedStyle(el);
     let mod = false;
@@ -53,7 +177,7 @@ SENTINELA_AUDIT_JS = """(() => {
     if (mod) rel.travasCssRemovidas++;
   });
 
-  // 3. Destravar disabled e readonly
+  // 7. Destravar disabled e readonly
   document.querySelectorAll('input, select, textarea, button').forEach((el) => {
     let d = false;
     if (el.hasAttribute('disabled')) { el.removeAttribute('disabled'); d = true; }
@@ -61,7 +185,7 @@ SENTINELA_AUDIT_JS = """(() => {
     if (d) rel.camposDesbloqueados++;
   });
 
-  // 4. Neutralizar overlays vazios
+  // 8. Neutralizar overlays vazios
   document.querySelectorAll('div, section, span, aside').forEach((el) => {
     const s = window.getComputedStyle(el);
     const isFixedOrAbsolute = s.position === 'fixed' || s.position === 'absolute';
@@ -77,46 +201,13 @@ SENTINELA_AUDIT_JS = """(() => {
     }
   });
 
-  // 5. Coleta de inputs e botões
-  document.querySelectorAll('input, select, textarea').forEach((el) => {
-    const id = el.id || el.name || el.getAttribute('placeholder') || 'anônimo';
-    const val = el.value || el.getAttribute('value') || el.innerText?.trim();
-    if (val) {
-      rel.valoresCacheColetados.push({
-        elemento: el.tagName.toLowerCase(),
-        identificador: id,
-        tipo: el.type || 'text',
-        valorReal: val
-      });
-    }
-    rel.inputs.push({
-      id: el.id,
-      name: el.name,
-      type: el.type,
-      placeholder: el.placeholder,
-      value: el.value
-    });
-  });
-
+  // 9. Coleta de botões
   document.querySelectorAll('button').forEach((b) => {
     const txt = b.innerText.trim();
     if (txt) rel.botoes.push(txt);
   });
 
-  // 6. Atributos de acessibilidade
-  document.querySelectorAll('[aria-label], [aria-description], [title], [alt]').forEach((el) => {
-    const txt = el.getAttribute('aria-label') || el.getAttribute('aria-description') || el.getAttribute('title') || el.getAttribute('alt');
-    if (txt) {
-      rel.metadadosAriaColetados.push({
-        tag: el.tagName.toLowerCase(),
-        identificador: el.id || el.className || 'sem-id',
-        atributo: el.hasAttribute('aria-label') ? 'aria-label' : (el.hasAttribute('title') ? 'title' : 'outros'),
-        textoOculto: txt
-      });
-    }
-  });
-
-  // Atualizar HTML após desmascaramento
+  // 10. Atualizar HTML completo após todas as alterações e desmascaramentos
   rel.html = document.documentElement.outerHTML;
   return JSON.stringify(rel);
 })()"""
@@ -244,9 +335,13 @@ def main():
         print(f"   • Título da Página: {live_data.get('title')}")
         print(f"   • URL Capturada: {live_data.get('url')}")
         print(f"   • Senhas Desmascaradas: {live_data.get('senhasDesmascaradas')}")
+        print(f"   • Inputs Hidden Capturados: {len(live_data.get('inputsHidden', []))}")
+        print(f"   • Textos Mascarados Identificados: {len(live_data.get('textosMascarados', []))}")
+        print(f"   • State de Frameworks (React/Vue/Angular): React={len(live_data.get('stateFrameworks', {}).get('react', []))} | Vue={len(live_data.get('stateFrameworks', {}).get('vue', []))}")
+        print(f"   • Variáveis Globais de State: {list(live_data.get('variaveisGlobaisState', {}).keys())}")
         print(f"   • Campos Desbloqueados: {live_data.get('camposDesbloqueados')}")
         print(f"   • Overlays Removidos: {live_data.get('overlaysRemovidos')}")
-        print(f"   • Inputs Identificados: {len(live_data.get('inputs', []))}")
+        print(f"   • Inputs de Formulário: {len(live_data.get('inputsForm', []))}")
         print(f"   • Botões Detectados: {len(live_data.get('botoes', []))}")
 
         html_content = live_data.pop("html")
