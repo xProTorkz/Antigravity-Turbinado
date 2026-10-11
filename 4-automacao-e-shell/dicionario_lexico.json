@@ -127,7 +127,7 @@
     "clone": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em $PROJETOS_ROOT/<NOME_PASTA> e abrir no navegador.",
     "espelho": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em $PROJETOS_ROOT/<NOME_PASTA> e abrir no navegador.",
     "replicar": "Alias do Auditoria Total Replicador: baixar recursivamente o frontend via wget na pasta indicada em $PROJETOS_ROOT/<NOME_PASTA> e abrir no navegador.",
-    "auditoria_total": "Auditoria Total e Vasculhamento Geral: vasculha e inspeciona compulsoriamente todas as 14 camadas arquiteturais (infraestrutura, memória, permissões, DOM, DevTools, senhas desmascaradas, rede, APIs, arquivos sensíveis, segredos, SCA, SQL, webshells, headers e extração de arquivos relevantes).",
+    "auditoria_total": "Auditoria Total e Vasculhamento Geral: vasculha e inspeciona compulsoriamente todas as 14 camadas arquiteturais (infraestrutura, memória, permissões, DOM, DevTools, senhas desmascaradas, rede, APIs, arquivos sensíveis, segredos, SCA, SQL, webshells, headers e extração cirúrgica de arquivos relevantes em ./reports/arquivos_relevantes/ com contingência CDP e laudo tripartite).",
     "auditoria_completa": "Executar auditoria técnica completa de ambiente, permissões, processos e repositórios locais.",
     "inspecao_interface_irrestrita": "Executar script unificado de inspeção irrestrita de interface no DOM: remove filtros visuais e de segurança CSS (-webkit-text-security, blur), converte inputs confidenciais (password -> text), remove bloqueios de interação (disabled, readonly), elimina elementos bloqueadores invisíveis (overlays/divs flutuantes), extrai metadados em cache (.value, .innerText) e inspeciona atributos de acessibilidade (aria-labels, role) para auditoria completa de frontend.",
     "desmascarar_inputs_senha": "Converter inputs type=\"password\" para type=\"text\" para inspeção visual imediata e análise de conformidade de formulários.",
@@ -3153,6 +3153,18 @@
         "MUTATION_ALLOWED": false,
         "AUDIT_LOGGING": true
       },
+      "destino_extracao_evidencias": "./reports/arquivos_relevantes/",
+      "regra_extracao_limpa": "É terminantemente proibido despejar artefatos soltos na raiz ou fora do diretório canônico; todas as evidências, amostras e payloads extraídos devem ser gravados exclusivamente em ./reports/arquivos_relevantes/ com manifesto de integridade SHA-256.",
+      "contingencia_cdp": {
+        "condicao": "Se conexão CDP porta 9222 falhar ou estiver inacessível",
+        "acao": "Registrar alerta 'CDP_OFFLINE' no laudo pericial e executar compulsoriamente 100% das camadas estáticas locais e inspeções offline sem abortar a esteira",
+        "fallback_status": "CDP_OFFLINE"
+      },
+      "matriz_encerramento_laudo": {
+        "BLOQUEADO": "Crítico: Presença de chaves privadas/segredos em texto plano, webshells ativas, backdoors ou violações graves de conformidade que impedem o avanço operacional.",
+        "OK_COM_PENDENCIAS": "Alerta: Ausência de portas ativas/CDP offline, dependências com alertas médios ou ausência de cabeçalhos de segurança, permitindo continuidade com ressalvas documentadas.",
+        "OK": "Conforme: Todas as 14 camadas inspecionadas com sucesso, integridade de arquivos validada e ausência de vulnerabilidades críticas ou segredos expostos."
+      },
       "descricao": "Executa a Auditoria Total e Vasculhamento Geral nas 14 Camadas Arquiteturais: Diagnóstico de Infraestrutura, Memória/CPU, Permissões 0600, Extração Total de Dados Ocultos (desmascaramento DOM, React/Vue State, hidratação), Borda e Rede, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN, Extração de Arquivos Relevantes e Laudo Pericial Unificado.",
       "lista_comandos_execucao": [
         "1. Inicialização de diretórios de relatórios e artefatos (./reports, ./artifacts)",
@@ -3166,7 +3178,7 @@
         "9. Camada 10 - Caça a webshells, padrões eval/base64, backdoors e vetores privesc (audit-hidden-webshells, audit-privesc-vectors)",
         "10. Governança PCI-DSS - Varredura universal de cartões de crédito (PAN) e parâmetros de risco em 3 categorias canônicas via scan_cards_pci.py",
         "11. Verificação de replicação e snapshots offline do DOM (index.html, hub_replicado.html)",
-        "12. Compilação do laudo pericial unificado das 10 camadas via compile_audit_report.py"
+        "12. Compilação do laudo pericial unificado das 14 camadas via compile_audit_report.py"
       ],
       "estrutura_completa_vasculhamento_7_camadas": {
         "titulo": "ESTRUTURA COMPLETA PARA VASCULHAR UM SISTEMA INTEIRO",
@@ -5493,7 +5505,7 @@
     },
     "AUDITORIA_TOTAL": {
       "id": "AUDITORIA_TOTAL",
-      "descricao": "Auditoria Total nas 10 Camadas Arquiteturais: Extração Total de Dados Ocultos (desmascaramento DOM, React/Vue State, hidratação), Superfície Web/Client-Side, Borda e Rede, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN e Laudo Pericial Unificado.",
+      "descricao": "Auditoria Total nas 14 Camadas Arquiteturais: Extração Total de Dados Ocultos (desmascaramento DOM, React/Vue State, hidratação), Superfície Web/Client-Side, Borda e Rede, Gateways/APIs, Rotas Sensíveis, Segredos/Chaves, SCA/Dependências, Sanitização SQL, Webshells/Backdoors, Conformidade PCI-DSS/PAN, Extração Seletiva de Arquivos Relevantes, Cabeçalhos HTTP de Segurança e Laudo Pericial Unificado.",
       "categoria": "seguranca",
       "status": "ativo",
       "prioridade": "critica",
@@ -5793,7 +5805,7 @@
       ],
       "metadata": {
         "dicionario": "sentinela",
-        "camadas": 10,
+        "camadas": 14,
         "compliance": "PCI-DSS-v4.0",
         "extracao_total_oculto": true,
         "dom_unmask": true,
@@ -5816,7 +5828,7 @@
           "9. Camada 10 - Caça a webshells, padrões eval/base64, backdoors e vetores privesc (audit-hidden-webshells, audit-privesc-vectors)",
           "10. Governança PCI-DSS - Varredura universal de cartões de crédito (PAN) e parâmetros de risco em 3 categorias canônicas via scan_cards_pci.py",
           "11. Verificação de replicação e snapshots offline do DOM (index.html, hub_replicado.html)",
-          "12. Compilação do laudo pericial unificado das 10 camadas via compile_audit_report.py"
+          "12. Compilação do laudo pericial unificado das 14 camadas via compile_audit_report.py"
         ],
         "estrutura_completa_vasculhamento_7_camadas": {
           "titulo": "ESTRUTURA COMPLETA PARA VASCULHAR UM SISTEMA INTEIRO",
@@ -6339,6 +6351,16 @@
           "nome": "Governança Sentinela & Matriz de Hardening OPSEC",
           "escopo": "Diagnóstico consolidado de vulnerabilidade e exposição, categorização de criticidade (Baixa, Média, Crítica) e checklist prático de contramedidas."
         }
+      },
+      "protocolo_rastreabilidade_avancada": {
+        "fontes_locais_obrigatorias": [
+          "WhatsApp Local SQLite (/Users/lucasvinicius/Library/Group Containers/group.net.whatsapp.WhatsApp.shared/ChatStorage.sqlite e ContactsV2.sqlite)",
+          "Discord Bot Local API & Guilds (/Users/lucasvinicius/projetos/BOTS/Discord Bot/)",
+          "Contatos do Sistema e Históricos de Shell"
+        ],
+        "protocolo_anti_homonimo": "Proibido atribuir processos judiciais ou CNPJs genéricos baseados em homônimos de nomes comuns sem amarração prévia comprovada por CPF, telefone, e-mail ou identificador digital único.",
+        "extracao_visual_avatar": "Download obrigatório do avatar/foto em alta resolução e análise pericial de marcadores biométricos, idade aparente e dispositivos eletrônicos.",
+        "triangulacao_temporal": "Cruzamento temporal de logs de entrada em servidores, mensagens trocadas e envio de cartões vCard."
       }
     }
   },
