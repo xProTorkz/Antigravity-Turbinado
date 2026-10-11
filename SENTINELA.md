@@ -317,4 +317,29 @@ Para sincronizar e baixar a versão mais recente do Sentinela e do Dicionário L
   3. Destrava o terminal integrado no `settings.json` do VS Code e Antigravity (Git Bash padrão ou PowerShell Bypass).
 * Isso garante que qualquer usuário de Windows execute ferramentas autônomas sem bloqueios ou interrupções.
 
+---
 
+### 13. PROTOCOLO LÉXICO SOBERANO & GATILHOS DIRETOS (DICIONÁRIO ON-DEMAND)
+
+O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade máxima e soberana de termos, comandos rápidos, intenções, rotinas de automação e regras operacionais do ecossistema Sentinela / Antigravity Turbinado.
+
+Para maximizar a velocidade e garantir consumo cirúrgico de tokens (sem necessidade de processos em background ou servidores externos), a IA adota a arquitetura de **Resolução Direta dos Gatilhos Mestres** combinada com **Consulta Pontual Sob Demanda**.
+
+#### 13.1 Trio de Gatilhos Mestres de Execução Imediata
+Sempre que o usuário emitir um destes gatilhos canônicos, execute compulsoriamente seu pipeline formal sem necessidade de leitura em disco:
+
+1. **`auditoria total` (ou `fazer auditoria total`, `executar auditoria total`)**:
+   * **Missão:** Vasculhamento e inspeção forense compulsoriamente em todas as 14 camadas arquiteturais (infraestrutura, memória, permissões 0600, arquivos sensíveis `.env`, segredos/chaves de API, gateways/rotas, dependências SCA, sanitização SQL, webshells/backdoors e conformidade).
+   * **Desmascaramento & DOM:** Em inspeções web, utiliza compulsoriamente a sessão já aberta em background no Google Chrome via CDP/DevTools sem abrir novas janelas ou processos redundantes.
+   * **Saída Canônica Restrita:** Baixa e extrai **exclusivamente arquivos importantes e relevantes** na pasta dedicada `./reports/arquivos_relevantes/`, emitindo laudo pericial formal em `./reports/` com hashes SHA-256 e sem inflar o repositório com lixo estático.
+
+2. **`auditoria total replicador` (ou `replicar`, `clone`, `espelho`)**:
+   * **Missão:** Espelhar e clonar a aplicação alvo completa (frontend, estilos, bundles JS, assets e schemas de backend) em pasta dedicada sob `$PROJETOS_ROOT/SITES/<nome_do_projeto>`, gerando ambiente de execução 100% autônomo e offline em `./replica`.
+
+3. **`atualizar sentinela` (ou `baixa a nova atualizacao sentinela`)**:
+   * **Missão:** Executa o atualizador canônico disparando `git pull origin main` no repositório `Antigravity-Turbinado`, sincronizando o `dicionario_lexico.json`, as skills `@sentinela` e validando a integridade estrutural com recibo de entrega.
+
+#### 13.2 Ponte Léxica Sob Demanda para Outros Termos
+Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
+1. **Consulta Imediata via `grep_search`:** A IA consulta cirurgicamente a chave em `~/.gemini/config/dicionario_lexico.json` para obter a definição e o escopo exato da operação antes de iniciar a execução.
+2. **Fidelidade Canônica:** Executa rigorosamente os passos prescritos no dicionário léxico, preservando a governança, as regras de segurança e o isolamento do projeto ativo.
