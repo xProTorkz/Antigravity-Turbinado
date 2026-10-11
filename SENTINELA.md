@@ -325,7 +325,7 @@ O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade m�
 
 Para maximizar a velocidade e garantir consumo cirúrgico de tokens (sem necessidade de processos em background ou servidores externos), a IA adota a arquitetura de **Resolução Direta dos Gatilhos Mestres** combinada com **Consulta Pontual Sob Demanda**.
 
-#### 13.1 Trio de Gatilhos Mestres de Execução Imediata
+#### 13.1 Quarteto de Gatilhos Mestres de Execução Imediata
 Sempre que o usuário emitir um destes gatilhos canônicos, É TERMINANTEMENTE PROIBIDO APENAS RESPONDER EM TEXTO. A IA DEVE OBRIGATORIAMENTE DISPARAR NO TERMINAL VIA `run_command` O PIPELINE CORRESPONDENTE:
 
 1. **`auditoria total` (ou `fazer auditoria total`, `executar auditoria total`, `varredura completa`)**:
@@ -334,12 +334,25 @@ Sempre que o usuário emitir um destes gatilhos canônicos, É TERMINANTEMENTE P
    * **Comportamento & 12 Etapas:** Executa o macro-pipeline completo (client-side, DOM unmask, portas TCP, gateways, rotas sensíveis, segredos/chaves, SCA, sanitização SQL, webshells/privesc, PCI-DSS e compilação de laudo).
    * **Saída Canônica:** Gera `./reports/LAUDO_AUDITORIA_TOTAL.md` e `./reports/dashboard_auditoria.html`, extraindo arquivos relevantes exclusivamente para `./reports/arquivos_relevantes/`. Ao finalizar, apresente o resumo do laudo e link para o dashboard.
 
-2. **`auditoria total replicador` (ou `replicar`, `clone`, `espelho`)**:
+2. **`auditoria pessoal [nome]` (ou `auditoria pessoal`, `dossiê pessoal`, `varredura pessoal`, `auditoria forense pessoal`)**:
+   * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
+     `bash -c 'source "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/agy_cmd.sh" && agy_cmd auditoria-pessoal "${1:-Lucas Vinicius Dias Ferreira}"'`
+   * **Comportamento & 14 Camadas:** É TERMINANTEMENTE PROIBIDO emitir resumos superficiais ou respostas puramente textuais de poucos parágrafos. A IA deve obrigatoriamente executar a esteira pericial de 14 camadas (Identidade civil, Registro.br/Whois, servidores VPS/SSH, telecomunicações, logística/residência, corporativo/CNPJ, judicial/TJPE, plataformas 00doHot/bots, financeiro/gateways, modelos IA, GitOps/BYOK, portas locais, resíduos em disco/cache e matriz OPSEC).
+   * **Saída Canônica & Downloads:**
+     1. Extração de arquivos físicos individuais em `./reports/arquivos_relevantes/evidencia_*.json/.txt`.
+     2. Geração do `manifest_arquivos_relevantes.json` com hashes SHA-256.
+     3. Laudo pericial completo em `./reports/LAUDO_AUDITORIA_PESSOAL_[NOME].md`.
+     4. Dashboard interativo Dark Mode em `./reports/dashboard_auditoria_pessoal_[nome].html`.
+     5. Compilação do PDF Executivo oficial via Chrome headless salvo diretamente em `~/Downloads/Auditoria_Pessoal_[Nome].pdf`.
+     6. Empacotamento do dossiê em pasta e arquivo `.zip` em `~/Downloads/AUDITORIA_PESSOAL_[NOME].zip`.
+     7. Abertura automática no macOS via `open` da pasta e do PDF.
+
+3. **`auditoria total replicador` (ou `replicar`, `clone`, `espelho`)**:
    * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
      `bash -c 'source "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/agy_cmd.sh" && agy_cmd auditoria-total-replicador "${1:-.}"'`
    * **Comportamento:** Espelha e clona a aplicação alvo completa gerando réplica autônoma offline em `./replica`.
 
-3. **`atualizar sentinela` (ou `baixa a nova atualizacao sentinela`)**:
+4. **`atualizar sentinela` (ou `baixa a nova atualizacao sentinela`)**:
    * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
      `bash "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/atualizar_sentinela.sh"`
    * **Comportamento:** Executa `git pull origin main`, sincroniza dicionário e skills, emitindo recibo.

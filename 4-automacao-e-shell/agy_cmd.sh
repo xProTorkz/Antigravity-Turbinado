@@ -3038,6 +3038,13 @@ EOF
             echo "=============================================================================="
             ;;
 
+        "auditoria-pessoal"|"auditoria pessoal"|"dossie-pessoal"|"dossiê pessoal"|"varredura-pessoal"|"varredura pessoal"|"auditoria de identidade")
+            local target_name="${1:-Lucas Vinicius Dias Ferreira}"
+            local doc="${2:-}"
+            local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+            python3 "$script_dir/auditoria_pessoal_engine.py" "$target_name" "$doc"
+            ;;
+
         "va-mais-a-fundo"|"va mais a fundo"|"vá mais a fundo"|"vai mais a fundo"|"mais a fundo")
             echo "🔬 =============================================================================="
             echo "⚡ MACRO-PIPELINE: INVESTIGAÇÃO TÉCNICA DE BAIXO NÍVEL EM PROFUNDIDADE"
