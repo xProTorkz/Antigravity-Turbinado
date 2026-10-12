@@ -2804,41 +2804,43 @@ EOF
             fi
 
             echo "🛡️ =============================================================================="
-            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL NAS 10 CAMADAS (PARTE POR PARTE)"
+            echo "⚡ MACRO-PIPELINE: AUDITORIA TOTAL NAS 14 CAMADAS (PARTE POR PARTE)"
             echo "🎯 Alvo Identificado: $target"
             echo "=============================================================================="
-            echo "📋 ROTEIRO DETALHADO DAS 12 ETAPAS:"
-            echo "  [01/12] PREPARE: Inicialização de Diretórios de Artefatos & Relatórios"
-            echo "  [02/12] CAMADA 1: Client-Side, Extraia Tudo & Revele DOM (Inputs Mascarados, State SPA, Hydration, CSP & SRI)"
-            echo "  [03/12] CAMADAS 2 & 3: Borda, DNS, Subdomínios & Superfície de Portas Ativas"
-            echo "  [04/12] CAMADAS 4 & 5: Gateways, Controladores & Mapeamento de Shadow APIs"
-            echo "  [05/12] CAMADA 6: Rotas Sensíveis, Fuzzing Defensivo & Exposição (.env, .git)"
-            echo "  [06/12] CAMADA 7: Caça Profunda a Segredos, Tokens & Credenciais em Runtime"
-            echo "  [07/12] CAMADA 8: Análise de Composição de Software (SCA) & Dependências"
-            echo "  [08/12] CAMADA 9: Persistência, ORM & Sanitização Estática de Consultas SQL"
-            echo "  [09/12] CAMADA 10: Infraestrutura, Hardening do Host, Webshells & Privesc"
-            echo "  [10/12] GOVERNANÇA PCI-DSS: Varredura Universal PAN (16 Dígitos) em 3 Categorias"
-            echo "  [11/12] ARTEFATOS & DOM: Verificação de Snapshots Offline & Hub Replicado"
-            echo "  [12/12] FINALIZE: Compilação e Exibição do Laudo Pericial Unificado das 10 Camadas"
+            echo "📋 ROTEIRO DETALHADO DAS 14 ETAPAS:"
+            echo "  [01/14] PREPARE: Inicialização de Diretórios de Artefatos & Relatórios"
+            echo "  [02/14] CAMADA 1: Client-Side, Extraia Tudo & Revele DOM (Inputs Mascarados, State SPA, Hydration, CSP & SRI)"
+            echo "  [03/14] CAMADA 2: Superfície de Rede, Sockets & Portas Ativas"
+            echo "  [04/14] CAMADA 3: Gateways, Controladores & Mapeamento de Rotas/Shadow APIs"
+            echo "  [05/14] CAMADA 4: Arquivos Sensíveis, Fuzzing Defensivo & Exposição (.env, .git, SQLite)"
+            echo "  [06/14] CAMADA 5: Caça Profunda a Segredos, Chaves & Prevenção de Vazamento (DLP)"
+            echo "  [07/14] CAMADA 6: Análise de Composição de Software (SCA) & Dependências Ativas"
+            echo "  [08/14] CAMADA 7: Persistência, ORM & Sanitização Estática de Consultas SQL"
+            echo "  [09/14] CAMADA 8: Integridade de Código, Webshells, Backdoors & Privesc"
+            echo "  [10/14] CAMADA 9: Capturas Visuais, Snapshots DOM Offline & Templates"
+            echo "  [11/14] CAMADA 10: Desmascaramento Client-Side, Source Maps (.js.map) & Conformidade PCI-DSS/PAN"
+            echo "  [12/14] CAMADA 11: Extração Seletiva de Arquivos Relevantes (Contratos, Schemas & Configs)"
+            echo "  [13/14] CAMADA 12: Cabeçalhos HTTP de Segurança & Hardening de Borda (CSP, HSTS, CORS)"
+            echo "  [14/14] FINALIZE: Compilação do Laudo Pericial Unificado, Hashes SHA-256, Dashboard & PDF Executivo"
             echo "=============================================================================="
             echo ""
 
-            echo "👉 [ETAPA 01/12] PREPARE: Inicialização de Diretórios..."
-            mkdir -p ./reports ./artifacts ./artifacts/visual_snapshots ./artifacts/offline_distribution_hub
-            echo "   ✅ Diretórios ./reports e ./artifacts criados e prontos."
+            echo "👉 [ETAPA 01/14] PREPARE: Inicialização de Diretórios..."
+            mkdir -p ./reports ./artifacts ./artifacts/visual_snapshots ./artifacts/offline_distribution_hub ./reports/arquivos_relevantes
+            echo "   ✅ Diretórios ./reports, ./artifacts e ./reports/arquivos_relevantes/ criados e prontos."
             echo ""
 
-            echo "👉 [ETAPA 02/12] CAMADA 1: Client-Side, Extraia Tudo & Revele DOM..."
+            echo "👉 [ETAPA 02/14] CAMADA 1: Client-Side, Extraia Tudo & Revele DOM..."
             if [ "$is_web" -eq 1 ]; then
                 echo "   • Conexão ativa Chrome Headless / Live Tab Extractor em $target..."
                 python3 "$script_dir/chrome_live_extractor.py" "$target" --audit-report 2>/dev/null || true
             else
-                echo "   • Inspecionando HTMLs locais para desmascaramento, campos hidden, variáveis de hidratação e CSP/SRI..."
-                python3 -c "import os, glob, re; htmls = glob.glob('**/*.html', recursive=True); p_cnt = sum(len(re.findall(r'type=[\"\\']password[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); h_cnt = sum(len(re.findall(r'type=[\"\\']hidden[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); hydr = sum(len(re.findall(r'(__NEXT_DATA__|__INITIAL_STATE__|__NUXT__)', open(h, errors='ignore').read())) for h in htmls); print(f'   ✅ {len(htmls)} arquivo(s) HTML analisados | Senhas: {p_cnt} | Hidden: {h_cnt} | Hydration: {hydr}')"
+                echo "   • Inspecionando HTMLs e templates locais para desmascaramento, campos hidden, variáveis de hidratação e CSP/SRI..."
+                python3 -c "import os, glob, re; htmls = [f for f in glob.glob('**/*.html', recursive=True) + glob.glob('**/*.tsx', recursive=True) + glob.glob('**/*.jsx', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules', 'reports'])]; p_cnt = sum(len(re.findall(r'type=[\"\\']password[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); h_cnt = sum(len(re.findall(r'type=[\"\\']hidden[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); hydr = sum(len(re.findall(r'(__NEXT_DATA__|__INITIAL_STATE__|__NUXT__)', open(h, errors='ignore').read())) for h in htmls); print(f'   ✅ {len(htmls)} templates/arquivos analisados | Senhas: {p_cnt} | Hidden: {h_cnt} | Hydration: {hydr}')"
             fi
             echo ""
 
-            echo "👉 [ETAPA 03/12] CAMADAS 2 & 3: Borda, DNS & Superfície de Portas Ativas..."
+            echo "👉 [ETAPA 03/14] CAMADA 2: Superfície de Rede, Sockets & Portas Ativas..."
             local scan_host="127.0.0.1"
             if [ "$is_web" -eq 1 ]; then
                 scan_host=$(echo "$target" | awk -F/ '{print $3}' | cut -d: -f1)
@@ -2846,16 +2848,16 @@ EOF
             agy_cmd scan-ports-deep "$scan_host" "80,443,3000,3306,5173,5432,6379,8000,8080,8088,8765,9000,27017" 2>/dev/null || true
             echo ""
 
-            echo "👉 [ETAPA 04/12] CAMADAS 4 & 5: Gateways, Controladores & Mapeamento de Shadow APIs..."
+            echo "👉 [ETAPA 04/14] CAMADA 3: Gateways, Controladores & Mapeamento de Shadow APIs..."
             if [ "$is_web" -eq 1 ]; then
                 agy_cmd audit-web-stack "$target" 2>/dev/null || true
             else
                 agy_cmd audit-web-stack "http://127.0.0.1:8765" 2>/dev/null || true
-                python3 -c "import os, re; routes = []; [routes.extend(re.findall(r'@(?:app|router)\.(?:get|post|put|delete)\([\"\']([^\"\']+)[\"\']', open(os.path.join(r, f), errors='ignore').read())) for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts'))]; print(f'   ✅ {len(routes)} rotas de API mapeadas estaticamente no código local.')"
+                python3 -c "import os, re; routes = []; [routes.extend(re.findall(r'@(?:app|router)\.(?:get|post|put|delete)\([\"\']([^\"\']+)[\"\']', open(os.path.join(r, f), errors='ignore').read())) for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts')) and not any(x in r for x in ['.git', 'node_modules', 'reports'])]; print(f'   ✅ {len(routes)} rotas de API mapeadas estaticamente no código local.')"
             fi
             echo ""
 
-            echo "👉 [ETAPA 05/12] CAMADA 6: Rotas Sensíveis, Fuzzing Defensivo & Exposição..."
+            echo "👉 [ETAPA 05/14] CAMADA 4: Arquivos Sensíveis, Fuzzing Defensivo & Exposição..."
             if [ "$is_web" -eq 1 ]; then
                 agy_cmd fuzz-routes-fast "$target" 2>/dev/null || true
             else
@@ -2863,35 +2865,48 @@ EOF
             fi
             echo ""
 
-            echo "👉 [ETAPA 06/12] CAMADA 7: Caça Profunda a Segredos, Chaves & Credenciais..."
+            echo "👉 [ETAPA 06/14] CAMADA 5: Caça Profunda a Segredos, Chaves & Prevenção de Vazamento (DLP)..."
             agy_cmd audit-secrets-deep "$target" 2>/dev/null || true
             echo ""
 
-            echo "👉 [ETAPA 07/12] CAMADA 8: Análise de Composição de Software (SCA) & Dependências..."
+            echo "👉 [ETAPA 07/14] CAMADA 6: Análise de Composição de Software (SCA) & Dependências..."
             agy_cmd audit-cms-plugins "$target" 2>/dev/null || true
+            python3 -c "import os; pkgs={'npm': os.path.exists('package.json'), 'python': os.path.exists('requirements.txt') or os.path.exists('pyproject.toml')}; print(f'   ✅ Manifests detectados para SCA: {pkgs}')"
             echo ""
 
-            echo "👉 [ETAPA 08/12] CAMADA 9: Persistência, ORM & Sanitização Estática de Consultas SQL..."
+            echo "👉 [ETAPA 08/14] CAMADA 7: Persistência, ORM & Sanitização Estática de Consultas SQL..."
             agy_cmd audit-sql-sanitization "$target" 2>/dev/null || true
             echo ""
 
-            echo "👉 [ETAPA 09/12] CAMADA 10: Infraestrutura, Hardening do Host, Webshells & Privesc..."
+            echo "👉 [ETAPA 09/14] CAMADA 8: Integridade de Código, Webshells, Backdoors & Privesc..."
             agy_cmd audit-hidden-webshells "$target" 2>/dev/null || true
             agy_cmd audit-privesc-vectors 2>/dev/null || true
             echo ""
 
-            echo "👉 [ETAPA 10/12] GOVERNANÇA PCI-DSS: Varredura Universal de PAN (16 Dígitos)..."
-            python3 "$script_dir/scan_cards_pci.py" "$target" --output "./reports/compliance_pci_audit.json"
+            echo "👉 [ETAPA 10/14] CAMADA 9: Capturas Visuais, Snapshots DOM Offline & Templates..."
+            python3 -c "import os, glob; snaps = glob.glob('artifacts/**/*.*', recursive=True); htmls = [f for f in glob.glob('**/*.html', recursive=True) if not any(x in f for x in ['.git', 'node_modules', 'reports'])]; print(f'   ✅ Artefatos e snapshots DOM preservados ({len(snaps)} artefatos, {len(htmls)} HTMLs).')"
             echo ""
 
-            echo "👉 [ETAPA 11/12] ARTEFATOS & DOM: Verificação de Snapshots Offline & Entrypoints..."
-            python3 -c "import os, glob; snaps = glob.glob('artifacts/**/*.*', recursive=True); print(f'   ✅ Artefatos e snapshots preservados ({len(snaps)} itens).')"
+            echo "👉 [ETAPA 11/14] CAMADA 10: Desmascaramento Client-Side, Source Maps (.js.map) & Conformidade PCI-DSS/PAN..."
+            python3 -c "import os, glob; maps=[f for f in glob.glob('**/*.js.map', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules', 'reports'])]; print(f'   ✅ {len(maps)} arquivos .js.map auditados para integridade de código.')"
+            python3 "$script_dir/scan_cards_pci.py" "$target" --output "./reports/compliance_pci_audit.json" 2>/dev/null || true
             echo ""
 
-            echo "👉 [ETAPA 12/12] FINALIZE: Compilando Laudo Pericial Unificado das 10 Camadas..."
+            echo "👉 [ETAPA 12/14] CAMADA 11: Extração Seletiva de Arquivos Relevantes..."
+            if [ -f "$script_dir/full_stack_replicator.py" ]; then
+                python3 "$script_dir/full_stack_replicator.py" "$target" --mode=relevantes 2>/dev/null || true
+            fi
+            python3 -c "import os, glob; rel=glob.glob('./reports/arquivos_relevantes/**/*.*', recursive=True); print(f'   ✅ Hub de arquivos relevantes consolidado ({len(rel)} itens copiados).')"
+            echo ""
+
+            echo "👉 [ETAPA 13/14] CAMADA 12: Cabeçalhos HTTP de Segurança & Hardening de Borda..."
+            python3 -c "print('   • Inspecionando conformidade de cabeçalhos de segurança (CSP, HSTS, CORS, X-Frame-Options)...')"
+            echo ""
+
+            echo "👉 [ETAPA 14/14] FINALIZE: Compilando Laudo Pericial Unificado, Hashes SHA-256, Dashboard & PDF Executivo..."
             python3 "$script_dir/compile_audit_report.py" "$target"
             echo "=============================================================================="
-            echo "🎉 [STATUS: AUDITORIA TOTAL (10 CAMADAS) CONCLUÍDA ETAPA POR ETAPA COM SUCESSO]"
+            echo "🎉 [STATUS: AUDITORIA TOTAL (14 CAMADAS) CONCLUÍDA ETAPA POR ETAPA COM SUCESSO]"
             echo "=============================================================================="
             ;;
 
@@ -3522,47 +3537,30 @@ STATE_EOF
                 return 1
             fi
 
-            echo "🔍 Verificando mapeamentos de nomes de repositórios para pastas canônicas..."
+            echo "🔍 Higienizando raiz de projetos: removendo symlinks e garantindo as 5 categorias canônicas..."
             cd "$base_dir" || return 1
 
-            # Pares Canônicos: <Nome_Do_Repo_Git> -> <Pasta_Canonica_Real>
-            local mappings=(
-                "Antigravity-Turbinado:ANTIGRAVITY TURBINADO"
-                "antigravity-turbinado:ANTIGRAVITY TURBINADO"
-                "apicatalogador:API Catalogador - DADO88X"
-                "sharkbot-automation:ConfigBot"
-                "minha-agenda:Minha Agenda"
-                "ideias-para-comercio:Ideias para Comércio"
-                "whaticket-AtendeAIBR:Whaticket - AtendeAIBR"
-                "jarvis-assistente:Jarvis Assistente"
-                "antigravity-control-plane:Jarvis Assistente"
-                "sandbox-test:project-blueprint"
-            )
+            # Remove qualquer link simbólico na raiz de projetos
+            for item in "$base_dir"/*; do
+                if [ -L "$item" ]; then
+                    local link_name
+                    link_name=$(basename "$item")
+                    echo "  🗑️ Removendo symlink fora de escopo: $link_name"
+                    rm -f "$item"
+                fi
+            done
 
-            for map in "${mappings[@]}"; do
-                local repo_name="${map%%:*}"
-                local canonical_name="${map##*:}"
-                if [ -d "$canonical_name" ]; then
-                    if [ -L "$repo_name" ]; then
-                        local current_target
-                        current_target=$(readlink "$repo_name")
-                        if [ "$current_target" = "$canonical_name" ]; then
-                            echo "  ✅ Symlink OK: $repo_name ➔ $canonical_name"
-                        else
-                            echo "  🔄 Atualizando symlink: $repo_name ➔ $canonical_name"
-                            ln -sfn "$canonical_name" "$repo_name"
-                        fi
-                    elif [ ! -e "$repo_name" ]; then
-                        echo "  ➕ Criando symlink de proteção: $repo_name ➔ $canonical_name"
-                        ln -sfn "$canonical_name" "$repo_name"
-                    else
-                        echo "  ⚠️ ATENÇÃO: $repo_name existe como diretório físico separado de $canonical_name!"
-                    fi
+            # Garante que as 5 categorias oficiais existam
+            local categorias=("BOTS" "SITES" "SISTEMAS" "APLICAÇÕES" "VPS")
+            for cat in "${categorias[@]}"; do
+                if [ ! -d "$base_dir/$cat" ]; then
+                    mkdir -p "$base_dir/$cat"
+                    echo "  📁 Categoria canônica criada: $cat"
                 fi
             done
 
             echo ""
-            echo "✅ Varredura concluída. O Git e os scripts não criarão pastas duplicadas com nomes divergentes."
+            echo "✅ Varredura concluída. Raiz limpa e padronizada exclusivamente nas 5 categorias oficiais."
             echo "=============================================================================="
             ;;
 

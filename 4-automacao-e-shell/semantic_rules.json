@@ -395,7 +395,45 @@
       "AUDIT_LOGGING": true,
       "SECURITY_LOGGING": true,
       "OUTPUT_TARGET": "reports/audit_total_TIMESTAMP.md",
-      "MUTATION_ALLOWED": false
+      "MUTATION_ALLOWED": false,
+      "ALLOW_SUBAGENTS": true,
+      "SUBAGENTS_ENABLED": true,
+      "SUBAGENT_MODE": "FAN_OUT",
+      "PROFILE": "PARALLEL",
+      "SUBAGENTS_COUNT": 3,
+      "SUBAGENTS_ALLOCATION": [
+        {
+          "role": "auditor_client_side",
+          "type": "research",
+          "layers": [
+            1,
+            2,
+            3
+          ],
+          "mission": "Varredura profunda de DOM, CSS, JavaScript e State"
+        },
+        {
+          "role": "auditor_rede_api",
+          "type": "research",
+          "layers": [
+            4,
+            5,
+            6
+          ],
+          "mission": "Varredura de Storage, tráfego de rede e endpoints de API"
+        },
+        {
+          "role": "auditor_infra_seguranca",
+          "type": "research",
+          "layers": [
+            7,
+            8,
+            9,
+            10
+          ],
+          "mission": "Varredura de Infra/Meta, segredos, SCA, SQL injection e PCI-DSS"
+        }
+      ]
     },
     "camadas_totais": [
       {
@@ -468,7 +506,14 @@
       "domain": "1. Frontend (Client-Side)",
       "concept": "Surface Web (Web Superficial)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["componentes_ui", "templates", "renderizacao", "layouts", "responsividade", "acessibilidade_a11y"]
+      "scope": [
+        "componentes_ui",
+        "templates",
+        "renderizacao",
+        "layouts",
+        "responsividade",
+        "acessibilidade_a11y"
+      ]
     },
     {
       "phase": 2,
@@ -477,7 +522,13 @@
       "domain": "1. Frontend (Client-Side)",
       "concept": "Surface Web (Web Superficial)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["event_handlers", "validacoes_formulario_client", "action_dispatchers", "hooks_interacao", "fluxos_ux"]
+      "scope": [
+        "event_handlers",
+        "validacoes_formulario_client",
+        "action_dispatchers",
+        "hooks_interacao",
+        "fluxos_ux"
+      ]
     },
     {
       "phase": 3,
@@ -486,7 +537,13 @@
       "domain": "1. Frontend (Client-Side)",
       "concept": "Surface Web (Web Superficial)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["stores_centrais", "reducers", "contexts", "reatividade_dados", "persistencia_sessao_local"]
+      "scope": [
+        "stores_centrais",
+        "reducers",
+        "contexts",
+        "reatividade_dados",
+        "persistencia_sessao_local"
+      ]
     },
     {
       "phase": 4,
@@ -495,7 +552,14 @@
       "domain": "1. Frontend (Client-Side)",
       "concept": "Surface Web (Web Superficial)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["clientes_http_fetch_axios", "websockets", "interceptors", "timeouts", "serializacao_payload", "retries"]
+      "scope": [
+        "clientes_http_fetch_axios",
+        "websockets",
+        "interceptors",
+        "timeouts",
+        "serializacao_payload",
+        "retries"
+      ]
     },
     {
       "phase": 5,
@@ -504,7 +568,13 @@
       "domain": "2. Transporte, Borda e Segurança Perimetral",
       "concept": "Segurança Perimetral & Borda",
       "surface": "AGY_BACKGROUND",
-      "scope": ["regras_waf", "bloqueio_ddos_camada_7", "mitigacao_botnet", "rate_limiting_ip", "filtragem_owasp"]
+      "scope": [
+        "regras_waf",
+        "bloqueio_ddos_camada_7",
+        "mitigacao_botnet",
+        "rate_limiting_ip",
+        "filtragem_owasp"
+      ]
     },
     {
       "phase": 6,
@@ -513,7 +583,13 @@
       "domain": "2. Transporte, Borda e Segurança Perimetral",
       "concept": "Borda Distribuída",
       "surface": "AGY_BACKGROUND",
-      "scope": ["edge_caching", "invalidation_rules", "geo_routing", "compressao_brotli_gzip", "headers_borda"]
+      "scope": [
+        "edge_caching",
+        "invalidation_rules",
+        "geo_routing",
+        "compressao_brotli_gzip",
+        "headers_borda"
+      ]
     },
     {
       "phase": 7,
@@ -522,7 +598,13 @@
       "domain": "2. Transporte, Borda e Segurança Perimetral",
       "concept": "Transporte e Roteamento de Borda",
       "surface": "AGY_BACKGROUND",
-      "scope": ["resolucao_dns", "anycast", "terminacao_tls_ssl", "algoritmos_balanceamento", "healthcheck_upstream"]
+      "scope": [
+        "resolucao_dns",
+        "anycast",
+        "terminacao_tls_ssl",
+        "algoritmos_balanceamento",
+        "healthcheck_upstream"
+      ]
     },
     {
       "phase": 8,
@@ -531,7 +613,12 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Deep Web (Web Profunda)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["controladores_http", "rotas_rest_graphql_grpc", "validacao_schemas_entrada", "status_codes_headers"]
+      "scope": [
+        "controladores_http",
+        "rotas_rest_graphql_grpc",
+        "validacao_schemas_entrada",
+        "status_codes_headers"
+      ]
     },
     {
       "phase": 9,
@@ -540,7 +627,13 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Deep Web (Web Profunda)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["middlewares_autenticacao", "validacao_jwt_sessao", "autorizacao_rbac_abac", "sanitizacao_anti_xss_sqli", "csp_hsts"]
+      "scope": [
+        "middlewares_autenticacao",
+        "validacao_jwt_sessao",
+        "autorizacao_rbac_abac",
+        "sanitizacao_anti_xss_sqli",
+        "csp_hsts"
+      ]
     },
     {
       "phase": 10,
@@ -549,7 +642,13 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Deep Web (Web Profunda)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["servicos_dominio", "use_cases", "fluxos_transacionais", "orquestracao_operacoes", "invariantes_negocio"]
+      "scope": [
+        "servicos_dominio",
+        "use_cases",
+        "fluxos_transacionais",
+        "orquestracao_operacoes",
+        "invariantes_negocio"
+      ]
     },
     {
       "phase": 11,
@@ -558,7 +657,13 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Deep Web / Event-Driven",
       "surface": "AGY_BACKGROUND",
-      "scope": ["brokers_filas", "pub_sub", "dead_letter_queues", "consumo_assincrono", "idempotencia_mensagens"]
+      "scope": [
+        "brokers_filas",
+        "pub_sub",
+        "dead_letter_queues",
+        "consumo_assincrono",
+        "idempotencia_mensagens"
+      ]
     },
     {
       "phase": 12,
@@ -567,7 +672,13 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Camadas Avançadas de Performance",
       "surface": "AGY_BACKGROUND",
-      "scope": ["redis_memcached", "eviction_policies", "cache_invalidation", "latencia_in_memory", "thundering_herd_lock"]
+      "scope": [
+        "redis_memcached",
+        "eviction_policies",
+        "cache_invalidation",
+        "latencia_in_memory",
+        "thundering_herd_lock"
+      ]
     },
     {
       "phase": 13,
@@ -576,7 +687,13 @@
       "domain": "3. Backend (Server-Side)",
       "concept": "Deep Web (Persistência)",
       "surface": "AGY_BACKGROUND",
-      "scope": ["modelos_orm", "repositorios_dados", "query_builders", "migrations", "integridade_referencial"]
+      "scope": [
+        "modelos_orm",
+        "repositorios_dados",
+        "query_builders",
+        "migrations",
+        "integridade_referencial"
+      ]
     },
     {
       "phase": 14,
@@ -585,7 +702,13 @@
       "domain": "4. Armazenamento e Análise de Dados",
       "concept": "Camadas Avançadas de Dados",
       "surface": "AGY_BACKGROUND",
-      "scope": ["rdbms_nosql_engines", "indices_b_tree", "transacoes_acid", "checkpoints_wal", "locks_concorrencia"]
+      "scope": [
+        "rdbms_nosql_engines",
+        "indices_b_tree",
+        "transacoes_acid",
+        "checkpoints_wal",
+        "locks_concorrencia"
+      ]
     },
     {
       "phase": 15,
@@ -594,7 +717,12 @@
       "domain": "4. Armazenamento e Análise de Dados",
       "concept": "Camadas Avançadas de Dados e Performance",
       "surface": "AGY_BACKGROUND",
-      "scope": ["read_replicas_lag", "data_pipelines_etl_elt", "colunar_olap_bigquery_clickhouse", "agregacoes_bi"]
+      "scope": [
+        "read_replicas_lag",
+        "data_pipelines_etl_elt",
+        "colunar_olap_bigquery_clickhouse",
+        "agregacoes_bi"
+      ]
     },
     {
       "phase": 16,
@@ -603,7 +731,12 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["nginx_apache_caddy", "upstream_keepalive", "timeouts_buffer_proxy", "config_segura_ssl"]
+      "scope": [
+        "nginx_apache_caddy",
+        "upstream_keepalive",
+        "timeouts_buffer_proxy",
+        "config_segura_ssl"
+      ]
     },
     {
       "phase": 17,
@@ -612,7 +745,12 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["docker_containerd", "isolamento_namespaces_cgroups", "seguranca_imagens_rootless", "camadas_build"]
+      "scope": [
+        "docker_containerd",
+        "isolamento_namespaces_cgroups",
+        "seguranca_imagens_rootless",
+        "camadas_build"
+      ]
     },
     {
       "phase": 18,
@@ -621,7 +759,13 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["k8s_docker_compose_swarm", "pods_deployments", "auto_scaling_hpa", "ingress_controllers", "service_mesh"]
+      "scope": [
+        "k8s_docker_compose_swarm",
+        "pods_deployments",
+        "auto_scaling_hpa",
+        "ingress_controllers",
+        "service_mesh"
+      ]
     },
     {
       "phase": 19,
@@ -630,7 +774,13 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["kernel_linux_darwin", "parametros_sysctl", "descritores_ulimit", "systemd_launchd_daemons", "patches_so"]
+      "scope": [
+        "kernel_linux_darwin",
+        "parametros_sysctl",
+        "descritores_ulimit",
+        "systemd_launchd_daemons",
+        "patches_so"
+      ]
     },
     {
       "phase": 20,
@@ -639,7 +789,12 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["terraform_opentofu_ansible", "drift_infraestrutura", "seguranca_state_lock", "modulos_imutaveis"]
+      "scope": [
+        "terraform_opentofu_ansible",
+        "drift_infraestrutura",
+        "seguranca_state_lock",
+        "modulos_imutaveis"
+      ]
     },
     {
       "phase": 21,
@@ -648,7 +803,13 @@
       "domain": "5. Hospedagem, Virtualização e Infraestrutura (DevOps)",
       "concept": "Infraestrutura Abaixo do Backend",
       "surface": "AGY_BACKGROUND",
-      "scope": ["vms_bare_metal", "alocacao_cpu_vram", "topologia_redes_vpc", "discos_nvme_io_ebs", "resiliencia_regiao"]
+      "scope": [
+        "vms_bare_metal",
+        "alocacao_cpu_vram",
+        "topologia_redes_vpc",
+        "discos_nvme_io_ebs",
+        "resiliencia_regiao"
+      ]
     },
     {
       "phase": 22,
@@ -657,7 +818,13 @@
       "domain": "6. Operações Transversais (Cercam todas as outras)",
       "concept": "Operações & Segurança Transversal",
       "surface": "AGY_BACKGROUND",
-      "scope": ["pipelines_ci_cd", "linters_sast_dast", "gates_aprovacao", "estrategias_deploy_canary_bluegreen", "rollbacks"]
+      "scope": [
+        "pipelines_ci_cd",
+        "linters_sast_dast",
+        "gates_aprovacao",
+        "estrategias_deploy_canary_bluegreen",
+        "rollbacks"
+      ]
     },
     {
       "phase": 23,
@@ -666,7 +833,12 @@
       "domain": "6. Operações Transversais (Cercam todas as outras)",
       "concept": "Operações & Segurança Transversal",
       "surface": "AGY_BACKGROUND",
-      "scope": ["coleta_metricas_prometheus", "tracing_distribuido_opentelemetry", "centralizacao_logs_siem", "alertas_slo_sli"]
+      "scope": [
+        "coleta_metricas_prometheus",
+        "tracing_distribuido_opentelemetry",
+        "centralizacao_logs_siem",
+        "alertas_slo_sli"
+      ]
     }
   ],
   "regra_auditoria_global": {

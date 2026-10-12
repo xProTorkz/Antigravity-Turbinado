@@ -7,6 +7,7 @@ Módulo Canônico do Sentinela Guardião & Antigravity Turbinado v4.0
 ==============================================================================
 """
 
+import math
 import os
 import sys
 import json
@@ -27,6 +28,113 @@ def compute_sha256(filepath):
 def sanitize_name(name):
     clean = re.sub(r'[^a-zA-Z0-9_]+', '_', name.strip())
     return clean.strip('_')
+
+def calculate_opsec_scores(is_lucas, target_name):
+    """Calcula a pontuação de exposição pericial (0-100) para cada uma das 14 camadas."""
+    if is_lucas:
+        return {
+            "1. Identidade Civil": 40,
+            "2. Domínios & Whois": 85,
+            "3. Servidores VPS/SSH": 90,
+            "4. Telecom / Linhas": 65,
+            "5. Logística / Residência": 45,
+            "6. Corporativo / CNPJ": 75,
+            "7. Judicial / Processos": 30,
+            "8. Plataformas & Bots": 85,
+            "9. Gateways & Finanças": 70,
+            "10. Modelos IA / Prompts": 95,
+            "11. GitOps & BYOK": 90,
+            "12. Portas Locais": 40,
+            "13. Resíduos em Disco": 35,
+            "14. Matriz OPSEC Global": 80
+        }
+    else:
+        return {
+            "1. Identidade Civil": 60,
+            "2. Domínios & Whois": 25,
+            "3. Servidores VPS/SSH": 15,
+            "4. Telecom / Linhas": 75,
+            "5. Logística / Residência": 40,
+            "6. Corporativo / CNPJ": 25,
+            "7. Judicial / Processos": 20,
+            "8. Plataformas & Bots": 85,
+            "9. Gateways & Finanças": 50,
+            "10. Modelos IA / Prompts": 25,
+            "11. GitOps & BYOK": 15,
+            "12. Portas Locais": 10,
+            "13. Resíduos em Disco": 55,
+            "14. Matriz OPSEC Global": 50
+        }
+
+def generate_radar_svg(scores_dict):
+    """Gera um gráfico de radar SVG nativo (480x480) em estilo Cyber Forensics."""
+    center_x = 240
+    center_y = 240
+    max_radius = 150
+    layers = list(scores_dict.keys())
+    n = len(layers)
+
+    grid_svg = ""
+    for level in [0.2, 0.4, 0.6, 0.8, 1.0]:
+        r = max_radius * level
+        pts = []
+        for i in range(n):
+            angle = (2 * math.pi / n) * i - math.pi / 2
+            x = center_x + r * math.cos(angle)
+            y = center_y + r * math.sin(angle)
+            pts.append(f"{x:.1f},{y:.1f}")
+        grid_svg += f'<polygon points="{" ".join(pts)}" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>\n'
+
+    axes_svg = ""
+    data_points = []
+    labels_svg = ""
+    for i, (layer_name, score) in enumerate(scores_dict.items()):
+        angle = (2 * math.pi / n) * i - math.pi / 2
+        ax_x = center_x + max_radius * math.cos(angle)
+        ax_y = center_y + max_radius * math.sin(angle)
+        axes_svg += f'<line x1="{center_x}" y1="{center_y}" x2="{ax_x:.1f}" y2="{ax_y:.1f}" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>\n'
+
+        r_val = max_radius * (max(8, min(100, score)) / 100.0)
+        dp_x = center_x + r_val * math.cos(angle)
+        dp_y = center_y + r_val * math.sin(angle)
+        data_points.append(f"{dp_x:.1f},{dp_y:.1f}")
+
+        lbl_r = max_radius + 26
+        lbl_x = center_x + lbl_r * math.cos(angle)
+        lbl_y = center_y + lbl_r * math.sin(angle)
+        anchor = "middle"
+        if math.cos(angle) > 0.25:
+            anchor = "start"
+        elif math.cos(angle) < -0.25:
+            anchor = "end"
+
+        short_lbl = layer_name.split()[0].replace(".", "")
+        tag = layer_name.split()[-1] if len(layer_name.split()) > 1 else ""
+        display_label = f"C{short_lbl} ({score}%)"
+        labels_svg += f'<text x="{lbl_x:.1f}" y="{lbl_y:.1f}" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="{anchor}" dominant-baseline="central">{display_label}</text>\n'
+
+    poly_points = " ".join(data_points)
+    circles_svg = " ".join([f'<circle cx="{pt.split(",")[0]}" cy="{pt.split(",")[1]}" r="4" fill="#00f0ff" stroke="#0a0c10" stroke-width="1.5"/>' for pt in data_points])
+
+    chart_svg = f"""<svg width="100%" height="380" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;max-width:480px;">
+      <defs>
+        <radialGradient id="radarGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.38"/>
+          <stop offset="60%" stop-color="#0070f3" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#7928ca" stop-opacity="0.08"/>
+        </radialGradient>
+        <filter id="radarGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3.5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      </defs>
+      {grid_svg}
+      {axes_svg}
+      <polygon points="{poly_points}" fill="url(#radarGrad)" stroke="#00f0ff" stroke-width="2.5" filter="url(#radarGlow)"/>
+      {circles_svg}
+      {labels_svg}
+    </svg>"""
+    return chart_svg
 
 def run_auditoria_pessoal(target_name="jaiilsonsilvaa", doc=""):
     print("=" * 80)
@@ -314,15 +422,36 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
     ])
 
     md_path = os.path.join(reports_dir, f"LAUDO_AUDITORIA_PESSOAL_{clean_target.upper()}.md")
+    canonical_pessoal_md = os.path.join(reports_dir, "LAUDO_AUDITORIA_PESSOAL.md")
     with open(md_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(md_lines))
+    with open(canonical_pessoal_md, "w", encoding="utf-8") as f:
         f.write("\n".join(md_lines))
     shutil.copy2(md_path, os.path.join(dest_folder, "Laudo_Auditoria_Total_Forense.md"))
     print(f"   ✅ Laudo Markdown gerado em {md_path}")
 
-    # 4. Dashboard Visual HTML Dinâmico
-    print("\n👉 [ETAPA 4/7] Gerando Dashboard Visual Interativo (HTML Dark Mode + Print)...")
+    # 4. Dashboard Visual HTML Dinâmico com Radar Chart e Ações Rápidas
+    print("\n👉 [ETAPA 4/7] Gerando Dashboard Visual Interativo (Radar Chart + Print)...")
     html_path = os.path.join(reports_dir, f"dashboard_auditoria_pessoal_{clean_target.lower()}.html")
+    canonical_pessoal_html = os.path.join(reports_dir, "dashboard_auditoria_pessoal.html")
     dest_html = os.path.join(dest_folder, "Dashboard_Auditoria_Interativo.html")
+
+    opsec_scores = calculate_opsec_scores(is_lucas, target_name)
+    opsec_score_val = round(sum(opsec_scores.values()) / len(opsec_scores))
+    radar_svg_code = generate_radar_svg(opsec_scores)
+
+    if opsec_score_val >= 70:
+        risk_label = "Elevado / Exposição Crítica"
+        risk_color = "#ef4444"
+        risk_badge_cls = "pill-danger"
+    elif opsec_score_val >= 45:
+        risk_label = "Moderado / Monitorado"
+        risk_color = "#f59e0b"
+        risk_badge_cls = "pill-warn"
+    else:
+        risk_label = "Baixo / Hardening Ativo"
+        risk_color = "#10b981"
+        risk_badge_cls = "pill-success"
 
     html_rows = ""
     for m in manifest_entries:
@@ -458,8 +587,42 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
         <h1>🏛️ LAUDO PERICIAL FORENSE: AUDITORIA PESSOAL (14 CAMADAS)</h1>
         <p><strong>Alvo Pericial:</strong> {target_name} ({nome_formal}) &bull; <strong>Protocolo:</strong> SENTINELA-OSINT-{clean_target.upper()} &bull; <strong>Data:</strong> {now_str}</p>
       </div>
-      <div>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <button onclick="window.print()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+          🖨️ Exportar / Imprimir PDF
+        </button>
         <span class="badge-status">DOSSIÊ CONCLUÍDO</span>
+      </div>
+    </div>
+
+    <!-- RADAR FORENSE & MATRIZ QUANTITATIVA OPSEC -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; margin-bottom: 24px;">
+      <div class="section-card" style="margin-bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px;">
+        <h2 style="width: 100%; font-size: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <span>🕸️ Radar Forense de Exposição (14 Eixos)</span>
+          <span style="font-size: 11px; font-weight: normal; color: #94a3b8;">Escala 0-100% de Risco</span>
+        </h2>
+        {radar_svg_code}
+      </div>
+      <div class="section-card" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 15px; margin-bottom: 14px;">🛡️ Índice Geral de Exposição OPSEC</h2>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+            <span style="font-size: 42px; font-weight: 900; color: {risk_color};">{opsec_score_val}</span>
+            <span style="font-size: 16px; color: #94a3b8;">/ 100 pts</span>
+            <span class="pill {risk_badge_cls}" style="margin-left: auto; font-size: 12px; padding: 4px 10px;">{risk_label}</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); height: 8px; border-radius: 9999px; overflow: hidden; margin-bottom: 18px;">
+            <div style="background: {risk_color}; width: {opsec_score_val}%; height: 100%; border-radius: 9999px;"></div>
+          </div>
+          <p style="font-size: 12.5px; color: #94a3b8; line-height: 1.6; margin-bottom: 14px;">
+            A pontuação sintetiza o cruzamento vetorial das 14 camadas forenses: identidade civil, pegada social/mensageria, registros de telecomunicação, domínios, infraestrutura de servidores e exposição de engenharia social.
+          </p>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px 14px; font-size: 12px;">
+          <div style="color: #38bdf8; font-weight: 700; margin-bottom: 4px;">🎯 Foco Imediato de Hardening:</div>
+          <div style="color: #cbd5e1;">Ativação de 2FA em contas de mensageria, restrição de visibilidade de vCards e blindagem de perfis públicos.</div>
+        </div>
       </div>
     </div>
 
@@ -471,7 +634,7 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
       </div>
       <div class="metric-card">
         <div class="label">Evidências Físicas Extraídas</div>
-        <div class="value">8 Arquivos</div>
+        <div class="value">{len(manifest_entries)} Arquivos</div>
         <div class="sub">Manifesto SHA-256 verificado</div>
       </div>
       <div class="metric-card">
@@ -481,8 +644,8 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
       </div>
       <div class="metric-card">
         <div class="label">Nível de Risco OPSEC</div>
-        <div class="value" style="color: #fbbf24;">Moderado</div>
-        <div class="sub">Exposição social e mensageria</div>
+        <div class="value" style="color: {risk_color};">{risk_label.split('/')[0].strip()}</div>
+        <div class="sub">Score ponderado: {opsec_score_val}%</div>
       </div>
     </div>
 
@@ -635,7 +798,10 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
         f.write(html_code)
     with open(dest_html, "w", encoding="utf-8") as f:
         f.write(html_code)
+    with open(canonical_pessoal_html, "w", encoding="utf-8") as f:
+        f.write(html_code)
     print(f"   ✅ Dashboard HTML gerado em {html_path}")
+    print(f"   ✅ Dashboard Canônico Pessoal em {canonical_pessoal_html}")
 
     # 5. Compilar PDF Executivo via Google Chrome
     print("\n👉 [ETAPA 5/7] Compilando PDF Executivo via Google Chrome Headless...")

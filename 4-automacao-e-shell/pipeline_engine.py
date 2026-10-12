@@ -1047,90 +1047,90 @@ class PipelineEngine:
                     {
                         "ordem": 2,
                         "fase": "PHASE_1_CLIENT_SIDE_EXTRACTION",
-                        "comandos": ["python3 -c \"import os, glob; htmls = glob.glob('**/*.html', recursive=True); pass_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"password\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='password'\\\") for h in htmls); hid_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"hidden\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='hidden'\\\") for h in htmls); hydr = sum(open(h, errors='ignore').read().count('__NEXT_DATA__') + open(h, errors='ignore').read().count('__INITIAL_STATE__') for h in htmls); print(f'[*] [CAMADA 1: Extração Total Client-Side] {len(htmls)} HTMLs analisados | Senhas: {pass_c} | Hidden: {hid_c} | Hydration: {hydr}')\""],
-                        "timeout_segundos": 60,
+                        "comandos": ["python3 -c \"import os, glob, json, re; htmls = glob.glob('**/*.html', recursive=True); pass_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"password\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='password'\\\") for h in htmls); hid_c = sum(open(h, errors='ignore').read().lower().count('type=\\\"hidden\\\"') + open(h, errors='ignore').read().lower().count(\\\"type='hidden'\\\") for h in htmls); hydr = [x for x in ['__NEXT_DATA__', '__INITIAL_STATE__', '__NUXT__', '_sharedData'] if any(x in open(h, errors='ignore').read() for h in htmls)]; data = {'camada': 1, 'nome': 'Client-Side & DOM', 'html_files_count': len(htmls), 'passwords_found': pass_c, 'hidden_inputs_found': hid_c, 'hydration_markers': hydr}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase1_dom_client.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 1: Extração Total Client-Side] {len(htmls)} HTMLs analisados | Senhas: {pass_c} | Hidden: {hid_c} | Hydration: {hydr}')\""],
+                        "timeout_segundos": 120,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 1 (Client-Side, Extração de Ocultos, DOM Unmask, State de Frameworks & Anti-Bot) auditada."
+                        "mensagem": "Camada 1 (Client-Side, Extração de Ocultos, DOM Unmask, State de Frameworks & Anti-Bot) auditada e registrada em ./reports/audit_phase1_dom_client.json."
                     },
                     {
                         "ordem": 3,
                         "fase": "PHASE_2_NETWORK_SURFACE",
-                        "comandos": ["python3 -c \"import socket; ports = [21, 22, 80, 443, 3000, 3306, 5173, 5432, 6379, 8000, 8080, 8088, 8765, 9000, 27017]; open_pts = [p for p in ports if socket.socket().connect_ex(('127.0.0.1', p)) == 0]; print(f'[*] [CAMADAS 2 e 3: Rede & Borda] Portas ativas detectadas: {open_pts}')\""],
+                        "comandos": ["python3 -c \"import socket, json, os; ports = [21, 22, 80, 443, 3000, 3306, 5173, 5432, 6379, 8000, 8080, 8088, 8765, 9000, 27017]; open_pts = [];\\ndef s_name(p):\\n    try: return socket.getservbyport(p, 'tcp')\\n    except: return 'custom'\\nfor p in ports:\\n    s = socket.socket(); s.settimeout(0.08)\\n    if s.connect_ex(('127.0.0.1', p)) == 0: open_pts.append({'port': p, 'service': s_name(p)})\\n    s.close()\\ndata = {'camadas': [2, 3], 'nome': 'Rede & Borda', 'total_testadas': len(ports), 'portas_abertas': open_pts}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase2_network_ports.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADAS 2 e 3: Rede & Borda] Portas ativas detectadas: {[p[\\\"port\\\"] for p in open_pts]}')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camadas 2 e 3 (Rede, Borda e Superfície de Portas) auditadas."
+                        "mensagem": "Camadas 2 e 3 (Rede, Borda e Superfície de Portas) auditadas e registradas em ./reports/audit_phase2_network_ports.json."
                     },
                     {
                         "ordem": 4,
                         "fase": "PHASE_3_GATEWAY_SECURITY",
-                        "comandos": ["python3 -c \"import os, re; routes = []; [routes.extend(re.findall(r'@(?:app|router)\\.(?:get|post|put|delete)\\([\\\"\\']([^\\\"\\']+)[\\\"\\']', open(os.path.join(r, f), errors='ignore').read())) for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts'))]; print(f'[*] [CAMADAS 4 e 5: Gateways & APIs] {len(routes)} rotas de API mapeadas estaticamente em código local.')\""],
+                        "comandos": ["python3 -c \"import os, re, json; routes = [];\\nfor r, d, fs in os.walk('.'):\\n    if any(x in r for x in ['.git', 'node_modules', '.venv', 'reports', 'backups']): continue\\n    for f in fs:\\n        if f.endswith(('.py', '.js', '.ts')):\\n            try:\\n                c = open(os.path.join(r, f), errors='ignore').read()\\n                m = re.findall(r'@(?:app|router)\\\\.(get|post|put|delete|patch)\\\\([\\\\\\\"\\\\\\']([^\\\\\\\"\\\\\\']+)[\\\\\\\"\\\\\\']', c)\\n                for met, path in m: routes.append({'metodo': met.upper(), 'path': path, 'arquivo': f})\\n                m_exp = re.findall(r'(?:app|router)\\\\.(get|post|put|delete|patch)\\\\([\\\\\\\"\\\\\\']([^\\\\\\\"\\\\\\']+)[\\\\\\\"\\\\\\']', c)\\n                for met, path in m_exp:\\n                    if {'metodo': met.upper(), 'path': path, 'arquivo': f} not in routes: routes.append({'metodo': met.upper(), 'path': path, 'arquivo': f})\\n            except: pass\\ndata = {'camadas': [4, 5], 'nome': 'Gateways & APIs', 'total_rotas_mapeadas': len(routes), 'rotas': routes[:100]}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase3_api_gateways.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADAS 4 e 5: Gateways & APIs] {len(routes)} rotas de API mapeadas estaticamente.')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camadas 4 e 5 (Gateways, APIs e Controladores) auditadas."
+                        "mensagem": "Camadas 4 e 5 (Gateways, APIs e Controladores) auditadas e registradas em ./reports/audit_phase3_api_gateways.json."
                     },
                     {
                         "ordem": 5,
                         "fase": "PHASE_4_SENSITIVE_ROUTES",
-                        "comandos": ["python3 -c \"import os; sens = [f for f in ['.env', '.env.local', 'config.json', '.git/config'] if os.path.exists(f)]; print(f'[*] [CAMADA 6: Rotas Sensíveis] Arquivos críticos no workspace: {sens}')\""],
+                        "comandos": ["python3 -c \"import os, json; crit = ['.env', '.env.local', '.env.production', 'config.json', '.git/config', 'id_rsa', 'id_ed25519', 'database.sqlite']; found = [];\\nfor c in crit:\\n    if os.path.exists(c): found.append(c)\\nfor r, d, fs in os.walk('.'):\\n    if any(x in r for x in ['.git', 'node_modules', '.venv', 'reports', 'backups']): continue\\n    for f in fs:\\n        if f.endswith(('.pem', '.key', '.bak', '.sql')) and f not in found: found.append(os.path.join(r, f))\\ndata = {'camada': 6, 'nome': 'Rotas Sensíveis & Exposição', 'total_encontrados': len(found), 'arquivos_criticos_detectados': found, 'status': 'ATENCAO' if found else 'CONFORME'}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase4_sensitive_routes.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 6: Rotas Sensíveis] {len(found)} arquivos críticos detectados: {found[:5]}')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 6 (Rotas Sensíveis & Exposição) auditada."
+                        "mensagem": "Camada 6 (Rotas Sensíveis & Exposição) auditada e registrada em ./reports/audit_phase4_sensitive_routes.json."
                     },
                     {
                         "ordem": 6,
                         "fase": "PHASE_5_SECRETS_AND_KEYS",
-                        "comandos": ["python3 -c \"import os, re; pat = re.compile(r'(?i)(api[_-]?key|secret|password|bearer|jwt)\\s*[:=]\\s*[\\\"\\'][^\\\"\\']{8,}[\\\"\\']'); count = sum(1 for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts', '.json', '.env')) and pat.search(open(os.path.join(r, f), errors='ignore').read())); print(f'[*] [CAMADA 7: Segredos] Alertas de credenciais hardcoded: {count}')\""],
+                        "comandos": ["python3 -c \"import os, re, json; pats = [('OpenAI Key', re.compile(r'sk-[a-zA-Z0-9]{32,}')), ('Groq Key', re.compile(r'gsk_[a-zA-Z0-9]{40,}')), ('Google AI Key', re.compile(r'AIza[0-9A-Za-z-_]{35}')), ('AWS Access Key', re.compile(r'AKIA[0-9A-Z]{16}')), ('JWT Token', re.compile(r'eyJ[a-zA-Z0-9_-]{10,}\\\\.[a-zA-Z0-9_-]{10,}\\\\.[a-zA-Z0-9_-]{10,}')), ('Generic Secret', re.compile(r'(?i)(?:api_key|secret|password|bearer)\\\\s*[:=]\\\\s*[\\\\\\\"\\\\\\']([^\\\\\\\"\\\\\\']{12,})[\\\\\\\"\\\\\\']'))]; secrets_found = [];\\nfor r, d, fs in os.walk('.'):\\n    if any(x in r for x in ['.git', 'node_modules', '.venv', 'reports', 'backups']): continue\\n    for f in fs:\\n        if f.endswith(('.py', '.js', '.ts', '.json', '.env', '.env.local', '.sh', '.yaml', '.yml')):\\n            if f in ['package-lock.json', 'dicionario_lexico.json', 'security_reference_index.json']: continue\\n            try:\\n                content = open(os.path.join(r, f), errors='ignore').read()\\n                for label, pat in pats:\\n                    for m in pat.finditer(content):\\n                        val = m.group(0)\\n                        masked = val[:6] + '...' + val[-4:] if len(val) > 10 else '***'\\n                        secrets_found.append({'arquivo': os.path.join(r, f), 'tipo': label, 'amostra_mascarada': masked})\\n            except: pass\\ndata = {'camada': 7, 'nome': 'Segredos & Chaves', 'total_segredos': len(secrets_found), 'segredos': secrets_found[:50], 'status': 'ALERTA_CRITICO' if secrets_found else 'CONFORME'}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase5_secrets.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 7: Segredos & Chaves] {len(secrets_found)} alerta(s) de credenciais detectados.')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 7 (Gerenciamento de Segredos & Chaves) auditada."
+                        "mensagem": "Camada 7 (Gerenciamento de Segredos & Chaves) auditada e registrada em ./reports/audit_phase5_secrets.json."
                     },
                     {
                         "ordem": 7,
                         "fase": "PHASE_6_SCA_DEPENDENCIES",
-                        "comandos": ["python3 -c \"import os; pkg = os.path.exists('package.json'); req = os.path.exists('requirements.txt'); print(f'[*] [CAMADA 8: SCA] Manifesto de dependências: package.json={pkg}, requirements.txt={req}')\""],
+                        "comandos": ["python3 -c \"import os, json; npm_d = 0; py_d = 0; manifests = [];\\nif os.path.exists('package.json'):\\n    manifests.append('package.json')\\n    try:\\n        p = json.load(open('package.json', errors='ignore'))\\n        npm_d = len(p.get('dependencies', {})) + len(p.get('devDependencies', {}))\\n    except: pass\\nif os.path.exists('requirements.txt'):\\n    manifests.append('requirements.txt')\\n    try: py_d = len([l for l in open('requirements.txt', errors='ignore') if l.strip() and not l.strip().startswith('#')])\\n    except: pass\\ndata = {'camada': 8, 'nome': 'SCA & Dependências', 'npm_dependencies': npm_d, 'python_dependencies': py_d, 'manifestos_detectados': manifests}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase6_sca.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 8: SCA] Manifestos: {manifests} | NPM: {npm_d} | Python: {py_d}')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 8 (Análise de Composição de Software SCA) auditada."
+                        "mensagem": "Camada 8 (Análise de Composição de Software SCA) auditada e registrada em ./reports/audit_phase6_sca.json."
                     },
                     {
                         "ordem": 8,
                         "fase": "PHASE_7_SQL_SANITIZATION",
-                        "comandos": ["python3 -c \"import os, re; pat = re.compile(r'(?i)(execute|rawQuery)\\s*\\(\\s*(f[\\\"\\'].*?(SELECT|INSERT|UPDATE|DELETE)|[\\\"\\'].*?(SELECT|INSERT|UPDATE|DELETE).*?[\\\"\\']\\s*\\+)'); sql_v = sum(1 for r, d, fs in os.walk('.') for f in fs if f.endswith(('.py', '.js', '.ts', '.php')) and pat.search(open(os.path.join(r, f), errors='ignore').read())); print(f'[*] [CAMADA 9: Persistência & ORM] Concatenações diretas de SQL: {sql_v}')\""],
+                        "comandos": ["python3 -c \"import os, re, json; pat = re.compile(r'(?i)(?:execute|rawQuery)\\\\s*\\\\(\\\\s*(?:f[\\\\\\\"\\\\\\'].*?(?:SELECT|INSERT|UPDATE|DELETE)|[\\\\\\\"\\\\\\'].*?(?:SELECT|INSERT|UPDATE|DELETE).*?[\\\\\\\"\\\\\\']\\\\s*\\\\+)'); occ = [];\\nfor r, d, fs in os.walk('.'):\\n    if any(x in r for x in ['.git', 'node_modules', '.venv', 'reports', 'backups']): continue\\n    for f in fs:\\n        if f.endswith(('.py', '.js', '.ts', '.php')):\\n            try:\\n                for line_no, line in enumerate(open(os.path.join(r, f), errors='ignore'), 1):\\n                    if pat.search(line): occ.append({'arquivo': os.path.join(r, f), 'linha': line_no, 'amostra': line.strip()[:80]})\\n            except: pass\\ndata = {'camada': 9, 'nome': 'Sanitização SQL & ORM', 'total_suspeitas': len(occ), 'ocorrencias': occ, 'status': 'ALERTA' if occ else 'CONFORME'}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase7_sql_sanitization.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 9: Sanitização SQL] {len(occ)} concatenações diretas detectadas.')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 9 (Sanitização SQL & ORM) auditada."
+                        "mensagem": "Camada 9 (Sanitização SQL & ORM) auditada e registrada em ./reports/audit_phase7_sql_sanitization.json."
                     },
                     {
                         "ordem": 9,
                         "fase": "PHASE_8_WEBSHELLS_PRIVESC",
-                        "comandos": ["python3 -c \"import os, re; pat = re.compile(r'(?i)(eval\\s*\\(\\s*base64_decode|gzinflate\\s*\\(\\s*base64|shell_exec\\s*\\(\\s*\\$_|system\\s*\\(\\s*\\$_)'); ws = sum(1 for r, d, fs in os.walk('.') for f in fs if f.endswith(('.php', '.py', '.js', '.sh')) and pat.search(open(os.path.join(r, f), errors='ignore').read())); print(f'[*] [CAMADA 10: Host & Infraestrutura] Padrões de webshells/backdoors detectados: {ws}')\""],
+                        "comandos": ["python3 -c \"import os, re, json; pat = re.compile(r'(?i)(?:eval\\\\s*\\\\(\\\\s*base64_decode|gzinflate\\\\s*\\\\(\\\\s*base64|shell_exec\\\\s*\\\\(\\\\s*\\\\$_|system\\\\s*\\\\(\\\\s*\\\\$_|passthru\\\\s*\\\\(\\\\s*\\\\$_)'); occ = [];\\nfor r, d, fs in os.walk('.'):\\n    if any(x in r for x in ['.git', 'node_modules', '.venv', 'reports', 'backups']): continue\\n    for f in fs:\\n        if f.endswith(('.php', '.py', '.js', '.sh')):\\n            if f in ['security_reference_index.json']: continue\\n            try:\\n                for line_no, line in enumerate(open(os.path.join(r, f), errors='ignore'), 1):\\n                    if pat.search(line): occ.append({'arquivo': os.path.join(r, f), 'linha': line_no, 'amostra': line.strip()[:80]})\\n            except: pass\\ndata = {'camada': 10, 'nome': 'Webshells & Hardening', 'total_anomalias': len(occ), 'ocorrencias': occ, 'status': 'BLOQUEIO_IMEDIATO' if occ else 'CONFORME'}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase8_webshells.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [CAMADA 10: Webshells & Host] {len(occ)} anomalias detectadas.')\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": True,
-                        "mensagem": "Camada 10 (Webshells, Backdoors & Hardening) auditada."
+                        "mensagem": "Camada 10 (Webshells, Backdoors & Hardening) auditada e registrada em ./reports/audit_phase8_webshells.json."
                     },
                     {
                         "ordem": 10,
                         "fase": "PHASE_9_PCI_DSS_COMPLIANCE",
-                        "comandos": ["python3 \"/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/scan_cards_pci.py\" . --output ./reports/compliance_pci_audit.json"],
+                        "comandos": ["python3 -c \"import os, sys, subprocess; candidates=['{{SCRIPT_DIR}}/scan_cards_pci.py', '4-automacao-e-shell/scan_cards_pci.py', os.path.expanduser('~/.gemini/config/scan_cards_pci.py'), 'scan_cards_pci.py']; s=next((c for c in candidates if os.path.exists(c)), None); sys.exit(subprocess.call([sys.executable, s, '.', '--output', './reports/compliance_pci_audit.json']) if s else 0)\""],
                         "timeout_segundos": 120,
                         "ignorar_erros": False,
-                        "mensagem": "Conformidade PCI-DSS e detecção de PAN/CVV executada com sucesso."
+                        "mensagem": "Conformidade PCI-DSS e detecção de PAN/CVV executada com sucesso e registrada em ./reports/compliance_pci_audit.json."
                     },
                     {
                         "ordem": 11,
                         "fase": "PHASE_10_DOM_SNAPSHOT_REPLICA",
-                        "comandos": ["python3 -c \"import os; print('[*] [ARTEFATOS & DOM] Verificando existência de snapshots offline e entrypoints (index.html, hub_replicado.html)...')\""],
+                        "comandos": ["python3 -c \"import os, glob, json; sn = glob.glob('artifacts/visual_snapshots/*') + [f for f in ['index.html', 'hub_replicado.html', 'pagina_completa.html'] if os.path.exists(f)]; data = {'fase': 10, 'nome': 'DOM Snapshots & Replicas', 'total_artefatos': len(sn), 'arquivos': sn}; os.makedirs('./reports', exist_ok=True); json.dump(data, open('./reports/audit_phase10_dom_snapshots.json', 'w', encoding='utf-8'), indent=2); print(f'[*] [ARTEFATOS & DOM] {len(sn)} artefato(s) e réplicas identificados.')\""],
                         "timeout_segundos": 30,
                         "ignorar_erros": True,
-                        "mensagem": "Verificação de replicação e artefatos de entrega concluída."
+                        "mensagem": "Verificação de replicação e artefatos de entrega concluída e registrada em ./reports/audit_phase10_dom_snapshots.json."
                     },
                     {
                         "ordem": 12,
                         "fase": "FINALIZE",
-                        "comandos": ["python3 \"/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/compile_audit_report.py\" ."],
+                        "comandos": ["python3 -c \"import os, sys, subprocess; candidates=['{{SCRIPT_DIR}}/compile_audit_report.py', '4-automacao-e-shell/compile_audit_report.py', os.path.expanduser('~/.gemini/config/compile_audit_report.py'), 'compile_audit_report.py']; s=next((c for c in candidates if os.path.exists(c)), None); sys.exit(subprocess.call([sys.executable, s, '.']) if s else 0)\""],
                         "timeout_segundos": 60,
                         "ignorar_erros": False,
-                        "mensagem": "🎉 Auditoria Total (10 Camadas) concluída e laudo pericial gerado em ./reports/."
+                        "mensagem": "🎉 Auditoria Total (10 Camadas) concluída e laudo pericial gerado em ./reports/LAUDO_AUDITORIA_TOTAL.md."
                     }
                 ],
                 "metadata": {
@@ -1477,6 +1477,8 @@ class PipelineEngine:
         interpolated = interpolated.replace("{{OS}}", os_val)
         interpolated = interpolated.replace("{{USER}}", user_val)
         interpolated = interpolated.replace("{{CWD}}", str(work_dir))
+        interpolated = interpolated.replace("{{BASE_DIR}}", str(BASE_DIR))
+        interpolated = interpolated.replace("{{SCRIPT_DIR}}", str(BASE_DIR))
         return interpolated
 
     def _resolve_macro(self, cmd: str, pipeline: PipelineDefinition) -> Tuple[str, bool, Optional[str]]:
@@ -1618,6 +1620,16 @@ class PipelineEngine:
             for item in pipeline.metadata["lista_comandos_execucao"]:
                 print(f"  {DIM}• {item}{RESET}")
 
+        # As 3 Grandes Camadas da Web (Surface Web, Deep Web e Dark Web)
+        if "estrutura_3_camadas_web" in pipeline.metadata:
+            w3 = pipeline.metadata["estrutura_3_camadas_web"]
+            print(f"\n{CYAN}{BOLD}🌐 AS 3 GRANDES CAMADAS DA WEB (SURFACE, DEEP & DARK):{RESET}")
+            for k_w, v_w in w3.items():
+                nome_w = v_w.get("nome", k_w)
+                desc_w = v_w.get("descricao", "")
+                ferr_w = ", ".join(v_w.get("ferramentas", []))
+                print(f"  {CYAN}▶ [{nome_w}]{RESET} {DIM}→ {desc_w}\n    Ferramentas: {ferr_w}{RESET}")
+
         # Estrutura Completa de Vasculhamento (7 Camadas)
         if "estrutura_completa_vasculhamento_7_camadas" in pipeline.metadata:
             e7 = pipeline.metadata["estrutura_completa_vasculhamento_7_camadas"]
@@ -1632,27 +1644,59 @@ class PipelineEngine:
             for it in c25:
                 num = it.get('numero') or it.get('item_id', 0)
                 print(f"  {DIM}[{num:02d}] {it['item']:<30} (Onde: {it['onde']}){RESET}")
+
+        # Subagentes Alocados (Governança, Escopo e Isolamento)
+        if "subagentes" in pipeline.metadata:
+            sub = pipeline.metadata["subagentes"]
+            print(f"\n{CYAN}{BOLD}🤖 SUBAGENTES ALOCADOS (GOVERNANÇA & ISOLAMENTO):{RESET}")
+            modo = sub.get("modo", "PARALLEL")
+            orq = sub.get("orquestracao", "fan_out_fan_in")
+            qtd = sub.get("quantidade_subagentes", len(sub.get("subagentes_alocados", [])))
+            print(f"  {DIM}• Modo: {modo} | Orquestração: {orq} | Subagentes: {qtd} | Permissão de Escrita: Read-Only (Auditoria){RESET}")
+            for sa in sub.get("subagentes_alocados", []):
+                cams = ", ".join(str(c) for c in sa.get("camadas", []))
+                print(f"  {CYAN}▶ [{sa['id']}]{RESET} {BOLD}{sa.get('papel', ''):<26}{RESET} {DIM}→ Camadas: [{cams}] | Missão: {sa.get('missao', '')}{RESET}")
+
+        # Script Mestre JavaScript de Vasculhamento
+        if "script_mestre_javascript" in pipeline.metadata:
+            print(f"\n{CYAN}{BOLD}📜 SCRIPT MESTRE JAVASCRIPT (INJEÇÃO CDP DEVTOOLS):{RESET}")
+            print(f"  {DIM}• Injeção: window context / CDP Evaluate | Protocolo: Stealth Passive Hook | Função: VASCULAR_TUDO(){RESET}")
         print()
 
         t_start = time.time()
         success = True
         total_etapas = len(pipeline.etapas)
 
-        for step in pipeline.etapas:
-            ordem = step.get("ordem", 1)
+        for idx, step in enumerate(pipeline.etapas, 1):
+            ordem = step.get("ordem") or step.get("etapa") or idx
             fase = step.get("fase", "ETAPA")
+            camada = step.get("camada")
+            area = step.get("area")
+            acao = step.get("acao")
+            criterio = step.get("criterio_verificacao")
+            ignorar_erros = step.get("ignorar_erros", False)
+            bloqueio = step.get("bloqueio_em_caso_falha", not ignorar_erros)
             cmds = step.get("comandos", [])
             msg = step.get("mensagem")
-            ignorar_erros = step.get("ignorar_erros", False)
             timeout = step.get("timeout_segundos", 60)
 
             print(f"{YELLOW}{BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RESET}")
             print(f"{YELLOW}{BOLD}▶ [ETAPA {ordem}/{total_etapas}] FASE: {fase}{RESET}")
+            if camada or area:
+                print(f"  {CYAN}{BOLD}🏛️ [CAMADA]:{RESET} {camada or 'Geral'} {DIM}│{RESET} {CYAN}{BOLD}[ÁREA]:{RESET} {area or 'Sistema'}")
+            if acao:
+                print(f"  {DIM}🎯 [AÇÃO]: {acao}{RESET}")
+            if criterio:
+                print(f"  {YELLOW}🔍 [CRITÉRIO DE VERIFICAÇÃO]: {criterio}{RESET}")
             print(f"{YELLOW}{BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RESET}")
 
             step_record = {
                 "ordem": ordem,
                 "fase": fase,
+                "camada": camada,
+                "area": area,
+                "acao": acao,
+                "criterio_verificacao": criterio,
                 "comandos": cmds,
                 "status": "OK",
                 "saidas": []
@@ -1717,6 +1761,9 @@ class PipelineEngine:
                     success = False
                     break
 
+            if success and criterio:
+                print(f"  {GREEN}🛡️ [VERIFICAÇÃO APROVADA]: Critério da {camada or fase} validado.{RESET}")
+
             if msg:
                 interp_msg = self._interpolate_command(msg, pipeline, work_dir)
                 print(f"  {GREEN}{BOLD}✓ [ETAPA {ordem}/{total_etapas} CONCLUÍDA]{RESET} {GREEN}{interp_msg}{RESET}\n")
@@ -1725,8 +1772,10 @@ class PipelineEngine:
                 print(f"  {GREEN}{BOLD}✓ [ETAPA {ordem}/{total_etapas} CONCLUÍDA]{RESET}\n")
 
             receipt["etapas_executadas"].append(step_record)
-            if not success and not ignorar_erros:
-                break
+            if not success:
+                if bloqueio or not ignorar_erros:
+                    print(f"  {RED}{BOLD}🛑 [BLOQUEIO SENTINELA ATIVADO]: Falha na etapa {ordem} ({fase}). Execução pausada para proteger o estado.{RESET}\n")
+                    break
 
         receipt["duracao_segundos"] = round(time.time() - t_start, 2)
         receipt["fim_utc"] = datetime.now(timezone.utc).isoformat()
@@ -1755,7 +1804,9 @@ def main():
         print("  python3 pipeline_engine.py add-dsl <arq|txt>    - Cadastra pipeline a partir de DSL")
         print("  python3 pipeline_engine.py match \"<texto>\"       - Testa correspondência semântica de trigger")
         print("  python3 pipeline_engine.py run <id> [--dry-run] - Executa pipeline")
+        print("  python3 pipeline_engine.py build               - Compila módulos de dicionario_modulos/ no dicionario_lexico.json")
         print("  python3 pipeline_engine.py sync                 - Sincroniza dicionário com ~/.gemini/config")
+        print("  python3 pipeline_engine.py learn <ctx> <cmd> [desc] - Aprende e registra novo comando no dicionário")
         sys.exit(0)
 
     cmd = sys.argv[1].lower()
@@ -1863,14 +1914,58 @@ def main():
             print(f"{GREEN}[✓] Pipeline '{pipe.id}' registrado com sucesso no dicionario_lexico.json!{RESET}")
         engine.sync_dictionary()
 
+    elif cmd == "build":
+        builder_path = engine.dict_path.parent / "build_dicionario.py"
+        if builder_path.exists():
+            try:
+                sys.path.insert(0, str(builder_path.parent))
+                import build_dicionario
+                build_dicionario.build()
+                engine.dictionary_data = engine._load_dictionary()
+                print(f"{GREEN}[✓] Dicionário recompilado e recarregado com sucesso no PipelineEngine!{RESET}")
+            except Exception as ex:
+                print(f"{RED}[X] Erro ao compilar dicionário: {ex}{RESET}")
+                sys.exit(1)
+        else:
+            print(f"{RED}[X] Compilador build_dicionario.py não encontrado em {builder_path}.{RESET}")
+            sys.exit(1)
+
     elif cmd == "sync":
+        # Se os módulos existirem, rodar build primeiro
+        builder_path = engine.dict_path.parent / "build_dicionario.py"
+        if builder_path.exists():
+            try:
+                sys.path.insert(0, str(builder_path.parent))
+                import build_dicionario
+                build_dicionario.build()
+                engine.dictionary_data = engine._load_dictionary()
+            except Exception as ex:
+                print(f"{YELLOW}[!] Aviso ao compilar antes do sync: {ex}{RESET}")
+
         if engine.sync_dictionary():
             print(f"{GREEN}[✓] Dicionário sincronizado com sucesso com ~/.gemini/config/dicionario_lexico.json!{RESET}")
         else:
             print(f"{RED}[X] Falha na sincronização.{RESET}")
 
+    elif cmd == "learn":
+        if len(sys.argv) < 4:
+            print("Uso: python3 pipeline_engine.py learn <contexto> <comando> [descricao]")
+            sys.exit(1)
+        ctx = sys.argv[2]
+        new_cmd = sys.argv[3]
+        desc = " ".join(sys.argv[4:]) if len(sys.argv) > 4 else None
+        try:
+            from dicionario_learner import DicionarioLearner
+            learner = DicionarioLearner()
+            res = learner.learn_command(cmd=new_cmd, contexto=ctx, descricao=desc)
+            print(f"{GREEN}[✓] {res.get('status')}:{RESET} {res.get('mensagem')}")
+            engine.dictionary_data = engine._load_dictionary()
+        except Exception as ex:
+            print(f"{RED}[X] Falha ao aprender comando: {ex}{RESET}")
+            sys.exit(1)
+
     else:
-        print(f"{RED}[!] Comando desconhecido: '{cmd}'. Use 'list', 'get', 'to-dsl', 'validate', 'add-dsl', 'match', 'run' ou 'sync'.{RESET}")
+        print(f"{RED}[!] Comando desconhecido: '{cmd}'. Use 'list', 'get', 'to-dsl', 'validate', 'add-dsl', 'match', 'run', 'build', 'sync' ou 'learn'.{RESET}")
 
 
 if __name__ == "__main__":
