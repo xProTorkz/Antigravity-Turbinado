@@ -568,6 +568,90 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
     .remed-card p {{ font-size: 12px; color: var(--text-muted); }}
     .footer-box {{ border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 11.5px; color: var(--text-muted); }}
 
+    /* OSINT Search & Filter Styles */
+    .osint-search-container {{
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.1);
+      position: sticky;
+      top: 12px;
+      z-index: 1000;
+    }}
+    .osint-search-box {{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }}
+    .osint-search-input {{
+      flex: 1;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 10px 16px;
+      color: #fff;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }}
+    .osint-search-input:focus {{ border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }}
+    .osint-search-clear {{
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }}
+    .osint-search-clear:hover {{ background: rgba(239, 68, 68, 0.25); }}
+    .osint-search-kbd {{
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: #94a3b8;
+      font-family: monospace;
+      white-space: nowrap;
+    }}
+    .osint-chips {{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }}
+    .osint-chip {{
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }}
+    .osint-chip:hover {{ background: rgba(255, 255, 255, 0.1); color: #fff; }}
+    .osint-chip.active {{
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border-color: #38bdf8;
+      font-weight: 700;
+    }}
+    .osint-feedback {{
+      margin-left: auto;
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 600;
+    }}
+
     @media print {{
       @page {{ size: A4; margin: 12mm 10mm 12mm 10mm; }}
       body {{ background: #fff !important; color: #1e293b !important; padding: 0 !important; }}
@@ -649,9 +733,27 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
       </div>
     </div>
 
+    <!-- BARRA DE BUSCA FORENSE & FILTROS MULTIDIMENSIONAIS -->
+    <div class="osint-search-container">
+      <div class="osint-search-box">
+        <span style="font-size: 16px; color: #38bdf8;">⚡</span>
+        <input type="text" id="osintSearch" class="osint-search-input" placeholder="BUSCA FORENSE: Filtrar camadas, evidências, CPFs, nomes, redes sociais, hashes SHA-256 ou termos (pressione '/' para buscar)..." onkeyup="filterPersonalAudit(this.value)">
+        <button id="osintClearBtn" class="osint-search-clear" onclick="clearOsintSearch()" style="display:none">✕ Limpar</button>
+        <span class="osint-search-kbd">Atalho: <strong>/</strong> ou <strong>Cmd+K</strong></span>
+      </div>
+      <div class="osint-chips">
+        <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; margin-right: 4px;">Filtros:</span>
+        <button class="osint-chip active" onclick="setOsintFilter('ALL', this)">Todas as Camadas (14)</button>
+        <button class="osint-chip" onclick="setOsintFilter('ATENCAO', this)">⚠️ Atenção / Exposição</button>
+        <button class="osint-chip" onclick="setOsintFilter('IDENTIFICADO', this)">ℹ️ Identificado</button>
+        <button class="osint-chip" onclick="setOsintFilter('SEGURO', this)">✅ Seguro / Resguardado</button>
+        <span id="osintCountFeedback" class="osint-feedback"></span>
+      </div>
+    </div>
+
     <div class="section-card">
       <h2>📂 Repositório de Evidências Físicas Baixadas (Integridade Criptográfica)</h2>
-      <table>
+      <table id="evidenceTable">
         <thead>
           <tr>
             <th>Arquivo de Evidência</th>
@@ -668,7 +770,7 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
 
     <div class="section-card">
       <h2>📊 Matriz Forense Consolidada (14 Camadas de Auditoria)</h2>
-      <table>
+      <table id="matrixTable">
         <thead>
           <tr>
             <th style="width: 180px;">Camada Forense</th>
@@ -768,7 +870,7 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
 
     <div class="section-card">
       <h2>🛡️ Plano de Ação Forense & Hardening OPSEC</h2>
-      <div class="remed-grid">
+      <div class="remed-grid" id="hardeningGrid">
         <div class="remed-card warning">
           <h3>1. Registro de Domínio Pessoal (.com.br) <span class="pill pill-warn">PROTEÇÃO</span></h3>
           <p>O domínio <code>{clean_target.lower()}.com.br</code> está disponível no Registro.br. Registrar o domínio evita cybersquatting e garante autoridade para e-mails institucionais.</p>
@@ -791,6 +893,107 @@ Status: Análise de Pegada Física e Geográfica concluída sem incidentes de ex
       </div>
     </div>
   </div>
+
+  <script>
+    let currentOsintCategory = 'ALL';
+
+    function filterPersonalAudit(q) {{
+      const searchInput = document.getElementById('osintSearch');
+      const query = (q !== undefined ? q : (searchInput ? searchInput.value : '')).trim().toLowerCase();
+      const clearBtn = document.getElementById('osintClearBtn');
+      const feedback = document.getElementById('osintCountFeedback');
+
+      if (clearBtn) {{
+        clearBtn.style.display = (query.length > 0 || currentOsintCategory !== 'ALL') ? 'inline-block' : 'none';
+      }}
+
+      let matchMatrix = 0;
+      let matchEvidences = 0;
+      let matchHardening = 0;
+
+      // 1. Matriz de 14 Camadas
+      const matrixRows = document.querySelectorAll('#matrixTable tbody tr');
+      matrixRows.forEach(row => {{
+        const text = row.innerText.toLowerCase();
+        const matchesQuery = query === '' || text.includes(query);
+        
+        let matchesCategory = true;
+        if (currentOsintCategory === 'ATENCAO') {{
+          matchesCategory = row.innerHTML.includes('pill-warn') || row.innerHTML.includes('pill-danger') || text.includes('atenção') || text.includes('exposição');
+        }} else if (currentOsintCategory === 'IDENTIFICADO') {{
+          matchesCategory = row.innerHTML.includes('pill-info') || text.includes('identificado') || text.includes('regular') || text.includes('móvel');
+        }} else if (currentOsintCategory === 'SEGURO') {{
+          matchesCategory = row.innerHTML.includes('pill-success') || text.includes('limpo') || text.includes('resguardado') || text.includes('sem restrições') || text.includes('isolado') || text.includes('certificado');
+        }}
+
+        const show = matchesQuery && matchesCategory;
+        row.style.display = show ? '' : 'none';
+        if (show) matchMatrix++;
+      }});
+
+      // 2. Repositório de Evidências Físicas
+      const evRows = document.querySelectorAll('#evidenceTable tbody tr');
+      evRows.forEach(row => {{
+        const text = row.innerText.toLowerCase();
+        const show = (query === '' || text.includes(query));
+        row.style.display = show ? '' : 'none';
+        if (show) matchEvidences++;
+      }});
+
+      // 3. Hardening & Plano de Ação
+      const remedCards = document.querySelectorAll('#hardeningGrid .remed-card');
+      remedCards.forEach(card => {{
+        const text = card.innerText.toLowerCase();
+        const matchesQuery = query === '' || text.includes(query);
+        let matchesCategory = true;
+        if (currentOsintCategory === 'ATENCAO') {{
+          matchesCategory = card.classList.contains('warning') || card.classList.contains('danger');
+        }} else if (currentOsintCategory === 'SEGURO') {{
+          matchesCategory = card.classList.contains('success');
+        }}
+        const show = matchesQuery && matchesCategory;
+        card.style.display = show ? '' : 'none';
+        if (show) matchHardening++;
+      }});
+
+      if (feedback) {{
+        if (query.length > 0 || currentOsintCategory !== 'ALL') {{
+          feedback.innerHTML = `⚡ <strong>${{matchMatrix}}</strong> camadas, <strong>${{matchEvidences}}</strong> evidências, <strong>${{matchHardening}}</strong> ações`;
+        }} else {{
+          feedback.innerHTML = '';
+        }}
+      }}
+    }}
+
+    function setOsintFilter(cat, btn) {{
+      currentOsintCategory = cat;
+      document.querySelectorAll('.osint-chips .osint-chip').forEach(c => c.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterPersonalAudit();
+    }}
+
+    function clearOsintSearch() {{
+      const input = document.getElementById('osintSearch');
+      if (input) input.value = '';
+      currentOsintCategory = 'ALL';
+      document.querySelectorAll('.osint-chips .osint-chip').forEach(c => c.classList.remove('active'));
+      const allBtn = document.querySelector('.osint-chips .osint-chip');
+      if (allBtn) allBtn.classList.add('active');
+      filterPersonalAudit('');
+    }}
+
+    // Atalhos globais
+    window.addEventListener('keydown', function(e) {{
+      if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && document.activeElement.tagName !== 'INPUT') {{
+        e.preventDefault();
+        const input = document.getElementById('osintSearch');
+        if (input) {{ input.focus(); input.select(); }}
+      }}
+      if (e.key === 'Escape') {{
+        clearOsintSearch();
+      }}
+    }});
+  </script>
 </body>
 </html>
 """

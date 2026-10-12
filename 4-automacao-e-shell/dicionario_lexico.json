@@ -153,7 +153,13 @@
     "pericia de identidade": "pipeline:AUDITORIA_PESSOAL",
     "perícia de identidade": "pipeline:AUDITORIA_PESSOAL",
     "auditar pessoa": "pipeline:AUDITORIA_PESSOAL",
-    "auditar identidade": "pipeline:AUDITORIA_PESSOAL"
+    "auditar identidade": "pipeline:AUDITORIA_PESSOAL",
+    "buscar_auditoria": "Busca unificada em todos os laudos de auditoria gerados (Markdown, JSON e HTML) em ./reports/ por termo, tecnologia, CPF, nome, vulnerabilidade ou hash SHA-256 com categorização (Projeto, Pessoal, Forense) e realce de sintaxe.",
+    "buscar na auditoria": "cmd:agy_cmd buscar-auditoria",
+    "buscar na auditoria total": "cmd:agy_cmd buscar-auditoria",
+    "buscar na auditoria pessoal": "cmd:agy_cmd buscar-auditoria",
+    "pesquisar na auditoria": "cmd:agy_cmd buscar-auditoria",
+    "filtrar auditoria": "cmd:agy_cmd buscar-auditoria"
   },
   "categorias": {
     "red_teaming_e_ataque_extremo": [

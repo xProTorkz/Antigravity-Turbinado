@@ -3060,6 +3060,68 @@ EOF
             python3 "$script_dir/auditoria_pessoal_engine.py" "$target_name" "$doc"
             ;;
 
+        "buscar-auditoria"|"buscar auditoria"|"pesquisar-auditoria"|"pesquisar auditoria"|"buscar-laudo"|"buscar laudo"|"filtrar-auditoria"|"filtrar auditoria")
+            local termo="${1:-}"
+            local reports_dir="${2:-./reports}"
+            if [ -z "$termo" ]; then
+                echo "❌ Uso: agy_cmd buscar-auditoria <termo_ou_expressao> [diretorio_relatorios]"
+                echo "   Exemplo: agy_cmd buscar-auditoria 'SQL'"
+                echo "   Exemplo: agy_cmd buscar-auditoria 'jaiilson'"
+                echo "   Exemplo: agy_cmd buscar-auditoria 'PCI'"
+                echo "   Exemplo: agy_cmd buscar-auditoria 'token'"
+                return 1
+            fi
+            python3 -c "
+import os, sys, glob, re
+
+termo = sys.argv[1].lower()
+r_dir = sys.argv[2] if len(sys.argv) > 2 else './reports'
+
+print('🔎 ' + '='*76)
+print(f'⚡ BUSCA UNIFICADA EM LAUDOS DE AUDITORIA: \"{sys.argv[1]}\"')
+print(f'📁 Diretório de Pesquisa: {os.path.abspath(r_dir)}')
+print('='*78)
+
+if not os.path.exists(r_dir):
+    print(f'❌ Diretório {r_dir} não encontrado.')
+    sys.exit(0)
+
+files = sorted(glob.glob(os.path.join(r_dir, '**/*'), recursive=True))
+valid_files = [f for f in files if os.path.isfile(f) and f.endswith(('.md', '.json', '.html', '.txt'))]
+
+total_hits = 0
+files_matched = 0
+
+for fpath in valid_files:
+    fname = os.path.basename(fpath)
+    try:
+        with open(fpath, 'r', encoding='utf-8', errors='ignore') as fp:
+            lines = fp.readlines()
+    except Exception:
+        continue
+
+    matching_lines = []
+    for idx, line in enumerate(lines, 1):
+        if termo in line.lower():
+            matching_lines.append((idx, line.strip()))
+
+    if matching_lines:
+        files_matched += 1
+        total_hits += len(matching_lines)
+        tipo = '📄 PROJETO' if ('total' in fname.lower() or 'projeto' in fname.lower()) and 'pessoal' not in fname.lower() else ('👤 PESSOAL' if 'pessoal' in fname.lower() or 'dossie' in fname.lower() else '📊 FORENSE')
+        print(f'\n\033[1;36m[{tipo}]\033[0m \033[1;37m{fpath}\033[0m ({len(matching_lines)} ocorrência(s)):')
+        for lno, text in matching_lines[:5]:
+            hl = re.sub(f'({re.escape(sys.argv[1])})', r'\033[1;33m\1\033[0m', text, flags=re.I)
+            print(f'   \033[38;5;244mL{lno:4d}:\033[0m {hl[:140]}')
+        if len(matching_lines) > 5:
+            print(f'   \033[38;5;244m... e mais {len(matching_lines)-5} linhas correspondentes neste arquivo.\033[0m')
+
+print('\n' + '='*78)
+print(f'🎯 RESULTADO DA BUSCA: {total_hits} ocorrência(s) encontrada(s) em {files_matched} arquivo(s).')
+print('='*78)
+" "$termo" "$reports_dir"
+            ;;
+
         "va-mais-a-fundo"|"va mais a fundo"|"vá mais a fundo"|"vai mais a fundo"|"mais a fundo")
             echo "🔬 =============================================================================="
             echo "⚡ MACRO-PIPELINE: INVESTIGAÇÃO TÉCNICA DE BAIXO NÍVEL EM PROFUNDIDADE"

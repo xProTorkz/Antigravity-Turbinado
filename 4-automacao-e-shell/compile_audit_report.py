@@ -1723,7 +1723,7 @@ def generate_interactive_html_dashboard(
     remediations_html = ""
     for idx, rem in enumerate(remediations):
         remediations_html += f"""
-        <div class="rem-item">
+        <div class="rem-item" data-severidade="{rem['severidade']}">
             <div class="rem-header">
                 <span class="rem-title">{rem['titulo']}</span>
                 <span class="badge-{rem['severidade'].lower()}">{rem['severidade']}</span>
@@ -2020,6 +2020,84 @@ def generate_interactive_html_dashboard(
         .method-view {{ background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid #64748b; }}
         .method-all {{ background: rgba(255, 255, 255, 0.1); color: #f1f5f9; border: 1px solid rgba(255, 255, 255, 0.2); }}
 
+        /* Global Omnibar Search */
+        .global-search-container {{
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 14px;
+            z-index: 1000;
+        }}
+        .global-search-box {{
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.6), 0 0 18px rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem 1.25rem;
+            transition: all 0.25s ease;
+        }}
+        .global-search-box:focus-within {{
+            border-color: #60a5fa;
+            box-shadow: 0 14px 32px -5px rgba(0, 0, 0, 0.8), 0 0 26px rgba(59, 130, 246, 0.4);
+        }}
+        .global-search-icon {{ font-size: 1.25rem; color: #60a5fa; }}
+        .global-search-input {{
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }}
+        .global-search-input::placeholder {{ color: #64748b; }}
+        .global-search-clear {{
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }}
+        .global-search-clear:hover {{ background: rgba(239, 68, 68, 0.3); }}
+        .global-search-kbd {{
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-family: monospace;
+            white-space: nowrap;
+        }}
+        .global-search-status {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: #38bdf8;
+            margin-top: 0.35rem;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }}
+        .search-badge-count {{
+            font-size: 0.75rem;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 2px 8px;
+            border-radius: 9999px;
+            margin-left: auto;
+        }}
+
         /* Interactive Filter Bar */
         .toolbar {{
             display: flex;
@@ -2134,6 +2212,20 @@ def generate_interactive_html_dashboard(
                 <div>Emissão: <strong>{now_utc}</strong></div>
             </div>
         </header>
+
+        <!-- Busca Global Instantânea (Omnibar) -->
+        <div class="global-search-container">
+            <div class="global-search-box">
+                <span class="global-search-icon">⚡</span>
+                <input type="text" id="globalAuditSearch" class="global-search-input" placeholder="BUSCA GLOBAL INSTANTÂNEA: Digite qualquer termo, rota, tecnologia, arquivo ou CVE (pressione '/' para buscar)..." onkeyup="runGlobalSearch(this.value)">
+                <button id="globalSearchClear" class="global-search-clear" onclick="clearGlobalSearch()" style="display:none">✕ Limpar</button>
+                <span class="global-search-kbd">Atalho: <strong>/</strong> ou <strong>Cmd+K</strong></span>
+            </div>
+            <div id="globalSearchStatus" class="global-search-status" style="display:none">
+                <span id="globalSearchMatchText"></span>
+                <span style="color: var(--text-muted); cursor: pointer;" onclick="clearGlobalSearch()">[Restaurar Visualização Completa]</span>
+            </div>
+        </div>
 
         <div class="hero-grid">
             <!-- Score Card -->
@@ -2380,7 +2472,19 @@ def generate_interactive_html_dashboard(
 
         <!-- 6. Remediação Automática -->
         <h2 class="section-title">🛠️ Matriz de Remediação Automática (Comandos de 1 Clique)</h2>
-        <div class="rem-grid">
+        <div class="card" style="margin-bottom: 1rem;">
+            <div class="toolbar">
+                <input type="text" id="remedSearch" class="search-box" placeholder="🔍 Filtrar remediações por título, severidade, tecnologia ou comando..." onkeyup="filterRemediations()">
+                <div class="chips-container remed-chips">
+                    <button class="chip active" onclick="setRemedFilter('ALL', this)">Todas</button>
+                    <button class="chip" onclick="setRemedFilter('CRITICA', this)">🔴 Crítica</button>
+                    <button class="chip" onclick="setRemedFilter('ALTA', this)">🟠 Alta</button>
+                    <button class="chip" onclick="setRemedFilter('MEDIA', this)">🟡 Média</button>
+                    <button class="chip" onclick="setRemedFilter('BAIXA', this)">🟢 Baixa</button>
+                </div>
+            </div>
+        </div>
+        <div class="rem-grid" id="remediationsGrid">
             {remediations_html}
         </div>
 
@@ -2406,9 +2510,50 @@ def generate_interactive_html_dashboard(
     </div>
 
     <script>
+        // 1. Filtro de Capacidades Arquiteturais
+        let currentCapStatus = 'ALL';
+        function filterCapabilities() {{
+            const search = (document.getElementById('capSearch') ? document.getElementById('capSearch').value.toLowerCase() : '');
+            const rows = document.querySelectorAll('#capsTable tbody tr');
+            rows.forEach(row => {{
+                const text = row.innerText.toLowerCase();
+                const status = row.getAttribute('data-status') || '';
+                const matchesSearch = text.includes(search);
+                const matchesStatus = (currentCapStatus === 'ALL' || status === currentCapStatus);
+                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+            }});
+        }}
+        function setCapStatusFilter(status, btn) {{
+            currentCapStatus = status;
+            document.querySelectorAll('.cap-status-chips .chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            filterCapabilities();
+        }}
+
+        // 2. Filtro de Arquivos Estruturais
+        let currentStructStatus = 'ALL';
+        function filterStructuralFiles() {{
+            const search = (document.getElementById('structSearch') ? document.getElementById('structSearch').value.toLowerCase() : '');
+            const rows = document.querySelectorAll('#structTable tbody tr');
+            rows.forEach(row => {{
+                const text = row.innerText.toLowerCase();
+                const status = row.getAttribute('data-status') || '';
+                const matchesSearch = text.includes(search);
+                const matchesStatus = (currentStructStatus === 'ALL' || status === currentStructStatus);
+                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+            }});
+        }}
+        function setStructStatusFilter(status, btn) {{
+            currentStructStatus = status;
+            document.querySelectorAll('.struct-status-chips .chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            filterStructuralFiles();
+        }}
+
+        // 3. Filtro de Rotas e Endpoints
         let currentRouteCategory = 'ALL';
         function filterRoutes() {{
-            const search = document.getElementById('routeSearch').value.toLowerCase();
+            const search = (document.getElementById('routeSearch') ? document.getElementById('routeSearch').value.toLowerCase() : '');
             const rows = document.querySelectorAll('#routesTable tbody tr');
             rows.forEach(row => {{
                 const text = row.innerText.toLowerCase();
@@ -2429,9 +2574,10 @@ def generate_interactive_html_dashboard(
             filterRoutes();
         }}
 
+        // 4. Filtro de Links Externos e Gateways
         let currentLinkCategory = 'ALL';
         function filterLinks() {{
-            const search = document.getElementById('linkSearch').value.toLowerCase();
+            const search = (document.getElementById('linkSearch') ? document.getElementById('linkSearch').value.toLowerCase() : '');
             const rows = document.querySelectorAll('#linksTable tbody tr');
             rows.forEach(row => {{
                 const text = row.innerText.toLowerCase();
@@ -2447,6 +2593,102 @@ def generate_interactive_html_dashboard(
             btn.classList.add('active');
             filterLinks();
         }}
+
+        // 5. Filtro de Remediações
+        let currentRemedSeverity = 'ALL';
+        function filterRemediations() {{
+            const search = (document.getElementById('remedSearch') ? document.getElementById('remedSearch').value.toLowerCase() : '');
+            const items = document.querySelectorAll('#remediationsGrid .rem-item');
+            items.forEach(item => {{
+                const text = item.innerText.toLowerCase();
+                const sev = (item.getAttribute('data-severidade') || '').toUpperCase();
+                const matchesSearch = text.includes(search);
+                const matchesSev = (currentRemedSeverity === 'ALL' || sev.includes(currentRemedSeverity));
+                item.style.display = (matchesSearch && matchesSev) ? '' : 'none';
+            }});
+        }}
+        function setRemedFilter(sev, btn) {{
+            currentRemedSeverity = sev;
+            document.querySelectorAll('.remed-chips .chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            filterRemediations();
+        }}
+
+        // 6. Busca Global Instantânea (Omnibar)
+        function runGlobalSearch(q) {{
+            const clearBtn = document.getElementById('globalSearchClear');
+            const statusBox = document.getElementById('globalSearchStatus');
+            const matchText = document.getElementById('globalSearchMatchText');
+            const term = (q || '').trim().toLowerCase();
+
+            if (!term) {{
+                clearGlobalSearch();
+                return;
+            }}
+
+            if (clearBtn) clearBtn.style.display = 'inline-block';
+            if (statusBox) statusBox.style.display = 'flex';
+
+            let matchCaps = 0, matchStructs = 0, matchRoutes = 0, matchLinks = 0, matchRems = 0;
+
+            document.querySelectorAll('#capsTable tbody tr').forEach(tr => {{
+                const m = tr.innerText.toLowerCase().includes(term);
+                tr.style.display = m ? '' : 'none';
+                if (m) matchCaps++;
+            }});
+            document.querySelectorAll('#structTable tbody tr').forEach(tr => {{
+                const m = tr.innerText.toLowerCase().includes(term);
+                tr.style.display = m ? '' : 'none';
+                if (m) matchStructs++;
+            }});
+            document.querySelectorAll('#routesTable tbody tr').forEach(tr => {{
+                const m = tr.innerText.toLowerCase().includes(term);
+                tr.style.display = m ? '' : 'none';
+                if (m) matchRoutes++;
+            }});
+            document.querySelectorAll('#linksTable tbody tr').forEach(tr => {{
+                const m = tr.innerText.toLowerCase().includes(term);
+                tr.style.display = m ? '' : 'none';
+                if (m) matchLinks++;
+            }});
+            document.querySelectorAll('#remediationsGrid .rem-item').forEach(el => {{
+                const m = el.innerText.toLowerCase().includes(term);
+                el.style.display = m ? '' : 'none';
+                if (m) matchRems++;
+            }});
+
+            const total = matchCaps + matchStructs + matchRoutes + matchLinks + matchRems;
+            if (matchText) {{
+                matchText.innerHTML = `⚡ <strong>${{total}}</strong> ocorrência(s) encontrada(s) para "<em>${{q}}</em>": <strong>${{matchCaps}}</strong> capacidades, <strong>${{matchStructs}}</strong> arquivos, <strong>${{matchRoutes}}</strong> rotas, <strong>${{matchLinks}}</strong> conexões, <strong>${{matchRems}}</strong> remediações.`;
+            }}
+        }}
+
+        function clearGlobalSearch() {{
+            const input = document.getElementById('globalAuditSearch');
+            if (input) input.value = '';
+            const clearBtn = document.getElementById('globalSearchClear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            const statusBox = document.getElementById('globalSearchStatus');
+            if (statusBox) statusBox.style.display = 'none';
+
+            filterCapabilities();
+            filterStructuralFiles();
+            filterRoutes();
+            filterLinks();
+            filterRemediations();
+        }}
+
+        // Atalhos globais de teclado
+        window.addEventListener('keydown', function(e) {{
+            if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && document.activeElement.tagName !== 'INPUT') {{
+                e.preventDefault();
+                const input = document.getElementById('globalAuditSearch');
+                if (input) {{ input.focus(); input.select(); }}
+            }}
+            if (e.key === 'Escape') {{
+                clearGlobalSearch();
+            }}
+        }});
 
         function copyCode(id) {{
             const codeEl = document.getElementById(id);
