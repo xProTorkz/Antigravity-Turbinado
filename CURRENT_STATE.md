@@ -35,3 +35,20 @@
 - [2026-10-07 01:35:10 UTC] chore(sync): salva avancos e descobertas do projeto
 - [2026-10-07 01:45:35 UTC] fix(miniapp): sincroniza caminho canonico do miniapp para pasta de projetos
 - [2026-10-07 02:14:10 UTC] chore(sync): salva avancos e descobertas do projeto
+- [2026-10-12 22:15:00 UTC] feat(context): registrar diretriz estrategica de desenvolvimento e proposito de SITES/
+
+---
+
+## 🎯 DIRETRIZES ESTRATÉGICAS DO MANTENEDOR (MEMÓRIA ATIVA)
+
+1. **Metodologia de Foco & Tração:**
+   * O desenvolvimento entre projetos é iterativo e exploratório: o trabalho avança em um e outro para validar qual não empaca e ganha tração real antes de afunilar em um produto final.
+   * Não há dispersão desordenada; cada frente é testada para validar viabilidade e potencial de monetização.
+
+2. **Foco Imediato de Engenharia (Antigravity Turbinado):**
+   * Aprimoramento das palavras-gatilho do Dicionário Léxico.
+   * Elevação do desempenho do desenvolvimento unificando as 3 ferramentas do ecossistema + Gemini Orquestrador.
+
+3. **Propósito Canônico da Pasta `SITES/`:**
+   * A pasta `SITES/` destina-se exclusivamente ao armazenamento de sites baixados que servem como biblioteca de templates para uso futuro.
+   * **Requisito Técnico Prioritário:** Aperfeiçoar o algoritmo de vasculhamento e extração (replicador/auditoria) para baixar sites e templates de forma completa (código HTML, CSS, JavaScript, assets remotos, imagens, fontes e estado de hidratação/DOM).

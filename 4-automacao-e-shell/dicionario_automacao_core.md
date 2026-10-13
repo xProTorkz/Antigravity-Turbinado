@@ -548,6 +548,191 @@ BIN|BRAND|LEVEL|BANK|HAVE_CARDHOLDER_NAME|VALUE|TITULAR_PREVIEW
      - Verificação de Dados de Autenticação Sensíveis (SAD): Se houver presença de campos como `card_password`, `cvv` ou `security_code` com valor verdadeiro ou string, disparo de **BLOQUEIO IMEDIATO** no pipeline por violação estrita do **PCI-DSS Requirement 3.2**.
   3. **Log de Compliance (Saída Estruturada):** Gravação obrigatória dos resultados no arquivo de governança local `./reports/compliance_pci_audit.json`, contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados sensíveis em conformidade com o **PCI-DSS Requirement 3.3**.
 
+##### 🌐 Configurações de Alcance "TUDO MESMO" & Saída Esperada da Auditoria Total (v4.7)
+
+Diretiva irrevogável de varredura profunda onde todos os recursos são visitados e auditados:
+
+```javascript
+define AUDITORIA_TOTAL = {
+  // 🔐 Credenciais e Segredos
+  credentials_scan: {
+    // Busca por senhas hardcoded em todos os idiomas/linguagens
+    // Tokens de API (GitHub, AWS, Cloud, serviços terceiros)
+    // Chaves de API (Stripe, PayPal, Google, Facebook, etc.)
+    // Certificados SSL expirados/próximo de expiração
+    // Passwords de banco de dados em config files
+    // .env files expostos em repositórios públicos
+    // Session secrets e chaves de criptografia
+    search_patterns: [
+      /(password|passwd|pwd|secret)[\s]*=[\s]*"?([^"\s]+)"?/gi,
+      /(api_key|apikey|apikey)[\s]*=[\s]*"?([^"\s]+)"?/gi,
+      /(token|auth_token)[\s]*=[\s]*"?([^"\s]+)"?/gi,
+      /(secret_key|secretkey)[\s]*=[\s]*"?([^"\s]+)"?/gi,
+      /(access_token|refresh_token)[\s]*=[\s]*"?([^"\s]+)"?/gi
+    ]
+  },
+
+  // 🌐 Redes, Domínios e Infraestrutura
+  infrastructure_scan: {
+    // Domínios registrados vinculados ao sistema
+    // Subdomínios ocultos ou expirados
+    // IPs abertos e portas expostas
+    // Portas não documentadas (22, 3389, 5900, etc.)
+    // Serviços rodando em localhost acessíveis externamente
+    // Rotas de rede interna expostas
+    // Firewall rules e configurações de segurança
+    check_items: [
+      "todos_domínios_registrados",
+      "subdomínios_ativos",
+      "portas_abertas_24/7",
+      "serviços_ocultos_tor/i2p",
+      "endereços_ip_privados_vazando",
+      "dnsservers_configurados",
+      "dhcp_ranges_ativos"
+    ]
+  },
+
+  // 👥 Contas e Identidades
+  accounts_scan: {
+    // Todas as contas de usuário (ativas, inativas, deletadas "fantasmas")
+    // Contas de serviço sem supervisão
+    // Contas administrativas com permissões excessivas
+    // Usuários com default passwords
+    // Contas de backup esquecidas
+    // Service accounts com acesso excessivo
+    // Grupos de acesso e permissões herdadas
+    audit_levels: [
+      "usuários_sistema_principal",
+      "contas_servico_ocultas",
+      "admin_without_mfa",
+      "usuários_ex-funcionários",
+      "contas_sistema_operacional",
+      "grupos_de_acesso_internos"
+    ]
+  },
+
+  // 🔗 APIs e Integrações
+  api_scan: {
+    // Todas as APIs (públicas, privadas, internas)
+    // Endpoints sem documentação
+    // APIs com versionamento expirado
+    // Webhooks configurados sem validação
+    // Third-party integrations sem revisão
+    // Taxas de rate limiting inexistentes
+    // Payloads retornando dados desnecessários
+    verify: [
+      "endpoint_list_completo",
+      "documentation_status",
+      "auth_methods_por_endpoint",
+      "data_sensibilidade_retornada",
+      "cors_configurations",
+      "versioning_status"
+    ]
+  },
+
+  // 📎 Arquivos e Recursos Ocultos
+  hidden_resources_scan: {
+    // Arquivos .git/, .svn/ expostos
+    // Backup files (backup.sql.bak, .old, .backup)
+    // .env.example files com dados reais
+    // Robots.txt revelando diretórios sensíveis
+    // Sitemap.xml com URLs privadas
+    // Arquivos de log em diretórios públicos
+    // Thumbs.db/desktop.ini em shares
+    // README files com credenciais de teste
+    file_patterns: [
+      "/\\.git/",
+      "/\\.svn/",
+      "/backup.*\\.(sql|db|bak)",
+      "/\\.env[^.]",
+      "/robots\\.txt",
+      "/sitemap.*\\.xml"
+    ]
+  },
+
+  // 🏢 Fornecedores e Terceiros
+  vendors_scan: {
+    // Todas contas/acessos de fornecedores
+    // Integrações com sistemas externos
+    // APIs de parceiros sem revisão anual
+    // Links úteis/bookmarks internos não documentados
+    // Documentos de acesso restrito compartilhados indevidamente
+    // Contratos de acesso e permissões vigentes
+    checklist: [
+      "fornecedores_atuais",
+      "integrações_ativas",
+      "acessos_terceiros_ativos",
+      "documentos_restritos",
+      "links_uteis_organização",
+      "contratos_vigência"
+    ]
+  },
+
+  // 📊 Mecanismos de Execução
+  execution_protocols: {
+    deep_scan: true,
+    historical_logs: true,
+    include_archived: true,
+    compliance_gaps: "all_standards",
+    output_format: "comprehensive_dashboard"
+  }
+}
+```
+
+##### 📋 Formato Canônico da Saída Esperada
+
+```text
+🔍 AUDITORIA TOTAL COMPLETA INICIADA
+========================================
+
+📋 ESCANEANDO {total_items} categorias
+🕒 Estimado: {duration} minutos/horas
+📁 Alcance: TODOS OS RECURSOS SÃO VISITADOS
+
+✅ RESULTADOS ESPERADOS:
+
+1. 🔐 SENHAS/TOKENS EXPOSTOS:
+   - [QUANTIDADE] segredos encontrados em código/fichas
+   - [LISTA] arquivos/linhas específicas
+   - [AÇÃO] rotação imediata recomendada
+
+2. 🌐 INFRAESTRUTURA OCULTA:
+   - [QUANTIDADE] domínios/subdomínios não documentados
+   - [QUANTIDADE] portas/services expostas
+   - [QUANTIDADE] IPs vazando em logs/externos
+
+3. 👥 CONTAS NÃO VISÍVEIS:
+   - [QUANTIDADE] contas inativas/ "fantasmas"
+   - [QUANTIDADE] admin sem MFA/permissões excessivas
+   - [QUANTIDADE] ex-funcionários ainda com acesso
+
+4. 🔗 APIs TODAS:
+   - [QUANTIDADE] endpoints privados/públicos
+   - [QUANTIDADE] integrações terceiras sem revisão
+   - [QUANTIDADE] webhooks sem validação
+
+5. 📎 RECURSOS OCULTOS:
+   - [QUANTIDADE] arquivos .git/.env expostos
+   - [QUANTIDADE] backups em locais errados
+   - [QUANTIDADE] robots.txt revelando estrutura
+
+6. 🏢 FORNECEDORES/TERCEIROS:
+   - [QUANTIDADE] acessos ativos sem controle
+   - [QUANTIDADE] integrações sem SLA/documentação
+   - [QUANTIDADE] links úteis sem documentação interna
+
+7. 📊 RELATÓRIO FINAL:
+   - Score de segurança 0-100
+   - Críticos/Alto/Médio/Baixo prioritários
+   - Roadmap de correções estimado
+   - Checklist de conformidade completo
+
+========================================
+🏁 AUDITORIA TOTAL CONCLUÍDA
+📄 Relatório gerado: {timestamp}
+🔄 Próxima auditoria recomendada: {data_proxima}
+```
+
 #### 2. `auditoria-global` / `"auditoria global"` / `"//audit-global"` / `"/auditoria-global"` / `"raio-x global"`
 **Regra Canônica de Auditoria Global em 6 Domínios e 23 Camadas Estruturais (Execução Invisível e Silenciosa):**  
 Quando solicitada a *"auditoria global"*, o sistema executa compulsoriamente a varredura profunda de ponta a ponta sobre os 6 domínios do ecossistema e suas 23 camadas arquiteturais estruturadas, operando de forma invisível e silenciosa em segundo plano (`AGY_BACKGROUND`, `UI_FOCUS=false`, `VISIBLE_TERMINAL=false`, `BACKGROUND=true`, supressão de ruído no terminal e sem foco/troca de janelas ou abas):

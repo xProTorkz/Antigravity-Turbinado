@@ -439,17 +439,19 @@ class FullStackReplicator:
                         map_file.write_bytes(map_bytes)
                         self.extract_source_maps(dest_js)
 
-            # 3. Download e Relativização de Imagens e Ícones
-            print("    • Baixando imagens, ícones e SVGs...")
+            # 3. Download e Relativização de Imagens, Ícones, Lazy Loading e Srcset
+            print("    • Baixando imagens, ícones, SVGs e resolvendo srcset/lazy loading...")
             img_srcs = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', raw_html, re.I)
             img_srcs += re.findall(r'<link[^>]+rel=["\'](?:icon|shortcut icon|apple-touch-icon)["\'][^>]+href=["\']([^"\']+)["\']', raw_html, re.I)
+            img_srcs += re.findall(r'(?:data-src|data-original|data-lazy-src)=["\']([^"\']+)["\']', raw_html, re.I)
             img_srcs = list(dict.fromkeys(img_srcs))
 
             for idx, isrc in enumerate(img_srcs):
-                if isrc.startswith("data:"):
+                if isrc.startswith("data:") or not isrc.strip():
                     continue
-                abs_img_url = urllib.parse.urljoin(base_url, isrc)
-                img_name = f"img_{idx}_{os.path.basename(urllib.parse.urlparse(abs_img_url).path) or 'image.png'}"
+                abs_img_url = urllib.parse.urljoin(base_url, isrc.strip())
+                parsed_img = urllib.parse.urlparse(abs_img_url)
+                img_name = f"img_{idx}_{os.path.basename(parsed_img.path) or 'image.png'}"
                 img_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', img_name)
 
                 img_bytes = self.download_url_bytes(abs_img_url, timeout=10)
@@ -458,6 +460,51 @@ class FullStackReplicator:
                     dest_img.write_bytes(img_bytes)
                     self.manifest["assets_downloaded"].append(f"assets/images/{img_name}")
                     raw_html = raw_html.replace(isrc, f"./assets/images/{img_name}")
+
+            # Tratar atributos srcset em <img> e <source>
+            srcset_matches = re.findall(r'srcset=["\']([^"\']+)["\']', raw_html, re.I)
+            for s_val in set(srcset_matches):
+                new_srcset_parts = []
+                for part in s_val.split(','):
+                    part = part.strip()
+                    if not part:
+                        continue
+                    tokens = part.split()
+                    s_url = tokens[0]
+                    descriptor = f" {tokens[1]}" if len(tokens) > 1 else ""
+                    if not s_url.startswith("data:"):
+                        abs_s_url = urllib.parse.urljoin(base_url, s_url)
+                        parsed_s = urllib.parse.urlparse(abs_s_url)
+                        s_name = f"srcset_{hashlib.md5(abs_s_url.encode()).hexdigest()[:8]}_{os.path.basename(parsed_s.path) or 'img.jpg'}"
+                        s_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', s_name)
+                        s_bytes = self.download_url_bytes(abs_s_url, timeout=10)
+                        if s_bytes:
+                            (self.images_dir / s_name).write_bytes(s_bytes)
+                            new_srcset_parts.append(f"./assets/images/{s_name}{descriptor}")
+                        else:
+                            new_srcset_parts.append(part)
+                    else:
+                        new_srcset_parts.append(part)
+                if new_srcset_parts:
+                    raw_html = raw_html.replace(f'srcset="{s_val}"', f'srcset="{", ".join(new_srcset_parts)}"')
+                    raw_html = raw_html.replace(f"srcset='{s_val}'", f"srcset='{', '.join(new_srcset_parts)}'")
+
+            # Tratar background-image inline em tags style="..."
+            inline_bg_urls = re.findall(r'style=["\'][^"\']*url\([\'"]?([^\'")]+)[\'"]?\)[^"\']*["\']', raw_html, re.I)
+            for bg_url in set(inline_bg_urls):
+                if bg_url.startswith("data:") or bg_url.startswith("#"):
+                    continue
+                abs_bg_url = urllib.parse.urljoin(base_url, bg_url)
+                parsed_bg = urllib.parse.urlparse(abs_bg_url)
+                bg_name = f"bg_{hashlib.md5(abs_bg_url.encode()).hexdigest()[:8]}_{os.path.basename(parsed_bg.path) or 'bg.jpg'}"
+                bg_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', bg_name)
+                bg_bytes = self.download_url_bytes(abs_bg_url, timeout=10)
+                if bg_bytes:
+                    (self.images_dir / bg_name).write_bytes(bg_bytes)
+                    raw_html = raw_html.replace(bg_url, f"./assets/images/{bg_name}")
+
+            # Limpar tag <base> para que links locais funcionem
+            raw_html = re.sub(r'<base[^>]*>', '', raw_html, flags=re.I)
 
             # 4. Dump de Hidratação SSR e Dados Client-Side
             storage_data = {
@@ -482,7 +529,14 @@ class FullStackReplicator:
             final_index = self.frontend_dir / "index.html"
             final_index.write_text(raw_html, encoding='utf-8')
             self.manifest["frontend_files"].append("frontend/index.html")
+
+            # Gerar também index.html na raiz da pasta do site para acesso direto
+            root_index = self.output_dir / "index.html"
+            root_html = raw_html.replace('./assets/', './frontend/assets/')
+            root_index.write_text(root_html, encoding='utf-8')
+
             print(f"    ✓ Frontend Web completo replicado com sucesso em: {self.frontend_dir}")
+            print(f"    ✓ Template pronto para uso e edição em: {self.output_dir}")
 
         else:
             forms = re.findall(r'<form[^>]*>(.*?)</form>', raw_html, re.DOTALL | re.IGNORECASE)

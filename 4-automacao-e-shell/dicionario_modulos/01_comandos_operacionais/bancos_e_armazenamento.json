@@ -1,0 +1,15 @@
+{
+  "dominio": "bancos_e_armazenamento",
+  "descricao": "Gatilhos operacionais de persistência: destravar WAL, checkpoint SQLite, rotação e truncamento de logs",
+  "mapeamento": {
+    "limpeza_cache_logs": "Executar rotação determinística de logs e truncamento de buffers temporários em disco.",
+    "verificar_permissoes": "Auditar políticas de acesso, permissões POSIX e integridade de escrita nos diretórios de projetos.",
+    "otimizar_sqlite": "Executar VACUUM e otimização estrutural de bases SQLite com verificação PRAGMA.",
+    "higienizar_logs": "Varrer e mascarar dados sensíveis (tokens, CPFs, credenciais) em arquivos de log.",
+    "destravar_sqlite_wal": "Executar checkpoint WAL TRUNCATE e remover arquivos de lock da base SQLite.",
+    "auditoria_normal": "Executar auditoria operacional padrão cobrindo código, ambiente e incluindo compulsoriamente a suíte DevTools de depuração DOM e desmascaramento para análise de conformidade de formulários/interface.",
+    "destravar_postgres_vps": "Executar diagnóstico e destravar conexões/locks do PostgreSQL remotamente na VPS via SSH/Docker.",
+    "destravar_redis_vps": "Limpar cache, destravar sockets ou reiniciar container do Redis remotamente na VPS via SSH.",
+    "status_bancos_vps": "Verificar integridade, latência e persistência dos bancos de dados rodando na VPS remota."
+  }
+}

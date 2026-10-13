@@ -56,3 +56,10 @@ tunnel*.log
 *.pdf
 snapshots/
 *.tar.gz
+
+# Local audit reports and sensitive scans
+reports/*
+!reports/compliance_pci_audit.json
+4-automacao-e-shell/reports/LAUDO_REPLICADOR_TOTAL.md
+4-automacao-e-shell/reports/replica_manifest.json
+index_live.html

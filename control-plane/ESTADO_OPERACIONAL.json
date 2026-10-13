@@ -1,0 +1,8 @@
+{
+  "updated_at": "2026-10-12T02:56:36.224937+00:00",
+  "supervisor_status": "ONLINE_ACTIVE",
+  "active_bg_workers_count": 0,
+  "max_bg_workers": 4,
+  "workers": {},
+  "locked_files": []
+}

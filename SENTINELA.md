@@ -33,12 +33,13 @@ A divisão canônica e inegociável de responsabilidades é:
 Antes de qualquer alteração, determine o projeto, workspace real, repositório, branch, Issue e ambiente correspondentes.
 
 #### Soberania da Pasta Local & Mapeamento 1:1 no GitHub
-* **Estrutura Canônica em 3 Categorias:** Todos os projetos residem exclusivamente em `/Users/lucasvinicius/projetos/` (`PROJETOS/`), sob `SITES/`, `APLICACOES/` ou `SISTEMAS/`. Proibido manter projetos soltos ou em subpastas paralelas.
+* **Estrutura Canônica Estrita em 5 Pastas Principais:** A raiz `/Users/lucasvinicius/projetos/` contém estritamente e exclusivamente as seguintes pastas autorizadas: `BOTS/`, `SITES/`, `SISTEMAS/`, `APLICAÇÕES/` e `VPS/`. Proibido manter projetos, pastas ou arquivos soltos fora dessa estrutura.
+* **Proibição Total de Symlinks na Raiz:** É terminantemente proibido criar symlinks, atalhos ou links simbólicos soltos na raiz de `/Users/lucasvinicius/projetos/`. A raiz deve permanecer 100% limpa.
 * **Padrão Estrito "Nome Sobrenome":** Em todas as camadas, adota-se rigorosamente a formatação limpa:
   `Pasta Local = Nome do Projeto = Repositório GitHub = Nome nas Ferramentas`
   (ex: `Atende Ai`, `Dados Bacbo`, `Arena Beach`, `Jarvis Assistente`, `Buy Station`, `Green Sinais`, `Minha Agenda`).
-* **Symlinks de Compatibilidade:** A raiz `/Users/lucasvinicius/projetos/` mantém symlinks canônicos apontando diretamente para os diretórios reais nas 3 categorias.
-* **Verificação Obrigatória Pré-Criação:** É mandatório verificar a existência física do diretório local antes de qualquer criação, vínculo ou despacho no GitHub, assegurando que o nome corresponda fielmente à pasta física existente na máquina.
+* **Proteção iCloud (.nosync):** A raiz mantém o arquivo `.nosync` para impedir que o daemon do macOS / iCloud crie pastas ou arquivos temporários na raiz.
+* **Verificação Obrigatória Pré-Criação:** É mandatório verificar a existência física do diretório local antes de qualquer criação, vínculo ou despacho no GitHub, assegurando que o nome corresponda fielmente à pasta física existente na máquina dentro de sua respectiva categoria.
 
 A pasta local baixada na máquina é a autoridade máxima sobre a identidade do projeto. Não há listas canônicas pré-definidas; a resolução é estritamente dinâmica baseada no diretório físico real.
 

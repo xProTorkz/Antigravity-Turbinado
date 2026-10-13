@@ -1,0 +1,11 @@
+{
+  "dominio": "auditoria_infra_completa",
+  "descricao": "Diagnóstico de Infraestrutura, Memória RAM, CPU, Swap e Permissões chmod 0600",
+  "mapeamento": {
+    "auditoria_completa": "Executar auditoria técnica completa de ambiente, permissões, processos e repositórios locais.",
+    "auditar_variaveis_fantasmas": "Varredura estática no código-fonte via regex/AST localizando process.env e os.getenv sem declaração em .env ou .env.example.",
+    "auditoria_infra_completa": "Diagnóstico integral de infraestrutura, RAM, CPU, Swap, descritores de sockets e permissões 0600."
+  },
+  "aliases_linguagem": {},
+  "pipelines": {}
+}

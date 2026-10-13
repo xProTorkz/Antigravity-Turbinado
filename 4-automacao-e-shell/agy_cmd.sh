@@ -2832,8 +2832,8 @@ EOF
 
             echo "👉 [ETAPA 02/14] CAMADA 1: Client-Side, Extraia Tudo & Revele DOM..."
             if [ "$is_web" -eq 1 ]; then
-                echo "   • Conexão ativa Chrome Headless / Live Tab Extractor em $target..."
-                python3 "$script_dir/chrome_live_extractor.py" "$target" --audit-report 2>/dev/null || true
+                echo "   • Executando Web Spider & Rastreador Completo em $target..."
+                python3 "$script_dir/web_spider_auditor.py" "$target"
             else
                 echo "   • Inspecionando HTMLs e templates locais para desmascaramento, campos hidden, variáveis de hidratação e CSP/SRI..."
                 python3 -c "import os, glob, re; htmls = [f for f in glob.glob('**/*.html', recursive=True) + glob.glob('**/*.tsx', recursive=True) + glob.glob('**/*.jsx', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules', 'reports'])]; p_cnt = sum(len(re.findall(r'type=[\"\\']password[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); h_cnt = sum(len(re.findall(r'type=[\"\\']hidden[\"\\']', open(h, errors='ignore').read(), re.I)) for h in htmls); hydr = sum(len(re.findall(r'(__NEXT_DATA__|__INITIAL_STATE__|__NUXT__)', open(h, errors='ignore').read())) for h in htmls); print(f'   ✅ {len(htmls)} templates/arquivos analisados | Senhas: {p_cnt} | Hidden: {h_cnt} | Hydration: {hydr}')"
@@ -2971,8 +2971,9 @@ EOF
             python3 -c "import os, glob; htmls = glob.glob('**/*.html', recursive=True); print(f'   ✅ Conteúdo estruturado verificado em {len(htmls)} documento(s).')"
             echo ""
 
-            echo "👉 [ETAPA 08/12] FASE 7: Espelhamento Estrutural de Arquivos do Servidor..."
-            echo "   • Preservando ativos visuais, CSS, fontes e folhas de estilo locais..."
+            echo "👉 [ETAPA 08/12] FASE 7: Espelhamento Estrutural & Extração de Template..."
+            echo "   • Executando Full Stack Replicator para download e desacoplamento do template..."
+            python3 "$script_dir/full_stack_replicator.py" "$target" --mode=full 2>/dev/null || python3 "$script_dir/full_stack_replicator.py" "$target"
             echo ""
 
             echo "👉 [ETAPA 09/12] FASE 8: Capturas Visuais de Tela Cheia & PDFs..."

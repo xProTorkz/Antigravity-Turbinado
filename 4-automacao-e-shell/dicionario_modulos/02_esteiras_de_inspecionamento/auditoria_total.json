@@ -1,209 +1,220 @@
 {
   "dominio": "auditoria_total",
-  "descricao": "Auditoria Total e Vasculhamento Geral: 14 Camadas Arquiteturais, Inspeção de Interface, DevTools, Infraestrutura, Matriz Arquitetural (27 Domínios, 187 Capacidades) e Inventário de Arquivos Estruturais (11 Categorias, 126 Arquivos Canônicos)",
+  "descricao": "Auditoria Total nas 14 Camadas Arquiteturais e Extração de Arquivos Relevantes",
   "mapeamento": {
-    "auditoria_total": "Auditoria Total e Vasculhamento Geral: vasculha e inspeciona compulsoriamente todas as 14 camadas arquiteturais (infraestrutura, memória, permissões, DOM, DevTools, senhas desmascaradas, rede, APIs, arquivos sensíveis, segredos, SCA, SQL, webshells, headers e extração cirúrgica de arquivos relevantes em ./reports/arquivos_relevantes/ com contingência CDP e laudo tripartite).",
-    "auditoria_completa": "Executar auditoria técnica completa de ambiente, permissões, processos e repositórios locais.",
-    "inspecao_interface_irrestrita": "Executar script unificado de inspeção irrestrita de interface no DOM: remove filtros visuais e de segurança CSS (-webkit-text-security, blur), converte inputs confidenciais (password -> text), remove bloqueios de interação (disabled, readonly), elimina elementos bloqueadores invisíveis (overlays/divs flutuantes), extrai metadados em cache (.value, .innerText) e inspeciona atributos de acessibilidade (aria-labels, role) para auditoria completa de frontend.",
-    "desmascarar_inputs_senha": "Converter inputs type=\"password\" para type=\"text\" para inspeção visual imediata e análise de conformidade de formulários.",
-    "remover_travas_css_visual": "Remover propriedades visuais restritivas CSS, filtros de desfoque (blur) e propriedades text-security de todos os elementos.",
-    "extrair_valores_cache_dom": "Varrer e imprimir no Console todos os valores reais armazenados na árvore DOM (.value, getAttribute(\"value\"), .innerText).",
-    "destravar_estados_elementos": "Remover atributos de bloqueio disabled e readonly de inputs, selects, textareas e botões.",
-    "remover_overlays_invisiveis": "Localizar e neutralizar divs flutuantes transparentes ou camadas de bloqueio de ponteiro que impedem clique ou inspeção.",
-    "chromedevtools_avancado": "Conexão silenciosa via CDP ao Chrome ativo integrado à auditoria total.",
-    "matriz_arquitetural_27_dominios": "Varredura de 27 domínios arquiteturais e 187 capacidades: Autenticação/Identidade/Cripto (JWT, PASETO, OAuth2/OIDC, SAML/LDAP, WebAuthn, TOTP, RBAC, ABAC, RLS, Multi-Tenancy, HMAC, KMS), Concorrência & FSM (FSM, Idempotency, ACID, Pessimistic/Optimistic Locking, Audit Trails, Circuit Breakers, Exponential Backoff), Filas & Workers (RabbitMQ, Kafka, BullMQ/Redis, DLQ, Cron, Webhooks Consumers), Dados/Cache/Busca (PgBouncer, Migrations, Read/Write Splitting, Índices B-Tree/GIN/GiST, Redis/Memcached, TTL, Full-Text Search), Rede/APIs (Reverse Proxies, API Gateways, REST/GraphQL/gRPC, WebSockets, SSE, Rate Limiters, Load Balancers), Observabilidade (APM, Distributed Tracing, JSON Logs, Loki/ELK, Sentry, Prometheus/Grafana, Health Checks), Arquitetura Avançada (Event Sourcing, CQRS, Saga, Outbox, Service Mesh, EDA, DDD), Storage & Mídia (S3/MinIO/R2, Presigned URLs, Multipart, Edge Caching, FFmpeg/HLS, Deduplicação), Analytics (CDC/Debezium, ClickHouse/BigQuery/Snowflake, Airflow/Spark, Time-Series, Parquet/ORC), Nuvem/Runtime (Docker, K8s, Helm, PM2/Systemd, Terraform, Serverless, HPA), Rede Baixo Nível (Sockets TCP/UDP, TLS/ACME, HTTP/3, Anycast, BGP, VPC, WireGuard), CI/CD (GitHub Actions, Blue-Green, Canary, Feature Flags, GitOps, Chaos Engineering), IA/Vetores (Vector DBs, Embeddings, RAG, LangChain/LlamaIndex), Linux Kernel (Syscalls, Inodes, shm, SWAP, OOM Killer, cgroups), Compliance (LGPD/GDPR, Retenção, PCI-DSS, Disaster Recovery, PITR), Consenso Distribuído (Raft, Paxos, CRDT, Gossip, 2PC), Runtimes (JIT, GC, Wasm, V8, LLVM), Hardening (eBPF, WAF, DDoS, mTLS, ASLR, Seccomp, CSP/HSTS, HSM), FinOps (Double-Entry, Metering, Dunning, Proration, Reconciliação), Cripto Avançada (ZK-SNARKs, FHE, Ed25519, Kyber, Shamir, Merkle), Firmware/Boot (UEFI, Coreboot, IPMI, Bootloaders, PTP), File Systems (LSM-Trees, B+ Trees, ZFS/Btrfs, Ceph, WAL, mmap), Serialização (Protobuf, FlatBuffers, Avro, MessagePack, Arrow), Telecom (BGP Peering, MPLS, DWDM, SR-IOV, DPDK, Jumbo Frames), P2P (Kademlia, Libp2p, Gossipsub, BitTorrent, Hole Punching), e SRE (SLOs/SLAs/SLIs, Error Budgets, Deadlock Detectors, Flame Graphs, Pyroscope).",
-    "inventario_arquivos_estruturais": "Inspeção e catalogação de 126 arquivos estruturais canônicos divididos em 11 categorias: Configuração (.env*, .gitignore, package.json, requirements.txt, tsconfig.json, Makefile), Containers & IaC (Dockerfile, docker-compose*.yml, main.tf, Helm charts, k8s manifests), CI/CD (.github/workflows/ci.yml, .gitlab-ci.yml, Jenkinsfile), Servidores Web (nginx.conf, Caddyfile, traefik.yml), Banco de Dados (schema.prisma, schema.sql, migrations, redis.conf, postgresql.conf), Backend Core (server.ts, app.ts, routes.ts, controllers, middlewares), Filas (workers, jobs, bullmq.config.ts), Segurança (cert.pem, privkey.pem, id_rsa, authorized_keys), Observabilidade (prometheus.yml, otel-collector, loki, sentry), Linux Core (/etc/hosts, /etc/resolv.conf, /var/log/syslog, crontab), e Web3/Onion (.onion, wallets/, torrc)."
+    "auditoria_total": "Auditoria Total e Vasculhamento Geral: vasculha e inspeciona compulsoriamente todas as 14 camadas arquiteturais (infraestrutura, memória, permissões, DOM, DevTools, senhas desmascaradas, rede, APIs, arquivos sensíveis, segredos, SCA, SQL, webshells, headers e extração cirúrgica de arquivos relevantes em ./reports/arquivos_relevantes/ com contingência CDP e laudo tripartite)."
   },
   "aliases_linguagem": {
     "auditoria_total": {
       "termos": [
-        "auditoria total",
-        "faca uma auditoria total",
-        "faça uma auditoria total",
-        "executar auditoria total",
-        "auditoria completa",
-        "faça uma auditoria completa",
-        "faca uma auditoria completa",
-        "execute auditoria completa",
-        "executar auditoria completa",
-        "auditoria normal",
-        "faça uma auditoria normal",
-        "faca uma auditoria normal",
-        "auditoria",
         "/auditoria",
-        "audit total",
-        "raio-x total",
-        "raio-x completo",
-        "varredura completa",
-        "varredura total de seguranca",
-        "auditoria total do sistema",
-        "inspecione",
-        "inspeção",
-        "inspecao",
-        "inspecionar",
-        "faça a inspeção",
-        "faca a inspecao",
-        "faça a nova verificação",
-        "faca a nova verificacao",
-        "inspeção irrestrita",
-        "inspecao irrestrita",
-        "inspecione a interface",
-        "inspecionar a interface",
-        "inspecione o frontend",
-        "inspecione o projeto",
-        "inspecionar sistema",
         "analise",
-        "faça a análise",
-        "faca a analise",
-        "revelar dados ocultos",
-        "remover overlays",
-        "desmascarar campos",
-        "desmascarar senhas",
+        "arquivos estruturais",
+        "audit total",
+        "auditar capacidades tecnicas",
+        "audite todas as camadas",
+        "auditoria",
+        "auditoria completa",
+        "auditoria criptografia avancada",
+        "auditoria de apis e rotas",
+        "auditoria de arquitetura",
+        "auditoria de arquivos canonicos",
+        "auditoria de banco e cache",
+        "auditoria de filas e workers",
+        "auditoria de infraestrutura",
+        "auditoria de microservicos",
+        "auditoria docker e k8s",
+        "auditoria em todas as camadas",
+        "auditoria finops e billing",
+        "auditoria infra",
+        "auditoria jwt e auth",
+        "auditoria kernel e linux core",
+        "auditoria no chrome ativo",
+        "auditoria normal",
+        "auditoria observabilidade e logs",
+        "auditoria profunda",
+        "auditoria rapida",
+        "auditoria seguranca e hardening",
+        "auditoria total",
+        "auditoria total do sistema",
+        "auditoria total profunda",
+        "auditoria total rapida",
+        "auditoria total v6",
+        "capacidades arquiteturais",
+        "check de integridade",
         "chromedevtools",
         "chromedevtools avancado",
-        "usar chrome ja aberto",
-        "auditoria no chrome ativo",
-        "inspecao silenciosa chrome",
-        "vasculhe",
-        "vasculhar",
-        "vasculhe tudo",
-        "vasculhe todas as áreas",
-        "vasculhe todas as areas",
-        "vasculhar todas as camadas",
-        "vasculhe todas as camadas",
-        "vasculhe o sistema",
-        "vasculhar o projeto",
-        "vasculhamento",
-        "todas as camadas",
-        "todas as camadas ate o backend",
-        "todas as camadas até o backend",
-        "ir em todas as camadas",
-        "explorar todas as camadas",
-        "auditoria em todas as camadas",
-        "audite todas as camadas",
-        "auditoria infra",
-        "auditoria de infraestrutura",
-        "check de integridade",
-        "verificar integridade",
-        "healthcheck sistema",
+        "desmascarar campos",
+        "desmascarar senhas",
         "diagnostico completo",
-        "auditoria rapida",
-        "auditoria total rapida",
-        "raio-x rapido",
-        "inspecao rapida",
-        "inspeção rápida",
-        "varredura rapida",
-        "varredura rápida",
-        "auditoria total profunda",
-        "auditoria profunda",
-        "raio-x profundo",
+        "executar auditoria completa",
+        "executar auditoria total",
+        "execute auditoria completa",
+        "explorar todas as camadas",
+        "faca a analise",
+        "faca a inspecao",
+        "faca a nova verificacao",
+        "faca uma auditoria completa",
+        "faca uma auditoria normal",
+        "faca uma auditoria total",
+        "faça a análise",
+        "faça a inspeção",
+        "faça a nova verificação",
+        "faça uma auditoria completa",
+        "faça uma auditoria normal",
+        "faça uma auditoria total",
+        "healthcheck sistema",
+        "inspecao",
+        "inspecao irrestrita",
         "inspecao profunda",
+        "inspecao rapida",
+        "inspecao silenciosa chrome",
+        "inspecionar",
+        "inspecionar a interface",
+        "inspecionar sistema",
+        "inspecione",
+        "inspecione a interface",
+        "inspecione o frontend",
+        "inspecione o projeto",
+        "inspeção",
+        "inspeção irrestrita",
         "inspeção profunda",
-        "matriz arquitetural",
-        "auditoria de arquitetura",
-        "capacidades arquiteturais",
-        "auditar capacidades tecnicas",
+        "inspeção rápida",
         "inventario de arquivos",
         "inventario estrutural",
-        "auditoria de arquivos canonicos",
-        "arquivos estruturais",
-        "auditoria total v6",
+        "ir em todas as camadas",
+        "matriz arquitetural",
         "raio-x arquitetural",
-        "auditoria de microservicos",
-        "auditoria de apis e rotas",
-        "auditoria de filas e workers",
-        "auditoria de banco e cache",
-        "auditoria jwt e auth",
-        "auditoria docker e k8s",
-        "auditoria observabilidade e logs",
-        "auditoria kernel e linux core",
-        "auditoria seguranca e hardening",
-        "auditoria finops e billing",
-        "auditoria criptografia avancada"
-      ],
-      "gatilhos": [
-        "auditoria total",
-        "faca uma auditoria total",
-        "faça uma auditoria total",
-        "executar auditoria total",
-        "auditoria completa",
-        "faça uma auditoria completa",
-        "faca uma auditoria completa",
-        "execute auditoria completa",
-        "executar auditoria completa",
-        "auditoria normal",
-        "faça uma auditoria normal",
-        "faca uma auditoria normal",
-        "auditoria",
-        "/auditoria",
-        "audit total",
-        "raio-x total",
         "raio-x completo",
-        "varredura completa",
-        "varredura total de seguranca",
-        "auditoria total do sistema",
-        "inspecione",
-        "inspeção",
-        "inspecao",
-        "inspecionar",
-        "faça a inspeção",
-        "faca a inspecao",
-        "faça a nova verificação",
-        "faca a nova verificacao",
-        "inspeção irrestrita",
-        "inspecao irrestrita",
-        "inspecione a interface",
-        "inspecionar a interface",
-        "inspecione o frontend",
-        "inspecione o projeto",
-        "inspecionar sistema",
-        "analise",
-        "faça a análise",
-        "faca a analise",
-        "revelar dados ocultos",
+        "raio-x profundo",
+        "raio-x rapido",
+        "raio-x total",
         "remover overlays",
-        "desmascarar campos",
-        "desmascarar senhas",
-        "chromedevtools",
-        "chromedevtools avancado",
-        "usar chrome ja aberto",
-        "auditoria no chrome ativo",
-        "inspecao silenciosa chrome",
-        "vasculhe",
-        "vasculhar",
-        "vasculhe tudo",
-        "vasculhe todas as áreas",
-        "vasculhe todas as areas",
-        "vasculhar todas as camadas",
-        "vasculhe todas as camadas",
-        "vasculhe o sistema",
-        "vasculhar o projeto",
-        "vasculhamento",
+        "revelar dados ocultos",
         "todas as camadas",
         "todas as camadas ate o backend",
         "todas as camadas até o backend",
-        "ir em todas as camadas",
-        "explorar todas as camadas",
-        "auditoria em todas as camadas",
-        "audite todas as camadas",
-        "auditoria infra",
-        "auditoria de infraestrutura",
-        "check de integridade",
-        "verificar integridade",
-        "healthcheck sistema",
-        "diagnostico completo",
-        "auditoria rapida",
-        "auditoria total rapida",
-        "raio-x rapido",
-        "inspecao rapida",
-        "inspeção rápida",
+        "usar chrome ja aberto",
+        "varredura completa",
         "varredura rapida",
         "varredura rápida",
-        "auditoria total profunda",
+        "varredura total de seguranca",
+        "vasculhamento",
+        "vasculhar",
+        "vasculhar o projeto",
+        "vasculhar todas as camadas",
+        "vasculhe",
+        "vasculhe o sistema",
+        "vasculhe todas as areas",
+        "vasculhe todas as camadas",
+        "vasculhe todas as áreas",
+        "vasculhe tudo",
+        "verificar integridade"
+      ],
+      "gatilhos": [
+        "/auditoria",
+        "analise",
+        "arquivos estruturais",
+        "audit total",
+        "auditar capacidades tecnicas",
+        "audite todas as camadas",
+        "auditoria",
+        "auditoria completa",
+        "auditoria criptografia avancada",
+        "auditoria de apis e rotas",
+        "auditoria de arquitetura",
+        "auditoria de arquivos canonicos",
+        "auditoria de banco e cache",
+        "auditoria de filas e workers",
+        "auditoria de infraestrutura",
+        "auditoria de microservicos",
+        "auditoria docker e k8s",
+        "auditoria em todas as camadas",
+        "auditoria finops e billing",
+        "auditoria infra",
+        "auditoria jwt e auth",
+        "auditoria kernel e linux core",
+        "auditoria no chrome ativo",
+        "auditoria normal",
+        "auditoria observabilidade e logs",
         "auditoria profunda",
-        "raio-x profundo",
+        "auditoria rapida",
+        "auditoria seguranca e hardening",
+        "auditoria total",
+        "auditoria total do sistema",
+        "auditoria total profunda",
+        "auditoria total rapida",
+        "auditoria total v6",
+        "capacidades arquiteturais",
+        "check de integridade",
+        "chromedevtools",
+        "chromedevtools avancado",
+        "desmascarar campos",
+        "desmascarar senhas",
+        "diagnostico completo",
+        "executar auditoria completa",
+        "executar auditoria total",
+        "execute auditoria completa",
+        "explorar todas as camadas",
+        "faca a analise",
+        "faca a inspecao",
+        "faca a nova verificacao",
+        "faca uma auditoria completa",
+        "faca uma auditoria normal",
+        "faca uma auditoria total",
+        "faça a análise",
+        "faça a inspeção",
+        "faça a nova verificação",
+        "faça uma auditoria completa",
+        "faça uma auditoria normal",
+        "faça uma auditoria total",
+        "healthcheck sistema",
+        "inspecao",
+        "inspecao irrestrita",
         "inspecao profunda",
-        "inspeção profunda"
+        "inspecao rapida",
+        "inspecao silenciosa chrome",
+        "inspecionar",
+        "inspecionar a interface",
+        "inspecionar sistema",
+        "inspecione",
+        "inspecione a interface",
+        "inspecione o frontend",
+        "inspecione o projeto",
+        "inspeção",
+        "inspeção irrestrita",
+        "inspeção profunda",
+        "inspeção rápida",
+        "inventario de arquivos",
+        "inventario estrutural",
+        "ir em todas as camadas",
+        "matriz arquitetural",
+        "raio-x arquitetural",
+        "raio-x completo",
+        "raio-x profundo",
+        "raio-x rapido",
+        "raio-x total",
+        "remover overlays",
+        "revelar dados ocultos",
+        "todas as camadas",
+        "todas as camadas ate o backend",
+        "todas as camadas até o backend",
+        "usar chrome ja aberto",
+        "varredura completa",
+        "varredura rapida",
+        "varredura rápida",
+        "varredura total de seguranca",
+        "vasculhamento",
+        "vasculhar",
+        "vasculhar o projeto",
+        "vasculhar todas as camadas",
+        "vasculhe",
+        "vasculhe o sistema",
+        "vasculhe todas as areas",
+        "vasculhe todas as camadas",
+        "vasculhe todas as áreas",
+        "vasculhe tudo",
+        "verificar integridade"
       ],
       "diretiva": "auditoria_total",
       "execucao_material": true,
@@ -211,14 +222,21 @@
       "restricoes_estritas": {
         "READ_ONLY_FIRST": true,
         "MUTATION_ALLOWED": false,
-        "AUDIT_LOGGING": true
+        "AUDIT_LOGGING": true,
+        "MEMORIA_VOLATIL_PII": true,
+        "ZERO_DISK_RAW_SECRETS": true
       },
       "destino_extracao_evidencias": "./reports/arquivos_relevantes/",
       "regra_extracao_limpa": "É terminantemente proibido despejar artefatos soltos na raiz ou fora do diretório canônico; todas as evidências, amostras e payloads extraídos devem ser gravados exclusivamente em ./reports/arquivos_relevantes/ com manifesto de integridade SHA-256.",
       "contingencia_cdp": {
         "condicao": "Se conexão CDP porta 9222 falhar ou estiver inacessível",
         "acao": "Registrar alerta 'CDP_OFFLINE' no laudo pericial e executar compulsoriamente 100% das camadas estáticas locais e inspeções offline sem abortar a esteira",
-        "fallback_status": "CDP_OFFLINE"
+        "fallback_status": "CDP_OFFLINE",
+        "fallback_headless_curl_lxml": {
+          "condicao": "Se binário do Chrome Headless sofrer bloqueio de sandbox macOS ou CDP porta 9222 estiver inacessível",
+          "acao": "Ativar analisador estático nativo em Python/curl com parser de DOM sem dependência de socket remoto",
+          "status": "FALLBACK_STANDALONE_OK"
+        }
       },
       "matriz_encerramento_laudo": {
         "BLOQUEADO": "Crítico: Presença de chaves privadas/segredos em texto plano, webshells ativas, backdoors ou violações graves de conformidade que impedem o avanço operacional.",
@@ -240,732 +258,18 @@
         "11. Verificação de replicação e snapshots offline do DOM (index.html, hub_replicado.html)",
         "12. Compilação do laudo pericial unificado das 14 camadas via compile_audit_report.py"
       ],
-      "estrutura_completa_vasculhamento_7_camadas": {
-        "titulo": "ESTRUTURA COMPLETA PARA VASCULHAR UM SISTEMA INTEIRO",
-        "descricao": "Mapa mental + checklist de tudo que existe para inspecionar, organizado pelas 7 camadas.",
-        "estrutura_geral": [
-          {
-            "camada": 1,
-            "nome": "DOM / HTML",
-            "foco": "estrutura da página"
-          },
-          {
-            "camada": 2,
-            "nome": "CSS / Estilo",
-            "foco": "como é renderizado"
-          },
-          {
-            "camada": 3,
-            "nome": "JavaScript",
-            "foco": "lógica e estado"
-          },
-          {
-            "camada": 4,
-            "nome": "Storage",
-            "foco": "dados persistidos"
-          },
-          {
-            "camada": 5,
-            "nome": "Rede (Network)",
-            "foco": "o que sai e entra"
-          },
-          {
-            "camada": 6,
-            "nome": "Backend / API",
-            "foco": "endpoints e contratos"
-          },
-          {
-            "camada": 7,
-            "nome": "Infra / Meta",
-            "foco": "headers, certificados, infra"
-          }
-        ],
-        "camadas_detalhadas": {
-          "camada_1_dom_html": {
-            "numero": 1,
-            "nome": "DOM / HTML",
-            "foco": "estrutura da página",
-            "o_que_ver": [
-              "Árvore completa de elementos",
-              "Atributos data-* (escondem valores reais)",
-              "Inputs hidden, password, readonly",
-              "Comentários HTML (<!-- -->)",
-              "Meta tags",
-              "Scripts inline"
-            ],
-            "onde": "Elements / Inspector",
-            "comandos": [
-              "document.documentElement.outerHTML           // HTML completo",
-              "document.querySelectorAll(\"*\").length        // total de elementos",
-              "[...document.querySelectorAll(\"*\")].map(e => e.tagName)  // todos os elementos",
-              "document.querySelectorAll(\"[data-*]\")        // elementos com data-attributes"
-            ]
-          },
-          "camada_2_css_estilo": {
-            "numero": 2,
-            "nome": "CSS / Estilo",
-            "foco": "como é renderizado",
-            "o_que_ver": [
-              "Stylesheets carregadas",
-              "Regras aplicadas",
-              "Elementos escondidos (display:none, visibility:hidden, opacity:0)",
-              "Pseudo-elementos com conteúdo (::before, ::after)"
-            ],
-            "onde": "Elements → Styles / Computed",
-            "comandos": [
-              "document.styleSheets.length                  // total de stylesheets",
-              "[...document.styleSheets].forEach(s => console.log(s.href))",
-              "// Achar elementos escondidos",
-              "[...document.querySelectorAll(\"*\")].filter(e => { const s = getComputedStyle(e); return s.display === \"none\" || s.visibility === \"hidden\" || s.opacity === \"0\"; })"
-            ]
-          },
-          "camada_3_javascript": {
-            "numero": 3,
-            "nome": "JavaScript",
-            "foco": "lógica e estado",
-            "o_que_ver": [
-              "Arquivos JS carregados",
-              "Funções globais",
-              "Event listeners",
-              "Variáveis de state (React/Vue/Angular)",
-              "Objetos globais do framework"
-            ],
-            "onde": "Sources / Debugger + Console",
-            "comandos": [
-              "// Todos os scripts carregados: [...document.scripts].map(s => s.src)",
-              "// Todas as funções globais: Object.keys(window).filter(k => typeof window[k] === \"function\")",
-              "// Event listeners de um elemento: getEventListeners(document.querySelector(\"SEU_SELECTOR\"))",
-              "// State de frameworks: window.__INITIAL_STATE__ || window.__NUXT__ || window.__NEXT_DATA__ || window._sharedData"
-            ]
-          },
-          "camada_4_storage": {
-            "numero": 4,
-            "nome": "Storage",
-            "foco": "dados persistidos",
-            "o_que_ver": [
-              "LocalStorage",
-              "SessionStorage",
-              "Cookies (com flags)",
-              "IndexedDB",
-              "Cache Storage",
-              "Service Workers",
-              "Web SQL (legado)"
-            ],
-            "onde": "Application / Storage",
-            "comandos": [
-              "console.log(\"LOCAL:\", {...localStorage});",
-              "console.log(\"SESSION:\", {...sessionStorage});",
-              "console.log(\"COOKIES:\", document.cookie);",
-              "indexedDB.databases().then(d => console.log(\"IDB:\", d));",
-              "caches.keys().then(k => console.log(\"CACHE:\", k));",
-              "navigator.serviceWorker.getRegistrations().then(r => console.log(\"SW:\", r));"
-            ]
-          },
-          "camada_5_rede_network": {
-            "numero": 5,
-            "nome": "Rede (Network)",
-            "foco": "o que sai e entra",
-            "o_que_ver": [
-              "Todas as requisições (Fetch, XHR, Doc, WS, SSE, Img, Font, etc.)",
-              "Headers enviados e recebidos",
-              "Payloads e respostas",
-              "Cookies trafegados",
-              "WebSockets (frames)",
-              "EventStreams"
-            ],
-            "onde": "Network",
-            "filtros": [
-              "Fetch/XHR",
-              "WS",
-              "Doc",
-              "CSS",
-              "JS",
-              "Img",
-              "Media",
-              "Font",
-              "Other"
-            ],
-            "comandos": [
-              "// Todas as requisições da página: performance.getEntriesByType(\"resource\").map(r => r.name)",
-              "// Interceptar tudo: const of = window.fetch; window.fetch = (...a) => { console.log(\"→\", a[0], a[1]); return of(...a).then(r => { console.log(\"←\", r.status, a[0]); return r; }); };"
-            ]
-          },
-          "camada_6_backend_api": {
-            "numero": 6,
-            "nome": "Backend / API",
-            "foco": "endpoints e contratos",
-            "o_que_ver": [
-              "Endpoints descobertos",
-              "Métodos HTTP (GET, POST, PUT, DELETE)",
-              "Autenticação (Bearer, Cookie, API Key)",
-              "Contratos (JSON schemas)",
-              "Rate limits",
-              "Versionamento (/v1/, /v2/)"
-            ],
-            "onde": "Network → filtro Fetch/XHR → analisar cada endpoint",
-            "comandos": [
-              "// Listar todos os endpoints chamados: [...new Set(performance.getEntriesByType(\"resource\").map(r => r.name).filter(u => u.includes(\"/api/\") || u.includes(\"/v1/\") || u.includes(\"/graphql\")))]",
-              "// Reproduzir requisição: botão direito → Copy as cURL"
-            ]
-          },
-          "camada_7_infra_meta": {
-            "numero": 7,
-            "nome": "Infra / Meta",
-            "foco": "headers, certificados, infra",
-            "o_que_ver": [
-              "Certificado TLS",
-              "IPs dos servidores",
-              "CDN usado",
-              "Headers de segurança (CSP, HSTS, X-Frame-Options)",
-              "Tecnologias detectadas",
-              "Robots.txt, sitemap.xml, manifest.json",
-              "Well-known endpoints"
-            ],
-            "onde": "Cadeado da barra de endereço + Network + arquivos diretos",
-            "comandos": [
-              "// Meta tags: [...document.querySelectorAll(\"meta\")].map(m => ({name: m.name, content: m.content}))",
-              "// Manifest: document.querySelector(\"link[rel=\"manifest\"]\")?.href",
-              "// Tecnologias (via headers): Veja Response Headers Server, X-Powered-By, X-Generator"
-            ],
-            "urls_para_checar": [
-              "/robots.txt",
-              "/sitemap.xml",
-              "/.well-known/security.txt",
-              "/manifest.json",
-              "/sw.js",
-              "/api",
-              "/graphql"
-            ]
-          }
-        }
-      },
-      "checklist_vasculhamento_completo_25_itens": [
-        {
-          "numero": 1,
-          "item": "HTML completo",
-          "onde": "Elements"
-        },
-        {
-          "numero": 2,
-          "item": "Inputs (hidden, password)",
-          "onde": "Elements + Console"
-        },
-        {
-          "numero": 3,
-          "item": "Atributos data-*",
-          "onde": "Elements"
-        },
-        {
-          "numero": 4,
-          "item": "Comentários HTML",
-          "onde": "Elements"
-        },
-        {
-          "numero": 5,
-          "item": "Elementos escondidos",
-          "onde": "Console"
-        },
-        {
-          "numero": 6,
-          "item": "Scripts carregados",
-          "onde": "Sources"
-        },
-        {
-          "numero": 7,
-          "item": "Funções globais",
-          "onde": "Console"
-        },
-        {
-          "numero": 8,
-          "item": "State de framework",
-          "onde": "Console"
-        },
-        {
-          "numero": 9,
-          "item": "LocalStorage",
-          "onde": "Application"
-        },
-        {
-          "numero": 10,
-          "item": "SessionStorage",
-          "onde": "Application"
-        },
-        {
-          "numero": 11,
-          "item": "Cookies",
-          "onde": "Application"
-        },
-        {
-          "numero": 12,
-          "item": "IndexedDB",
-          "onde": "Application"
-        },
-        {
-          "numero": 13,
-          "item": "Service Workers",
-          "onde": "Application"
-        },
-        {
-          "numero": 14,
-          "item": "Cache Storage",
-          "onde": "Application"
-        },
-        {
-          "numero": 15,
-          "item": "Requisições de rede",
-          "onde": "Network"
-        },
-        {
-          "numero": 16,
-          "item": "Headers de req/resp",
-          "onde": "Network"
-        },
-        {
-          "numero": 17,
-          "item": "Payloads",
-          "onde": "Network"
-        },
-        {
-          "numero": 18,
-          "item": "WebSockets",
-          "onde": "Network → WS"
-        },
-        {
-          "numero": 19,
-          "item": "Endpoints de API",
-          "onde": "Network"
-        },
-        {
-          "numero": 20,
-          "item": "Certificado TLS",
-          "onde": "Cadeado"
-        },
-        {
-          "numero": 21,
-          "item": "Headers de segurança",
-          "onde": "Network"
-        },
-        {
-          "numero": 22,
-          "item": "robots.txt / sitemap",
-          "onde": "URL direta"
-        },
-        {
-          "numero": 23,
-          "item": "manifest.json",
-          "onde": "URL direta"
-        },
-        {
-          "numero": 24,
-          "item": "Meta tags",
-          "onde": "Elements"
-        },
-        {
-          "numero": 25,
-          "item": "Tecnologias",
-          "onde": "Headers (Server, X-Powered-By)"
-        }
-      ],
-      "script_mestre_javascript": "(function VASCULAR_TUDO() {\n  const R = {};\n  R.url = location.href;\n  R.title = document.title;\n  R.meta = [...document.querySelectorAll('meta')].map(m => ({n: m.name||m.getAttribute('property'), c: m.content}));\n  R.scripts = [...document.scripts].map(s => s.src || 'inline');\n  R.links = [...document.querySelectorAll('link')].map(l => ({rel: l.rel, href: l.href}));\n  R.inputs = [...document.querySelectorAll('input,textarea,select')].map(i => ({tag: i.tagName, name: i.name, id: i.id, type: i.type, value: i.value}));\n  R.forms = [...document.forms].map(f => ({action: f.action, method: f.method, fields: [...f.elements].map(e => e.name)}));\n  R.dataAttrs = [...document.querySelectorAll('*')].filter(e => [...e.attributes].some(a => a.name.startsWith('data-'))).map(e => ({tag: e.tagName, attrs: [...e.attributes].filter(a => a.name.startsWith('data-')).map(a => [a.name, a.value])}));\n  R.comments = (document.documentElement.outerHTML.match(/<!--[\\s\\S]*?-->/g) || []);\n  R.hiddenElements = [...document.querySelectorAll('*')].filter(e => {\n    const s = getComputedStyle(e);\n    return s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0';\n  }).map(e => ({tag: e.tagName, id: e.id, class: e.className}));\n  R.storage = {\n    local: {...localStorage},\n    session: {...sessionStorage},\n    cookies: document.cookie\n  };\n  R.resources = performance.getEntriesByType('resource').map(r => r.name);\n  R.apiEndpoints = [...new Set(R.resources.filter(u => u.includes('/api/') || u.includes('/v1/') || u.includes('/v2/') || u.includes('/graphql')))];\n  R.frameworkState = window.__INITIAL_STATE__ || window.__NUXT__ || window.__NEXT_DATA__ || window._sharedData || null;\n  return R;\n})();",
-      "subagentes": {
-        "habilitado": true,
-        "obrigatorio": true,
-        "modo": "PARALLEL",
-        "orquestracao": "fan_out_fan_in",
-        "allow_subagents": true,
-        "allow_parallel": true,
-        "quantidade_subagentes": 3,
-        "subagentes_alocados": [
-          {
-            "id": "subagente_1_client_side",
-            "papel": "auditor_client_side",
-            "tipo": "research",
-            "camadas": [
-              1,
-              2,
-              3
-            ],
-            "missao": "Auditoria de DOM, CSS, JavaScript, State de SPA (React Fiber, Vue, Angular), variáveis de hidratação e desmascaramento de inputs",
-            "write_permission": false
-          },
-          {
-            "id": "subagente_2_rede_api",
-            "papel": "auditor_rede_api",
-            "tipo": "research",
-            "camadas": [
-              4,
-              5,
-              6
-            ],
-            "missao": "Auditoria de Storage, tráfego de rede (Fetch/XHR/WS), endpoints de backend (/api, /v1, /graphql) e contratos",
-            "write_permission": false
-          },
-          {
-            "id": "subagente_3_infra_seguranca",
-            "papel": "auditor_infra_seguranca",
-            "tipo": "research",
-            "camadas": [
-              7,
-              8,
-              9,
-              10
-            ],
-            "missao": "Auditoria de Infra/Meta, caça a segredos hardcoded, análise de composição SCA, sanitização SQL, detecção de webshells e conformidade PCI-DSS/PAN",
-            "write_permission": false
-          }
-        ],
-        "regras_governanca": {
-          "max_writer_per_project": 1,
-          "isolamento": "Subagentes de pesquisa operam em modo read-only compartilhando evidências diretamente com o compilador do laudo"
-        }
-      },
-      "fluxo_execucao_sequencial": [
-        {
-          "etapa": 1,
-          "ordem": 1,
-          "fase": "PREPARE",
-          "camada": "Camada 0: Inicialização de Relatórios & Isolamento",
-          "area": "Diretórios de Evidências Forenses",
-          "acao": "Criar diretórios ./reports e ./artifacts para gravação de telemetria",
-          "comandos": [
-            "mkdir -p ./reports ./artifacts ./backups"
-          ],
-          "criterio_verificacao": "Diretórios de relatórios operacionais criados com sucesso.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 2,
-          "ordem": 2,
-          "fase": "PHASE_1_DOM_CLIENT",
-          "camada": "Camada 1: Client-Side, DOM & Interface do Usuário",
-          "area": "Estrutura DOM, Componentes Visuais & Inputs Ocultos",
-          "acao": "Mapear elementos de interface, campos ocultos e inputs desabilitados",
-          "comandos": [
-            "python3 -c \"import os, glob, json; htmls=[f for f in glob.glob('**/*.html', recursive=True) if os.path.isfile(f)]; res={'total_htmls': len(htmls), 'samples': htmls[:5]}; json.dump(res, open('./reports/audit_phase1_dom_client.json', 'w'), indent=2); print(f'[*] [FASE 1] Mapeados {len(htmls)} arquivos HTML/DOM para auditoria.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase1_dom_client.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 3,
-          "ordem": 3,
-          "fase": "PHASE_2_NETWORK_PORTS",
-          "camada": "Camada 2: Portas & Superfície de Rede",
-          "area": "Sockets Locais, Serviços Ativos & Portas Expostas",
-          "acao": "Auditar portas locais e conexões abertas",
-          "comandos": [
-            "python3 -c \"import socket, json; ports=[80, 443, 3000, 3306, 5432, 6379, 8000, 8080]; open_p=[p for p in ports if socket.socket().connect_ex(('127.0.0.1', p)) == 0]; json.dump({'open_ports': open_p}, open('./reports/audit_phase2_network_ports.json', 'w'), indent=2); print(f'[*] [FASE 2] Portas ativas: {open_p}')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase2_network_ports.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 4,
-          "ordem": 4,
-          "fase": "PHASE_3_API_GATEWAYS",
-          "camada": "Camada 3: Gateways, Rotas & APIs",
-          "area": "Endpoints REST, GraphQL, WebSockets & Swagger/OpenAPI",
-          "acao": "Identificar contratos de rotas de backend e proxies",
-          "comandos": [
-            "python3 -c \"import os, glob, re, json; files=[f for f in glob.glob('**/*.js', recursive=True)+glob.glob('**/*.py', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules'])]; routes=set(); [routes.update(re.findall(r'/(?:api|v[0-9]+)/[a-zA-Z0-9_/-]+', open(f, errors='ignore').read())) for f in files]; json.dump({'routes_discovered': list(routes)[:50]}, open('./reports/audit_phase3_api_gateways.json', 'w'), indent=2); print(f'[*] [FASE 3] {len(routes)} rotas de API catalogadas.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase3_api_gateways.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 5,
-          "ordem": 5,
-          "fase": "PHASE_4_SENSITIVE_ROUTES",
-          "camada": "Camada 4: Arquivos Sensíveis & Superfície Exposta",
-          "area": "Detecção de .env, .git, backups (.bak, .sql) e chaves",
-          "acao": "Escanear projeto contra arquivos de configuração e credenciais residuais",
-          "comandos": [
-            "python3 -c \"import os, glob, json; targets=['.env*', '**/*.bak', '**/*.sql', '**/*.pem', '**/*.key']; found=[]; [found.extend([x for x in glob.glob(t, recursive=True) if os.path.isfile(x)]) for t in targets]; json.dump({'sensitive_files': found}, open('./reports/audit_phase4_sensitive_routes.json', 'w'), indent=2); print(f'[*] [FASE 4] {len(found)} arquivos sensíveis/backups localizados.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase4_sensitive_routes.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 6,
-          "ordem": 6,
-          "fase": "PHASE_5_SECRETS_DLP",
-          "camada": "Camada 5: Segredos, Chaves & Prevenção de Vazamento (DLP)",
-          "area": "Tokens AWS, GitHub, OpenAI, Senhas Hardcoded",
-          "acao": "Escanear código-fonte em busca de segredos hardcoded",
-          "comandos": [
-            "python3 -c \"import os, glob, re, json; files=[f for f in glob.glob('**/*', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules', 'reports'])]; p=re.compile(r'(AKIA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36}|AIza[0-9A-Za-z-_]{35})'); hits=0; [hits.__add__(len(p.findall(open(f, errors='ignore').read()))) for f in files]; json.dump({'potential_secrets': hits, 'status': 'AUDITED_MASKED'}, open('./reports/audit_phase5_secrets.json', 'w'), indent=2); print(f'[*] [FASE 5] Varredura de segredos concluída: {hits} ocorrências analisadas.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase5_secrets.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 7,
-          "ordem": 7,
-          "fase": "PHASE_6_SCA_DEPENDENCIES",
-          "camada": "Camada 6: Cadeia de Suprimentos & Dependências (SCA)",
-          "area": "Manifests (package.json, requirements.txt) & CVEs",
-          "acao": "Auditar manifests de pacotes contra dependências desatualizadas e vulnerabilidades conhecidas (CVEs)",
-          "comandos": [
-            "python3 -c \"import os, json; pkgs={'npm': os.path.exists('package.json'), 'python': os.path.exists('requirements.txt')}; res={'manifests': pkgs, 'sca_status': 'CHECKED_OK'}; json.dump(res, open('./reports/audit_phase6_sca.json', 'w'), indent=2); print(f'[*] [FASE 6: SCA] Manifests de dependências auditados: {pkgs}')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase6_sca.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 8,
-          "ordem": 8,
-          "fase": "PHASE_7_SQL_SANITIZATION",
-          "camada": "Camada 7: Sanitização de Dados & Queries Dinâmicas",
-          "area": "Queries SQL Concatenadas, Injeção e Sanitização",
-          "acao": "Analisar código contra interpolação insegura de consultas a banco",
-          "comandos": [
-            "python3 -c \"import os, glob, re, json; files=[f for f in glob.glob('**/*.js', recursive=True)+glob.glob('**/*.py', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules'])]; p=re.compile(r'SELECT.*\\+.*FROM|execute\\(.*%s', re.I); hits=0; [hits.__add__(len(p.findall(open(f, errors='ignore').read()))) for f in files]; json.dump({'sql_concat_candidates': hits, 'status': 'AUDITED'}, open('./reports/audit_phase7_sql_sanitization.json', 'w'), indent=2); print(f'[*] [FASE 7] Sanitização SQL auditada: {hits} candidatos inspecionados.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase7_sql_sanitization.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 9,
-          "ordem": 9,
-          "fase": "PHASE_8_WEBSHELLS_INTEGRITY",
-          "camada": "Camada 8: Integridade de Código & Backdoors",
-          "area": "Funções de Execução Arbitrária, Webshells e Obfuscação",
-          "acao": "Varrer código em busca de payloads maliciosos, webshells ou backdoors",
-          "comandos": [
-            "python3 -c \"import os, glob, re, json; files=[f for f in glob.glob('**/*.php', recursive=True)+glob.glob('**/*.py', recursive=True) if os.path.isfile(f) and not any(x in f for x in ['.git', 'node_modules'])]; p=re.compile(r'(eval\\(base64_decode|system\\(\\$_GET|os\\.system\\(request)'); hits=0; [hits.__add__(len(p.findall(open(f, errors='ignore').read()))) for f in files]; json.dump({'backdoor_candidates': hits, 'clean': hits==0}, open('./reports/audit_phase8_webshells.json', 'w'), indent=2); print(f'[*] [FASE 8] Varredura de integridade contra backdoors concluída: {hits} suspeitas.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase8_webshells.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 10,
-          "ordem": 10,
-          "fase": "PHASE_9_DOM_SNAPSHOTS",
-          "camada": "Camada 9: Capturas Visuais & Snapshots Offline",
-          "area": "HTML Snapshots, Código Estático & Recursos Embutidos",
-          "acao": "Catalogar snapshots estáticos de interface para auditoria offline",
-          "comandos": [
-            "python3 -c \"import os, glob, json; sn=[f for f in glob.glob('**/*.html', recursive=True) if os.path.isfile(f)]; json.dump({'snapshots_count': len(sn), 'files': sn[:10]}, open('./reports/audit_phase10_dom_snapshots.json', 'w'), indent=2); print(f'[*] [FASE 10] {len(sn)} snapshots DOM/HTML catalogados.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_phase10_dom_snapshots.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 11,
-          "ordem": 11,
-          "fase": "PHASE_10_DOM_PASSWORDS_CLIENT",
-          "camada": "Camada 10: Desmascaramento Client-Side & Senhas",
-          "area": "Source Maps (.js.map), Formulários & Conformidade PCI",
-          "acao": "Detectar Source Maps (.js.map) para reconstituição de código e auditar formulários",
-          "comandos": [
-            "python3 -c \"import os, glob, json; maps=[f for f in glob.glob('**/*.js.map', recursive=True) if os.path.isfile(f)]; json.dump({'source_maps_found': len(maps), 'files': maps[:5]}, open('./reports/audit_source_maps.json', 'w'), indent=2); print(f'[*] [SOURCE MAPS] {len(maps)} arquivos .js.map detectados para reconstituição de código.')\"",
-            "python3 -c \"import os, sys, subprocess; candidates=['4-automacao-e-shell/scan_cards_pci.py', os.path.expanduser('~/.gemini/config/scan_cards_pci.py')]; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.']) if s else None\""
-          ],
-          "criterio_verificacao": "Relatório audit_source_maps.json e compliance_pci_audit.json gerados.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 12,
-          "ordem": 12,
-          "fase": "EXTRACAO_ARQUIVOS_RELEVANTES",
-          "camada": "Camada 12: Extração Seletiva de Arquivos Relevantes",
-          "area": "Contratos de API, Schemas SQL & Configs",
-          "acao": "Extrair e baixar exclusivamente os arquivos importantes e relevantes em ./reports/arquivos_relevantes/",
-          "comandos": [
-            "python3 -c \"import os, sys, subprocess; candidates=['4-automacao-e-shell/full_stack_replicator.py', os.path.expanduser('~/.gemini/config/full_stack_replicator.py'), 'full_stack_replicator.py']; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.', '--mode=relevantes']) if s else None\""
-          ],
-          "criterio_verificacao": "Arquivos relevantes extraídos em ./reports/arquivos_relevantes/ e laudo gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 13,
-          "ordem": 13,
-          "fase": "PHASE_SECURITY_HEADERS",
-          "camada": "Camada 13: Cabeçalhos HTTP de Segurança & Hardening de Borda",
-          "area": "CSP, HSTS, X-Frame-Options, CORS & Referrer-Policy",
-          "acao": "Inspecionar conformidade de cabeçalhos de segurança HTTP em endpoints locais ou de borda",
-          "comandos": [
-            "python3 -c \"import os, json; headers_report={'tested_endpoints': ['http://127.0.0.1:3000', 'http://127.0.0.1:8000', 'http://127.0.0.1:8080'], 'recommendations': ['HSTS (Strict-Transport-Security)', 'CSP (Content-Security-Policy)', 'X-Content-Type-Options: nosniff', 'X-Frame-Options: DENY']}; json.dump(headers_report, open('./reports/audit_security_headers.json', 'w'), indent=2); print('[*] [SECURITY HEADERS] Auditoria de cabeçalhos de borda registrada em ./reports/audit_security_headers.json.')\""
-          ],
-          "criterio_verificacao": "Relatório audit_security_headers.json gerado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        },
-        {
-          "etapa": 14,
-          "ordem": 14,
-          "fase": "PHASE_11_COMPILE_FINAL_REPORT",
-          "camada": "Camada 14: Compilação de Laudo Forense & Hashes SHA-256",
-          "area": "Laudo Pericial Canônico (LAUDO_AUDITORIA_TOTAL.md)",
-          "acao": "Consolidar todas as camadas em um laudo pericial único com tabela SHA-256",
-          "comandos": [
-            "python3 -c \"import os, sys, subprocess; candidates=['4-automacao-e-shell/compile_audit_report.py', os.path.expanduser('~/.gemini/config/compile_audit_report.py'), 'compile_audit_report.py']; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.']) if s else print('[*] Compilador de laudo final executado.')\""
-          ],
-          "criterio_verificacao": "Laudo LAUDO_AUDITORIA_TOTAL.md gerado e validado.",
-          "bloqueio_em_caso_falha": true,
-          "timeout_segundos": 60
-        }
-      ],
-      "script_unificado_devtools": "(() => {\n  console.group('🛡️ [SENTINELA] INSPEÇÃO IRRESTRITA DE INTERFACE & DEPURAÇÃO DOM');\n  const rel = {\n    senhasDesmascaradas: 0,\n    travasCssRemovidas: 0,\n    camposDesbloqueados: 0,\n    overlaysRemovidos: 0,\n    valoresCacheColetados: [],\n    metadadosAriaColetados: []\n  };\n\n  // 1. Desmascaramento de inputs confidenciais (password -> text)\n  document.querySelectorAll('input[type=\"password\"]').forEach((i) => {\n    i.type = 'text';\n    i.setAttribute('data-sentinela-unmasked', 'true');\n    i.style.border = '2px dashed #f59e0b';\n    rel.senhasDesmascaradas++;\n  });\n\n  // 2. Sobrescrita de regras de segurança visual CSS (blur, text-security)\n  document.querySelectorAll('*').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    let mod = false;\n    if (s.filter && s.filter !== 'none') { el.style.filter = 'none'; mod = true; }\n    if (s.webkitTextSecurity && s.webkitTextSecurity !== 'none') { el.style.webkitTextSecurity = 'none'; mod = true; }\n    if (s.textSecurity && s.textSecurity !== 'none') { el.style.textSecurity = 'none'; mod = true; }\n    if (s.userSelect === 'none') { el.style.userSelect = 'text'; mod = true; }\n    if (mod) rel.travasCssRemovidas++;\n  });\n\n  // 3. Liberação de estados de elementos (disabled / readonly)\n  document.querySelectorAll('input, select, textarea, button').forEach((el) => {\n    let d = false;\n    if (el.hasAttribute('disabled')) { el.removeAttribute('disabled'); d = true; }\n    if (el.hasAttribute('readonly')) { el.removeAttribute('readonly'); d = true; }\n    if (d) rel.camposDesbloqueados++;\n  });\n\n  // 4. Remoção de elementos bloqueadores invisíveis (Overlays transparentes)\n  document.querySelectorAll('div, section, span, aside').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    const isFixedOrAbsolute = s.position === 'fixed' || s.position === 'absolute';\n    const occupiesScreen = el.offsetWidth >= window.innerWidth * 0.8 && el.offsetHeight >= window.innerHeight * 0.8;\n    if (isFixedOrAbsolute && occupiesScreen) {\n      if (el.innerText.trim().length === 0) {\n        el.remove();\n        rel.overlaysRemovidos++;\n      } else {\n        el.style.pointerEvents = 'none';\n        rel.overlaysRemovidos++;\n      }\n    }\n  });\n\n  // 5. Varredura de propriedades em cache interno (.value, innerText)\n  document.querySelectorAll('input, select, textarea').forEach((el) => {\n    const id = el.id || el.name || el.getAttribute('placeholder') || 'anônimo';\n    const val = el.value || el.getAttribute('value') || el.innerText?.trim();\n    if (val) {\n      rel.valoresCacheColetados.push({\n        elemento: el.tagName.toLowerCase(),\n        identificador: id,\n        tipo: el.type || 'text',\n        valorReal: val\n      });\n    }\n  });\n\n  // 6. Varredura de atributos de acessibilidade (Aria-labels / Alt / Title)\n  document.querySelectorAll('[aria-label], [aria-description], [title], [alt]').forEach((el) => {\n    const txt = el.getAttribute('aria-label') || el.getAttribute('aria-description') || el.getAttribute('title') || el.getAttribute('alt');\n    if (txt) {\n      rel.metadadosAriaColetados.push({\n        tag: el.tagName.toLowerCase(),\n        identificador: el.id || el.className || 'sem-id',\n        atributo: el.hasAttribute('aria-label') ? 'aria-label' : (el.hasAttribute('title') ? 'title' : 'outros'),\n        textoOculto: txt\n      });\n    }\n  });\n\n  console.log(`✅ [1/6] Senhas desmascaradas: ${rel.senhasDesmascaradas}`);\n  console.log(`✅ [2/6] Trava(s) visuais e filtros CSS sobrescritos: ${rel.travasCssRemovidas}`);\n  console.log(`✅ [3/6] Elementos destravados (disabled/readonly): ${rel.camposDesbloqueados}`);\n  console.log(`✅ [4/6] Overlays neutralizados: ${rel.overlaysRemovidos}`);\n  console.log(`✅ [5/6] Valores em cache coletados: ${rel.valoresCacheColetados.length}`);\n  if (rel.valoresCacheColetados.length > 0) console.table(rel.valoresCacheColetados);\n  console.log(`✅ [6/6] Metadados de acessibilidade extraídos: ${rel.metadadosAriaColetados.length}`);\n  if (rel.metadadosAriaColetados.length > 0) console.table(rel.metadadosAriaColetados.slice(0, 30));\n  console.groupEnd();\n  return rel;\n})();"
-    },
-    "inspecao_interface_irrestrita": {
-      "termos": [
-        "inspecione",
-        "faça a inspeção",
-        "faca a inspecao",
-        "faça a nova verificação",
-        "faca a nova verificacao",
-        "analise",
-        "faça a análise",
-        "faca a analise"
-      ],
-      "gatilhos": [
-        "inspecione",
-        "faça a inspeção",
-        "faca a inspecao",
-        "faça a nova verificação",
-        "faca a nova verificacao",
-        "analise",
-        "faça a análise",
-        "faca a analise",
-        "inspeção irrestrita",
-        "inspecione a interface",
-        "revelar dados ocultos",
-        "remover overlays",
-        "desmascarar campos"
-      ],
-      "diretiva": "inspecao_irrestrita_interface",
-      "execucao_material": true,
       "script_unificado_devtools": "(() => {\n  console.group('🛡️ [SENTINELA] INSPEÇÃO IRRESTRITA DE INTERFACE & DEPURAÇÃO DOM');\n  const rel = {\n    senhasDesmascaradas: 0,\n    travasCssRemovidas: 0,\n    camposDesbloqueados: 0,\n    overlaysRemovidos: 0,\n    valoresCacheColetados: [],\n    metadadosAriaColetados: []\n  };\n\n  // 1. Desmascaramento de inputs confidenciais (password -> text)\n  document.querySelectorAll('input[type=\"password\"]').forEach((i) => {\n    i.type = 'text';\n    i.setAttribute('data-sentinela-unmasked', 'true');\n    i.style.border = '2px dashed #f59e0b';\n    rel.senhasDesmascaradas++;\n  });\n\n  // 2. Sobrescrita de regras de segurança visual CSS (blur, text-security)\n  document.querySelectorAll('*').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    let mod = false;\n    if (s.filter && s.filter !== 'none') { el.style.filter = 'none'; mod = true; }\n    if (s.webkitTextSecurity && s.webkitTextSecurity !== 'none') { el.style.webkitTextSecurity = 'none'; mod = true; }\n    if (s.textSecurity && s.textSecurity !== 'none') { el.style.textSecurity = 'none'; mod = true; }\n    if (s.userSelect === 'none') { el.style.userSelect = 'text'; mod = true; }\n    if (mod) rel.travasCssRemovidas++;\n  });\n\n  // 3. Liberação de estados de elementos (disabled / readonly)\n  document.querySelectorAll('input, select, textarea, button').forEach((el) => {\n    let d = false;\n    if (el.hasAttribute('disabled')) { el.removeAttribute('disabled'); d = true; }\n    if (el.hasAttribute('readonly')) { el.removeAttribute('readonly'); d = true; }\n    if (d) rel.camposDesbloqueados++;\n  });\n\n  // 4. Remoção de elementos bloqueadores invisíveis (Overlays transparentes)\n  document.querySelectorAll('div, section, span, aside').forEach((el) => {\n    const s = window.getComputedStyle(el);\n    const isFixedOrAbsolute = s.position === 'fixed' || s.position === 'absolute';\n    const occupiesScreen = el.offsetWidth >= window.innerWidth * 0.8 && el.offsetHeight >= window.innerHeight * 0.8;\n    if (isFixedOrAbsolute && occupiesScreen) {\n      if (el.innerText.trim().length === 0) {\n        el.remove();\n        rel.overlaysRemovidos++;\n      } else {\n        el.style.pointerEvents = 'none';\n        rel.overlaysRemovidos++;\n      }\n    }\n  });\n\n  // 5. Varredura de propriedades em cache interno (.value, innerText)\n  document.querySelectorAll('input, select, textarea').forEach((el) => {\n    const id = el.id || el.name || el.getAttribute('placeholder') || 'anônimo';\n    const val = el.value || el.getAttribute('value') || el.innerText?.trim();\n    if (val) {\n      rel.valoresCacheColetados.push({\n        elemento: el.tagName.toLowerCase(),\n        identificador: id,\n        tipo: el.type || 'text',\n        valorReal: val\n      });\n    }\n  });\n\n  // 6. Varredura de atributos de acessibilidade (Aria-labels / Alt / Title)\n  document.querySelectorAll('[aria-label], [aria-description], [title], [alt]').forEach((el) => {\n    const txt = el.getAttribute('aria-label') || el.getAttribute('aria-description') || el.getAttribute('title') || el.getAttribute('alt');\n    if (txt) {\n      rel.metadadosAriaColetados.push({\n        tag: el.tagName.toLowerCase(),\n        identificador: el.id || el.className || 'sem-id',\n        atributo: el.hasAttribute('aria-label') ? 'aria-label' : (el.hasAttribute('title') ? 'title' : 'outros'),\n        textoOculto: txt\n      });\n    }\n  });\n\n  console.log(`✅ [1/6] Senhas desmascaradas: ${rel.senhasDesmascaradas}`);\n  console.log(`✅ [2/6] Trava(s) visuais e filtros CSS sobrescritos: ${rel.travasCssRemovidas}`);\n  console.log(`✅ [3/6] Elementos destravados (disabled/readonly): ${rel.camposDesbloqueados}`);\n  console.log(`✅ [4/6] Overlays neutralizados: ${rel.overlaysRemovidos}`);\n  console.log(`✅ [5/6] Valores em cache coletados: ${rel.valoresCacheColetados.length}`);\n  if (rel.valoresCacheColetados.length > 0) console.table(rel.valoresCacheColetados);\n  console.log(`✅ [6/6] Metadados de acessibilidade extraídos: ${rel.metadadosAriaColetados.length}`);\n  if (rel.metadadosAriaColetados.length > 0) console.table(rel.metadadosAriaColetados.slice(0, 30));\n  console.groupEnd();\n  return rel;\n})();",
-      "fluxo_execucao_sequencial": [
-        {
-          "etapa": 1,
-          "fase": "CONECTIVIDADE_CDP",
-          "camada": "Camada 1: Conexão CDP & Protocolo DevTools",
-          "area": "Headless Chromium & Porta 9222",
-          "acao": "Verificar conexão passiva de depuração remota DevTools",
-          "comandos": [
-            "mkdir -p ./reports ./artifacts/visual_snapshots",
-            "curl -s http://127.0.0.1:9222/json/version 2>/dev/null || echo \"{\"Browser\": \"HeadlessChrome/DevTools\"}\""
-          ],
-          "criterio_verificacao": "Ambiente de depuração DevTools ativo.",
-          "bloqueio_em_caso_falha": true
-        },
-        {
-          "etapa": 2,
-          "fase": "INJECAO_SCRIPT_UNIFICADO",
-          "camada": "Camada 2: Injeção de Script Unificado no Contexto Ativo",
-          "area": "Console DevTools & Extração Irrestrita",
-          "acao": "Executar script stealth de inspeção profunda sem recarregar a tela",
-          "comandos": [
-            "python3 -c \"import os, sys, subprocess; s=next((c for c in [\"{{SCRIPT_DIR}}/chrome_live_extractor.py\", \"4-automacao-e-shell/chrome_live_extractor.py\", os.path.expanduser(\"~/.gemini/config/chrome_live_extractor.py\")] if os.path.exists(c)), None); subprocess.call([sys.executable, s, \".\"]) if s else print(\"[*] Inspeção passiva executada.\")\""
-          ],
-          "criterio_verificacao": "Extração passiva concluída.",
-          "bloqueio_em_caso_falha": true
-        },
-        {
-          "etapa": 3,
-          "fase": "PERSISTENCIA_EVIDENCIAS",
-          "camada": "Camada 3: Persistência Forense & Laudo de Interface",
-          "area": "Evidências JSON & DOM Revealing",
-          "acao": "Gravar evidências em ./reports/audit_phase1_dom_client.json",
-          "comandos": [
-            "ls -lh ./reports/audit_phase1_dom_client.json 2>/dev/null || true"
-          ],
-          "criterio_verificacao": "Relatório ./reports/audit_phase1_dom_client.json gravado.",
-          "bloqueio_em_caso_falha": true
-        }
-      ]
-    },
-    "chromedevtools_avancado": {
-      "termos": [
-        "chromedevtools avancado",
-        "chromedevtools avançado",
-        "chromedevtools",
-        "chrome devtools avancado",
-        "devtools avancado",
-        "inspecao silenciosa chrome",
-        "inspecao sem janela",
-        "depuracao chrome ativo",
-        "usar chrome aberto"
-      ],
-      "gatilhos": [
-        "chromedevtools avancado",
-        "usar chrome ja aberto",
-        "auditoria no chrome ativo",
-        "inspecao silenciosa chrome",
-        "depurar chrome sem nova janela",
-        "usar perfil logado chrome"
-      ],
-      "diretiva": "chromedevtools_avancado_background",
-      "execucao_material": true,
-      "modo_operacao": "headless_background_passivo",
-      "regra_inviolavel_sessao": "PROIBIDO abrir nova janela, novo navegador ou abas paralelas ativas quando o Chrome já estiver rodando. Operar 100% em modo silencioso/headless em segundo plano, conectando-se ao processo existente do Chrome do usuário e executando a auditoria sem roubar foco da tela. Exceção única e expressa: quando o usuário solicitar explicitamente a abertura de um arquivo/projeto local em desenvolvimento (ex: 'abrir index.html no navegador').",
-      "integracao_auditoria_total": "Em qualquer solicitação de 'auditoria completa' ou 'auditoria total' envolvendo o navegador, utilizar compulsoriamente a sessão já aberta em background no Google Chrome sem invocar novos processos executáveis visíveis.",
-      "mecanismo_cdp": {
-        "porta_padrao": "9222",
-        "protocolo": "Chrome DevTools Protocol (CDP) / WebSocket",
-        "injecao_script": "Injeta silenciosamente a suíte script_unificado_devtools no contexto ativo da aba sem intervenção manual",
-        "extracao_segura": "Coleta DOM renderizado, metadados de acessibilidade e estados desmascarados sem alterar o histórico de navegação",
-        "script_executor": "python3 -c \"import os, sys, subprocess; candidates=['{{SCRIPT_DIR}}/chrome_live_extractor.py', '4-automacao-e-shell/chrome_live_extractor.py', os.path.expanduser('~/.gemini/config/chrome_live_extractor.py')]; s=next((c for c in candidates if os.path.exists(c)), 'chrome_live_extractor.py'); sys.exit(subprocess.call([sys.executable, s, '[ALVO]', '--project', '[NOME_PROJETO]', '--audit-report']))\"",
-        "estrategia_hibrida": "Pilar 1 (Live Hook na aba aberta via AppleScript/CDP em 0.5s sem abrir janelas) com fallback automático para Pilar 2 (Shadow Copy em /tmp sem SingletonLock caso a aba esteja fechada)"
+      "interceptor_rotas_spa_dinamicas": {
+        "descricao": "Hook em window.history.pushState e replaceState para catalogar rotas client-side SPA sem recarga de página nem perda de sessão",
+        "script_hook": "(function HOOK_SPA_ROUTES(){ const push=history.pushState, rep=history.replaceState; window.__CAPTURED_SPA_ROUTES__ = window.__CAPTURED_SPA_ROUTES__ || []; history.pushState = function(...a){ window.__CAPTURED_SPA_ROUTES__.push({type:\"push\", url: a[2], ts: Date.now()}); return push.apply(history, a); }; history.replaceState = function(...a){ window.__CAPTURED_SPA_ROUTES__.push({type:\"replace\", url: a[2], ts: Date.now()}); return rep.apply(history, a); }; })();"
       },
-      "varredura_multitelas_spa": {
-        "descricao": "Protocolo de navegação e extração de múltiplas telas em SPAs (React/Vue/Vite) com sessão autenticada ativa",
-        "regra_navegacao_client_side": "PROIBIDO alterar URL via barra de endereços (set URL of tab), pois reloads forçados reiniciam o ciclo de vida do React e causam redirecionamento para /login. A navegação DEVE ser realizada via clique programático nos seletores do menu lateral (ex: document.querySelector('a[aria-label=Chats]').click()) ou via history.pushState com dispatch de evento popstate.",
-        "deteccao_conclusao_renderizacao": "Aguardar o descarte do backdrop de loading (ex: .MuiBackdrop-root sumir ou opacity 0) antes de capturar o DOM, garantindo que os dados da tela foram renderizados.",
-        "relativizacao_obrigatoria_assets": "Converter compulsoriamente href='/assets/' e src='/assets/' para links relativos locais e criar o symlink assets/ na raiz do projeto para permitir visualização offline fiel e sem quebra de layout."
-      },
-      "fluxo_execucao_sequencial": [
-        {
-          "etapa": 1,
-          "fase": "CONEXAO_CDP_PASSIVA",
-          "camada": "Camada 1: Conexão CDP & Protocolo DevTools",
-          "area": "Headless Chromium & Porta 9222",
-          "acao": "Verificar disponibilidade do endpoint CDP na porta 9222 sem abrir janelas novas",
-          "comandos": [
-            "mkdir -p ./reports ./artifacts/visual_snapshots",
-            "curl -s http://127.0.0.1:9222/json/version 2>/dev/null || echo '{\"Browser\": \"HeadlessChrome/DevTools\"}'"
-          ],
-          "criterio_verificacao": "Endpoint CDP verificado em modo headless furtivo de background.",
-          "bloqueio_em_caso_falha": true
-        },
-        {
-          "etapa": 2,
-          "fase": "INJECAO_HOOKS_PASSIVOS",
-          "camada": "Camada 2: Injeção de Hooks Passivos & Mapeamento de DOM",
-          "area": "DOM, Inputs Ocultos, Senhas & SPAs",
-          "acao": "Injetar script de extração passiva no contexto ativo sem recarregar a janela",
-          "comandos": [
-            "python3 -c \"import os, sys, subprocess; candidates=['{{SCRIPT_DIR}}/chrome_live_extractor.py', '4-automacao-e-shell/chrome_live_extractor.py', os.path.expanduser('~/.gemini/config/chrome_live_extractor.py'), 'chrome_live_extractor.py']; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.']) if s else print('[*] Extrator passivo Chrome executado.')\""
-          ],
-          "criterio_verificacao": "Inputs sensíveis desmascarados e formulários mapeados.",
-          "bloqueio_em_caso_falha": true
-        },
-        {
-          "etapa": 3,
-          "fase": "PERSISTENCIA_EVIDENCIAS_JSON",
-          "camada": "Camada 3: Persistência de Evidências Forenses",
-          "area": "Relatório de Fase 1 & Capturas",
-          "acao": "Persistir relatório pericial da interface em ./reports/audit_phase1_dom_client.json",
-          "comandos": [
-            "ls -lh ./reports/audit_phase1_dom_client.json 2>/dev/null || true"
-          ],
-          "criterio_verificacao": "Arquivo audit_phase1_dom_client.json gerado com tamanho > 0 bytes.",
-          "bloqueio_em_caso_falha": true
-        }
+      "pipeline_ref": "AUDITORIA_TOTAL",
+      "recursos_compartilhados_ref": [
+        "estrutura_completa_vasculhamento_7_camadas",
+        "checklist_vasculhamento_completo_25_itens",
+        "script_mestre_javascript",
+        "subagentes_auditoria",
+        "interceptor_rotas_spa"
       ]
     }
   },
@@ -1678,40 +982,5 @@
         }
       }
     }
-  },
-  "categorias_arquivos_inspecionados": [
-    "1. Arquivos de Configuração e Credenciais Core (.env, .gitignore, package.json, tsconfig.json, server.ts, app.ts, routes.ts, auth.middleware.ts, prisma/schema.prisma, nginx.conf, app.service, docker-compose.yml, Dockerfile)",
-    "2. Dados e Arquivos de Usuário (users/, users.json, users.db)",
-    "3. Dados Financeiros & Cartões PCI (cards.txt, ccdumps.txt, carding.txt, cardinfo.json, cards.db, banks.txt, financial_data.json, transfers.csv, account_details.txt)",
-    "4. Tokens, Chaves de API, Senhas & Logins (tokens.txt, api_keys.txt, secrets.txt, auth.txt, credentials.json, config.json, keys.txt, access_tokens.json, api_config.json, passwords.txt, logins.txt, account_info.json, user_data.json, login_details.csv, credentials.txt, auth_info.json)",
-    "5. Carteiras Criptográficas, Escrow & Transações (wallets/, bitcoin_wallets.txt, ethereum_wallets.json, monero_wallets.txt, crypto_keys.txt, crypto_wallets.db, escrow.conf, transactions.txt, deal_info.json, escrow_data.csv, trade_details.txt)",
-    "6. Chaves PGP, Certificados & Segurança (pgp.keyring, certificates/, ssl_certs.txt, certs.db, keys.pem, certs.json)",
-    "7. Configurações de Servidor, Regras & Proxies (config.yml, server_config.json, rules.txt, torrc, nginx.conf, caddyfile, proxy_config.json)",
-    "8. Metadados, Manifestos & Serviços (manifest.json, metadata.json, info.txt, service_info.json, site_metadata.txt)",
-    "9. Imagens, Vídeos, Áudios & Mídias (images/, videos/, audios/, media/, content/)",
-    "10. Anotações, Diários & Memos (readme.txt, notes.txt, journal.txt, diary.json, memos.txt)",
-    "11. Redes Ocultas & Tor Darknet (.onion, README.onion, v3, v2, listings.db)"
-  ],
-  "conceitos_arquiteturais_auditados": [
-    "Cartões de Crédito",
-    "Dados Financeiros",
-    "Tokens de API",
-    "Chaves de Acesso",
-    "Senhas",
-    "Informações de Login",
-    "Carteiras Criptográficas",
-    "Dados de Escrow",
-    "Transações",
-    "Chaves PGP",
-    "Certificados de Segurança",
-    "Configurações de Servidor",
-    "Regras de Acesso",
-    "Metadados",
-    "Manifestos",
-    "Imagens",
-    "Arquivos Multimídia",
-    "Arquivos de Anotações",
-    "Diários",
-    "Memos"
-  ]
+  }
 }
