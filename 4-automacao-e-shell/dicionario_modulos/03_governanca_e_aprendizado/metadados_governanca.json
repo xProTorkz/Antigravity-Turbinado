@@ -122,9 +122,9 @@
       "criar_backup_git_bundle",
       "auditar_vazamento_fd_open_files",
       "auditar_rotas_rede_kernel",
-      "limpar_clipboard_sensivel",
       "auditoria_normal",
-      "inspecao_interface_irrestrita"
+      "auditoria",
+      "inspecao"
     ],
     "espelhamento_e_download_estatico": [
       "espelhamento_frontend_estatico",

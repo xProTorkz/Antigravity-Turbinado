@@ -12,18 +12,24 @@
   "aliases_linguagem": {
     "auditoria_total_replicador": {
       "termos": [
+        "auditoria replicador",
+        "auditoria-replicador",
+        "auditoriareplicador",
+        "auditoria replicadora",
+        "audit replicador",
         "auditoria total replicador",
-        "auditoria total replicador com single-file-cli",
-        "executar auditoria total replicador",
-        "faca auditoria total replicador",
-        "faça uma auditoria total replicador"
+        "audtoria replicador",
+        "auditoria replciador"
       ],
       "gatilhos": [
+        "auditoria replicador",
+        "auditoria-replicador",
+        "auditoriareplicador",
+        "auditoria replicadora",
+        "audit replicador",
         "auditoria total replicador",
-        "auditoria total replicador com single-file-cli",
-        "executar auditoria total replicador",
-        "faca auditoria total replicador",
-        "faça uma auditoria total replicador"
+        "audtoria replicador",
+        "auditoria replciador"
       ],
       "diretiva": "auditoria_total_replicador",
       "execucao_material": true,
@@ -237,11 +243,14 @@
       "modo": "interativo",
       "requer_confirmacao": true,
       "triggers": [
+        "auditoria replicador",
+        "auditoria-replicador",
+        "auditoriareplicador",
+        "auditoria replicadora",
+        "audit replicador",
         "auditoria total replicador",
-        "executar auditoria total replicador",
-        "faça uma auditoria total replicador",
-        "faca auditoria total replicador",
-        "auditoria total replicador com single-file-cli"
+        "audtoria replicador",
+        "auditoria replciador"
       ],
       "target_os": [
         "linux",
