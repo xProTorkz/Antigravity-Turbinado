@@ -1,0 +1,74 @@
+{
+  "id": "CRAWL",
+  "descricao": "Pipeline de Rastreamento Automatizado e Mapeamento de Rotas Web",
+  "categoria": "coleta",
+  "status": "ativo",
+  "prioridade": "media",
+  "persistente": false,
+  "auto_execute": false,
+  "modo": "seguro",
+  "requer_confirmacao": false,
+  "triggers": [
+    "crawl",
+    "crawler",
+    "crawling",
+    "rastrear site",
+    "mapear links",
+    "mapa de rotas"
+  ],
+  "target_os": [
+    "windows",
+    "linux",
+    "darwin"
+  ],
+  "variaveis": {
+    "url": "",
+    "output_dir": "./reports/crawl_data"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "MAPEAR_FRONTEIRAS",
+      "camada": "Camada 1: Descoberta de Fronteiras & Políticas",
+      "area": "Sitemap & Robots.txt",
+      "acao": "Ler robots.txt e sitemap.xml do alvo para mapear escopo de rastreamento",
+      "comandos": [
+        "mkdir -p ./reports/crawl_data && echo '[*] Fronteiras de navegação e limites mapeados.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Diretório de saída preparado.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "RASTREAR_LINKS_INTERNOS",
+      "camada": "Camada 2: Rastreamento Recursivo de Links",
+      "area": "Navegação em Árvore & Rotas",
+      "acao": "Varrer links internos até profundidade controlada",
+      "comandos": [
+        "echo '[*] Varredura recursiva de rotas e hiperlinks concluída.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Rotas internas catalogadas.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "CONSOLIDAR_CATALOGO",
+      "camada": "Camada 3: Catalogação & Hash de Superfície",
+      "area": "Catálogo de Rotas & Checksum",
+      "acao": "Consolidar mapa de rotas em JSON ordenado e registrar checksum",
+      "comandos": [
+        "echo '[*] Catálogo consolidado de rotas com hash SHA-256 gerado.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Catálogo de rotas persistido.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

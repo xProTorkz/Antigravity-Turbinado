@@ -1,0 +1,73 @@
+{
+  "id": "ATUALIZAR_SENTINELA",
+  "descricao": "Pipeline de Atualização Canônica do Sentinela e Dicionário Léxico",
+  "categoria": "governanca",
+  "status": "ativo",
+  "prioridade": "alta",
+  "persistente": true,
+  "auto_execute": false,
+  "modo": "seguro",
+  "requer_confirmacao": false,
+  "triggers": [
+    "atualizar sentinela",
+    "baixa a nova atualizacao sentinela",
+    "atualiza o sentinela",
+    "update sentinela",
+    "sincronizar sentinela"
+  ],
+  "target_os": [
+    "windows",
+    "linux",
+    "darwin"
+  ],
+  "variaveis": {
+    "branch": "main",
+    "remote": "origin"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "PULL_REPOSITORIO",
+      "camada": "Camada 1: Repositório & Controle de Versão",
+      "area": "Git Remoto & Branch Main",
+      "acao": "Puxar atualização mais recente do repositório Antigravity-Turbinado",
+      "comandos": [
+        "git pull origin main 2>/dev/null || echo '[*] Repositório verificado e atualizado.'"
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Repositório atualizado ou status verificado.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "SINCRONIZAR_CONFIG_GLOBAL",
+      "camada": "Camada 2: Sincronização de Governança Global",
+      "area": "Espelho Global (~/.gemini/config/)",
+      "acao": "Copiar dicionario_lexico.json e skills para a pasta global de configuração",
+      "comandos": [
+        "cp 4-automacao-e-shell/dicionario_lexico.json ~/.gemini/config/dicionario_lexico.json 2>/dev/null || true"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Dicionário global sincronizado.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "VALIDAR_E_COMPILAR",
+      "camada": "Camada 3: Validação de Integridade Forense",
+      "area": "Sintaxe & Checksum SHA-256",
+      "acao": "Compilar minificado, validar integridade sintática e atualizar symlinks",
+      "comandos": [
+        "python3 4-automacao-e-shell/build_dicionario.py"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Compilação concluída com sucesso e checksum emitido.",
+      "ignorar_erros": false
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

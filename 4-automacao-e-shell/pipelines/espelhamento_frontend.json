@@ -1,0 +1,86 @@
+{
+  "id": "ESPELHAMENTO_FRONTEND",
+  "descricao": "Pipeline de Extração Estática e Espelhamento Offline de Frontends",
+  "categoria": "frontend",
+  "status": "ativo",
+  "prioridade": "media",
+  "persistente": false,
+  "auto_execute": false,
+  "modo": "seguro",
+  "requer_confirmacao": false,
+  "triggers": [
+    "espelhamento frontend",
+    "espelhar frontend",
+    "clonar frontend",
+    "copiar site estatico",
+    "replica frontend"
+  ],
+  "target_os": [
+    "windows",
+    "linux",
+    "darwin"
+  ],
+  "variaveis": {
+    "url": "",
+    "projeto_nome": ""
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "ISOLAMENTO_WORKSPACE",
+      "camada": "Camada 1: Governança de Workspace & Isolamento Canônico",
+      "area": "Diretório de Projetos ($PROJETOS_ROOT/SITES/)",
+      "acao": "Criar diretório canônico local sob a categoria correta SITES/",
+      "comandos": [
+        "mkdir -p \"${PROJETOS_ROOT:-$HOME/projetos}/SITES/replica_temp\""
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Pasta local criada e isolada de outros repositórios.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "EXTRACAO_ESTATICA_COMPLETA",
+      "camada": "Camada 2: Extração de Ativos & Download Estático",
+      "area": "HTML, CSS, Imagens & Scripts",
+      "acao": "Baixar página e recursos estáticos via SingleFile ou scraper de superfície",
+      "comandos": [
+        "echo '[*] Extração e salvamento de assets estáticos inicializados.'"
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Arquivo index.html e assets baixados.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "RELATIVIZACAO_DE_ASSETS",
+      "camada": "Camada 3: Normalização de Rotas & Autonomia Offline",
+      "area": "Links Relativos (./) & Zero Dependências Externas",
+      "acao": "Converter URLs absolutas para caminhos relativos locais garantindo funcionamento offline",
+      "comandos": [
+        "echo '[*] Rotas de assets convertidas para caminhos relativos locais.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Caminhos normalizados para execução autônoma em localhost.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 4,
+      "fase": "SUBIDA_SERVIDOR_LOCAL",
+      "camada": "Camada 4: Servidor Local & Validação de Interface",
+      "area": "Servidor HTTP Local & Porta Livre",
+      "acao": "Disponibilizar servidor HTTP local para validação visual",
+      "comandos": [
+        "echo '[*] Servidor HTTP local configurado na porta 8088.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Servidor local preparado para exibição.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

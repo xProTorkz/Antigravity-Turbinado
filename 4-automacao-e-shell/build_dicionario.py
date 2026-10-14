@@ -62,7 +62,22 @@ def build():
                 print(f"    [X] Erro de validação no pipeline {pf.name}: {ex}")
                 sys.exit(1)
 
-    # 3. Regravar dicionário canônico e minificado
+    # 3. Validar integridade dos termos do dicionário (O Que É & O Que Faz)
+    termos = dict_data.get("dicionario", {})
+    termos_com_pipeline = 0
+    print(f"\n[*] Validando {len(termos)} termos do dicionário conceitual:")
+    for tid, tinfo in termos.items():
+        assert "o_que_e" in tinfo, f"Termo '{tid}' não possui 'o_que_e'"
+        assert "o_que_faz" in tinfo, f"Termo '{tid}' não possui 'o_que_faz'"
+        p_rel = tinfo.get("pipeline")
+        if p_rel:
+            p_file = BASE_DIR / p_rel
+            if not p_file.exists():
+                print(f"    [!] Aviso: Pipeline '{p_rel}' referenciado por '{tid}' não existe localmente.")
+            else:
+                termos_com_pipeline += 1
+
+    # 4. Regravar dicionário canônico e minificado
     with open(TARGET_DICT, "w", encoding="utf-8") as f:
         json.dump(dict_data, f, indent=2, ensure_ascii=False)
 
@@ -73,15 +88,14 @@ def build():
     sha_local = calculate_sha256(TARGET_DICT)
 
     print("\n📊 RESUMO DO DICIONÁRIO:")
-    print(f"    ✓ Versão Canônica:     {dict_data.get('versao')}")
-    print(f"    ✓ Gatilhos Modulares:  {len(dict_data.get('gatilhos', {}))} gatilhos")
-    print(f"    ✓ Mapeamentos Rápidos: {len(dict_data.get('mapeamento', {}))} termos")
-    print(f"    ✓ Aliases de Linguagem:{len(dict_data.get('aliases_linguagem', {}))} aliases")
-    print(f"    ✓ Pipelines Externos:  {pipelines_count} arquivos independentes")
-    print(f"    🔒 SHA-256 do Canônico: {sha_local}")
-    print(f"    📄 Destino Canônico:    {TARGET_DICT}")
+    print(f"    ✓ Versão Canônica:          {dict_data.get('versao')}")
+    print(f"    ✓ Termos (O Que É / Faz):   {len(termos)} termos catalogados")
+    print(f"    ✓ Termos com Pipeline:      {termos_com_pipeline} esteiras mapeadas")
+    print(f"    ✓ Pipelines Executáveis:    {pipelines_count} arquivos independentes")
+    print(f"    🔒 SHA-256 do Canônico:      {sha_local}")
+    print(f"    📄 Destino Canônico:         {TARGET_DICT}")
 
-    # 4. Sincronização automática com a pasta global (~/.gemini/config/dicionario_lexico.json)
+    # 5. Sincronização automática com a pasta global (~/.gemini/config/dicionario_lexico.json)
     if GLOBAL_CONFIG_DICT.parent.exists():
         try:
             if GLOBAL_CONFIG_DICT.is_symlink() or GLOBAL_CONFIG_DICT.exists():

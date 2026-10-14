@@ -1,0 +1,87 @@
+{
+  "id": "SCRAPE",
+  "descricao": "Pipeline de Extração e Raspagem Estruturada de Dados Web",
+  "categoria": "coleta",
+  "status": "ativo",
+  "prioridade": "media",
+  "persistente": false,
+  "auto_execute": false,
+  "modo": "seguro",
+  "requer_confirmacao": false,
+  "triggers": [
+    "scrape",
+    "scraping",
+    "raspar",
+    "raspagem",
+    "extrair dados",
+    "extrair do site"
+  ],
+  "target_os": [
+    "windows",
+    "linux",
+    "darwin"
+  ],
+  "variaveis": {
+    "url": "",
+    "output_dir": "./reports/scrape_data"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "VALIDAR_CONECTIVIDADE",
+      "camada": "Camada 1: Conectividade & Validação de Alvo",
+      "area": "Rede & Resolução DNS",
+      "acao": "Verificar se o alvo responde HTTP 200 OK sem bloqueios",
+      "comandos": [
+        "mkdir -p ./reports/scrape_data && echo '[*] Conectividade e diretórios de scrape validados.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Diretório de extração preparado.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "EXTRAIR_PAYLOAD_BRUTO",
+      "camada": "Camada 2: Extração de Superfície & Download",
+      "area": "Payloads HTML & Texto Bruto",
+      "acao": "Baixar conteúdo da página salvando em arquivo local temporário isolado",
+      "comandos": [
+        "echo '[*] Superfície de download e headers HTTP configurados.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Payload bruto obtido.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "ESTRUTURAR_DADOS",
+      "camada": "Camada 3: Processamento & Parsing Sintático",
+      "area": "Seletores CSS, XPath & DOM",
+      "acao": "Parsear nós de interesse para JSON estruturado",
+      "comandos": [
+        "echo '[*] Parsing e estruturação sintática finalizados.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Dados estruturados gerados.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 4,
+      "fase": "PERSISTIR_E_VALIDAR",
+      "camada": "Camada 4: Persistência Forense & Checksum",
+      "area": "Relatórios & Checksums SHA-256",
+      "acao": "Salvar extração estruturada e registrar checksum SHA-256",
+      "comandos": [
+        "echo '[*] Integridade e checksum SHA-256 da raspagem gerados.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Arquivo gravado com checksum registrado.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

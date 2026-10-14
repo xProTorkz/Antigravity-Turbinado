@@ -320,46 +320,24 @@ Para sincronizar e baixar a versão mais recente do Sentinela e do Dicionário L
 
 ---
 
-### 13. PROTOCOLO LÉXICO SOBERANO & GATILHOS DIRETOS (DICIONÁRIO ON-DEMAND)
+### 13. PROTOCOLO LÉXICO SOBERANO & SEPARAÇÃO CONCEITO / PIPELINE
 
-O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade máxima e soberana de termos, comandos rápidos, intenções, rotinas de automação e regras operacionais do ecossistema Sentinela / Antigravity Turbinado.
+O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade máxima e soberana de termos, conceitos e esteiras do ecossistema Sentinela / Antigravity Turbinado.
 
-Para maximizar a velocidade e garantir consumo cirúrgico de tokens (sem necessidade de processos em background ou servidores externos), a IA adota a arquitetura de **Resolução Direta dos Gatilhos Mestres** combinada com **Consulta Pontual Sob Demanda**.
+A arquitetura adota a separação estrita e inegociável entre **Consulta Léxica** e **Execução de Pipeline**:
 
-#### 13.1 Quarteto de Gatilhos Mestres de Execução Imediata
-Sempre que o usuário emitir um destes gatilhos canônicos, É TERMINANTEMENTE PROIBIDO APENAS RESPONDER EM TEXTO. A IA DEVE OBRIGATORIAMENTE DISPARAR NO TERMINAL VIA `run_command` O PIPELINE CORRESPONDENTE:
+#### 13.1 Consulta de Termos no Dicionário (O Que É & O Que Faz)
+Quando o usuário mencionar, perguntar ou acionar qualquer termo, conceito ou gatilho sem a palavra-chave de execução (ex: `"auditoria total"`, `"auditoria replicador"`, `"hwid"`, `"inspecionar hwid"`, `"dump banco"`, `"sinc git"`):
+* **Comportamento Obrigatório:** O Sentinela consulta `dicionario_lexico.json` e **APENAS MOSTRA O QUE É E O QUE FAZ**, apresentando o card conceitual, os gatilhos e o caminho do pipeline associado, SEM executar comandos.
+* **Exemplo de Apresentação:**
+  - **O que é:** Definição arquitetural clara e objetiva.
+  - **O que faz:** Explicação exata do escopo da ação.
+  - **Pipeline Configurado:** `pipelines/<arquivo>.json`.
+  - **Instrução de Execução:** Informa que para rodar os comandos, basta solicitar `pipeline <termo>` ou `pipeline completo`.
 
-1. **`auditoria total` (ou `fazer auditoria total`, `executar auditoria total`, `varredura completa`)**:
-   * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal do workspace:
-     `bash -c 'source "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/agy_cmd.sh" && agy_cmd auditoria-total "${1:-.}"'`
-   * **Comportamento & 12 Etapas:** Executa o macro-pipeline completo (client-side, DOM unmask, portas TCP, gateways, rotas sensíveis, segredos/chaves, SCA, sanitização SQL, webshells/privesc, PCI-DSS e compilação de laudo).
-   * **Saída Canônica:** Gera `./reports/LAUDO_AUDITORIA_TOTAL.md` e `./reports/dashboard_auditoria.html`, extraindo arquivos relevantes exclusivamente para `./reports/arquivos_relevantes/`. Ao finalizar, apresente o resumo do laudo e link para o dashboard.
+#### 13.2 Execução Operacional de Pipelines (Comandos Configurados)
+Quando o usuário emitir o comando utilizando a palavra-chave **`pipeline`** (ex: `"pipeline"`, `"pipeline auditoria total"`, `"pipeline completo"`, `"pipeline replicador"`, `"pipeline hwid"`):
+* **Comportamento Obrigatório:** O Sentinela carrega sob demanda o arquivo JSON correspondente na pasta `pipelines/` e **EXECUTA RIGOROSAMENTE OS COMANDOS QUE ESTÃO CONFIGURADOS** via `run_command` ou pelo executor:
+  `python3 "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/executar_pipeline.py" "pipeline <termo>"`
+* **Zero Comandos no Dicionário:** O dicionário permanece 100% limpo, leve e rápido, contendo apenas definições conceituais (`o_que_e` e `o_que_faz`). Cada esteira executiva reside de forma independente e isolada em seu próprio arquivo `pipelines/<arquivo>.json` com suas respectivas variáveis, etapas, comandos e critérios de validação.
 
-2. **`auditoria pessoal [nome]` (ou `auditoria pessoal`, `dossiê pessoal`, `varredura pessoal`, `auditoria forense pessoal`)**:
-   * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
-     `bash -c 'source "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/agy_cmd.sh" && agy_cmd auditoria-pessoal "${1:-Lucas Vinicius Dias Ferreira}"'`
-   * **Comportamento & 14 Camadas:** É TERMINANTEMENTE PROIBIDO emitir resumos superficiais ou respostas puramente textuais de poucos parágrafos. A IA deve obrigatoriamente executar a esteira pericial de 14 camadas (Identidade civil, Registro.br/Whois, servidores VPS/SSH, telecomunicações, logística/residência, corporativo/CNPJ, judicial/TJPE, plataformas 00doHot/bots, financeiro/gateways, modelos IA, GitOps/BYOK, portas locais, resíduos em disco/cache e matriz OPSEC).
-   * **Saída Canônica & Downloads:**
-     1. Extração de arquivos físicos individuais em `./reports/arquivos_relevantes/evidencia_*.json/.txt`.
-     2. Geração do `manifest_arquivos_relevantes.json` com hashes SHA-256.
-     3. Laudo pericial completo em `./reports/LAUDO_AUDITORIA_PESSOAL_[NOME].md`.
-     4. Dashboard interativo Dark Mode em `./reports/dashboard_auditoria_pessoal_[nome].html`.
-     5. Compilação do PDF Executivo oficial via Chrome headless salvo diretamente em `~/Downloads/Auditoria_Pessoal_[Nome].pdf`.
-     6. Empacotamento do dossiê em pasta e arquivo `.zip` em `~/Downloads/AUDITORIA_PESSOAL_[NOME].zip`.
-     7. Abertura automática no macOS via `open` da pasta e do PDF.
-
-3. **`auditoria total replicador` (ou `replicar`, `clone`, `espelho`)**:
-   * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
-     `bash -c 'source "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/agy_cmd.sh" && agy_cmd auditoria-total-replicador "${1:-.}"'`
-   * **Comportamento:** Espelha e clona a aplicação alvo completa gerando réplica autônoma offline em `./replica`.
-
-4. **`atualizar sentinela` (ou `baixa a nova atualizacao sentinela`)**:
-   * **COMANDO MANDATÓRIO DE DISPARO:** Execute no terminal:
-     `bash "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/atualizar_sentinela.sh"`
-   * **Comportamento:** Executa `git pull origin main`, sincroniza dicionário e skills, emitindo recibo.
-
-#### 13.2 Ponte Léxica Sob Demanda & Pipelines Modulares
-Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `hwid`, `inspecionar_hwid`, `hwid_hardware_rebuild`, `sanitizar_hwid`, `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
-1. **Consulta e Execução Imediata:** A IA consulta o `~/.gemini/config/dicionario_lexico.json` e dispara o executor universal desacoplado:
-   `python3 "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/executar_pipeline.py" "<gatilho>"`
-2. **Pipelines Modulares Isolados:** Cada esteira reside em seu arquivo independente em `4-automacao-e-shell/pipelines/`, garantindo execução cirúrgica, consumo mínimo de tokens e zero sobrecarga no dicionário unificado.

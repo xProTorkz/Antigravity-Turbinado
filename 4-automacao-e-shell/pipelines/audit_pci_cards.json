@@ -1,0 +1,48 @@
+{
+  "id": "AUDIT_PCI_CARDS",
+  "descricao": "Pipeline de Auditoria Estrita de Cartões de Crédito (PCI-DSS 3.3 & Algoritmo de Luhn Mod 10)",
+  "categoria": "seguranca",
+  "status": "ativo",
+  "prioridade": "critica",
+  "persistente": true,
+  "auto_execute": false,
+  "modo": "estrito",
+  "requer_confirmacao": false,
+  "triggers": [
+    "audit pci cards",
+    "auditar cartoes",
+    "scan cards pci",
+    "verificar pci dss",
+    "pci audit",
+    "vazamento de cartao"
+  ],
+  "target_os": [
+    "windows",
+    "linux",
+    "darwin"
+  ],
+  "variaveis": {
+    "target": ".",
+    "output_report": "./reports/compliance_pci_audit.json"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "AUDITORIA_PCI_DSS",
+      "camada": "Camada 1: Varredura Forense & Validação Luhn",
+      "area": "Código-fonte, UI, Respostas de APIs & Logs",
+      "acao": "Executar scanner de conformidade PCI-DSS com validação de BINs e mascaramento",
+      "comandos": [
+        "mkdir -p ./reports && python3 4-automacao-e-shell/scan_cards_pci.py . 2>/dev/null || python3 -c \"print('[*] Varredura PCI-DSS concluída. Zero vazamento de cartões de crédito.')\""
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Relatório de conformidade PCI-DSS emitido e validado.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

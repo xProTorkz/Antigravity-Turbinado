@@ -1,47 +1,48 @@
-# CURRENT_PLAN.md - Arquitetura Modular do Dicionário Léxico & Pipelines Independentes
+# CURRENT_PLAN.md - Arquitetura Canônica: Dicionário Conceitual & Pipelines Executivos
 
-## Objetivo
-Desacoplar completamente os pipelines operacionais do `dicionario_lexico.json`, transformando o dicionário em um catálogo léxico único, enxuto e inteligente (mapeando apenas palavras trocadas, variáveis e ponteiros), enquanto cada pipeline passa a residir em seu próprio arquivo JSON dedicado com suas variáveis e etapas executáveis.
+## Visão e Princípio Fundamental
+* **Dicionário (`dicionario_lexico.json`):** Mostra **exclusivamente o que é e o que faz** cada termo, com seus gatilhos e o ponteiro para a esteira correspondente. Nenhum comando cru de execução dentro do dicionário.
+* **Pipelines (`pipelines/*.json`):** Cada pipeline em arquivo próprio executa **exclusivamente os comandos configurados** (etapas, comandos, timeouts, critérios).
 
 ---
 
-## Fases do Plano
+## Fases de Execução & Status Operacional
 
-### Fase 1: Criação da Estrutura de Diretórios de Pipelines
-* Criar o diretório canônico `4-automacao-e-shell/pipelines/`.
+### Fase 1: Padronização dos Arquivos de Pipeline (`4-automacao-e-shell/pipelines/`) [CONCLUÍDO]
+* Todas as 18 esteiras executivas residem em arquivos independentes na pasta `pipelines/`:
+  1. `auditoria_total.json` (14 etapas de auditoria profunda em todas as camadas)
+  2. `auditoria_replicador.json` (12 etapas de espelhamento e réplica full-stack)
+  3. `auditoria_pessoal.json` (5 etapas periciais de privacidade)
+  4. `auditoria_global.json` (9 etapas de OSINT e superfície de rede)
+  5. `auditoria.json` (4 etapas de diagnóstico rápido de projeto)
+  6. `hwid_spoof.json` (5 etapas de emulação e spoofing AC 2.0)
+  7. `hwid_hardware_rebuild.json` (4 etapas de reconstrução física de hardware)
+  8. `inspecionar_hwid.json` (execução do inspecionar_hwid.ps1)
+  9. `sanitizar_ambiente.json` (execução do sanitizar_ambiente.ps1)
+  10. `dump_banco.json` (3 etapas de dump)
+  11. `limpeza_logs.json` (3 etapas de truncamento de logs)
+  12. `sinc_git.json` (3 etapas de sincronização atômica)
+  13. `atualizar_sentinela.json` (execução do atualizador canônico)
+  14. `trainer_de_jogo.json` (4 etapas de análise de memória e processos)
+  15. `audit_pci_cards.json` (execução do scanner PCI-DSS de cartões)
+  16. `scrape.json` (4 etapas de extração e raspagem web)
+  17. `crawl.json` (3 etapas de mapeamento recursivo de rotas)
+  18. `espelhamento_frontend.json` (4 etapas de cópia estática e relativização offline)
 
-### Fase 2: Extração dos Pipelines Modulares (1 Arquivo por Gatilho)
-* Criar e isolar cada pipeline em seu próprio arquivo JSON independente com variáveis, parâmetros de SO, etapas e critérios de aceitação:
-  1. `pipelines/hwid_spoof.json` (5 fases de HWID spoofing e emulação AC 2.0).
-  2. `pipelines/hwid_hardware_rebuild.json` (4 fases de reconstrução física de hardware e firmware limpo).
-  3. `pipelines/inspecionar_hwid.json` (inspeção profunda de HWID e pre-flight check Gamers Club).
-  4. `pipelines/sanitizar_ambiente.json` (sanitização de caches, DNS, ARP e logs de eventos).
-  5. `pipelines/auditoria_total.json` (12 etapas de auditoria completa em 14 camadas).
-  6. `pipelines/auditoria_pessoal.json` (14 camadas periciais de dossiê pessoal).
-  7. `pipelines/auditoria_replicador.json` (espelhamento e réplica full-stack offline).
-  8. `pipelines/dump_banco.json` (exportação contextual e checksum de banco de dados).
-  9. `pipelines/limpeza_logs.json` (rotação determinística e truncamento de logs).
-  10. `pipelines/sinc_git.json` (sincronização atômica e resolução de travas do Git).
+### Fase 2: Reestruturação Limpa do Dicionário Léxico (`dicionario_lexico.json`) [CONCLUÍDO]
+* Dicionário canônico único e unificado com schema conceitual estrito:
+  * `o_que_e`: Definição conceitual clara do termo.
+  * `o_que_faz`: Explicação detalhada da finalidade e resultado da ação.
+  * `gatilhos`: Sinônimos e expressões acionadoras.
+  * `pipeline`: Caminho para o arquivo correspondente em `pipelines/<nome>.json`.
+* Zero comandos crus poluindo o dicionário.
 
-### Fase 3: Unificação e Otimização Extrema do Dicionário Léxico
-* Consolidar o dicionário em **um único arquivo canônico** (`dicionario_lexico.json`):
-  * Manter apenas termos, aliases, descrições, variáveis e referências ao arquivo de pipeline correspondente (`pipeline_file: "pipelines/<nome>.json"`).
-  * Eliminar os megablocos de pipelines embutidos que tornavam o arquivo pesado.
-  * Remover módulos redundantes e manter a fonte de verdade limpa e coesa.
+### Fase 3: Ajuste do Executor Universal (`executar_pipeline.py`) [CONCLUÍDO]
+* Separação estrita de comportamentos:
+  * Consulta de Termo (ex: `auditoria total`, `auditoria replicador`): Dicionário apenas mostra O QUE É e O QUE FAZ.
+  * Chamada de Pipeline (ex: `pipeline auditoria total`, `pipeline replicador`, `pipeline completo`): Carrega o arquivo do pipeline e executa os comandos configurados.
 
-### Fase 4: Implementação do Executor Universal de Pipelines (`executar_pipeline.py`)
-* Criar o executor leve e multiplataforma `4-automacao-e-shell/executar_pipeline.py`:
-  * Resolução direta por gatilho ou nome do pipeline.
-  * Injeção de variáveis contextuais.
-  * Execução controlada com suporte nativo a Windows (PowerShell/cmd) e macOS/Linux (Bash).
-  * Emissão de recibo de execução com status de cada etapa.
+### Fase 4: Validação, Compilação e Sincronização GitHub [CONCLUÍDO]
+* `build_dicionario.py` executado com 100% de sucesso, gerando `dicionario_lexico.min.json` e atualizando o symlink global em `~/.gemini/config/dicionario_lexico.json`.
+* Testes validados para consulta léxica (`auditoria total`, `auditoria replicador`) e execução de esteira (`pipeline auditoria`, `pipeline sinc_git`).
 
-### Fase 5: Integração no `pipeline_engine.py`, `SENTINELA.md` e Atualizador
-* Permitir que o `pipeline_engine.py` carregue dinamicamente os pipelines da pasta `pipelines/`.
-* Atualizar o script de sincronização e o `SENTINELA.md`.
-* Sincronizar o symlink global em `~/.gemini/config/dicionario_lexico.json`.
-
-### Fase 6: Testes, Validação e Sincronização GitHub
-* Executar testes unitários do runner para validar a resolução dos gatilhos (`hwid`, `inspecionar_hwid`, `sanitizar_hwid`).
-* Executar o atualizador canônico.
-* Realizar commit atômico e push para `origin main`.

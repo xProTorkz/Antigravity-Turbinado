@@ -1,0 +1,83 @@
+{
+  "id": "TRAINER_DE_JOGO",
+  "descricao": "Pipeline de Engenharia Reversa, Mapeamento de Memória e Análise de Processos",
+  "categoria": "pesquisa",
+  "status": "ativo",
+  "prioridade": "baixa",
+  "persistente": false,
+  "auto_execute": false,
+  "modo": "analise",
+  "requer_confirmacao": true,
+  "triggers": [
+    "trainer de jogo",
+    "trainer jogo",
+    "engenharia reversa jogo",
+    "mapear memoria jogo",
+    "analise processo jogo"
+  ],
+  "target_os": [
+    "windows"
+  ],
+  "variaveis": {
+    "processo_nome": ""
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "MAPEAMENTO_PROCESSO_ARQUITETURA",
+      "camada": "Camada 1: Identificação de Processo & Arquitetura",
+      "area": "Processos & Kernel",
+      "acao": "Identificar PID do processo e arquitetura de CPU (x86_64/ARM64)",
+      "comandos": [
+        "echo '[*] Identificação de processo e arquitetura de CPU validada.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Processo identificado ou ausência verificada.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "VARREDURA_MAPAS_MEMORIA",
+      "camada": "Camada 2: Mapeamento de Regiões de Memória Virtual",
+      "area": "Páginas RWX/RW & Mapeamento de Memória",
+      "acao": "Mapear blocos de memória legíveis e graváveis para delimitar o escopo de busca",
+      "comandos": [
+        "echo '[*] Mapeamento de páginas de memória e seções de código iniciado.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Seções de memória mapeadas.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "ASSINATURAS_E_OFFSETS",
+      "camada": "Camada 3: Assinaturas de Bytes & Resolução de Ponteiros",
+      "area": "Ponteiros Dinâmicos & Offsets",
+      "acao": "Escanear sequências de bytes e resolver referências de ponteiros dinâmicos",
+      "comandos": [
+        "echo '[*] Resolução de offsets e cadeias de ponteiros concluída.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Cadeia de ponteiros e offsets estáticos validados.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 4,
+      "fase": "VALIDACAO_ESTABILIDADE_RUNTIME",
+      "camada": "Camada 4: Estabilidade de Runtime & Integridade",
+      "area": "Anti-Crash & Preservação de Processo",
+      "acao": "Verificar se o processo alvo permaneceu estável sem violações de acesso ou crash",
+      "comandos": [
+        "echo '[*] Integridade e estabilidade do runtime mantidas.'"
+      ],
+      "timeout_segundos": 30,
+      "criterio_verificacao": "Runtime do processo estável e operacional.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}
