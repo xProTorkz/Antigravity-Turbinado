@@ -63,3 +63,5 @@ reports/*
 4-automacao-e-shell/reports/LAUDO_REPLICADOR_TOTAL.md
 4-automacao-e-shell/reports/replica_manifest.json
 index_live.html
+replica/
+
