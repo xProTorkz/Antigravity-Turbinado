@@ -276,17 +276,14 @@ def main():
     raw_query = " ".join(args).strip()
     norm_query = normalize(raw_query)
 
-    # Regra: Se a chamada começa com "pipeline" ou contém "pipeline", é execução!
+    # Regra: Se a chamada começa com "pipeline" (ou erros comuns como "pipeiline", "pipline"), é execução!
     is_pipeline_trigger = False
     cleaned_query = raw_query
 
-    if norm_query.startswith("pipeline"):
+    pipeline_pattern = r"\b(?:pipeline|pipeiline|pipline|pipiline)\b"
+    if re.search(pipeline_pattern, raw_query, flags=re.IGNORECASE):
         is_pipeline_trigger = True
-        # remove prefixo "pipeline"
-        cleaned_query = re.sub(r"^pipeline\s*", "", raw_query, flags=re.IGNORECASE).strip()
-    elif "pipeline" in norm_query:
-        is_pipeline_trigger = True
-        cleaned_query = re.sub(r"\bpipeline\b", "", raw_query, flags=re.IGNORECASE).strip()
+        cleaned_query = re.sub(pipeline_pattern, "", raw_query, flags=re.IGNORECASE).strip()
 
     # Casos especiais de chamada de pipeline geral
     if is_pipeline_trigger and (not cleaned_query or cleaned_query.lower() in ["completo", "total", "full"]):

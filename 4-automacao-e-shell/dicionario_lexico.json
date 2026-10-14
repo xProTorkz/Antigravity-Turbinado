@@ -1,356 +1,140 @@
 {
   "versao": "6.0-LEAN-MODULAR",
   "modulo": "sentinela_lexicon",
-  "descricao": "Dicionário Léxico Canônico Sentinela v6.0 - Arquitetura Desacoplada e Modular. O dicionário define exclusivamente o que é e o que faz cada conceito. A execução dos comandos reside 100% segregada nos respectivos arquivos de pipeline em pipelines/.",
+  "descricao": "Dicionário Léxico Canônico Sentinela v6.0 - Arquitetura Desacoplada e Enxuta. O dicionário define exclusivamente o que é e o que faz cada conceito. A execução dos comandos reside 100% segregada nos respectivos arquivos em pipelines/.",
   "data_atualizacao": "2026-10-14",
   "pipelines_diretorio": "pipelines",
   "regras_de_ouro": {
     "consulta_lexica": "Ao consultar um termo ou gatilho, o dicionário apresenta estritamente O QUE É e O QUE FAZ.",
-    "execucao_pipeline": "Para executar os comandos configurados, utiliza-se a palavra 'pipeline' (ex: 'pipeline auditoria total', 'pipeline replicador', 'pipeline completo').",
+    "execucao_pipeline": "Para executar os comandos configurados, utiliza-se a palavra 'pipeline' (ou variações como 'pipeiline', 'pipeline completo').",
     "isolamento_total": "Zero comandos executáveis embutidos no dicionário. Toda a orquestração reside em pipelines/*.json."
   },
   "dicionario": {
     "auditoria_total": {
-      "nome": "Auditoria Total",
       "o_que_e": "Varredura forense e arquitetural profunda em 14 camadas do projeto (código, dependências, segurança PCI-DSS, secrets, git e conformidade estrutural).",
       "o_que_faz": "Inspeciona a árvore de arquivos, audita vazamento de credenciais e cartões PCI-DSS, verifica integridade de dependências, checa conformidade de regras e emite relatório forense consolidado.",
       "gatilhos": [
         "auditoria total",
-        "fazer auditoria total",
-        "executar auditoria total",
-        "varredura completa",
-        "full audit",
-        "auditoria profunda"
+        "auditoria toal",
+        "auditoria totl",
+        "auditoria-total",
+        "auditoria toatl",
+        "auditoria tota"
       ],
       "pipeline": "pipelines/auditoria_total.json"
     },
     "auditoria_replicador": {
-      "nome": "Auditoria Replicador",
       "o_que_e": "Procedimento de auditoria e clonagem/espelhamento full-stack em 12 etapas para replicação fiel de sistemas, sites ou bots.",
       "o_que_faz": "Audita o projeto de origem, replica layout estático e dinâmico, sanitiza rotas e segredos, gera a estrutura canônica local sob ~/projetos e valida a inicialização em localhost.",
       "gatilhos": [
         "auditoria replicador",
-        "replicador",
-        "auditar replicador",
-        "espelhar projeto",
-        "clone full stack"
+        "auditoria replicado",
+        "auditoria repliador",
+        "auditoria-replicador",
+        "auditoria replicadro",
+        "auditoria repliicador"
       ],
       "pipeline": "pipelines/auditoria_replicador.json"
     },
-    "auditoria": {
-      "nome": "Auditoria Rápida",
-      "o_que_e": "Diagnóstico preliminar e verificação de integridade do projeto em 4 camadas essenciais.",
-      "o_que_faz": "Verifica integridade de dependências, checa status de branches git, valida variáveis de ambiente e reporta anomalias imediatas.",
-      "gatilhos": [
-        "auditoria",
-        "auditar",
-        "diagnostico",
-        "checkup",
-        "status do projeto"
-      ],
-      "pipeline": "pipelines/auditoria.json"
-    },
-    "auditoria_global": {
-      "nome": "Auditoria Global",
-      "o_que_e": "Varredura pericial de superfície externa, OSINT e infraestrutura web em 9 camadas.",
-      "o_que_faz": "Audita certificados SSL, cabeçalhos de segurança HTTP, portas abertas, DNS, subdomínios e exposição pública de credenciais.",
-      "gatilhos": [
-        "auditoria global",
-        "varredura externa",
-        "auditoria osint",
-        "auditoria de infraestrutura"
-      ],
-      "pipeline": "pipelines/auditoria_global.json"
-    },
-    "auditoria_pessoal": {
-      "nome": "Auditoria Pessoal",
-      "o_que_e": "Varredura de privacidade local e isolamento estrito de máquina em 5 camadas.",
-      "o_que_faz": "Inspeciona chaves SSH, credenciais git, histórico de shell e caches locais para garantir zero vazamento de dados pessoais.",
-      "gatilhos": [
-        "auditoria pessoal",
-        "auditoria privada",
-        "limpar rastros pessoais",
-        "checar privacidade"
-      ],
-      "pipeline": "pipelines/auditoria_pessoal.json"
-    },
-    "audit_pci_cards": {
-      "nome": "Auditoria PCI-DSS de Cartões",
-      "o_que_e": "Scanner pericial de conformidade PCI-DSS 3.3 com algoritmo matemático de Luhn Mod 10.",
-      "o_que_faz": "Examina código-fonte, templates de UI, respostas de APIs e logs em busca de números de cartões desmascarados, bloqueando vazamentos.",
-      "gatilhos": [
-        "audit pci cards",
-        "auditar cartoes",
-        "scan cards pci",
-        "verificar pci dss",
-        "pci audit",
-        "vazamento de cartao"
-      ],
-      "pipeline": "pipelines/audit_pci_cards.json"
-    },
     "hwid": {
-      "nome": "HWID Spoofing (Anti-Cheat 2.0)",
-      "o_que_e": "Pipeline de 5 fases de spoofing de identidade de hardware e emulação para anti-cheats em nível de kernel (TPM 2.0, Secure Boot, VBS).",
-      "o_que_faz": "Executa limpeza de rastros, injeção pré-boot EFI, emulação de TPM e registros de hardware antes do carregamento do sistema operacional.",
+      "o_que_e": "Pipeline de 5 fases de HWID Spoofing e emulação de hardware para anti-cheats (Limpeza de Rastros, Injeção Pré-Boot EFI, Hipervisor, Emulação de Hardware & TPM, Boot do Windows).",
+      "o_que_faz": "Sanitiza telemetria de disco e rede, emula registros de hardware e TPM antes do carregamento do sistema operacional para evitar banimento por associação.",
       "gatilhos": [
         "hwid",
-        "spoof",
-        "spoofer",
+        "hwd",
         "hwid spoof",
-        "spoof hwid",
-        "ban hwid",
-        "banido hwid",
-        "desbanir",
-        "gc ban",
-        "gamers club ban",
-        "reset hwid",
-        "novo hwid"
+        "hwid-spoof",
+        "spoofer hwid",
+        "hwid spof"
       ],
       "pipeline": "pipelines/hwid_spoof.json"
     },
     "hwid_fisico": {
-      "nome": "HWID Físico & Reconstrução de Hardware",
-      "o_que_e": "Protocolo de 4 fases para troca e sanitização física de hardware contra banimentos persistentes por assinatura de firmware.",
-      "o_que_faz": "Orienta substituição de discos de armazenamento, desativação de MAC em ROM, regravação de BIOS/Firmware e isolamento de rede.",
+      "o_que_e": "Protocolo de 4 fases para reconstrução física de hardware (Sanitização Física, Regravação de Firmware/BIOS, Isolamento de Rede, Configuração Limpa de Fábrica).",
+      "o_que_faz": "Orienta substituição de discos NVMe/SSD, regravação de BIOS por programador externo, desativação de MAC e isolamento de rede.",
       "gatilhos": [
         "hwid fisico",
-        "reconstrucao hwid",
-        "hwid firmware",
-        "flashing bios hwid",
-        "reset tpm",
-        "clean os hwid",
-        "trocar hwid fisico"
+        "hwid fisco",
+        "hwid-fisico",
+        "hwid fizico",
+        "reconstrucao hwid"
       ],
       "pipeline": "pipelines/hwid_hardware_rebuild.json"
     },
     "inspecionar_hwid": {
-      "nome": "Inspeção Forense de HWID",
       "o_que_e": "Leitura forense e auditoria dos identificadores reais de hardware da máquina local.",
       "o_que_faz": "Lê e reporta os seriais de Motherboard, BIOS, CPU, Discos (NVMe/SATA), Endereços MAC de rede e status do chip TPM.",
       "gatilhos": [
         "inspecionar hwid",
-        "ver hwid",
-        "auditar hwid",
-        "checar hwid",
-        "ler hwid",
-        "hardware id",
-        "status hwid",
-        "hwid atual"
+        "inspecionar hwd",
+        "inspeciona hwid",
+        "inspecionar-hwid",
+        "inspecioanr hwid"
       ],
       "pipeline": "pipelines/inspecionar_hwid.json"
     },
     "sanitizar_ambiente": {
-      "nome": "Sanitização de Ambiente & Telemetria",
       "o_que_e": "Procedimento profundo de remoção de rastros, telemetria, logs de eventos e artefatos de rastreamento do sistema operacional.",
       "o_que_faz": "Limpa cache de rede ARP/DNS, trunca registros de eventos do Windows/Unix, apaga temporários e arquivos de telemetria de anti-cheats.",
       "gatilhos": [
-        "sanitizar hwid",
         "sanitizar ambiente",
-        "limpar rastros",
-        "limpar traces",
-        "remover telemetria",
-        "clean traces",
-        "reset rede hwid"
+        "sanitizar ambient",
+        "sanitiza ambiente",
+        "sanitizar-ambiente",
+        "sanitizar hwid",
+        "sanitiza hwid"
       ],
       "pipeline": "pipelines/sanitizar_ambiente.json"
     },
+    "atualizar_sentinela": {
+      "o_que_e": "Rotina de sincronização e atualização de governança global do ecossistema Sentinela e Dicionário Léxico.",
+      "o_que_faz": "Puxa a versão mais recente do Git, sincroniza o dicionário léxico canônico e as skills em ~/.gemini/config/ e valida os checksums.",
+      "gatilhos": [
+        "atualizar sentinela",
+        "atualiza sentinela",
+        "atualiza o sentinela",
+        "baixa a nova atualizacao sentinela",
+        "atualizar-sentinela",
+        "atualizar sentinla"
+      ],
+      "pipeline": "pipelines/atualizar_sentinela.json"
+    },
+    "sinc_git": {
+      "o_que_e": "Procedimento de sincronização segura e atômica com o repositório remoto sob regras do Sentinela.",
+      "o_que_faz": "Valida o status do workspace, audita diff contra secrets, realiza commit padronizado e envia alterações para o branch autorizado.",
+      "gatilhos": [
+        "sinc git",
+        "sync git",
+        "sinc-git",
+        "sincronizar git",
+        "sincroniza git",
+        "sync-git"
+      ],
+      "pipeline": "pipelines/sinc_git.json"
+    },
     "dump_banco": {
-      "nome": "Dump de Banco de Dados",
       "o_que_e": "Rotina de extração e exportação estruturada de esquemas e dados de bancos relacionais e NoSQL.",
       "o_que_faz": "Gera cópia consistente das tabelas em formato SQL/JSON com compactação e registro de hash forense para backup ou análise.",
       "gatilhos": [
-        "dump",
         "dump banco",
-        "fazer dump",
-        "exportar banco",
-        "backup banco",
-        "extrair base"
+        "dump do banco",
+        "dump-banco",
+        "dump bacno",
+        "fazer dump"
       ],
       "pipeline": "pipelines/dump_banco.json"
     },
     "limpeza_logs": {
-      "nome": "Limpeza de Logs",
       "o_que_e": "Rotina de manutenção e higienização de arquivos de log do projeto e do sistema operacional.",
       "o_que_faz": "Trunca arquivos .log volumosos preservando os cabeçalhos essenciais, remove dumps transitórios e libera espaço em disco.",
       "gatilhos": [
         "limpeza logs",
         "limpar logs",
-        "truncate logs",
-        "apagar logs velhos",
-        "zerar logs"
+        "limpeza-logs",
+        "limpeza de logs",
+        "limpesa logs"
       ],
       "pipeline": "pipelines/limpeza_logs.json"
-    },
-    "sinc_git": {
-      "nome": "Sincronização Atômica Git",
-      "o_que_e": "Procedimento de sincronização segura e atômica com o repositório remoto sob regras do Sentinela.",
-      "o_que_faz": "Valida o status do workspace, audita diff contra secrets, realiza commit padronizado e envia alterações para o branch autorizado.",
-      "gatilhos": [
-        "sinc git",
-        "sincronizar git",
-        "sync git",
-        "git sync",
-        "subir alteracoes",
-        "push git",
-        "sincronizar alteracoes"
-      ],
-      "pipeline": "pipelines/sinc_git.json"
-    },
-    "atualizar_sentinela": {
-      "nome": "Atualização do Sentinela",
-      "o_que_e": "Rotina de sincronização e atualização de governança global do ecossistema Sentinela e Dicionário Léxico.",
-      "o_que_faz": "Puxa a versão mais recente do repositório remoto, sincroniza o dicionário léxico canônico e as skills em ~/.gemini/config/ e valida os checksums.",
-      "gatilhos": [
-        "atualizar sentinela",
-        "baixa a nova atualizacao sentinela",
-        "atualiza o sentinela",
-        "update sentinela",
-        "sincronizar sentinela"
-      ],
-      "pipeline": "pipelines/atualizar_sentinela.json"
-    },
-    "scrape": {
-      "nome": "Raspagem de Dados (Scraping Web)",
-      "o_que_e": "Técnica de extração programática de conteúdo textual e elementos específicos a partir de páginas web.",
-      "o_que_faz": "Acessa a URL-alvo, faz o download do HTML, processa os seletores DOM/CSS e salva os dados estruturados em formato JSON.",
-      "gatilhos": [
-        "scrape",
-        "scraping",
-        "raspar",
-        "raspagem",
-        "extrair dados",
-        "extrair do site",
-        "pegar dados do site"
-      ],
-      "pipeline": "pipelines/scrape.json"
-    },
-    "crawl": {
-      "nome": "Rastreamento Web (Crawler)",
-      "o_que_e": "Navegação automatizada através da árvore de hiperlinks para descobrir rotas e mapear a estrutura de um domínio.",
-      "o_que_faz": "Lê sitemaps e robots.txt, percorre links recursivamente até a profundidade definida e gera catálogo completo de URLs encontradas.",
-      "gatilhos": [
-        "crawl",
-        "crawler",
-        "crawling",
-        "rastrear site",
-        "mapear links",
-        "mapa de rotas"
-      ],
-      "pipeline": "pipelines/crawl.json"
-    },
-    "espelhamento_frontend": {
-      "nome": "Espelhamento de Frontend",
-      "o_que_e": "Captura e reconstrução estática de interfaces web para estudo arquitetural, backup ou execução autônoma offline.",
-      "o_que_faz": "Baixa HTML, folhas de estilo CSS e ativos visuais, normaliza rotas absolutas para relativas e inicializa servidor local de visualização.",
-      "gatilhos": [
-        "espelhamento frontend",
-        "espelhar frontend",
-        "clonar frontend",
-        "copiar site estatico",
-        "replica frontend"
-      ],
-      "pipeline": "pipelines/espelhamento_frontend.json"
-    },
-    "trainer_de_jogo": {
-      "nome": "Trainer de Jogo & Análise de Memória",
-      "o_que_e": "Metodologia de engenharia reversa e análise de memória de processos para ambientes de teste e jogos locais.",
-      "o_que_faz": "Mapeia o processo, delimita regiões de memória RW/RWX, resolve sequências de ponteiros e offsets estáticos e valida a estabilidade.",
-      "gatilhos": [
-        "trainer de jogo",
-        "trainer jogo",
-        "engenharia reversa jogo",
-        "mapear memoria jogo",
-        "analise processo jogo"
-      ],
-      "pipeline": "pipelines/trainer_de_jogo.json"
-    },
-    "api": {
-      "nome": "API (Application Programming Interface)",
-      "o_que_e": "Interface padronizada que permite a comunicação e troca de dados entre diferentes softwares e microsserviços.",
-      "o_que_faz": "Expõe rotas e endpoints (REST, GraphQL, gRPC) para receber requisições, processar regras de negócio e retornar respostas estruturadas.",
-      "gatilhos": [
-        "api",
-        "interface de programacao",
-        "endpoints",
-        "rotas de backend"
-      ]
-    },
-    "webhook": {
-      "nome": "Webhook",
-      "o_que_e": "Mecanismo de comunicação assíncrona orientada a eventos via HTTP POST reverso.",
-      "o_que_faz": "Dispara notificações imediatas para endpoints configurados sempre que um evento de interesse ocorre no sistema de origem.",
-      "gatilhos": [
-        "webhook",
-        "webhooks",
-        "notificacao automatica",
-        "gatilho http"
-      ]
-    },
-    "proxy": {
-      "nome": "Servidor Proxy",
-      "o_que_e": "Servidor intermediário que atua como ponte entre clientes emissores e servidores de destino na rede.",
-      "o_que_faz": "Roteia conexões mascarando o IP de origem, gerencia cache de tráfego, provê balanceamento de carga e garante isolamento perimetral.",
-      "gatilhos": [
-        "proxy",
-        "servidor proxy",
-        "rotacao de ip",
-        "tunnelling"
-      ]
-    },
-    "jwt": {
-      "nome": "JSON Web Token (JWT)",
-      "o_que_e": "Padrão aberto (RFC 7519) para transmissão compacta e autocontida de informações assinadas digitalmente.",
-      "o_que_faz": "Autentica e autoriza usuários entre cliente e servidor com criptografia stateless, eliminando a dependência de sessões no banco.",
-      "gatilhos": [
-        "jwt",
-        "token jwt",
-        "bearer token",
-        "autenticacao jwt"
-      ]
-    },
-    "middleware": {
-      "nome": "Middleware",
-      "o_que_e": "Camada de software intermediária executada no pipeline entre o recebimento da requisição e o manipulador final.",
-      "o_que_faz": "Intercepta dados para validação de segurança, sanitização de cabeçalhos, rate-limiting, autenticação e registro de telemetria.",
-      "gatilhos": [
-        "middleware",
-        "middlewares",
-        "filtro de requisicao",
-        "interceptador"
-      ]
-    },
-    "pci_dss": {
-      "nome": "Padrão de Segurança PCI-DSS",
-      "o_que_e": "Norma global de segurança da informação estabelecida pelo PCI SSC para proteção de transações com cartão de crédito.",
-      "o_que_faz": "Exige mascaramento de PAN (apenas 6 primeiros e 4 últimos dígitos), proibição absoluta de armazenamento de CVV e criptografia em trânsito.",
-      "gatilhos": [
-        "pci dss",
-        "conformidade pci",
-        "pci security",
-        "norma de cartoes"
-      ]
-    },
-    "anti_cheat": {
-      "nome": "Sistema Anti-Cheat",
-      "o_que_e": "Módulo de defesa e proteção de integridade que opera em anel de privilégio elevado (Ring 0 / Kernel) para coibir trapaças em jogos.",
-      "o_que_faz": "Audita drivers carregados, hooks de memória, leitura/escrita em memória virtual de processos protegidos e atesta identificadores de hardware.",
-      "gatilhos": [
-        "anti cheat",
-        "anticheat",
-        "ac kernel",
-        "ring 0 anti cheat"
-      ]
-    },
-    "tpm": {
-      "nome": "TPM (Trusted Platform Module)",
-      "o_que_e": "Criptoprocessador de segurança projetado para fornecer operações de chave criptográfica e atestação de hardware.",
-      "o_que_faz": "Armazena chaves privadas invioláveis, atesta o estado de integridade do firmware na inicialização e suporta recursos como Secure Boot.",
-      "gatilhos": [
-        "tpm",
-        "tpm 2.0",
-        "chip de seguranca",
-        "trusted platform module"
-      ]
     }
   }
 }
