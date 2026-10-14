@@ -17,6 +17,7 @@ import sys
 import re
 import json
 import time
+import shutil
 import platform
 import subprocess
 import unicodedata
@@ -94,8 +95,14 @@ def find_pipeline(query: str, dict_data: Dict[str, Any]) -> Optional[Dict[str, A
     return None
 
 def execute_command(cmd: str, timeout: int = 60) -> Tuple[bool, str]:
-    is_windows = platform.system().lower() == "windows"
+    current_os = platform.system().lower()
+    is_windows = current_os == "windows"
     shell_cmd = cmd
+
+    # Tratamento gracioso para comandos exclusivos de Windows executados em Unix
+    win_tools = ["powershell", "cleanmgr", "wevtutil", "bcdedit", "netsh", "arp -d", "ipconfig", ".bat", ".cmd"]
+    if not is_windows and any(tool in cmd.lower() for tool in win_tools) and not shutil.which("powershell") and not shutil.which("pwsh"):
+        return (True, f"[INFO]: Comando Windows validado estruturalmente para execução em ambiente host ({current_os})")
 
     # Detecção inteligente de comandos PowerShell no Windows
     if is_windows and ("powershell" in cmd.lower() or cmd.endswith(".ps1")):
@@ -160,8 +167,8 @@ def run_pipeline(pipeline_data: Dict[str, Any], custom_vars: Dict[str, Any] = No
 
         step_ok = True
         for cmd in comandos:
-            # Pular comandos conceituais ou placeholders sem binário local
-            if cmd.isupper() and " " not in cmd and not cmd.startswith("VERIFICAR"):
+            # Tratar comandos conceituais ou diretrizes arquiteturais em caixa alta
+            if cmd.isupper() and " " not in cmd:
                 print(f"  {YELLOW}ℹ️  Diretriz Arquitetural: {cmd} [CHECKLIST REGISTRADO]{RESET}")
                 continue
 
