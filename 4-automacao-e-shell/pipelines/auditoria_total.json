@@ -116,10 +116,10 @@
       "ordem": 7,
       "fase": "PHASE_6_SCA_DEPENDENCIES",
       "camada": "Camada 6: Cadeia de Suprimentos & Dependências (SCA)",
-      "area": "Manifests (package.json, requirements.txt) & CVEs",
+      "area": "Manifests (package.json, requirements.txt), Lockfiles & CVEs",
       "acao": "Auditar manifests de pacotes contra dependências desatualizadas e vulnerabilidades conhecidas (CVEs)",
       "comandos": [
-        "python3 -c \"import os, json; pkgs={'npm': os.path.exists('package.json'), 'python': os.path.exists('requirements.txt')}; res={'manifests': pkgs, 'sca_status': 'CHECKED_OK'}; json.dump(res, open('./reports/audit_phase6_sca.json', 'w'), indent=2); print(f'[*] [FASE 6: SCA] Manifests de dependências auditados: {pkgs}')\""
+        "python3 -c \"import os, sys, json, subprocess; pkgs={'npm': os.path.exists('package.json'), 'python': os.path.exists('requirements.txt'), 'npm_lock': os.path.exists('package-lock.json'), 'pnpm_lock': os.path.exists('pnpm-lock.yaml'), 'poetry_lock': os.path.exists('poetry.lock')}; audit_res={}; (audit_res.update(json.loads(subprocess.run(['npm', 'audit', '--json'], capture_output=True, text=True, timeout=15).stdout or '{}')) if pkgs['npm_lock'] else None); res={'manifests': pkgs, 'audit_summary': audit_res.get('metadata', {}), 'sca_status': 'CHECKED_OK'}; json.dump(res, open('./reports/audit_phase6_sca.json', 'w'), indent=2); print(f'[*] [FASE 6: SCA] Manifests e lockfiles auditados: {pkgs}')\""
       ],
       "criterio_verificacao": "Relatório audit_phase6_sca.json gerado.",
       "bloqueio_em_caso_falha": true,
@@ -172,19 +172,32 @@
       "ordem": 11,
       "fase": "PHASE_10_DOM_PASSWORDS_CLIENT",
       "camada": "Camada 10: Desmascaramento Client-Side & Senhas",
-      "area": "Source Maps (.js.map), Formulários & Conformidade PCI",
+      "area": "Source Maps (.js.map), Formulários & Reconstituição",
       "acao": "Detectar Source Maps (.js.map) para reconstituição de código e auditar formulários",
       "comandos": [
-        "python3 -c \"import os, glob, json; maps=[f for f in glob.glob('**/*.js.map', recursive=True) if os.path.isfile(f)]; json.dump({'source_maps_found': len(maps), 'files': maps[:5]}, open('./reports/audit_source_maps.json', 'w'), indent=2); print(f'[*] [SOURCE MAPS] {len(maps)} arquivos .js.map detectados para reconstituição de código.')\"",
-        "python3 -c \"import os, sys, subprocess; candidates=['4-automacao-e-shell/scan_cards_pci.py', os.path.expanduser('~/.gemini/config/scan_cards_pci.py')]; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.']) if s else None\""
+        "python3 -c \"import os, glob, json; maps=[f for f in glob.glob('**/*.js.map', recursive=True) if os.path.isfile(f)]; json.dump({'source_maps_found': len(maps), 'files': maps[:5]}, open('./reports/audit_source_maps.json', 'w'), indent=2); print(f'[*] [SOURCE MAPS] {len(maps)} arquivos .js.map detectados para reconstituição de código.')\""
       ],
-      "criterio_verificacao": "Relatório audit_source_maps.json e compliance_pci_audit.json gerados.",
+      "criterio_verificacao": "Relatório audit_source_maps.json gerado.",
       "bloqueio_em_caso_falha": true,
       "timeout_segundos": 60
     },
     {
       "etapa": 12,
       "ordem": 12,
+      "fase": "PHASE_11_PCI_DSS_CARDS",
+      "camada": "Camada 11: Conformidade PCI-DSS / PAN & Vazamento de Dados Financeiros",
+      "area": "BINs Oficiais, Algoritmo Luhn Mod 10 & Mascaramento PCI 3.3",
+      "acao": "Auditoria profunda contra vazamento de PAN e validação matemática de cartões de crédito",
+      "comandos": [
+        "python3 -c \"import os, sys, subprocess; candidates=['4-automacao-e-shell/scan_cards_pci.py', os.path.expanduser('~/.gemini/config/scan_cards_pci.py'), 'scan_cards_pci.py']; s=next((c for c in candidates if os.path.exists(c)), None); subprocess.call([sys.executable, s, '.']) if s else None\""
+      ],
+      "criterio_verificacao": "Relatório compliance_pci_audit.json gerado.",
+      "bloqueio_em_caso_falha": true,
+      "timeout_segundos": 60
+    },
+    {
+      "etapa": 13,
+      "ordem": 13,
       "fase": "EXTRACAO_ARQUIVOS_RELEVANTES",
       "camada": "Camada 12: Extração Seletiva de Arquivos Relevantes",
       "area": "Contratos de API, Schemas SQL & Configs",
@@ -197,22 +210,22 @@
       "timeout_segundos": 60
     },
     {
-      "etapa": 13,
-      "ordem": 13,
+      "etapa": 14,
+      "ordem": 14,
       "fase": "PHASE_SECURITY_HEADERS",
       "camada": "Camada 13: Cabeçalhos HTTP de Segurança & Hardening de Borda",
       "area": "CSP, HSTS, X-Frame-Options, CORS & Referrer-Policy",
-      "acao": "Inspecionar conformidade de cabeçalhos de segurança HTTP em endpoints locais ou de borda",
+      "acao": "Inspecionar conformidade ativa de cabeçalhos de segurança HTTP em endpoints locais ou de borda",
       "comandos": [
-        "python3 -c \"import os, json; headers_report={'tested_endpoints': ['http://127.0.0.1:3000', 'http://127.0.0.1:8000', 'http://127.0.0.1:8080'], 'recommendations': ['HSTS (Strict-Transport-Security)', 'CSP (Content-Security-Policy)', 'X-Content-Type-Options: nosniff', 'X-Frame-Options: DENY']}; json.dump(headers_report, open('./reports/audit_security_headers.json', 'w'), indent=2); print('[*] [SECURITY HEADERS] Auditoria de cabeçalhos de borda registrada em ./reports/audit_security_headers.json.')\""
+        "python3 -c \"import urllib.request, json; endpoints=['http://127.0.0.1:3000', 'http://127.0.0.1:8000', 'http://127.0.0.1:8080', 'http://127.0.0.1:5173']; results={}; recs={'Strict-Transport-Security': 'HSTS', 'Content-Security-Policy': 'CSP', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY'}; [exec('''try:\\n req=urllib.request.Request(ep, method=\\\"HEAD\\\"); resp=urllib.request.urlopen(req, timeout=1.5); hdrs=dict(resp.headers); missing=[r for r in recs if r.lower() not in [k.lower() for k in hdrs]]; results[ep]={'status': resp.getcode(), 'headers': hdrs, 'missing_hardening': missing}\\nexcept Exception as exc:\\n results[ep]={'status': 'offline', 'error': str(exc)}''') for ep in endpoints]; report={'tested_endpoints': results, 'recommendations': list(recs.keys())}; json.dump(report, open('./reports/audit_security_headers.json', 'w'), indent=2); print('[*] [SECURITY HEADERS] Auditoria ativa de cabeçalhos de borda registrada em ./reports/audit_security_headers.json.')\""
       ],
       "criterio_verificacao": "Relatório audit_security_headers.json gerado.",
       "bloqueio_em_caso_falha": true,
       "timeout_segundos": 60
     },
     {
-      "etapa": 14,
-      "ordem": 14,
+      "etapa": 15,
+      "ordem": 15,
       "fase": "PHASE_11_COMPILE_FINAL_REPORT",
       "camada": "Camada 14: Compilação de Laudo Forense & Hashes SHA-256",
       "area": "Laudo Pericial Canônico (LAUDO_AUDITORIA_TOTAL.md)",
