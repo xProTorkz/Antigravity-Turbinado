@@ -13,7 +13,10 @@
     "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less).",
     "trainer_de_jogo": "🎮 Trainer de Jogo & Engenharia Reversa: pipeline de 6 fases para análise de binários (strings/readelf/file), descompilação (apktool/jadx/ilspycmd), edição de memória RAM (gdb/scanmem), manipulação Android via ADB, captura de pacotes (tcpdump/tshark) e compilação de DLLs injetáveis (mingw/gcc).",
     "audit_pci_cards": "Varredura universal contra vazamento de cartões de crédito (PAN) e auditoria de conformidade financeira PCI-DSS estruturada em 3 Categorias Canônicas: (1) Mapeamento de Controle (Metadados Permitidos: ID, BIN de 6 dígitos, Brand, Bank, Level, Hash do Card Token), (2) Verificação de Vulnerabilidade e Risco (Validação de 'card_preview' contra PAN desmascarado >4 dígitos finais, detecção de 'have_cardholder_number'=1/número bruto como retenção indevida de dados sensíveis, e bloqueio imediato por violação estrita do PCI-DSS Req 3.2 caso 'card_password' ou CVV estejam presentes), (3) Log de Compliance (Saída estruturada e formatada em './reports/compliance_pci_audit.json' contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados confidenciais).",
-    "hwid_spoof": "Pipeline de 5 fases para alteração de HWID no Gamers Club Anti-Cheat 2.0: [1. Limpeza de Rastros] ➔ [2. Injeção Pré-Boot EFI] ➔ [3. Hipervisor Ring -1] ➔ [4. Emulação Hardware & TPM 2.0] ➔ [5. Boot do Windows & Verificação], com controle de slots limitados e 1-Click Flash firmware."
+    "hwid_spoof": "Pipeline de 5 fases para alteração de HWID no Gamers Club Anti-Cheat 2.0: [1. Limpeza de Rastros] ➔ [2. Injeção Pré-Boot EFI] ➔ [3. Hipervisor Ring -1] ➔ [4. Emulação Hardware & TPM 2.0] ➔ [5. Boot do Windows & Verificação], com controle de slots limitados e 1-Click Flash firmware.",
+    "inspecionar_hwid": "Auditoria e inspeção profunda de identificadores de hardware da máquina (Motherboard, UUID, Discos NVMe/SATA, MAC, TPM 2.0, Secure Boot e VBS) via PowerShell.",
+    "sanitizar_ambiente_hwid": "Sanitização profunda de ambiente (Fase 1): remoção de telemetria, logs de eventos, arquivos temporários e flush de DNS/ARP via PowerShell.",
+    "hwid_hardware_rebuild": "Metodologia de 4 fases para reconstrução física de hardware & firmware limpo contra banimentos de HWID: [1. Sanitização Física] ➔ [2. Regravação de Firmware (Hardware)] ➔ [3. Isolamento de Rede] ➔ [4. Configuração Limpa de Fábrica]."
   },
   "aliases_linguagem": {
     "scrape": {
@@ -1090,6 +1093,78 @@
       "execucao_material": true,
       "pipeline_associado": "HWID_SPOOF_GC",
       "descricao": "Executar esteira completa de 5 fases para alteração de HWID e mitigação de banimento Gamers Club CS2 com Hipervisor Ring -1, EFI boot e emulação TPM 2.0."
+    },
+    "inspecionar_hwid": {
+      "termos": [
+        "inspecionar hwid",
+        "ver hwid",
+        "auditar hwid",
+        "checar hwid",
+        "ler hwid",
+        "hardware id",
+        "status hwid",
+        "hwid info",
+        "pre flight gc"
+      ],
+      "gatilhos": [
+        "inspecionar hwid",
+        "ver hwid",
+        "auditar hwid",
+        "checar hwid",
+        "ler hwid",
+        "hardware id",
+        "status hwid",
+        "hwid info",
+        "pre flight gc"
+      ],
+      "diretiva": "executar_inspecao_hwid",
+      "execucao_material": true,
+      "comando": "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1",
+      "descricao": "Executa inspeção profunda dos números de série do hardware e pre-flight check do TPM 2.0 e Secure Boot para a Gamers Club."
+    },
+    "sanitizar_ambiente_hwid": {
+      "termos": [
+        "sanitizar hwid",
+        "limpar rastros hwid",
+        "limpar traces",
+        "limpar logs anti-cheat",
+        "preparar pc hwid"
+      ],
+      "gatilhos": [
+        "sanitizar hwid",
+        "limpar rastros hwid",
+        "limpar traces",
+        "limpar logs anti-cheat",
+        "preparar pc hwid"
+      ],
+      "diretiva": "executar_sanitizacao_hwid",
+      "execucao_material": true,
+      "comando": "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/sanitizar_ambiente.ps1",
+      "descricao": "Executa limpeza profunda de arquivos temporários, logs de eventos do Windows, telemetria de jogos e caches de rede."
+    },
+    "hwid_hardware_rebuild": {
+      "termos": [
+        "hwid fisico",
+        "reconstrucao hwid",
+        "hwid firmware",
+        "flashing bios hwid",
+        "reset tpm",
+        "clean os hwid",
+        "trocar hwid fisico"
+      ],
+      "gatilhos": [
+        "hwid fisico",
+        "reconstrucao hwid",
+        "hwid firmware",
+        "flashing bios hwid",
+        "reset tpm",
+        "clean os hwid",
+        "trocar hwid fisico"
+      ],
+      "diretiva": "executar_pipeline_hardware_rebuild",
+      "execucao_material": true,
+      "pipeline_associado": "HWID_HARDWARE_REBUILD",
+      "descricao": "Guia operacional e pipeline de 4 fases para reconstrução física de hardware, regravação de firmware (CH341A/DMI), isolamento de rede e instalação limpa de fábrica."
     }
   },
   "pipelines": {
@@ -1263,6 +1338,8 @@
           "area": "Storage Sanitization, Registry & Telemetry Traces",
           "acao": "Eliminação rigorosa de traces, arquivos de telemetria, logs de anti-cheat, caches de rede e chaves criptográficas",
           "comandos": [
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1",
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/sanitizar_ambiente.ps1",
             "limpa_registros_spoofer.bat",
             "cleanmgr /sagerun:1",
             "ipconfig /flushdns",
@@ -1328,6 +1405,7 @@
           "area": "Windows Kernel Ring 0 & Gamers Club Anti-Cheat 2.0 Handshake",
           "acao": "Conclusão da inicialização do Windows em estado normal, validação de integridade do AC 2.0 e confirmação de nova identidade de máquina",
           "comandos": [
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1",
             "VERIFICAR_STATUS_SECURE_BOOT",
             "VERIFICAR_STATUS_TPM_2_0",
             "VERIFICAR_INTEGRIDADE_DRIVERS",
@@ -1342,6 +1420,101 @@
       "metadata": {
         "dicionario": "sentinela",
         "versao_pipeline": "2.0_cinco_fases",
+        "anti_cheat_target": "Gamers Club Anti-Cheat 2.0"
+      }
+    },
+    "HWID_HARDWARE_REBUILD": {
+      "id": "HWID_HARDWARE_REBUILD",
+      "descricao": "Pipeline de 4 fases para reconstrução física de hardware e firmware limpo contra banimento de HWID",
+      "categoria": "hardware_security",
+      "status": "ativo",
+      "prioridade": "alta",
+      "persistente": true,
+      "auto_execute": false,
+      "modo": "interativo",
+      "requer_confirmacao": true,
+      "triggers": [
+        "hwid fisico",
+        "reconstrucao hwid",
+        "hwid firmware",
+        "flashing bios hwid",
+        "reset tpm",
+        "clean os hwid",
+        "trocar hwid fisico"
+      ],
+      "target_os": [
+        "windows",
+        "hardware"
+      ],
+      "target": "gamers-club-cs2",
+      "etapas": [
+        {
+          "ordem": 1,
+          "fase": "SANITIZACAO_FISICA_E_SUBSTITUICAO",
+          "camada": "Fase 1: Sanitização Física e Substituição de Componentes",
+          "area": "Storage & Network Hardware",
+          "acao": "Substituição física de unidades de armazenamento (NVMe/SATA) para eliminar seriais estáticos de fábrica e desativação de NICs integradas com adição de placa PCIe/adaptador USB dedicado",
+          "comandos": [
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1",
+            "VERIFICAR_SUBSTITUICAO_DISCOS_NVME",
+            "VERIFICAR_DESATIVACAO_NIC_NATIVA_BIOS",
+            "VALIDAR_NOVA_INTERFACE_REDE"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "criterio_verificacao": "Unidades de armazenamento com novos seriais de fábrica e nova interface de rede física instalada."
+        },
+        {
+          "ordem": 2,
+          "fase": "REGRAVACAO_FIRMWARE_HARDWARE",
+          "camada": "Fase 2: Regravação de Firmware (Hardware-Level Flashing)",
+          "area": "EEPROM SPI BIOS & TPM Module",
+          "acao": "Reescrita física de SMBIOS/DMI via gravador de hardware (CH341A) ou ferramentas OEM com novos seriais/UUID, acompanhada de hard reset do chip TPM / fTPM e regeneração de chaves criptográficas",
+          "comandos": [
+            "FLASH_BIOS_ROM_CH341A_OR_OEM",
+            "RESET_TPM_CHIP_KEYS_BIOS",
+            "REGENERATE_ATTESTATION_KEYS"
+          ],
+          "timeout_segundos": 120,
+          "ignorar_erros": false,
+          "criterio_verificacao": "Firmware da placa-mãe regravado com novos identificadores DMI e chip TPM limpo sem chaves antigas."
+        },
+        {
+          "ordem": 3,
+          "fase": "ISOLAMENTO_DE_REDE",
+          "camada": "Fase 3: Ofuscação de Identidade de Rede (Network Isolation)",
+          "area": "ISP Routing & Local Gateway",
+          "acao": "Renovação forçada de IP público junto ao provedor (ISP) e alteração do MAC Address do gateway/roteador residencial para desvincular o histórico de telemetria",
+          "comandos": [
+            "RENOVAR_IP_PUBLICO_ISP",
+            "CLONAR_OU_ALTERAR_MAC_ROTEADOR",
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/sanitizar_ambiente.ps1"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "criterio_verificacao": "Novo IP público atribuído e assinatura física do gateway alterada."
+        },
+        {
+          "ordem": 4,
+          "fase": "CONFIGURACAO_LIMPA_DE_FABRICA",
+          "camada": "Fase 4: Instalação Limpa de Fábrica (Clean OS)",
+          "area": "Low-Level Format & Native Security Enforcement",
+          "acao": "Formatação profunda de baixo nível, instalação limpa do Windows a partir de mídia oficial Microsoft e ativação nativa de Secure Boot, TPM 2.0 e VBS com verificação final de integridade",
+          "comandos": [
+            "FORMATACAO_BAIXO_NIVEL_PARTICOES",
+            "INSTALACAO_WINDOWS_IMAGEM_OFICIAL",
+            "ATIVAR_SECURE_BOOT_TPM2_VBS_NATIVO",
+            "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "criterio_verificacao": "Sistema operacional limpo, Secure Boot e TPM 2.0 ativos nativamente sem drivers de interceptação, pronto para execução do Anti-Cheat 2.0.",
+          "mensagem": "RECONSTRUÇÃO FÍSICA E LIMPEZA DE FÁBRICA CONCLUÍDAS. HARDWARE TOTALMENTE REGENERADO."
+        }
+      ],
+      "metadata": {
+        "dicionario": "sentinela",
+        "versao_pipeline": "1.0_hardware_clean",
         "anti_cheat_target": "Gamers Club Anti-Cheat 2.0"
       }
     }
