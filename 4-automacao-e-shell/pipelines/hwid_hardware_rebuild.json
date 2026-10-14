@@ -1,0 +1,102 @@
+{
+  "id": "HWID_HARDWARE_REBUILD",
+  "descricao": "Pipeline de 4 fases para reconstrução física de hardware e firmware limpo contra banimento de HWID",
+  "categoria": "hardware_security",
+  "status": "ativo",
+  "prioridade": "alta",
+  "persistente": true,
+  "auto_execute": false,
+  "modo": "interativo",
+  "requer_confirmacao": true,
+  "triggers": [
+    "hwid fisico",
+    "reconstrucao hwid",
+    "hwid firmware",
+    "flashing bios hwid",
+    "reset tpm",
+    "clean os hwid",
+    "trocar hwid fisico"
+  ],
+  "target_os": [
+    "windows",
+    "hardware"
+  ],
+  "target": "gamers-club-cs2",
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "SANITIZACAO_FISICA_E_SUBSTITUICAO",
+      "camada": "Fase 1: Sanitização Física e Substituição de Componentes",
+      "area": "Storage & Network Hardware",
+      "acao": "Substituição física de unidades de armazenamento (NVMe/SATA) para eliminar seriais estáticos de fábrica e desativação de NICs integradas com adição de placa PCIe/adaptador USB dedicado",
+      "comandos": [
+        "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1",
+        "VERIFICAR_SUBSTITUICAO_DISCOS_NVME",
+        "VERIFICAR_DESATIVACAO_NIC_NATIVA_BIOS",
+        "VALIDAR_NOVA_INTERFACE_REDE"
+      ],
+      "timeout_segundos": 60,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Unidades de armazenamento com novos seriais de fábrica e nova interface de rede física instalada."
+    },
+    {
+      "ordem": 2,
+      "fase": "REGRAVACAO_FIRMWARE_HARDWARE",
+      "camada": "Fase 2: Regravação de Firmware (Hardware-Level Flashing)",
+      "area": "EEPROM SPI BIOS & TPM Module",
+      "acao": "Reescrita física de SMBIOS/DMI via gravador de hardware (CH341A) ou ferramentas OEM com novos seriais/UUID, acompanhada de hard reset do chip TPM / fTPM e regeneração de chaves criptográficas",
+      "comandos": [
+        "FLASH_BIOS_ROM_CH341A_OR_OEM",
+        "RESET_TPM_CHIP_KEYS_BIOS",
+        "REGENERATE_ATTESTATION_KEYS"
+      ],
+      "timeout_segundos": 120,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Firmware da placa-mãe regravado com novos identificadores DMI e chip TPM limpo sem chaves antigas."
+    },
+    {
+      "ordem": 3,
+      "fase": "ISOLAMENTO_DE_REDE",
+      "camada": "Fase 3: Ofuscação de Identidade de Rede (Network Isolation)",
+      "area": "ISP Routing & Local Gateway",
+      "acao": "Renovação forçada de IP público junto ao provedor (ISP) e alteração do MAC Address do gateway/roteador residencial para desvincular o histórico de telemetria",
+      "comandos": [
+        "RENOVAR_IP_PUBLICO_ISP",
+        "CLONAR_OU_ALTERAR_MAC_ROTEADOR",
+        "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/sanitizar_ambiente.ps1"
+      ],
+      "timeout_segundos": 60,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Novo IP público atribuído e assinatura física do gateway alterada."
+    },
+    {
+      "ordem": 4,
+      "fase": "CONFIGURACAO_LIMPA_DE_FABRICA",
+      "camada": "Fase 4: Instalação Limpa de Fábrica (Clean OS)",
+      "area": "Low-Level Format & Native Security Enforcement",
+      "acao": "Formatação profunda de baixo nível, instalação limpa do Windows a partir de mídia oficial Microsoft e ativação nativa de Secure Boot, TPM 2.0 e VBS com verificação final de integridade",
+      "comandos": [
+        "FORMATACAO_BAIXO_NIVEL_PARTICOES",
+        "INSTALACAO_WINDOWS_IMAGEM_OFICIAL",
+        "ATIVAR_SECURE_BOOT_TPM2_VBS_NATIVO",
+        "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1"
+      ],
+      "timeout_segundos": 60,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Sistema operacional limpo, Secure Boot e TPM 2.0 ativos nativamente sem drivers de interceptação, pronto para execução do Anti-Cheat 2.0.",
+      "mensagem": "RECONSTRUÇÃO FÍSICA E LIMPEZA DE FÁBRICA CONCLUÍDAS. HARDWARE TOTALMENTE REGENERADO."
+    }
+  ],
+  "metadata": {
+    "dicionario": "sentinela",
+    "versao_pipeline": "1.0_hardware_clean",
+    "anti_cheat_target": "Gamers Club Anti-Cheat 2.0"
+  },
+  "variaveis": {
+    "target": "gamers-club-cs2",
+    "target_os": [
+      "windows",
+      "hardware"
+    ]
+  }
+}

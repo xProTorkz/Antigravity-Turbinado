@@ -1,0 +1,40 @@
+{
+  "id": "INSPECIONAR_HWID",
+  "descricao": "Auditoria e inspeção profunda de identificadores de hardware da máquina (Motherboard, UUID, Discos NVMe/SATA, MAC, TPM 2.0, Secure Boot e VBS) via PowerShell",
+  "categoria": "hardware_security",
+  "status": "ativo",
+  "prioridade": "alta",
+  "triggers": [
+    "inspecionar hwid",
+    "ver hwid",
+    "auditar hwid",
+    "checar hwid",
+    "ler hwid",
+    "hardware id",
+    "status hwid",
+    "hwid info",
+    "pre flight gc"
+  ],
+  "target_os": [
+    "windows"
+  ],
+  "variaveis": {
+    "script_windows": "4-automacao-e-shell/inspecionar_hwid.ps1",
+    "modo_json": false
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "INSPECAO_IDENTIFICADORES_HWID",
+      "camada": "Inspeção e Auditoria de Hardware ID",
+      "area": "Hardware Identifiers & Anti-Cheat Pre-Flight",
+      "acao": "Executar script PowerShell inspecionar_hwid.ps1 exibindo seriais e diagnóstico Gamers Club AC 2.0",
+      "comandos": [
+        "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/inspecionar_hwid.ps1"
+      ],
+      "timeout_segundos": 60,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Seriais de hardware e status do TPM 2.0 e Secure Boot exibidos com sucesso."
+    }
+  ]
+}

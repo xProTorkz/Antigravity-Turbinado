@@ -860,6 +860,8 @@ class PipelineEngine:
 
     def _ensure_pipelines_schema(self):
         """Garante que a chave 'pipelines' existe e a versão é atualizada para 4.1."""
+        if str(self.dictionary_data.get("versao", "")).startswith("6."):
+            return
         dirty = False
         if "pipelines" not in self.dictionary_data:
             self.dictionary_data["pipelines"] = self._get_builtin_pipelines()
@@ -1303,23 +1305,74 @@ class PipelineEngine:
             }
         }
 
+    def _resolve_pipe_data(self, pid: str, val: Any) -> Optional[Dict[str, Any]]:
+        if isinstance(val, dict):
+            return val
+        elif isinstance(val, str):
+            pfile = BASE_DIR / val
+            if pfile.exists():
+                try:
+                    with open(pfile, "r", encoding="utf-8") as f:
+                        return json.load(f)
+                except Exception:
+                    pass
+        # Fallback para pipelines/<pid_lower>.json
+        pfile2 = (BASE_DIR / "pipelines") / f"{pid.lower()}.json"
+        if pfile2.exists():
+            try:
+                with open(pfile2, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+        return None
+
     def list_pipelines(self) -> List[PipelineDefinition]:
-        """Lista todos os pipelines registrados no dicionário."""
+        """Lista todos os pipelines registrados no dicionário e na pasta pipelines/."""
         raw_pipes = self.dictionary_data.get("pipelines", {})
         result = []
+        seen = set()
         for pid, data in raw_pipes.items():
-            result.append(PipelineDefinition.from_dict(data, pipeline_id=pid))
+            pdata = self._resolve_pipe_data(pid, data)
+            if pdata:
+                result.append(PipelineDefinition.from_dict(pdata, pipeline_id=pid))
+                seen.add(pid.lower())
+
+        # Carregar arquivos de pipelines/ que não estejam no dicionário
+        pipes_dir = BASE_DIR / "pipelines"
+        if pipes_dir.exists():
+            for pf in pipes_dir.glob("*.json"):
+                if pf.stem.lower() not in seen:
+                    try:
+                        with open(pf, "r", encoding="utf-8") as f:
+                            pdata = json.load(f)
+                        result.append(PipelineDefinition.from_dict(pdata, pipeline_id=pf.stem.upper()))
+                        seen.add(pf.stem.lower())
+                    except Exception:
+                        pass
         return result
 
     def get_pipeline(self, pipeline_id: str) -> Optional[PipelineDefinition]:
         """Obtém um pipeline específico por ID."""
         raw_pipes = self.dictionary_data.get("pipelines", {})
         if pipeline_id in raw_pipes:
-            return PipelineDefinition.from_dict(raw_pipes[pipeline_id], pipeline_id=pipeline_id)
+            pdata = self._resolve_pipe_data(pipeline_id, raw_pipes[pipeline_id])
+            if pdata:
+                return PipelineDefinition.from_dict(pdata, pipeline_id=pipeline_id)
         # Busca insensível a maiúsculas
         for pid, data in raw_pipes.items():
             if pid.lower() == pipeline_id.lower():
-                return PipelineDefinition.from_dict(data, pipeline_id=pid)
+                pdata = self._resolve_pipe_data(pid, data)
+                if pdata:
+                    return PipelineDefinition.from_dict(pdata, pipeline_id=pid)
+        # Busca direta em pipelines/
+        pfile = (BASE_DIR / "pipelines") / f"{pipeline_id.lower()}.json"
+        if pfile.exists():
+            try:
+                with open(pfile, "r", encoding="utf-8") as f:
+                    pdata = json.load(f)
+                return PipelineDefinition.from_dict(pdata, pipeline_id=pipeline_id)
+            except Exception:
+                pass
         return None
 
     def register_pipeline(self, pipeline: PipelineDefinition) -> bool:

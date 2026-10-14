@@ -1,0 +1,72 @@
+{
+  "id": "SINC_GIT_AUTOMATICO",
+  "descricao": "Sincroniza automaticamente a branch com o remoto e reporta status",
+  "categoria": "versionamento",
+  "status": "ativo",
+  "prioridade": "media",
+  "persistente": true,
+  "auto_execute": true,
+  "modo": "interativo",
+  "requer_confirmacao": true,
+  "triggers": [
+    "sincronizar git",
+    "sincroniza branch",
+    "sync git",
+    "puxar alteracoes"
+  ],
+  "target_os": [
+    "linux",
+    "darwin",
+    "windows"
+  ],
+  "target": null,
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "PREPARE",
+      "camada": "Camada 1: Inspeção Local Preventiva",
+      "area": "Git & Árvore de Trabalho",
+      "acao": "Inspecionar alterações locais antes da sincronização",
+      "comandos": [
+        "git status -s 2>/dev/null || true"
+      ],
+      "criterio_verificacao": "Working tree verificado.",
+      "mensagem": null
+    },
+    {
+      "ordem": 2,
+      "fase": "EXECUTE",
+      "camada": "Camada 2: Fetch de Referências Remotas",
+      "area": "Conectividade Remota",
+      "acao": "Buscar referências remotas atualizadas",
+      "comandos": [
+        "git fetch --all 2>/dev/null || true"
+      ],
+      "criterio_verificacao": "Referências remotas obtidas.",
+      "mensagem": null
+    },
+    {
+      "ordem": 3,
+      "fase": "FINALIZE",
+      "camada": "Camada 3: Validação do Commit Atual",
+      "area": "Memória Operacional & SHA",
+      "acao": "Registrar o hash SHA do commit ativo e status da branch",
+      "comandos": [
+        "git log -1 --oneline 2>/dev/null || true"
+      ],
+      "criterio_verificacao": "Hash SHA do commit atual registrado e branch sincronizada.",
+      "mensagem": "Sincronização verificada com sucesso."
+    }
+  ],
+  "metadata": {
+    "dicionario": "sentinela"
+  },
+  "variaveis": {
+    "target": null,
+    "target_os": [
+      "linux",
+      "darwin",
+      "windows"
+    ]
+  }
+}

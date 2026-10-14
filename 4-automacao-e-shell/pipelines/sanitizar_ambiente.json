@@ -1,0 +1,35 @@
+{
+  "id": "SANITIZAR_AMBIENTE_HWID",
+  "descricao": "Sanitização profunda de ambiente: remoção de telemetria, logs de eventos, arquivos temporários e flush de DNS/ARP via PowerShell",
+  "categoria": "hardware_security",
+  "status": "ativo",
+  "prioridade": "alta",
+  "triggers": [
+    "sanitizar hwid",
+    "limpar rastros hwid",
+    "limpar traces",
+    "limpar logs anti-cheat",
+    "preparar pc hwid"
+  ],
+  "target_os": [
+    "windows"
+  ],
+  "variaveis": {
+    "script_windows": "4-automacao-e-shell/sanitizar_ambiente.ps1"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "SANITIZACAO_E_REMOCAO_DE_TRACES",
+      "camada": "Sanitização Profunda de Ambiente",
+      "area": "Network Flush, Temp Files & Event Viewer",
+      "acao": "Executar script PowerShell sanitizar_ambiente.ps1 para flush DNS/ARP, limpeza de logs e exclusão de traces de telemetria",
+      "comandos": [
+        "powershell -ExecutionPolicy Bypass -File 4-automacao-e-shell/sanitizar_ambiente.ps1"
+      ],
+      "timeout_segundos": 60,
+      "ignorar_erros": false,
+      "criterio_verificacao": "Logs esvaziados, caches de rede limpos e arquivos temporários removidos."
+    }
+  ]
+}

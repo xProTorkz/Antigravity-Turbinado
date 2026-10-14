@@ -1,0 +1,71 @@
+{
+  "id": "LIMPEZA_LOGS_E_BUFFERS",
+  "descricao": "Limpeza determinística de buffers de log e arquivos temporários.",
+  "categoria": "manutencao",
+  "status": "ativo",
+  "prioridade": "media",
+  "persistente": true,
+  "auto_execute": true,
+  "modo": "silencioso",
+  "requer_confirmacao": false,
+  "triggers": [
+    "limpar logs",
+    "limpeza de logs",
+    "faxina de logs",
+    "rotacionar logs",
+    "truncar logs"
+  ],
+  "target_os": [
+    "linux",
+    "darwin",
+    "windows"
+  ],
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "PREPARE",
+      "camada": "Camada 1: Diagnóstico de Volume & Armazenamento",
+      "area": "Diretórios de Logs",
+      "acao": "Mapear arquivos de log volumosos sem tocar em arquivos de sistema",
+      "comandos": [
+        "mkdir -p ./logs",
+        "python3 -c \"import glob, os; logs=[f for f in glob.glob('./logs/**/*.log', recursive=True)+glob.glob('*.log') if os.path.getsize(f) > 5*1024*1024]; print(f'[*] Logs volumosos identificados: {logs}')\""
+      ],
+      "criterio_verificacao": "Arquivos de log mapeados.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "EXECUTE",
+      "camada": "Camada 2: Rotação & Truncamento Determinístico",
+      "area": "Sistema de Arquivos & Buffers",
+      "acao": "Truncar arquivos de log que ultrapassem 20MB preservando descritores ativos",
+      "comandos": [
+        "find ./logs -name '*.log' -size +20M -exec truncate -s 0 {} \\; 2>/dev/null || true"
+      ],
+      "criterio_verificacao": "Logs volumosos truncados sem deleção de descritores de processos ativos.",
+      "timeout_segundos": 30,
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "FINALIZE",
+      "camada": "Camada 3: Validação de Liberação de Espaço",
+      "area": "Recursos de Disco & Integridade",
+      "acao": "Conferir espaço liberado e integridade dos serviços",
+      "comandos": [
+        "find ./logs -name '*.log' -exec ls -lh {} \\; 2>/dev/null || true"
+      ],
+      "criterio_verificacao": "Espaço em disco verificado e buffers limpos.",
+      "mensagem": "Limpeza de logs finalizada com sucesso."
+    }
+  ],
+  "variaveis": {
+    "target": "default",
+    "target_os": [
+      "linux",
+      "darwin",
+      "windows"
+    ]
+  }
+}

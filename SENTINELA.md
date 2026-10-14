@@ -358,7 +358,8 @@ Sempre que o usuário emitir um destes gatilhos canônicos, É TERMINANTEMENTE P
      `bash "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/atualizar_sentinela.sh"`
    * **Comportamento:** Executa `git pull origin main`, sincroniza dicionário e skills, emitindo recibo.
 
-#### 13.2 Ponte Léxica Sob Demanda para Outros Termos
-Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `hwid_spoof`, `inspecionar_hwid`, `hwid_hardware_rebuild`, `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
-1. **Consulta Imediata via `grep_search`:** A IA consulta cirurgicamente a chave em `~/.gemini/config/dicionario_lexico.json` para obter a definição e o escopo exato da operação antes de iniciar a execução.
-2. **Fidelidade Canônica:** Executa rigorosamente os passos prescritos no dicionário léxico, preservando a governança, as regras de segurança e o isolamento do projeto ativo.
+#### 13.2 Ponte Léxica Sob Demanda & Pipelines Modulares
+Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `hwid`, `inspecionar_hwid`, `hwid_hardware_rebuild`, `sanitizar_hwid`, `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
+1. **Consulta e Execução Imediata:** A IA consulta o `~/.gemini/config/dicionario_lexico.json` e dispara o executor universal desacoplado:
+   `python3 "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/executar_pipeline.py" "<gatilho>"`
+2. **Pipelines Modulares Isolados:** Cada esteira reside em seu arquivo independente em `4-automacao-e-shell/pipelines/`, garantindo execução cirúrgica, consumo mínimo de tokens e zero sobrecarga no dicionário unificado.
