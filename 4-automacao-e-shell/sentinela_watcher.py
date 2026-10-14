@@ -29,15 +29,40 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
+def get_github_token() -> str:
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        return token
+    try:
+        proc = subprocess.run(
+            ["git", "credential-osxkeychain", "get"],
+            input="protocol=https\nhost=github.com\n",
+            text=True,
+            capture_output=True,
+            check=False
+        )
+        for line in proc.stdout.splitlines():
+            if line.startswith("password="):
+                return line.split("=", 1)[1].strip()
+    except Exception:
+        pass
+    try:
+        proc = subprocess.run(["gh", "auth", "token"], text=True, capture_output=True, check=False)
+        if proc.returncode == 0 and proc.stdout.strip():
+            return proc.stdout.strip()
+    except Exception:
+        pass
+    return ""
+
 # Configurações Globais
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", os.environ.get("GH_TOKEN", ""))
+GITHUB_TOKEN = get_github_token()
 STATE_FILE = os.path.expanduser("~/.gemini/watcher_state.json")
 LOG_DIR = os.path.expanduser("~/.gemini/logs")
 SHARED_STATE_FILE = os.path.expanduser("~/.gemini/ESTADO_OPERACIONAL.json")
 
 MAX_BG_WORKERS = 4
 POLL_INTERVAL_SECONDS = 45
-WORKER_TIMEOUT_SECONDS = 300  # 5 minutos por tarefa
+WORKER_TIMEOUT_SECONDS = 900  # 15 minutos por tarefa
 MAX_RETRIES = 3
 
 CATEGORIAS = ["BOTS", "SITES", "SISTEMAS", "APLICAÇÕES", "VPS"]
@@ -49,7 +74,7 @@ REPOS_TO_WATCH = [
     ("Jarvis Assistente", "xProTorkz/Jarvis-Assistente"),
     ("Buy Station", "xProTorkz/Buy-Station"),
     ("Minha Agenda", "xProTorkz/Minha-Agenda"),
-    ("Arena Beach", "xProTorkz/gestao-arena"),
+    ("Arena Beach", "xProTorkz/Arena-Beach"),
     ("Antigravity Turbinado", "xProTorkz/Antigravity-Turbinado")
 ]
 
