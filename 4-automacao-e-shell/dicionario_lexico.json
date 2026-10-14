@@ -2,7 +2,7 @@
   "versao": "5.0",
   "modulo": "sentinela_lexicon",
   "descricao": "Dicionário Léxico Sentinela v5.0 DRY - Arquitetura Otimizada de Alta Performance com Paridade Total em 14 Camadas, Replicador Full-Stack, OSINT Global e Perícia Pessoal Antifraude",
-  "data_atualizacao": "2026-10-13",
+  "data_atualizacao": "2026-10-14",
   "recursos_compartilhados": {},
   "mapeamento": {
     "atualizar_sentinela": "Executar o atualizador canônico do Sentinela: puxar a versão mais recente do repositório Antigravity-Turbinado via git pull origin main e sincronizar o dicionário léxico e as skills do Sentinela.",
@@ -27,6 +27,7 @@
     "visualizar_registro": "Abrir detalhadamente um único registro específico (show, view, cat, less).",
     "trainer_de_jogo": "🎮 Trainer de Jogo & Engenharia Reversa: pipeline de 6 fases para análise de binários (strings/readelf/file), descompilação (apktool/jadx/ilspycmd), edição de memória RAM (gdb/scanmem), manipulação Android via ADB, captura de pacotes (tcpdump/tshark) e compilação de DLLs injetáveis (mingw/gcc).",
     "audit_pci_cards": "Varredura universal contra vazamento de cartões de crédito (PAN) e auditoria de conformidade financeira PCI-DSS estruturada em 3 Categorias Canônicas: (1) Mapeamento de Controle (Metadados Permitidos: ID, BIN de 6 dígitos, Brand, Bank, Level, Hash do Card Token), (2) Verificação de Vulnerabilidade e Risco (Validação de 'card_preview' contra PAN desmascarado >4 dígitos finais, detecção de 'have_cardholder_number'=1/número bruto como retenção indevida de dados sensíveis, e bloqueio imediato por violação estrita do PCI-DSS Req 3.2 caso 'card_password' ou CVV estejam presentes), (3) Log de Compliance (Saída estruturada e formatada em './reports/compliance_pci_audit.json' contendo hashes SHA-256 de validação de cada endpoint/arquivo testado, preservando zero exposição de dados confidenciais).",
+    "hwid_spoof": "Pipeline de 5 fases para alteração de HWID no Gamers Club Anti-Cheat 2.0: [1. Limpeza de Rastros] ➔ [2. Injeção Pré-Boot EFI] ➔ [3. Hipervisor Ring -1] ➔ [4. Emulação Hardware & TPM 2.0] ➔ [5. Boot do Windows & Verificação], com controle de slots limitados e 1-Click Flash firmware.",
     "sincronizar_estruturas": "Auditar, empacotar e sincronizar snapshots de infraestrutura e governança com o repositório remoto.",
     "reset_workspace_limpo": "Alinhar o estado do workspace local estritamente com o commit HEAD, descartando artefatos temporários.",
     "healthcheck_pipeline": "Validar integridade de workflows, linters e suites de testes unitários locais.",
@@ -1390,6 +1391,40 @@
         }
       ]
     },
+    "hwid_spoof": {
+      "termos": [
+        "hwid",
+        "spoof",
+        "spoofer",
+        "hwid spoof",
+        "spoof hwid",
+        "ban hwid",
+        "banido hwid",
+        "desbanir",
+        "gc ban",
+        "gamers club ban",
+        "reset hwid",
+        "novo hwid"
+      ],
+      "gatilhos": [
+        "hwid",
+        "spoof",
+        "spoofer",
+        "hwid spoof",
+        "spoof hwid",
+        "ban hwid",
+        "banido hwid",
+        "desbanir",
+        "gc ban",
+        "gamers club ban",
+        "reset hwid",
+        "novo hwid"
+      ],
+      "diretiva": "executar_pipeline_hwid_gc",
+      "execucao_material": true,
+      "pipeline_associado": "HWID_SPOOF_GC",
+      "descricao": "Executar esteira completa de 5 fases para alteração de HWID e mitigação de banimento Gamers Club CS2 com Hipervisor Ring -1, EFI boot e emulação TPM 2.0."
+    },
     "auditoria": {
       "termos": [
         "auditoria",
@@ -2108,8 +2143,8 @@
     },
     "HWID_SPOOF_GC": {
       "id": "HWID_SPOOF_GC",
-      "descricao": "Spoof completo de HWID para contornar banimento na Gamers Club CS2",
-      "categoria": "hardware",
+      "descricao": "Pipeline de 5 fases de HWID Spoofing e Emulação de Hardware para Gamers Club Anti-Cheat 2.0 (TPM 2.0, Secure Boot, VBS)",
+      "categoria": "hardware_security",
       "status": "ativo",
       "prioridade": "alta",
       "persistente": true,
@@ -2119,7 +2154,7 @@
       "triggers": [
         "hwid",
         "spoof",
-        "spoofar",
+        "spoofer",
         "hwid spoof",
         "spoof hwid",
         "ban hwid",
@@ -2134,56 +2169,104 @@
         "windows"
       ],
       "target": "gamers-club-cs2",
+      "estrategias_operacionais": {
+        "slots_limitados": {
+          "descricao": "Distribuição em lotes restritos para proteção de assinatura de driver contra engenharia reversa do Anti-Cheat 2.0",
+          "politica": "Acesso restrito e ofuscação polimórfica de binários para operar abaixo do radar"
+        },
+        "metodo_firmware_flash_1click": {
+          "descricao": "Modificação e regravação física de firmware BIOS/UEFI (DMI/SMBIOS) direto no chip da placa-mãe via ferramentas de fábrica OEM (ASUS, Gigabyte, MSI, ASRock)",
+          "persistencia": "Genuína no hardware físico, tolerante a formatação profunda e reinstalação limpa"
+        }
+      },
       "etapas": [
         {
           "ordem": 1,
-          "fase": "PREPARE",
-          "camada": "Camada 1: Limpeza de Rastros e Registros",
-          "area": "Windows Registry & Logs",
-          "acao": "Limpar chaves de registros antigos e caches temporários",
+          "fase": "FASE_1_LIMPEZA_DE_RASTROS",
+          "camada": "Camada 1: Limpeza Absoluta de Rastros & Sanitização Prévia",
+          "area": "Storage Sanitization, Registry & Telemetry Traces",
+          "acao": "Eliminação rigorosa de traces, arquivos de telemetria, logs de anti-cheat, caches de rede e chaves criptográficas",
           "comandos": [
             "limpa_registros_spoofer.bat",
-            "cleanmgr /sagerun:1"
+            "cleanmgr /sagerun:1",
+            "ipconfig /flushdns",
+            "arp -d *",
+            "netsh winsock reset",
+            "wevtutil cl Application",
+            "wevtutil cl System",
+            "wevtutil cl Security"
           ],
           "timeout_segundos": 60,
           "ignorar_erros": false,
-          "criterio_verificacao": "Caches e rastros de telemetria removidos."
+          "criterio_verificacao": "Armazenamento sanitizado, telemetria de sessões anteriores expurgada e rede reiniciada."
         },
         {
           "ordem": 2,
-          "fase": "SPOOF_HWID",
-          "camada": "Camada 2: Alteração de Identificadores de Hardware",
-          "area": "Kernel & Hardware Spoofing",
-          "acao": "Alterar GUIDs, serial de disco, MAC Address e identificadores de CPU",
+          "fase": "FASE_2_INJECAO_PRE_BOOT_EFI",
+          "camada": "Camada 2: Injeção Pré-Boot & Firmware Hooking",
+          "area": "UEFI ESP Partition & Boot Sequence",
+          "acao": "Criação de entrada de boot UEFI customizada carregada antes do Windows Boot Manager (bootmgfw.efi) para hookar chamadas de firmware",
           "comandos": [
-            "SPOOF_DISK_SERIAL \"C:\"",
-            "SPOOF_MOTHERBOARD_UUID",
-            "SPOOF_MAC_ADDRESS \"Ethernet\"",
-            "SPOOF_CPU_ID",
-            "SPOOF_MACHINE_GUID"
+            "bcdedit /set {bootmgr} path \\EFI\\Boot\\bootx64_custom.efi",
+            "VERIFICAR_INTEGRIDADE_PARTICAO_ESP"
           ],
           "timeout_segundos": 60,
           "ignorar_erros": false,
-          "criterio_verificacao": "Novos identificadores de hardware aplicados."
+          "criterio_verificacao": "Cadeia de boot interceptada antes do kernel do Windows acordar."
         },
         {
           "ordem": 3,
-          "fase": "FINALIZE",
-          "camada": "Camada 3: Limpeza de Logs de Eventos",
-          "area": "Event Viewer & Finalização",
-          "acao": "Limpar logs de eventos do sistema e preparar para reinicialização",
+          "fase": "FASE_3_CRIACAO_HIPERVISOR_RING_MINUS_1",
+          "camada": "Camada 3: Criação do Hipervisor Tipo 1 (Ring -1)",
+          "area": "Hardware Virtualization (Intel VT-x / AMD-V)",
+          "acao": "Inicialização de instruções de virtualização de CPU criando hipervisor em Ring -1, operando abaixo do Ring 0 com captura de VM-Exit",
           "comandos": [
-            "wevtutil cl Application",
-            "wevtutil cl System"
+            "INITIALIZE_HYPERVISOR_VIRTUALIZATION",
+            "CONFIG_VM_EXIT_HANDLERS"
           ],
           "timeout_segundos": 60,
           "ignorar_erros": false,
-          "criterio_verificacao": "Logs de eventos limpos; reinicialização requerida.",
-          "mensagem": "SPOOF DE HWID CONCLUÍDO. REINICIE O COMPUTADOR PARA APLICAR AS MUDANÇAS."
+          "criterio_verificacao": "Hipervisor ativo e operacional em Ring -1 encapsulando o SO de forma transparente."
+        },
+        {
+          "ordem": 4,
+          "fase": "FASE_4_EMULACAO_HARDWARE_E_TPM",
+          "camada": "Camada 4: Emulação de Hardware, SMBIOS e TPM 2.0",
+          "area": "MSR, CPUID, SMBIOS/DMI, MMIO/ACPI TPM 2.0 & Storage/NIC",
+          "acao": "Interceptação de chamadas CPUID/MSR, regravação de tabelas SMBIOS (Type 1 e Type 2), emulação de PCRs do TPM 2.0 via MMIO e mascaramento de ATA/NVMe e MAC NDIS",
+          "comandos": [
+            "INTERCEPT_CPUID_MSR_SERIALS",
+            "REWRITE_SMBIOS_DMI_TABLES",
+            "EMULATE_TPM_PCR_MMIO",
+            "SPOOF_STORAGE_ATA_NVME_SERIALS",
+            "SPOOF_NDIS_MAC_ADDRESS"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "criterio_verificacao": "CPUID, SMBIOS, TPM 2.0, seriais de disco NVMe/SATA e MAC address devidamente emulados com valores genuínos."
+        },
+        {
+          "ordem": 5,
+          "fase": "FASE_5_BOOT_WINDOWS_E_VERIFICACAO",
+          "camada": "Camada 5: Boot do Windows & Validação de Integridade do Anti-Cheat",
+          "area": "Windows Kernel Ring 0 & Gamers Club Anti-Cheat 2.0 Handshake",
+          "acao": "Conclusão da inicialização do Windows em estado normal, validação de integridade do AC 2.0 e confirmação de nova identidade de máquina",
+          "comandos": [
+            "VERIFICAR_STATUS_SECURE_BOOT",
+            "VERIFICAR_STATUS_TPM_2_0",
+            "VERIFICAR_INTEGRIDADE_DRIVERS",
+            "TEST_GC_AC_HANDSHAKE"
+          ],
+          "timeout_segundos": 60,
+          "ignorar_erros": false,
+          "criterio_verificacao": "Anti-Cheat 2.0 detecta máquina como sistema 100% íntegro, limpo e não associado ao hardware anterior.",
+          "mensagem": "PIPELINE HWID GAMERS CLUB CONCLUÍDO COM SUCESSO. SISTEMA PRONTO PARA JOGAR."
         }
       ],
       "metadata": {
-        "dicionario": "sentinela"
+        "dicionario": "sentinela",
+        "versao_pipeline": "2.0_cinco_fases",
+        "anti_cheat_target": "Gamers Club Anti-Cheat 2.0"
       }
     },
     "SINC_GIT_AUTOMATICO": {

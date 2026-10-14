@@ -359,6 +359,6 @@ Sempre que o usuário emitir um destes gatilhos canônicos, É TERMINANTEMENTE P
    * **Comportamento:** Executa `git pull origin main`, sincroniza dicionário e skills, emitindo recibo.
 
 #### 13.2 Ponte Léxica Sob Demanda para Outros Termos
-Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
+Para qualquer outro comando rápido, jargão, verbo ou intenção enviado pelo usuário (ex: `hwid_spoof`, `fuzzing_api_extremo`, `destravar_sqlite_wal`, `harvest`, `higienizar_logs`, `destravar_git`, `trainer_de_jogo`, `audit_pci_cards`):
 1. **Consulta Imediata via `grep_search`:** A IA consulta cirurgicamente a chave em `~/.gemini/config/dicionario_lexico.json` para obter a definição e o escopo exato da operação antes de iniciar a execução.
 2. **Fidelidade Canônica:** Executa rigorosamente os passos prescritos no dicionário léxico, preservando a governança, as regras de segurança e o isolamento do projeto ativo.
