@@ -11,15 +11,21 @@
   },
   "dicionario": {
     "auditoria_total": {
-      "o_que_e": "Varredura forense e arquitetural profunda em 14 camadas do projeto (código, dependências, segurança PCI-DSS, secrets, git e conformidade estrutural).",
-      "o_que_faz": "Inspeciona a árvore de arquivos, audita vazamento de credenciais e cartões PCI-DSS, verifica integridade de dependências, checa conformidade de regras e emite relatório forense consolidado.",
+      "o_que_e": "Varredura forense e arquitetural profunda em 14 camadas do projeto (código, dependências, segurança PCI-DSS, secrets, git, schemas e dump/extração de banco de dados).",
+      "o_que_faz": "Inspeciona a árvore de arquivos, audita vazamento de credenciais e cartões PCI-DSS, realiza dump e extração estruturada de bancos/dados, verifica dependências e emite relatório forense consolidado.",
       "gatilhos": [
         "auditoria total",
         "auditoria toal",
         "auditoria totl",
         "auditoria-total",
         "auditoria toatl",
-        "auditoria tota"
+        "auditoria tota",
+        "dump banco",
+        "dump do banco",
+        "dump-banco",
+        "dump bacno",
+        "fazer dump",
+        "dump"
       ],
       "pipeline": "pipelines/auditoria_total.json"
     },
@@ -82,18 +88,6 @@
         "sync-git"
       ],
       "pipeline": "pipelines/sinc_git.json"
-    },
-    "dump_banco": {
-      "o_que_e": "Rotina de extração e exportação estruturada de esquemas e dados de bancos relacionais e NoSQL.",
-      "o_que_faz": "Gera cópia consistente das tabelas em formato SQL/JSON com compactação e registro de hash forense para backup ou análise.",
-      "gatilhos": [
-        "dump banco",
-        "dump do banco",
-        "dump-banco",
-        "dump bacno",
-        "fazer dump"
-      ],
-      "pipeline": "pipelines/dump_banco.json"
     },
     "limpeza_logs": {
       "o_que_e": "Rotina de manutenção e higienização de arquivos de log do projeto e do sistema operacional.",
