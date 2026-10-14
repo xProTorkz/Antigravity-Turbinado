@@ -62,13 +62,13 @@ def build():
                 print(f"    [X] Erro de validação no pipeline {pf.name}: {ex}")
                 sys.exit(1)
 
-    # 3. Validar integridade dos termos do dicionário (O Que É & O Que Faz)
-    termos = dict_data.get("dicionario", {})
+    # 3. Validar integridade dos termos do dicionário (Gatilhos & O Que Faz)
+    termos = dict_data.get("gatilhos", dict_data.get("dicionario", {}))
     termos_com_pipeline = 0
-    print(f"\n[*] Validando {len(termos)} termos do dicionário conceitual:")
+    print(f"\n[*] Validando {len(termos)} termos do roteador inteligente:")
     for tid, tinfo in termos.items():
-        assert "o_que_e" in tinfo, f"Termo '{tid}' não possui 'o_que_e'"
         assert "o_que_faz" in tinfo, f"Termo '{tid}' não possui 'o_que_faz'"
+        assert "gatilhos" in tinfo, f"Termo '{tid}' não possui 'gatilhos'"
         p_rel = tinfo.get("pipeline")
         if p_rel:
             p_file = BASE_DIR / p_rel
@@ -89,7 +89,7 @@ def build():
 
     print("\n📊 RESUMO DO DICIONÁRIO:")
     print(f"    ✓ Versão Canônica:          {dict_data.get('versao')}")
-    print(f"    ✓ Termos (O Que É / Faz):   {len(termos)} termos catalogados")
+    print(f"    ✓ Gatilhos Inteligentes:    {len(termos)} categorias cadastradas")
     print(f"    ✓ Termos com Pipeline:      {termos_com_pipeline} esteiras mapeadas")
     print(f"    ✓ Pipelines Executáveis:    {pipelines_count} arquivos independentes")
     print(f"    🔒 SHA-256 do Canônico:      {sha_local}")

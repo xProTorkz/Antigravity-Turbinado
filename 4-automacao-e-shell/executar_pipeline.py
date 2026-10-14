@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-executar_pipeline.py — Executor Universal e Dicionário Léxico Sentinela v6.0
+executar_pipeline.py — Roteador e Executor Inteligente do Sentinela v7.0
 
-Regra Fundamental:
-1. Consulta de Termos (ex: "auditoria total", "auditoria replicador", "hwid"):
-   O Dicionário mostra exclusivamente O QUE É e O QUE FAZ.
-2. Comando de Execução (ex: "pipeline", "pipeline auditoria total", "pipeline completo", "--run"):
-   Carrega sob demanda o arquivo em 'pipelines/' e EXECUTA OS COMANDOS CONFIGURADOS.
+Comportamento Soberano:
+1. Disparo Imediato: Quando o usuário diz "auditoria toal", "hwid", "sinc git", etc.,
+   o roteador reconhece o gatilho (inclusive com erros de digitação), exibe o que realmente faz
+   e COMEÇA A EXECUTAR IMEDIATAMENTE os comandos configurados no pipeline!
+2. Não exige a palavra 'pipeline' como prefixo (embora ainda a reconheça se fornecida).
 
 Uso:
-    python3 executar_pipeline.py "auditoria total"               # Mostra o que é e o que faz
-    python3 executar_pipeline.py "pipeline auditoria total"      # Executa os comandos configurados
-    python3 executar_pipeline.py "pipeline completo"             # Executa o pipeline completo (auditoria_total)
-    python3 executar_pipeline.py "pipeline"                      # Executa ou lista esteiras ativas
-    python3 executar_pipeline.py --run "auditoria replicador"    # Executa diretamente os comandos
-    python3 executar_pipeline.py --list                          # Lista todo o catálogo do dicionário
+    python3 executar_pipeline.py "auditoria toal"           # Dispara e executa imediatamente!
+    python3 executar_pipeline.py "hwid"                     # Dispara e executa o pipeline unificado de HWID!
+    python3 executar_pipeline.py "sinc git"                 # Dispara e executa a sincronização git!
+    python3 executar_pipeline.py --info "auditoria total"   # Modo estrito de consulta informativa
+    python3 executar_pipeline.py --list                     # Lista todos os gatilhos e o que fazem
 """
 
 import os
@@ -66,72 +65,61 @@ def load_dictionary() -> Dict[str, Any]:
                     return json.load(f)
             except Exception:
                 pass
-    return {"dicionario": {}}
+    return {"gatilhos": {}}
 
-def find_term_in_dict(query: str, dict_data: Dict[str, Any]) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-    query_norm = normalize(query)
-    termos = dict_data.get("dicionario", {})
+def find_trigger(query: str, dict_data: Dict[str, Any]) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
+    raw_norm = normalize(query)
+    # Remove prefixos opcionais como 'pipeline', 'pipeiline', 'rodar', 'executar'
+    cleaned = re.sub(r"^(?:pipeline|pipeiline|pipline|rodar|executar|fazer)\s+", "", raw_norm).strip()
+    
+    gatilhos_dict = dict_data.get("gatilhos", dict_data.get("dicionario", {}))
 
-    # 1. Match exato na chave
-    if query in termos:
-        return query, termos[query]
-    if query_norm in termos:
-        return query_norm, termos[query_norm]
+    # 1. Match direto na chave
+    if query in gatilhos_dict:
+        return query, gatilhos_dict[query]
+    if cleaned in gatilhos_dict:
+        return cleaned, gatilhos_dict[cleaned]
 
-    # 2. Match exato nos gatilhos
-    for tid, tdata in termos.items():
-        gatilhos = [normalize(g) for g in tdata.get("gatilhos", [])]
-        if query_norm in gatilhos:
+    # 2. Match exato nos gatilhos cadastrados
+    for tid, tdata in gatilhos_dict.items():
+        aliases = [normalize(g) for g in tdata.get("gatilhos", [])]
+        if raw_norm in aliases or cleaned in aliases:
             return tid, tdata
 
-    # 3. Match parcial nos gatilhos ou nome
-    for tid, tdata in termos.items():
-        gatilhos = [normalize(g) for g in tdata.get("gatilhos", [])]
-        nome = normalize(tdata.get("nome", ""))
-        if any(g in query_norm or query_norm in g for g in gatilhos) or (query_norm in nome):
-            return tid, tdata
+    # 3. Match por substring ou aproximação nos gatilhos
+    for tid, tdata in gatilhos_dict.items():
+        aliases = [normalize(g) for g in tdata.get("gatilhos", [])]
+        for a in aliases:
+            if a in cleaned or cleaned in a or a in raw_norm:
+                return tid, tdata
 
     # 4. Procura direta em pipelines/
-    direct_file = PIPELINES_DIR / f"{query_norm.replace(' ', '_')}.json"
+    direct_file = PIPELINES_DIR / f"{cleaned.replace(' ', '_')}.json"
     if direct_file.exists():
         return direct_file.stem, {
             "nome": direct_file.stem.replace("_", " ").title(),
-            "o_que_e": f"Pipeline direto: {direct_file.name}",
-            "o_que_faz": "Executa comandos definidos no arquivo de pipeline.",
-            "gatilhos": [query_norm],
-            "pipeline": f"pipelines/{direct_file.name}"
+            "o_que_faz": f"Executa esteira direta: {direct_file.name}",
+            "gatilhos": [cleaned],
+            "pipeline": f"pipelines/{direct_file.name}",
+            "auto_execute": True
         }
 
     return None, None
 
-def show_term_card(term_id: str, term_data: Dict[str, Any]):
+def show_info_card(term_id: str, term_data: Dict[str, Any]):
     nome = term_data.get("nome", term_id.replace("_", " ").title())
-    o_que_e = term_data.get("o_que_e", "Definição não cadastrada.")
-    o_que_faz = term_data.get("o_que_faz", "Descrição de ação não cadastrada.")
+    o_que_faz = term_data.get("o_que_faz", "")
     gatilhos = ", ".join(term_data.get("gatilhos", []))
-    p_file = term_data.get("pipeline")
+    p_file = term_data.get("pipeline", "")
 
     print("\n" + "═" * 78)
     print(f"{BOLD}{CYAN}📖 [SENTINELA - DICIONÁRIO LÉXICO] {nome.upper()}{RESET}")
     print("═" * 78)
-    print(f"\n{BOLD}{GREEN}• O QUE É:{RESET}")
-    print(f"  {o_que_e}")
-
-    print(f"\n{BOLD}{YELLOW}• O QUE FAZ:{RESET}")
+    print(f"\n{BOLD}{YELLOW}• O QUE REALMENTE FAZ:{RESET}")
     print(f"  {o_que_faz}")
-
-    if gatilhos:
-        print(f"\n{BOLD}{DIM}• GATILHOS:{RESET}")
-        print(f"  {DIM}{gatilhos}{RESET}")
-
-    if p_file:
-        print(f"\n{BOLD}{BLUE}• PIPELINE CONFIGURADO:{RESET} {p_file}")
-        print(f"\n{BOLD}{MAGENTA}⚡ PARA EXECUTAR OS COMANDOS CONFIGURADOS:{RESET}")
-        print(f"  Diga: {BOLD}'pipeline {term_data.get('gatilhos', [term_id])[0]}'{RESET} ou rode:")
-        print(f"  {CYAN}python3 4-automacao-e-shell/executar_pipeline.py --run \"{term_id}\"{RESET}")
-    else:
-        print(f"\n{DIM}ℹ️  Termo puramente conceitual. Não possui esteira executável associada.{RESET}")
-
+    print(f"\n{BOLD}{DIM}• GATILHOS VINCULADOS:{RESET}")
+    print(f"  {DIM}{gatilhos}{RESET}")
+    print(f"\n{BOLD}{BLUE}• PIPELINE CONFIGURADO:{RESET} {p_file}")
     print("═" * 78 + "\n")
 
 def execute_command(cmd: str, timeout: int = 60) -> Tuple[bool, str]:
@@ -139,7 +127,7 @@ def execute_command(cmd: str, timeout: int = 60) -> Tuple[bool, str]:
     is_windows = current_os == "windows"
     shell_cmd = cmd
 
-    # Tratamento gracioso para comandos de Windows executados em Unix
+    # Tratamento para comandos exclusivos de Windows no macOS/Linux
     win_tools = ["powershell", "cleanmgr", "wevtutil", "bcdedit", "netsh", "arp -d", "ipconfig", ".bat", ".cmd"]
     if not is_windows and any(tool in cmd.lower() for tool in win_tools) and not shutil.which("powershell") and not shutil.which("pwsh"):
         return (True, f"[INFO]: Comando Windows validado estruturalmente para execução em host ({current_os})")
@@ -165,7 +153,7 @@ def execute_command(cmd: str, timeout: int = 60) -> Tuple[bool, str]:
     except Exception as ex:
         return (False, f"ERRO DE EXECUÇÃO: {str(ex)}")
 
-def run_pipeline_file(pipeline_rel_path: str) -> bool:
+def run_pipeline_file(pipeline_rel_path: str, trigger_name: str, o_que_faz: str) -> bool:
     pfile = BASE_DIR / pipeline_rel_path if not Path(pipeline_rel_path).is_absolute() else Path(pipeline_rel_path)
 
     if not pfile.exists():
@@ -176,14 +164,14 @@ def run_pipeline_file(pipeline_rel_path: str) -> bool:
         pipe = json.load(f)
 
     pipe_id = pipe.get("id", pfile.stem.upper())
-    descricao = pipe.get("descricao", "Pipeline Operacional")
+    descricao = pipe.get("descricao", o_que_faz)
     etapas = pipe.get("etapas", [])
 
-    print("\n" + "=" * 78)
-    print(f"{BOLD}{CYAN}🚀 [SENTINELA] EXECUTANDO COMANDOS CONFIGURADOS: {pipe_id}{RESET}")
-    print(f"{DIM}📄 Arquivo: {pfile.name} | Total de Etapas: {len(etapas)}{RESET}")
-    print(f"{YELLOW}📝 Descrição: {descricao}{RESET}")
-    print("=" * 78 + "\n")
+    print("\n" + "═" * 78)
+    print(f"{BOLD}{CYAN}🎯 [SENTINELA] GATILHO RECONHECIDO: {trigger_name.upper()}{RESET}")
+    print(f"{YELLOW}📋 O QUE REALMENTE FAZ:{RESET} {o_que_faz}")
+    print(f"{BOLD}{GREEN}🚀 DISPARANDO PIPELINE: {pipe_id} ({pfile.name} | {len(etapas)} etapas){RESET}")
+    print("═" * 78 + "\n")
 
     start_time = time.time()
     steps_success = 0
@@ -225,7 +213,7 @@ def run_pipeline_file(pipeline_rel_path: str) -> bool:
 
         if step_ok:
             steps_success += 1
-            print(f"  {GREEN}✓ Critério Satisfeito: {criterio}{RESET}\n")
+            print(f"  {GREEN}✓ Concluído: {criterio}{RESET}\n")
         else:
             print(f"  {YELLOW}⚠️  Aviso: Etapa {ordem} concluída com ressalvas.{RESET}\n")
             if not ignorar_erros:
@@ -233,26 +221,26 @@ def run_pipeline_file(pipeline_rel_path: str) -> bool:
                 return False
 
     elapsed = round(time.time() - start_time, 2)
-    print("=" * 78)
-    print(f"{BOLD}{GREEN}✨ PIPELINE {pipe_id} CONCLUÍDO COM SUCESSO!{RESET}")
-    print(f"  • Etapas Concluídas: {steps_success}/{len(etapas)}")
-    print(f"  • Tempo Decorrido:    {elapsed}s")
-    print(f"  • Timestamp UTC:      {datetime.now(timezone.utc).isoformat()}")
-    print("=" * 78 + "\n")
+    print("═" * 78)
+    print(f"{BOLD}{GREEN}✨ PIPELINE {pipe_id} EXECUTADO COM SUCESSO!{RESET}")
+    print(f"  • Etapas Executadas:  {steps_success}/{len(etapas)}")
+    print(f"  • Tempo de Execução: {elapsed}s")
+    print(f"  • Horário UTC:       {datetime.now(timezone.utc).isoformat()}")
+    print("═" * 78 + "\n")
     return True
 
 def list_catalog(dict_data: Dict[str, Any]):
-    termos = dict_data.get("dicionario", {})
-    print("\n" + "=" * 78)
-    print(f"{BOLD}{CYAN}📚 [SENTINELA] CATÁLOGO DO DICIONÁRIO LÉXICO (O QUE É / O QUE FAZ){RESET}")
-    print("=" * 78)
-    for tid, tdata in sorted(termos.items()):
-        p = tdata.get("pipeline")
-        status_p = f"[{CYAN}{p}{RESET}]" if p else f"{DIM}(Conceitual){RESET}"
-        print(f"\n{BOLD}{GREEN}• {tdata.get('nome', tid)}{RESET} {status_p}")
-        print(f"  {YELLOW}O que é:{RESET} {tdata.get('o_que_e')}")
-        print(f"  {YELLOW}O que faz:{RESET} {tdata.get('o_que_faz')}")
-    print("\n" + "=" * 78 + "\n")
+    gatilhos = dict_data.get("gatilhos", dict_data.get("dicionario", {}))
+    print("\n" + "═" * 78)
+    print(f"{BOLD}{CYAN}📚 [SENTINELA] DICIONÁRIO LÉXICO & ROTEADOR INTELIGENTE{RESET}")
+    print("═" * 78)
+    for tid, tdata in sorted(gatilhos.items()):
+        p = tdata.get("pipeline", "N/A")
+        gats = ", ".join(tdata.get("gatilhos", [])[:5])
+        print(f"\n{BOLD}{GREEN}• {tdata.get('nome', tid)}{RESET} ➔ {CYAN}{p}{RESET}")
+        print(f"  {YELLOW}O que realmente faz:{RESET} {tdata.get('o_que_faz')}")
+        print(f"  {DIM}Gatilhos:{RESET} {gats}")
+    print("\n" + "═" * 78 + "\n")
 
 def main():
     if len(sys.argv) < 2 or sys.argv[1] in ["-h", "--help"]:
@@ -265,50 +253,37 @@ def main():
         list_catalog(dict_data)
         sys.exit(0)
 
-    # Identificar se é comando de execução expressa
-    force_run = False
+    # Modo somente informação (se explicitamente solicitado com --info ou -i)
+    only_info = False
     args = sys.argv[1:]
-
-    if args[0] in ["-r", "--run"]:
-        force_run = True
+    if args[0] in ["-i", "--info"]:
+        only_info = True
         args = args[1:]
 
     raw_query = " ".join(args).strip()
-    norm_query = normalize(raw_query)
-
-    # Regra: Se a chamada começa com "pipeline" (ou erros comuns como "pipeiline", "pipline"), é execução!
-    is_pipeline_trigger = False
-    cleaned_query = raw_query
-
-    pipeline_pattern = r"\b(?:pipeline|pipeiline|pipline|pipiline)\b"
-    if re.search(pipeline_pattern, raw_query, flags=re.IGNORECASE):
-        is_pipeline_trigger = True
-        cleaned_query = re.sub(pipeline_pattern, "", raw_query, flags=re.IGNORECASE).strip()
-
-    # Casos especiais de chamada de pipeline geral
-    if is_pipeline_trigger and (not cleaned_query or cleaned_query.lower() in ["completo", "total", "full"]):
-        cleaned_query = "auditoria_total"
-
-    tid, term_data = find_term_in_dict(cleaned_query if cleaned_query else raw_query, dict_data)
+    tid, term_data = find_trigger(raw_query, dict_data)
 
     if not term_data:
-        print(f"{RED}[X] Nenhum termo ou pipeline encontrado para: '{raw_query}'{RESET}")
-        print(f"{YELLOW}💡 Dica: Use 'python3 executar_pipeline.py --list' para ver todos os termos.{RESET}")
+        print(f"{RED}[X] Nenhum gatilho ou pipeline correspondente para: '{raw_query}'{RESET}")
+        print(f"{YELLOW}💡 Dica: Use 'python3 executar_pipeline.py --list' para ver todos os gatilhos.{RESET}")
         sys.exit(1)
 
-    # Se foi acionado com 'pipeline' ou '--run', executa os comandos!
-    if force_run or is_pipeline_trigger:
-        p_rel = term_data.get("pipeline")
-        if not p_rel:
-            print(f"{YELLOW}[!] O termo '{term_data.get('nome')}' é puramente conceitual e não possui comandos para executar.{RESET}")
-            show_term_card(tid, term_data)
-            sys.exit(0)
-        success = run_pipeline_file(p_rel)
-        sys.exit(0 if success else 1)
-    else:
-        # Consulta ao dicionário: mostra O QUE É e O QUE FAZ!
-        show_term_card(tid, term_data)
+    if only_info:
+        show_info_card(tid, term_data)
         sys.exit(0)
+
+    # DISPARO IMEDIATO: Tudo começa a acontecer diretamente!
+    p_rel = term_data.get("pipeline")
+    nome = term_data.get("nome", tid)
+    o_que_faz = term_data.get("o_que_faz", "")
+
+    if not p_rel:
+        print(f"{YELLOW}[!] Termo '{nome}' não possui pipeline configurado.{RESET}")
+        show_info_card(tid, term_data)
+        sys.exit(0)
+
+    success = run_pipeline_file(p_rel, nome, o_que_faz)
+    sys.exit(0 if success else 1)
 
 if __name__ == "__main__":
     main()

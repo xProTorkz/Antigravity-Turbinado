@@ -1,18 +1,12 @@
 {
   "versao": "6.0-LEAN-MODULAR",
   "modulo": "sentinela_lexicon",
-  "descricao": "Dicionário Léxico Canônico Sentinela v6.0 - Arquitetura Unificada e Enxuta. O dicionário define exclusivamente o que é e o que faz cada conceito. A execução dos comandos reside 100% segregada nos respectivos arquivos em pipelines/.",
+  "descricao": "Dicionário Léxico & Roteador de Execução do Sentinela v7.0. Mapeia palavras-gatilho e erros de digitação diretamente para o que realmente fazem e dispara a execução imediata em pipelines/.",
   "data_atualizacao": "2026-10-14",
-  "pipelines_diretorio": "pipelines",
-  "regras_de_ouro": {
-    "consulta_lexica": "Ao consultar um termo ou gatilho, o dicionário apresenta estritamente O QUE É e O QUE FAZ.",
-    "execucao_pipeline": "Para executar os comandos configurados, utiliza-se a palavra 'pipeline' (ou variações como 'pipeiline', 'pipeline completo').",
-    "isolamento_total": "Zero comandos executáveis embutidos no dicionário. Toda a orquestração reside em pipelines/*.json."
-  },
-  "dicionario": {
+  "diretorio_pipelines": "pipelines",
+  "gatilhos": {
     "auditoria_total": {
-      "o_que_e": "Varredura forense e arquitetural profunda em 14 camadas do projeto (código, dependências, segurança PCI-DSS, secrets, git, schemas e dump/extração de banco de dados).",
-      "o_que_faz": "Inspeciona a árvore de arquivos, audita vazamento de credenciais e cartões PCI-DSS, realiza dump e extração estruturada de bancos/dados, verifica dependências e emite relatório forense consolidado.",
+      "nome": "Auditoria Total",
       "gatilhos": [
         "auditoria total",
         "auditoria toal",
@@ -24,27 +18,31 @@
         "dump do banco",
         "dump-banco",
         "dump bacno",
-        "fazer dump",
-        "dump"
+        "dump",
+        "fazer dump"
       ],
-      "pipeline": "pipelines/auditoria_total.json"
+      "o_que_faz": "Executa varredura forense profunda em 14 camadas (código, dependências, conformidade PCI-DSS, credenciais, rotas e extração/dump de banco de dados), gerando laudo técnico consolidado.",
+      "pipeline": "pipelines/auditoria_total.json",
+      "auto_execute": true
     },
     "auditoria_replicador": {
-      "o_que_e": "Procedimento de auditoria e clonagem/espelhamento full-stack em 12 etapas para replicação fiel de sistemas, sites ou bots.",
-      "o_que_faz": "Audita o projeto de origem, replica layout estático e dinâmico, sanitiza rotas e segredos, gera a estrutura canônica local sob ~/projetos e valida a inicialização em localhost.",
+      "nome": "Auditoria Replicador",
       "gatilhos": [
         "auditoria replicador",
         "auditoria replicado",
         "auditoria repliador",
         "auditoria-replicador",
         "auditoria replicadro",
-        "auditoria repliicador"
+        "auditoria repliicador",
+        "replicador",
+        "espelhar projeto"
       ],
-      "pipeline": "pipelines/auditoria_replicador.json"
+      "o_que_faz": "Executa clonagem e espelhamento full-stack em 12 etapas, sanitizando rotas e segredos, gerando estrutura canônica local sob ~/projetos e subindo réplica em localhost.",
+      "pipeline": "pipelines/auditoria_replicador.json",
+      "auto_execute": true
     },
     "hwid": {
-      "o_que_e": "Pipeline completo de HWID: inspeção forense de identificadores, sanitização profunda de telemetria, spoofing pré-boot (EFI/Hipervisor/TPM) e reconstrução física de hardware/firmware contra banimentos de anti-cheat.",
-      "o_que_faz": "Audita seriais de Motherboard/CPU/Discos/MAC, limpa rastros e telemetria de rede/sistema, emula identidades de hardware e orienta a reconstrução de firmware limpo.",
+      "nome": "HWID Spoofing & Rebuild",
       "gatilhos": [
         "hwid",
         "hwd",
@@ -61,45 +59,54 @@
         "sanitizar ambiente",
         "sanitizar-ambiente"
       ],
-      "pipeline": "pipelines/hwid.json"
+      "o_que_faz": "Executa esteira unificada de HWID: inspeção forense de seriais, higienização de telemetria de rede/sistema, spoofing pré-boot (EFI/Hipervisor/TPM) e reconstrução física de firmware.",
+      "pipeline": "pipelines/hwid.json",
+      "auto_execute": true
     },
     "atualizar_sentinela": {
-      "o_que_e": "Rotina de sincronização e atualização de governança global do ecossistema Sentinela e Dicionário Léxico.",
-      "o_que_faz": "Puxa a versão mais recente do Git, sincroniza o dicionário léxico canônico e as skills em ~/.gemini/config/ e valida os checksums.",
+      "nome": "Atualização do Sentinela",
       "gatilhos": [
         "atualizar sentinela",
         "atualiza sentinela",
         "atualiza o sentinela",
         "baixa a nova atualizacao sentinela",
         "atualizar-sentinela",
-        "atualizar sentinla"
+        "atualizar sentinla",
+        "update sentinela"
       ],
-      "pipeline": "pipelines/atualizar_sentinela.json"
+      "o_que_faz": "Puxa as atualizações mais recentes do Git remoto, sincroniza o dicionário léxico e as skills em ~/.gemini/config/ e recompila a governança global.",
+      "pipeline": "pipelines/atualizar_sentinela.json",
+      "auto_execute": true
     },
     "sinc_git": {
-      "o_que_e": "Procedimento de sincronização segura e atômica com o repositório remoto sob regras do Sentinela.",
-      "o_que_faz": "Valida o status do workspace, audita diff contra secrets, realiza commit padronizado e envia alterações para o branch autorizado.",
+      "nome": "Sincronização Git",
       "gatilhos": [
         "sinc git",
         "sync git",
         "sinc-git",
         "sincronizar git",
         "sincroniza git",
-        "sync-git"
+        "sync-git",
+        "subir alteracoes",
+        "push git"
       ],
-      "pipeline": "pipelines/sinc_git.json"
+      "o_que_faz": "Valida o status do workspace, audita diff contra vazamento de segredos e realiza commit atômico e push para a branch autorizada.",
+      "pipeline": "pipelines/sinc_git.json",
+      "auto_execute": true
     },
     "limpeza_logs": {
-      "o_que_e": "Rotina de manutenção e higienização de arquivos de log do projeto e do sistema operacional.",
-      "o_que_faz": "Trunca arquivos .log volumosos preservando os cabeçalhos essenciais, remove dumps transitórios e libera espaço em disco.",
+      "nome": "Limpeza de Logs",
       "gatilhos": [
         "limpeza logs",
         "limpar logs",
         "limpeza-logs",
         "limpeza de logs",
-        "limpesa logs"
+        "limpesa logs",
+        "limpar log"
       ],
-      "pipeline": "pipelines/limpeza_logs.json"
+      "o_que_faz": "Trunca arquivos .log volumosos preservando os cabeçalhos essenciais, remove dumps transitórios e libera espaço em disco.",
+      "pipeline": "pipelines/limpeza_logs.json",
+      "auto_execute": true
     }
   }
 }

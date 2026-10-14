@@ -320,24 +320,19 @@ Para sincronizar e baixar a versão mais recente do Sentinela e do Dicionário L
 
 ---
 
-### 13. PROTOCOLO LÉXICO SOBERANO & SEPARAÇÃO CONCEITO / PIPELINE
+### 13. PROTOCOLO LÉXICO SOBERANO & DISPARO IMEDIATO DE PIPELINES
 
-O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade máxima e soberana de termos, conceitos e esteiras do ecossistema Sentinela / Antigravity Turbinado.
+O arquivo canônico `~/.gemini/config/dicionario_lexico.json` é a autoridade máxima e soberana de termos, mapeamentos e esteiras do ecossistema Sentinela / Antigravity Turbinado.
 
-A arquitetura adota a separação estrita e inegociável entre **Consulta Léxica** e **Execução de Pipeline**:
+A arquitetura adota a execução fluida e inteligente via **Palavras-Gatilho de Disparo Imediato**:
 
-#### 13.1 Consulta de Termos no Dicionário (O Que É & O Que Faz)
-Quando o usuário mencionar, perguntar ou acionar qualquer termo, conceito ou gatilho sem a palavra-chave de execução (ex: `"auditoria total"`, `"auditoria replicador"`, `"hwid"`, `"inspecionar hwid"`, `"dump banco"`, `"sinc git"`):
-* **Comportamento Obrigatório:** O Sentinela consulta `dicionario_lexico.json` e **APENAS MOSTRA O QUE É E O QUE FAZ**, apresentando o card conceitual, os gatilhos e o caminho do pipeline associado, SEM executar comandos.
-* **Exemplo de Apresentação:**
-  - **O que é:** Definição arquitetural clara e objetiva.
-  - **O que faz:** Explicação exata do escopo da ação.
-  - **Pipeline Configurado:** `pipelines/<arquivo>.json`.
-  - **Instrução de Execução:** Informa que para rodar os comandos, basta solicitar `pipeline <termo>` ou `pipeline completo`.
+#### 13.1 Disparo Imediato via Palavras-Gatilho
+* **Zero Fricção (Não Exige a Palavra "Pipeline"):** O usuário **não precisa dizer o prefixo "pipeline"**. Basta dizer o gatilho diretamente (ex: `"auditoria total"`, `"auditoria toal"`, `"hwid"`, `"auditoria replicador"`, `"dump banco"`, `"sinc git"`), e **tudo começa a acontecer imediatamente**.
+* **Comportamento do Sentinela:** A IA reconhece o gatilho (inclusive com variações e erros comuns de digitação), apresenta o cabeçalho técnico informando **o que realmente faz** e dispara imediatamente a execução dos comandos configurados no terminal via `run_command` ou pelo executor:
+  `python3 "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/executar_pipeline.py" "<gatilho>"`
 
-#### 13.2 Execução Operacional de Pipelines (Comandos Configurados)
-Quando o usuário emitir o comando utilizando a palavra-chave **`pipeline`** (ex: `"pipeline"`, `"pipeline auditoria total"`, `"pipeline completo"`, `"pipeline replicador"`, `"pipeline hwid"`):
-* **Comportamento Obrigatório:** O Sentinela carrega sob demanda o arquivo JSON correspondente na pasta `pipelines/` e **EXECUTA RIGOROSAMENTE OS COMANDOS QUE ESTÃO CONFIGURADOS** via `run_command` ou pelo executor:
-  `python3 "/Users/lucasvinicius/projetos/SISTEMAS/Antigravity Turbinado/4-automacao-e-shell/executar_pipeline.py" "pipeline <termo>"`
-* **Zero Comandos no Dicionário:** O dicionário permanece 100% limpo, leve e rápido, contendo apenas definições conceituais (`o_que_e` e `o_que_faz`). Cada esteira executiva reside de forma independente e isolada em seu próprio arquivo `pipelines/<arquivo>.json` com suas respectivas variáveis, etapas, comandos e critérios de validação.
+#### 13.2 Separação Inteligente: Dicionário Enxuto vs. Pipelines Modulares
+* **Dicionário Leve e Inteligente:** O dicionário permanece 100% limpo, sem scripts ou comandos crus embutidos. Ele mapeia as palavras-gatilho e seus erros de digitação diretamente para a ação (`o_que_faz`) e aponta para o respectivo arquivo em `pipelines/<arquivo>.json`.
+* **Pipelines como Verdade Executiva:** Cada esteira executiva reside de forma independente em seu próprio arquivo JSON (`pipelines/`), contendo as etapas cronológicas, comandos reais, variáveis, timeouts e critérios de validação.
+* **Consulta Estritamente Informativa:** Caso o usuário deseje apenas ler a definição sem executar os comandos, basta solicitar com o parâmetro `--info` ou perguntar explicitamente *"o que é [termo]?"*.
 
