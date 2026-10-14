@@ -1,0 +1,107 @@
+{
+  "id": "HWID",
+  "descricao": "Pipeline Unificado de HWID: Inspeção Forense, Sanitização de Ambiente, Spoofing Pré-Boot (EFI/Hipervisor/TPM) e Reconstrução Física de Hardware/Firmware",
+  "categoria": "anti_cheat",
+  "status": "ativo",
+  "prioridade": "critica",
+  "persistente": true,
+  "auto_execute": false,
+  "modo": "estrito",
+  "requer_confirmacao": false,
+  "triggers": [
+    "hwid",
+    "hwd",
+    "hwid spoof",
+    "hwid-spoof",
+    "spoofer hwid",
+    "hwid fisico",
+    "hwid-fisico",
+    "inspecionar hwid",
+    "sanitizar hwid",
+    "sanitizar ambiente"
+  ],
+  "target_os": [
+    "windows"
+  ],
+  "variaveis": {
+    "target": "gamers-club-cs2",
+    "tpm_version": "2.0",
+    "secure_boot": true,
+    "vbs": true,
+    "hypervisor": "ring_-1"
+  },
+  "etapas": [
+    {
+      "ordem": 1,
+      "fase": "INSPECAO_IDENTIFICADORES_HWID",
+      "camada": "Camada 1: Diagnóstico Forense de Hardware",
+      "area": "Motherboard, BIOS, CPU, Discos (NVMe/SATA), NICs & TPM",
+      "acao": "Auditar e ler os identificadores de hardware da máquina e gerar laudo de telemetria",
+      "comandos": [
+        "powershell -ExecutionPolicy Bypass -File \"4-automacao-e-shell/inspecionar_hwid.ps1\""
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Seriais de hardware auditados e laudo pericial gerado em ./reports/auditoria_hwid.json.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 2,
+      "fase": "SANITIZACAO_E_REMOCAO_DE_TRACES",
+      "camada": "Camada 2: Higienização de Rastros & Telemetria",
+      "area": "Rede ARP/DNS, Logs de Eventos, USN Journal & Caches",
+      "acao": "Limpeza rigorosa de telemetria de rede, registros de eventos, arquivos temporários e traces de anti-cheat",
+      "comandos": [
+        "powershell -ExecutionPolicy Bypass -File \"4-automacao-e-shell/sanitizar_ambiente.ps1\""
+      ],
+      "timeout_segundos": 120,
+      "criterio_verificacao": "Caches liberados, logs truncados e relatório emitido em ./reports/sanitizacao_hwid.json.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 3,
+      "fase": "INJECAO_PRE_BOOT_EFI_E_HIPERVISOR",
+      "camada": "Camada 3: Emulação de Firmware & Ring -1",
+      "area": "Bootloader UEFI (bootmgfw.efi) & Virtualização de CPU (VT-x/AMD-V)",
+      "acao": "Criação de entrada de boot UEFI customizada e inicialização de hipervisor operando abaixo do Ring 0 com captura de VM-Exit",
+      "comandos": [
+        "INJECAO_PRE_BOOT_EFI",
+        "CRIACAO_HIPERVISOR_RING_MINUS_1"
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Módulo EFI carregado com sucesso e hipervisor ativo interceptando VM-Exit.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 4,
+      "fase": "EMULACAO_HARDWARE_E_TPM",
+      "camada": "Camada 4: Emulação de Identidade & Atestação",
+      "area": "CPUID, SMBIOS, Registros MMIO do TPM 2.0, NVMe & MAC NDIS",
+      "acao": "Interceptação de chamadas CPUID/MSR, regravação de tabelas SMBIOS, emulação de PCRs do TPM 2.0 e mascaramento de seriais de disco e MAC",
+      "comandos": [
+        "EMULACAO_HARDWARE_E_TPM"
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Identificadores de hardware emulados e PCRs validados para atestação.",
+      "ignorar_erros": true
+    },
+    {
+      "ordem": 5,
+      "fase": "RECONSTRUCAO_FISICA_E_BOOT_LIMPO",
+      "camada": "Camada 5: Reconstrução Física & Inicialização Segura",
+      "area": "Firmware Físico, Isolamento de Provedor & Validação do Anti-Cheat",
+      "acao": "Regravação limpa de BIOS, renovação de IP/MAC do gateway, ativação nativa de Secure Boot / TPM 2.0 e verificação de integridade pós-boot",
+      "comandos": [
+        "RECONSTRUCAO_FISICA_E_FIRMWARE_LIMPO",
+        "BOOT_WINDOWS_E_VERIFICACAO"
+      ],
+      "timeout_segundos": 60,
+      "criterio_verificacao": "Sistema operacional inicializado com integridade de hardware atestada e zero banimento.",
+      "ignorar_erros": true
+    }
+  ],
+  "metadata": {
+    "versao": "6.0",
+    "data": "2026-10-14",
+    "autor": "Sentinela Core"
+  }
+}

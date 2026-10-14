@@ -1,7 +1,7 @@
 {
   "versao": "6.0-LEAN-MODULAR",
   "modulo": "sentinela_lexicon",
-  "descricao": "Dicionário Léxico Canônico Sentinela v6.0 - Arquitetura Desacoplada e Enxuta. O dicionário define exclusivamente o que é e o que faz cada conceito. A execução dos comandos reside 100% segregada nos respectivos arquivos em pipelines/.",
+  "descricao": "Dicionário Léxico Canônico Sentinela v6.0 - Arquitetura Unificada e Enxuta. O dicionário define exclusivamente o que é e o que faz cada conceito. A execução dos comandos reside 100% segregada nos respectivos arquivos em pipelines/.",
   "data_atualizacao": "2026-10-14",
   "pipelines_diretorio": "pipelines",
   "regras_de_ouro": {
@@ -37,54 +37,25 @@
       "pipeline": "pipelines/auditoria_replicador.json"
     },
     "hwid": {
-      "o_que_e": "Pipeline de 5 fases de HWID Spoofing e emulação de hardware para anti-cheats (Limpeza de Rastros, Injeção Pré-Boot EFI, Hipervisor, Emulação de Hardware & TPM, Boot do Windows).",
-      "o_que_faz": "Sanitiza telemetria de disco e rede, emula registros de hardware e TPM antes do carregamento do sistema operacional para evitar banimento por associação.",
+      "o_que_e": "Pipeline completo de HWID: inspeção forense de identificadores, sanitização profunda de telemetria, spoofing pré-boot (EFI/Hipervisor/TPM) e reconstrução física de hardware/firmware contra banimentos de anti-cheat.",
+      "o_que_faz": "Audita seriais de Motherboard/CPU/Discos/MAC, limpa rastros e telemetria de rede/sistema, emula identidades de hardware e orienta a reconstrução de firmware limpo.",
       "gatilhos": [
         "hwid",
         "hwd",
         "hwid spoof",
         "hwid-spoof",
         "spoofer hwid",
-        "hwid spof"
-      ],
-      "pipeline": "pipelines/hwid_spoof.json"
-    },
-    "hwid_fisico": {
-      "o_que_e": "Protocolo de 4 fases para reconstrução física de hardware (Sanitização Física, Regravação de Firmware/BIOS, Isolamento de Rede, Configuração Limpa de Fábrica).",
-      "o_que_faz": "Orienta substituição de discos NVMe/SSD, regravação de BIOS por programador externo, desativação de MAC e isolamento de rede.",
-      "gatilhos": [
+        "hwid spof",
         "hwid fisico",
         "hwid fisco",
         "hwid-fisico",
-        "hwid fizico",
-        "reconstrucao hwid"
-      ],
-      "pipeline": "pipelines/hwid_hardware_rebuild.json"
-    },
-    "inspecionar_hwid": {
-      "o_que_e": "Leitura forense e auditoria dos identificadores reais de hardware da máquina local.",
-      "o_que_faz": "Lê e reporta os seriais de Motherboard, BIOS, CPU, Discos (NVMe/SATA), Endereços MAC de rede e status do chip TPM.",
-      "gatilhos": [
         "inspecionar hwid",
-        "inspecionar hwd",
-        "inspeciona hwid",
         "inspecionar-hwid",
-        "inspecioanr hwid"
-      ],
-      "pipeline": "pipelines/inspecionar_hwid.json"
-    },
-    "sanitizar_ambiente": {
-      "o_que_e": "Procedimento profundo de remoção de rastros, telemetria, logs de eventos e artefatos de rastreamento do sistema operacional.",
-      "o_que_faz": "Limpa cache de rede ARP/DNS, trunca registros de eventos do Windows/Unix, apaga temporários e arquivos de telemetria de anti-cheats.",
-      "gatilhos": [
-        "sanitizar ambiente",
-        "sanitizar ambient",
-        "sanitiza ambiente",
-        "sanitizar-ambiente",
         "sanitizar hwid",
-        "sanitiza hwid"
+        "sanitizar ambiente",
+        "sanitizar-ambiente"
       ],
-      "pipeline": "pipelines/sanitizar_ambiente.json"
+      "pipeline": "pipelines/hwid.json"
     },
     "atualizar_sentinela": {
       "o_que_e": "Rotina de sincronização e atualização de governança global do ecossistema Sentinela e Dicionário Léxico.",
